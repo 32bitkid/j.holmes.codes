@@ -1,0 +1,44 @@
+@import '../css/variables';
+
+.blog {
+  @extend #primary;
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.when {
+  @extend #-f--small;
+  font-feature-settings: 'onum';
+  font-variant-numeric: oldstyle-nums;
+  line-height: $line-height * 2;
+  color: #999;
+}
+
+.title {
+  @extend #-f--x-large;
+  font-variant: small-caps;
+  font-feature-settings: "c2sc", "smcp";
+  margin-bottom: $line-height * 0.5;
+}
+
+.item {
+  @media screen and (min-width: $main-width) {
+    padding-left: ($article-width - $content-width) / 2;
+    padding-right: ($article-width - $content-width) / 2;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 0.5px dotted #ddd;
+    margin-bottom: $line-height;
+  }
+}
+
+.excerpt { margin-bottom: 0; }
+.cont {
+  padding-top: $line-height * 0.5;
+  padding-bottom: $line-height * 1;
+
+  a::after {
+    content: ' \00BB'
+  }
+}

@@ -1,0 +1,236 @@
+@import "../css/variables";
+
+@mixin pullout {
+	float: right;
+	margin-right: ($article-width - $content-width) * -1;
+	width: $article-width - $content-width - $gutter;
+	clear: right;
+}
+
+@mixin footnote-text {
+	@include pullout();
+	box-sizing: border-box;
+	word-wrap: break-word;
+	font-size: 0.7492rem;
+	margin-bottom: 0.7492rem * 0.5;
+	color: #666;
+}
+
+@mixin footnote($content, $counter: footnote, $prefix: '') {
+	counter-increment: $counter;
+	@media screen and (min-width: $main-width) {
+		&::after {
+			content: counter($counter, decimal);
+			font-variant-position: super;
+			font-feature-settings: 'sups';
+		}
+
+		&::before {
+			@include footnote-text();
+			content: $prefix counter($counter, decimal) '\A0\00B7\A0' $content;
+		}
+	}
+}
+
+#markdown-styles {
+	:global {
+		h1 { margin-top: $line-height * 3; }
+		h2 { margin-top: $line-height * 1; }
+
+		table {
+			margin-left: auto;
+			margin-right: auto;
+			margin-bottom: $line-height * 1;
+			font-feature-settings: 'tnum';
+			border-collapse: collapse;
+			border-spacing: 3ch 0.5ch;
+			line-height: 1;
+
+			thead, tbody {
+				td, th { padding: 0.75em 1.75ch; }
+			}
+
+			thead th {
+				font-size: 74.92%;
+				padding-bottom: 0.5em;
+				font-feature-settings: "c2sc", "smcp";
+				&:not(:empty) {
+					$gap: 1.5ch;
+					box-shadow: 0 $gap 0  calc(0.5px - #{$gap}) currentColor;
+				}
+			}
+
+			tbody > tr:nth-child(3n):not(:last-child):not(:empty) {
+				th, td { border-bottom: 0.25px dotted #999; }
+			}
+
+			tbody th {
+				font-weight: bold;
+			}
+
+			tbody td {
+				text-align: center;
+				&:empty::before {
+					content: '\2014';
+					color: rgba(black, 0.25);
+				}
+			}
+
+			tbody tr:last-child {
+				td, th {
+					border-bottom: none;
+				}
+			}
+		}
+
+		aside {
+			display: none;
+			@include footnote-text();
+
+			> p:first-child::before {
+				content: '\203B ';
+			}
+
+			@media screen and (min-width: $main-width) {
+				display: block;
+			}
+		}
+
+		aside table {
+			margin-left: 2ch;
+			width: 50%;
+			max-width: $article-width - $content-width - $gutter;
+		}
+
+		figure {
+			margin-bottom: $line-height;
+
+			&:hover > figcaption {
+				opacity: 1;
+			}
+
+			> figcaption {
+				display: none;
+				@include footnote-text();
+				padding-left: 1.25ch;
+				text-indent: -1.25ch;
+
+				@media screen and (min-width: $main-width) {
+					display: block;
+					counter-increment: figures;
+					&::before {
+						content: 'Figure\00A0' counter(figures) '\0020\00B7\0020';
+					}
+				}
+
+				opacity: 0.50;
+				transition: opacity 500ms;
+			}
+
+			> img {
+				max-width: $content-width;
+				margin-left: auto;
+				margin-right: auto;
+				display: block;
+			}
+		}
+
+		:not(figure) pre {
+			margin-bottom:  $line-height;
+		}
+
+		:not(q) .sic::after {
+			content: '(sic)';
+			font-size: 0.65rem;
+			vertical-align: super;
+		}
+
+		q .sic::after {
+			content: '[sic]';
+		}
+
+
+		a:not(.footnote-ref):not(.footnote-backref):link {
+			@include footnote(attr(href));
+
+			&::before {
+				opacity: 0.50;
+				transition: opacity 500ms;
+				padding-left: 1.25ch;
+				text-indent: -1.25ch;
+			}
+		}
+
+		p:hover, ul:hover, ol:hover {
+			a:not(.footnote-ref):not(.footnote-backref):link::before {
+				opacity: 1;
+			}
+		}
+
+		abbr {
+			@include footnote(attr(title));
+			text-decoration: none;
+
+			&::before {
+				opacity: 0.50;
+				transition: opacity 500ms;
+				padding-left: 1.25ch;
+				text-indent: -1.25ch;
+			}
+		}
+
+		p:hover abbr::before {
+			opacity: 1;
+		}
+	}
+}
+
+.article {
+	@extend #primary;
+	@extend #primary--full-height;
+	@extend #markdown-styles;
+
+	// Decorate End-Of-Text
+	@media screen {
+		&::after {
+			clear: both;
+			color: #ccc;
+			font-family: system-ui, sans-serif;
+			display: block;
+			text-align: right;
+			font-size: 5.6569rem;
+			line-height: $line-height * 4;
+			content: '\2404';
+		}
+	}
+}
+
+.byline {
+	line-height: 1.5rem;
+	font-size: 0.7492rem;
+	$yank: 2rem;
+	margin-top: $yank * -1;
+	margin-left: 3ch;
+	margin-bottom: (1.5rem * 1) + $yank;
+}
+
+.tags {
+	margin: 0;
+	list-style: none;
+	display: inline;
+}
+
+.tag {
+	display: inline;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	text-transform: uppercase;
+}
+
+.content {
+	position: relative;
+	max-width: $content-width;
+	counter-reset: footnote figures;
+	@media print {
+		max-width: unset;
+	}
+}

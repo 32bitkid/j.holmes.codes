@@ -1,0 +1,78 @@
+@import "../css/variables";
+
+:root {
+  margin-top: calc(#{$header-height} + 2px);
+  @media print {
+    margin-top: 0;
+  }
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: white;
+  border-bottom: 0.5px dotted #ddd;
+
+  nav {
+    max-width: $content-width;
+    box-sizing: border-box;
+    padding: 0.25rem 0.5rem;
+    margin-left: auto; margin-right: auto;
+    display: flex;
+    align-items: center;
+
+    @media screen and (min-width: $main-width) {
+      max-width: $article-width;
+    }
+  }
+
+  @media print { display: none; }
+}
+
+.home {
+  flex-grow: 1;
+}
+
+#social-media-link {
+  margin-left: 0.25rem;
+  font-size: 0;
+  line-height: 0;
+  &::after {
+    display: block;
+    width: 2rem; height: 2rem;
+    padding: 0.125rem;
+    box-sizing: border-box;
+    opacity: 0.25;
+    filter: grayscale(100%) brightness(0%);
+    transition: filter 500ms, opacity 500ms, transform 250ms ease-in;
+  }
+
+  &:hover::after {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.25);
+  }
+}
+
+@mixin social-media-link($content) {
+  @extend #social-media-link;
+  &::after { content: $content; }
+
+}
+
+.twitch { @include social-media-link(url('./icons/twitch.svg')); }
+.youtube { @include social-media-link(url('./icons/youtube.svg')); }
+.codepen { @include social-media-link(url('./icons/codepen.svg')); }
+.github { @include social-media-link(url('./icons/github.svg')); }
+.twitter { @include social-media-link(url('./icons/twitter.svg')); }
+.linkedin { @include social-media-link(url('./icons/linkedin.svg')); }
+.stackoverflow { @include social-media-link(url('./icons/stackoverflow.svg')); }
+
+.sep {
+  height: 1.5rem;
+  margin: 0.125em 0.25rem;
+  border-left: 4px dotted #ddd;
+}

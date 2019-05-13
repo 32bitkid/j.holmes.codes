@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css?family=Cardo:400,400i,700&display=swap&subset=latin-ext');
+@import '../css/variables';
+
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+:root, body {
+  font: 400 12pt / #{$line-height} 'Cardo', serif, system-ui;
+  font-feature-settings: "liga";
+}
+
+:root {
+  background-attachment: fixed;
+  color: #333;
+  background-color: white;
+}
+
+p,h1,h2,h3,h4,h5,h6 {
+  margin-bottom: $line-height;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-weight: 400;
+  letter-spacing: -0.0125em;
+  font-variant: small-caps;
+  font-feature-settings: "c2sc", "smcp";
+
+}
+
+h6 { font-size: 0.7492rem; }
+h5 { font-size: 1rem; }
+h4 { font-size: 1.3348rem; }
+h3 { font-size: 1.7818rem; }
+h2 { font-size: 2.3784rem; line-height: $line-height * 2; }
+h1 { font-size: 3.1748rem; line-height: $line-height * 2.25; }
+
+mark {
+  $highlight-color: lighten(#6cf, 17%);
+  mix-blend-mode: multiply;
+  background-color: $highlight-color;
+  color: black;
+}
+
+hr {
+  border: 0;
+  box-sizing: border-box;
+  height: 1px;
+  margin: calc(#{$line-height * 2} - 1px) 0 ($line-height * 2) 0;
+  position: relative;
+  clear: both;
+  &::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    border-bottom: 1px dotted currentColor;
+    left: 10%;
+    right: 10%;
+    opacity: 0.333;
+  }
+}
+
+q {
+  quotes: '\201c' '\201d'  "\2018" "\2019" '"' '"' "'" "'";
+  &::before { content: open-quote; }
+  &::after { content: close-quote; }
+}
+
+em { font-style: italic; }
+strong { font-weight: bold; }
+
+sup {
+  vertical-align: super;
+  font-size: 0.65rem;
+}
+
+kbd {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.625em;
+  border: 3px solid #dedad6;
+  border-top: 2px solid #ece8e4;
+  border-bottom: 6px solid #c9c4c4;
+  border-radius: 3px;
+  line-height: 1;
+  padding: 0.33em 0.66em;
+  box-shadow:
+          0 -0.125em 0 -0.063em #c9c4c4,
+          0 0.125em 0 -0.063em rgba(0,0,0,0.5);
+  background-color: #e7e7e7;
+  position: relative;
+  color: rgba(0,0,0,0.75);
+  vertical-align: middle;
+  margin-top: -50%;
+  margin-bottom: -50%;
+  font-weight: 400;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0px; left: 0px;
+    bottom: -1px; right: 0px;
+    border-radius: 4px;
+    border-left: 1px solid #efe7e7;
+    border-right: 1px solid #efe7e7;
+    border-bottom: 1px solid #c3c0c0;
+    box-shadow: 0 4px 4px -3px rgba(0,0,0,0.15);
+    background-image:
+            linear-gradient(to right,
+                    #dedad6,
+                    transparent 10%,
+                    transparent 90%,
+                    #dedad6);
+
+  }
+}
+
+/* LISTS */
+ul, ol {
+  margin-left: 4ch;
+  margin-bottom: $line-height * 1;
+}
+ul { list-style: square; }
+ol { list-style: decimal; }
+
+// Links
+:link, :visited {
+  color: #628da3;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Patch katex's newline size
+.katex .katex-html>.newline {
+  height: 1em;
+}

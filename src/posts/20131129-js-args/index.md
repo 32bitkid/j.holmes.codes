@@ -1,0 +1,118 @@
+---
+title: The magical world of the JavaScript arguments object
+tags:
+  - js
+date: 2013-11-29 00:00:00
+---
+So, I've known for a long time that the `arguments` object that is available in a function is
+a bit "odd", but until recently I didn't realize how odd.
+
+<!-- more -->
+***
+
+Last weekend, I was up in the northeast visiting friends and taking a little break from
+the south. As I waited at the airport for my flight home, I was browsing [Hacker News](http://news.ycombinator.com)
+for anything interesting, waiting for my zone to be called for boarding. I ended up at [this guys blog](http://sergimansilla.com/blog/extending-js-inline-unit-tests/) where he was talking about adding
+contract-like tests to javascript using some extension macros thanks to [Sweet.js](http://sweetjs.org/).
+
+Soon, I was on the plane and with nothing really to do and my chromebook in my carry-on I decided to do some
+expermentations with some different vanilla-js syntaxes for doing the same thing. Nothing serious, just wanted to
+play around.
+
+However, I quickly stumbled onto something that I kind of blew my mind.
+
+Here is a extremely simplified version what I did:
+
+```js
+var clean = function(expected) {
+  if(typeof expected !== "function") {
+    var capturedArguments = arguments;
+    expected = function() { return capturedArguments[0]; }
+  }
+  return expected;
+}
+```
+
+
+If `expected` is not a function then I wanted to wrap it into a function, and
+returning the original *value* that was given in it's place.
+
+Now, it's not the greatest example of idomatic javascript that I've ever written,
+but in my defense I was hurltleing through the air at 500mph in a box with wings.
+
+So, I tried passing it a function:
+
+```js
+var fn = clean(function() { return 1; });
+fn(); // => 1
+```
+
+Cool, but then I tried it with something that wasn't a function:
+
+```js
+var fn = clean(1);
+fn();
+```
+
+I expected the return of `fn()` to be `1`. However, much to my surprise, I got
+a reference back to `fn` itself... *"Huh?"* my former self though. I opened
+up the developer console, and added a breakpoint inside `clean`. Shockingly &ndash; at least to
+me at the time &ndash; was that `capturedArugments[0]` did not point at the value
+I originally had passed in... Instead it pointed at the function that I had
+assigned to `expected`.
+
+_\*mindblown\*_
+
+I had a feeling that I had stumbled onto something that I should have been
+aware of a long time ago. I wrote another function, something even simplier, in
+an attempt to understand what was going on.
+
+```js
+var strangeAdd = function(x,y) {
+  arguments[0] = 10;
+  arguments[1] = 5;
+  return x + y;
+}
+```
+
+And no matter what numbers that I fed into the function, the result would always come back `15`. In fact, no
+matter what data-type or object I fed in, I would always get `15`. Even more specifically, the only way
+that I would *not* get back `15`, was when I invoked the function with less than two arguments, eg. `strangeAdd();`.
+
+Then I tried something else.
+
+```js
+var strangeAdd = function(x,y) {
+  x = 10;
+  y = 5;
+  return arguments[0] + arguments[1];
+}
+```
+
+And lo-and-behold, the same result. It appeared like the `arguments` object
+and the variables of the function are *linked*. Change one and it effects the other.
+
+By this time, I was off the plane and was able to reconnect the internets &ndash; my
+source of information, and was able to find that this is a fairly well documented
+"feature" of the `arguments` object. I just had never heard of it.
+
+_\*mindblown\*_
+
+Note that this behavior is no longer supported when in strict mode:
+
+```js
+var noMoreMonkeyBusiness = function(x,y) {
+  "use strict"
+  arguments[0] = "foo";
+  arguments[1] = "bar";
+  return x + y;
+};
+
+noMoreMonkeyBusiness(1,2); // => 3
+```
+
+Phew... Sanity.
+
+I'm really not sure when one would *ever* want to do this, but I'm sure
+some where in some code base this trick is used. But I'm more surprised
+that I just had never heard of it until now!

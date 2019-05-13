@@ -1,0 +1,16 @@
+@import "../css/variables";
+
+.footer {
+  background-color: #111;
+  background-image:
+          radial-gradient(ellipse 75vw 37.5vw at center,
+                  #111, #222);
+color: #ccc;
+  box-sizing: border-box;
+  height: $footer-height;
+  text-align: center;
+  font-size: 0.7492rem;
+  clear: both;
+
+  @media print { display: none; }
+}

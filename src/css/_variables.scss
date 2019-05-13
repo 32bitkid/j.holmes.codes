@@ -1,0 +1,46 @@
+$header-height: 2.5rem;
+$footer-height: 10rem;
+
+$line-height: 1.45rem;
+
+$main-width: 64rem;
+$article-width: 64rem;
+$content-width: 45rem;
+$gutter: 2rem;
+
+#primary {
+  box-sizing: border-box;
+  max-width: $content-width;
+  padding: 1px 0.5rem 0;
+  margin-top: -1px;
+  margin-left: auto;
+  margin-right: auto;
+  @media print { max-width: unset; }
+  @media screen and (min-width: $main-width) {
+    max-width: $article-width;
+  }
+}
+
+#primary--full-height {
+  min-height: calc(100vh - 2px - #{$header-height} - #{$footer-height});
+
+  @media print {
+    max-width: unset;
+    min-height: unset;
+  }
+}
+
+// ratio = 2^(5/12)
+@mixin -f--small { font-size: 0.7492rem; }
+@mixin -f--normal { font-size: 1rem; }
+@mixin -f--large { font-size: 1.3348rem; }
+@mixin -f--x-large { font-size: 1.7818rem; }
+@mixin -f--huge { font-size: 2.3784rem; line-height: $line-height * 2; }
+@mixin -f--headline { font-size: 3.1748rem; line-height: $line-height * 2.25; }
+
+#-f--small { @include -f--small; }
+#-f--normal { @include -f--normal; }
+#-f--large { @include -f--large; }
+#-f--x-large { @include -f--x-large; }
+#-f--huge { @include -f--huge; }
+#-f--headline { @include -f--headline; }
