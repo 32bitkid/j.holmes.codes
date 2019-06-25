@@ -23,6 +23,7 @@ $glass: repeating-linear-gradient(
 .blog {
   padding-top: $line-height;
   padding-bottom: $line-height;
+  perspective: 24in;
 
   &__header, &__wrapper, &__more {
     @extend #primary;
@@ -37,7 +38,8 @@ $glass: repeating-linear-gradient(
   &__more {
     @extend #-f--large;
     letter-spacing: -0.05em;
-    :link {
+    :link, :visited {
+      color: black;
       display: block;
       text-align: right;
       padding-top: $line-height;
@@ -51,7 +53,7 @@ $glass: repeating-linear-gradient(
     background-size: 100vw 100vh;
     background-attachment: fixed;
     background-image: $glass;
-    background-color: #ccc;
+    background-color: #888;
   }
 
   &__wrapper {
@@ -76,6 +78,9 @@ $glass: repeating-linear-gradient(
   }
 }
 
+$timing-quick: 333ms;
+$timing-slow: 3s;
+
 .item {
   @media screen and (max-width: $content-width) {
     padding-bottom: calc(#{$line-height / 2} - 1px);
@@ -84,21 +89,22 @@ $glass: repeating-linear-gradient(
   }
 
   @media screen and (min-width: $content-width) {
-    $quick: 666ms;
-    $slow: 4s;
     position: relative;
-    background-color: #d7d7d7;
+    background-color: rgba(white, 0.3);
     box-sizing: border-box;
     overflow: hidden;
-    background-clip: padding-box;
     border-radius: 4px;
-    box-shadow: 0 0 1.45rem 0.125rem rgba(black, 0.125);
-    color: #111;
-    transition: background-color $quick ease-in;
+
+    color: #070f17;
+    transition:
+            transform 2s ease-in-out,
+            background-color $timing-quick ease-in;
+
+    transform: scale(1);
 
     .post {
       color: currentColor;
-      transition: color $quick ease-in;
+      transition: color $timing-quick ease-in;
       display: block;
       position: absolute;
       top: 0;
@@ -115,23 +121,24 @@ $glass: repeating-linear-gradient(
       left: 0;
       right: 0;
       bottom: 0;
-      background-blend-mode: overlay;
       background-position: -75vw 0, 0 0;
       background-attachment: fixed, scroll;
       background-size: 200vw auto, cover;
-      transition: background-position $slow cubic-bezier(0.000, 1.000, 0.000, 1);
+      transition:
+              background-position $timing-slow cubic-bezier(0.000, 1.000, 0.000, 1);
       background-image: $glass,
-      radial-gradient(ellipse farthest-corner,
+      radial-gradient(ellipse 100% (($article-width / 3) * (4 / 3)) at center,
                       rgba(white, 0) 25%,
-                      rgba(white, 0.25) 110%);
+                      rgba(#ccc, 0.125) 110%);
     }
 
     &:hover {
-      .post {
-        color: white;
-      }
-
       background-color: currentColor;
+      box-shadow: 0 0 2rem 0.125rem rgba(white, 0.5);
+      transform: scale(1.025);
+
+
+      .post { color: white; }
 
       &::before {
         background-position: -0.5rem 0, 0 0;
@@ -169,7 +176,10 @@ $glass: repeating-linear-gradient(
     position: absolute;
     left: 1rem;
     right: 1rem;
-    text-shadow: 0 0.125em 1.5em rgba(white, 0.75);
+    transition: text-shadow 2s linear;
+    text-shadow:
+            0 0 0 rgba(black, 0),
+            0 0 1rem rgba(white, 0.65);
 
     bottom: 45%;
     text-align: left;
@@ -177,6 +187,14 @@ $glass: repeating-linear-gradient(
       bottom: calc(50% - 1.7818rem * 1.25);
       text-align: right;
     }
+  }
+}
+
+.item:hover .title {
+  @media screen and (min-width: $content-width) {
+    text-shadow:
+            0 0 0.5em rgba(black, 1),
+            0 0.125em 2.25em rgba(white, 0.65);
   }
 }
 
