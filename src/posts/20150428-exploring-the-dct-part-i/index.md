@@ -280,8 +280,14 @@ However, compare them together on the same chart:
 | <table class="pull">
 | <thead><th></th><th colspan="2">Value</th><th>±</th></thead>
 | <tbody>
-|   <tr><th>0</th><td>8.0</td><td>10.8</td><th>2.8</th></tr><tr><th>1</th><td>16.0</td><td>14.6</td><th>-1.4</th></tr><tr><th>2</th><td>24.0</td><td>21.5</td><th>-2.5</th></tr><tr><th>3</th><td>32.0</td><td>30.5</td><th>-1.5</th></tr>
-|   <tr><th>4</th><td>40.0</td><td>40.2</td><th>0.2</th></tr><tr><th>5</th><td>48.0</td><td>49.2</td><th>1.2</th></tr><tr><th>6</th><td>56.0</td><td>56.1</td><th>0.1</th></tr><tr><th>7</th><td>64.0</td><td>59.9</td><th>-4.1</th></tr>
+|   <tr><th>0</th><td>8.0</td><td>10.8</td><th>&plus;2.8</th></tr>
+|   <tr><th>1</th><td>16.0</td><td>14.6</td><th>&minus;1.4</th></tr>
+|   <tr><th>2</th><td>24.0</td><td>21.5</td><th>&minus;2.5</th></tr>
+|   <tr><th>3</th><td>32.0</td><td>30.5</td><th>&minus;1.5</th></tr>
+|   <tr><th>4</th><td>40.0</td><td>40.2</td><th>&plus;0.2</th></tr>
+|   <tr><th>5</th><td>48.0</td><td>49.2</td><th>&plus;1.2</th></tr>
+|   <tr><th>6</th><td>56.0</td><td>56.1</td><th>&plus;0.1</th></tr>
+|   <tr><th>7</th><td>64.0</td><td>59.9</td><th>&minus;4.1</th></tr>
 | </tbody>
 | </table>
 | </aside>
