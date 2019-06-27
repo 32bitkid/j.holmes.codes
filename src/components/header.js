@@ -2,11 +2,8 @@ import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 
+import ExternalLink from './external-link';
 import css from './header.module.scss';
-
-const ExternalLink = ({ children, ...props }) => (
-  <a target="_blank" rel="noopener noreferrer" {...props}>{children}</a>
-)
 
 const Header = ({ siteTitle }) => (
   <header className={css.header}>

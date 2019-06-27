@@ -20,19 +20,44 @@ $glass: repeating-linear-gradient(
                 rgba(255, 255, 255, 0.075) 70vw * $wmod,
                 rgba(255, 255, 255, 0) 100vw * $wmod);
 
+.aboutMe, .blog, .projects {
+  &__header {
+    @extend #-f--x-large;
+    margin-bottom: $line-height;
+    font-variant: normal;
+    font-feature-settings: unset;
+    letter-spacing: -0.05em;
+    @media screen and (min-width: $content-width) {
+      @include -f--headline;
+      color: rgba(#333, 0.333);
+    }
+  }
+}
+
+.aboutMe, .projects {
+  @extend #primary;
+  padding-top: $line-height;
+  padding-bottom: $line-height;
+}
+
+.aboutMe {
+  p {
+    @media screen and (min-width: $content-width) {
+      max-width: $content-width - 1rem;
+      text-align: justify;
+    }
+
+  }
+}
+
 .blog {
   padding-top: $line-height;
   padding-bottom: $line-height;
+
   perspective: 24in;
 
   &__header, &__wrapper, &__more {
     @extend #primary;
-  }
-
-  &__header {
-    @extend #-f--large;
-    margin-bottom: $line-height;
-    letter-spacing: -0.05em;
   }
 
   &__more {

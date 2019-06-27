@@ -66,12 +66,19 @@ p,h1,h2,h3,h4,h5,h6 {
   margin-bottom: $line-height;
 }
 
+small {
+  font: inherit;
+  font-feature-settings: "c2sc", "smcp";
+  font-variant: small-caps;
+  font-variant-numeric: oldstyle-nums;
+  text-decoration: none;
+}
+
 h1,h2,h3,h4,h5,h6 {
   font-weight: 400;
   letter-spacing: -0.0125em;
   font-variant: small-caps;
-  font-feature-settings: "c2sc", "smcp";
-
+  font-feature-settings: "c2sc", "smcp", "onum";
 }
 
 h6 { font-size: 0.7492rem; }

@@ -1,5 +1,5 @@
 $header-height: 2.5rem;
-$footer-height: 10rem;
+$footer-height: 20rem;
 
 $line-height: 1.45rem;
 
@@ -11,8 +11,7 @@ $gutter: 2rem;
 #primary {
   box-sizing: border-box;
   max-width: $content-width;
-  padding: 1px 0.5rem 0;
-  margin-top: -1px;
+  padding: 0.5px 0.5rem 0;
   margin-left: auto;
   margin-right: auto;
   @media print { max-width: unset; }
@@ -22,7 +21,7 @@ $gutter: 2rem;
 }
 
 #primary--full-height {
-  min-height: calc(100vh - 2px - #{$header-height} - #{$footer-height});
+  min-height: calc(100vh - 1px - #{$header-height} - #{$footer-height});
 
   @media print {
     max-width: unset;
@@ -31,16 +30,17 @@ $gutter: 2rem;
 }
 
 // ratio = 2^(5/12)
-@mixin -f--small { font-size: 0.7492rem; }
-@mixin -f--normal { font-size: 1rem; }
-@mixin -f--large { font-size: 1.3348rem; }
-@mixin -f--x-large { font-size: 1.7818rem; }
+@mixin -f--small { font-size: 0.7492rem; line-height: $line-height; }
+@mixin -f--normal { font-size: 1rem; line-height: $line-height; }
+@mixin -f--large { font-size: 1.3348rem; line-height: $line-height; }
+@mixin -f--x-large { font-size: 1.7818rem; line-height: $line-height; }
 @mixin -f--huge { font-size: 2.3784rem; line-height: $line-height * 2; }
 @mixin -f--headline { font-size: 3.1748rem; line-height: $line-height * 2.25; }
-
+@mixin -f--epic { font-size: 4.2379rem; line-height: $line-height * 3; }
 #-f--small { @include -f--small; }
 #-f--normal { @include -f--normal; }
 #-f--large { @include -f--large; }
 #-f--x-large { @include -f--x-large; }
 #-f--huge { @include -f--huge; }
 #-f--headline { @include -f--headline; }
+#-f--epic { @include -f--epic; }

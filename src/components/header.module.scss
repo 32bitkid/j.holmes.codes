@@ -1,7 +1,7 @@
 @import "../css/variables";
 
 :root {
-  margin-top: calc(#{$header-height} + 2px);
+  margin-top: calc(#{$header-height} + 0.5px);
   @media print {
     margin-top: 0;
   }
@@ -15,6 +15,13 @@
   z-index: 1;
   background-color: white;
   border-bottom: 0.5px dotted #ddd;
+
+  > * {
+    opacity: 0.25;
+    transition: opacity 500ms;
+  }
+
+  &:hover > * { opacity: 1; }
 
   nav {
     max-width: $content-width;
