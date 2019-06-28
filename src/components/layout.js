@@ -30,9 +30,8 @@ const Layout = ({ children, className }) => (
         {children}
         <footer className={footerCss.footer}>
           <div>
-            © {(new Date()).getFullYear()} James Holmes, Built with
-            {` `}
-            <a href="https://www.gatsbyjs.org">Gatsby</a>
+            &copy; <small>2013&ndash;{(new Date()).getFullYear()} J. Holmes</small>.
+            Built with <a href="https://www.gatsbyjs.org">Gatsby</a>.
           </div>
         </footer>
       </>
