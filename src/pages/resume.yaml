@@ -27,11 +27,11 @@ technicalExperience:
     experience: 5
     url:  http://www.adobe.com/devnet/actionscript.html
   - &AngularJs
-    name: AngularJs
+    name: Angular
     url:  https://angularjs.org/
     experience: 3
   - &ASPNet
-    name: ASPNet
+    name: ASP.Net
     url:  http://www.asp.net/
     experience: 2
   - &BackboneJs
@@ -57,10 +57,6 @@ technicalExperience:
   - &Cucumber
     name: Cucumber
     url:  https://cucumber.io/
-    experience: 3
-  - &DotNetFramework
-    name: .Net Framework
-    url:  https://www.microsoft.com/net
     experience: 3
   - &Express
     name: Express
@@ -162,11 +158,16 @@ technicalExperience:
     url: https://www.typescriptlang.org/
     experience: 4
     featured: true
-  - &HTML5_CSS3
-    name: HTML5/CSS3
+  - &HTML5
+    name: HTML5
     experience: 5
     url: https://www.w3.org/TR/html52/
-    featured: trues
+    featured: true
+  - &CSS3
+    name: CSS3
+    experience: 5
+    url: https://www.w3.org/TR/css-2018/
+    featured: true
   - &SCSS
     name: SCSS
     url:  https://sass-lang.com
@@ -184,14 +185,15 @@ workExperience:
     title: Innovation Engineer
     from: '2016-02'
     to: '2019-04'
-    technologies:
+    tech:
       - *NodeJs
       - *React
       - *Python
       - *Golang
       - *Kotlin
       - *TypeScript
-      - *HTML5_CSS3
+      - *HTML5
+      - *CSS3
       - *SCSS
 
     description: |
@@ -204,17 +206,17 @@ workExperience:
     title:   Designgineer
     from:    '2015-05'
     to:      '2015-11'
-    technologies:
+    tech:
       - *NodeJs
       - *Express
       - *Less
       - *JavaScript
       - *Knockout
       - *BaconJs
-      - *React
       - *Postgres
       - *Redis
-      - *HTML5_CSS3
+      - *HTML5
+      - *CSS3
     description: |
       Leads To Conversations is a sales acceleration app start-up, founded by a
       pair previous co-workers. I joined the team as the second
@@ -230,7 +232,7 @@ workExperience:
     title:   Lead Front-End Developer
     from:    '2014-08'
     to:      '2015-04'
-    technologies:
+    tech:
       - *JavaScript
       - *Bootstrap
       - *AngularJs
@@ -239,14 +241,15 @@ workExperience:
       - *Java8
       - *Spring
       - *OrientDB
-      - *HTML5_CSS3
+      - *HTML5
+      - *CSS3
     description: |
       As the lead front-end developer at Skyward, I worked closely with the lead designer
       to realize and iterate the UI/UX of the application: a UAV flight
       planning, logging, and compliance SAAS. Built on Angular.js, I implemented
       the front-end on-top of the Java backend. Worked dilligently to establish
       the automated testing and build pipelines. Helped mentor junior developers
-      within the front-end stack, and helped expose and transition the team
+      within the front-end stack, and transitioned the team
       towards more functional programming paradigms available in Java 8.
 
   - company: VersionOne
@@ -254,7 +257,7 @@ workExperience:
     title:   Team Lead
     from:    '2012-02'
     to:      '2014-08'
-    technologies:
+    tech:
       - *JavaScript
       - *Less
       - *CoffeeScript
@@ -266,7 +269,8 @@ workExperience:
       - *Ruby
       - *Cucumber
       - *WebDriver
-      - *HTML5_CSS3
+      - *HTML5
+      - *CSS3
     description: |
       I greatly enjoyed working at VersionOne; the team was well established and
       full of some of the smartest and most passionate people I've had the
@@ -277,7 +281,7 @@ workExperience:
       While at VersionOne, I was the Feature Lead of a team of four developers on a
       high-profile, well-received [feature](https://www.versionone.com/product/agile-team-software/)
       of the flagship application. During my last year at VersionOne, I was
-      tapped to be a Team Lead, one of only three on the development team. In
+      tapped to be a Team Lead, one of three on the development team. In
       that role, I helped guide, mentor, and support the devs and designers on
       my team and coordinate with the other teams and Product Owners to deliver
       high-quality features and releases.
@@ -287,7 +291,7 @@ workExperience:
     title:   ScrumMaster / Team Lead
     from:    '2009-08'
     to:      '2011-09'
-    technologies:
+    tech:
       - *JavaScript
       - *jQuery
       - *CSharp
@@ -296,7 +300,8 @@ workExperience:
       - *Ruby
       - *Cucumber
       - *WebDriver
-      - *HTML5_CSS3
+      - *HTML5
+      - *CSS3
     description: |
       While initially hired as a technical test developer at Clearwave, I was quickly
       conscripted on to the development team where I helped mentor the team in
@@ -315,7 +320,7 @@ olderWorkExperience:
     title:   ActionScript Consultant
     from:    '2011-06'
     to:      '2012-06'
-    technologies:
+    tech:
       - *ActionScript
       - { name: AGAL }
       - { name: Flash }
@@ -334,7 +339,7 @@ olderWorkExperience:
     title:   Web Application Developer
     from:    '2008-02'
     to:      '2009-06'
-    technologies:
+    tech:
       - *Ruby
       - *Rails
       - *MySQL

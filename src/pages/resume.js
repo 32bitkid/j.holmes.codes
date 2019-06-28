@@ -41,8 +41,8 @@ const WorkExperience = ({ experience }) => {
         <span className={css.exp__title}>{exp.title}</span>
         {" "}&#x00B7;{" "}
         <span className={css.exp__company}>
-        <ExternalLink href={exp.url}>{exp.company}</ExternalLink>
-      </span>
+          <ExternalLink href={exp.url}>{exp.company}</ExternalLink>
+        </span>
       </heading>
       <div className={css.exp__dates}>
         <Date date={exp.from}/>
@@ -50,6 +50,15 @@ const WorkExperience = ({ experience }) => {
         <Date date={exp.to} fallback={<em>Present</em>}/>
       </div>
       <div className={css.exp__desc}>{ md(exp.description) }</div>
+      <ul className={css.exp__stack}>
+        {
+          (exp.tech || [])
+            .sort(skillSorter)
+            .map(({name}) => (
+              <li className={css.exp__tech}>{name}</li>
+            ))
+        }
+      </ul>
     </li>
   ));
 

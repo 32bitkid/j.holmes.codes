@@ -26,9 +26,8 @@ const AboutMe = () => (
       developed the tools and designs for future <small>IoT</small> development and
       prototypes for <small>IoT/UX</small> patterns and challenges. Often, I straddle
       the line between engineering and design; equally comfortable in{" "}
-      <ExternalLink href="https://www.sketch.com/">Sketch</ExternalLink> as I
-      am in <ExternalLink href="https://www.sublimetext.com/">Sublime
-      Text</ExternalLink>.
+      <ExternalLink href="https://www.sketch.com/">Sketch</ExternalLink> as
+      in <ExternalLink href="https://www.sublimetext.com/">Sublime Text</ExternalLink>.
     </p>
     <p>
       You can find me doodling on <ExternalLink href="https://codepen.io/32bitkid">CodePen</ExternalLink>,
@@ -76,8 +75,8 @@ const SelectedProjects = () => (
           <dt><ExternalLink href="https://codepen.io/32bitkid/pen/BgwwgG">Quest For Glory II Disks</ExternalLink></dt>
           <dd className={css.project__desc}>Tribute to the classic designs of the 80's and 90's Sierra On-Line adventure game releases.</dd>
           <dd>
-            <iframe height="200" style={{width: "100%"}} scrolling="no" title="Quest For Glory II Disks"
-                    src="//codepen.io/32bitkid/embed/preview/BgwwgG/?height=400&theme-id=light&default-tab=result"
+            <iframe height="300" style={{width: "100%"}} scrolling="no" title="Quest For Glory II Disks"
+                    src="//codepen.io/32bitkid/embed/preview/BgwwgG/?height=300&theme-id=light&default-tab=result"
                     frameBorder="no" allowTransparency="true" allowFullScreen="true">
               See the Pen <a href='https://codepen.io/32bitkid/pen/BgwwgG/'>Quest For Glory II Disks</a> by James Holmes
               (<a href='https://codepen.io/32bitkid'>@32bitkid</a>) on <a href='https://codepen.io'>CodePen</a>.
@@ -103,8 +102,8 @@ const SelectedProjects = () => (
         <dl>
           <dt><ExternalLink href="https://codepen.io/32bitkid/pen/LKZzMR">Interactive 60% Keyboard</ExternalLink></dt>
           <dd>
-            <iframe height="200" style={{width: "100%"}} scrolling="no" title="Interactive 60% Keyboard"
-                    src="//codepen.io/32bitkid/embed/preview/LKZzMR/?height=400&theme-id=light&default-tab=result"
+            <iframe height="300" style={{width: "100%"}} scrolling="no" title="Interactive 60% Keyboard"
+                    src="//codepen.io/32bitkid/embed/preview/LKZzMR/?height=300&theme-id=light&default-tab=result"
                     frameBorder="no" allowTransparency="true" allowFullScreen="true">
               See the Pen <a href='https://codepen.io/32bitkid/pen/LKZzMR/'>Interactive 60% Keyboard</a> by James Holmes
               (<a href='https://codepen.io/32bitkid'>@32bitkid</a>) on <a href='https://codepen.io'>CodePen</a>.
@@ -137,8 +136,8 @@ const SelectedProjects = () => (
         <dt><ExternalLink href="https://codepen.io/32bitkid/pen/agmYew">Interactive 60% Keyboard</ExternalLink></dt>
         <dd className={css.project__desc}>Tribute to the classic Commodore 64 BASIC one-liner. .</dd>
         <dd>
-          <iframe height="200" style={{width: "100%"}} scrolling="no" title="10 PRINT CHR$(205.5+RND(1)); : GOTO 10"
-                  src="//codepen.io/32bitkid/embed/preview/agmYew/?height=400&theme-id=light&default-tab=result"
+          <iframe height="300" style={{width: "100%"}} scrolling="no" title="10 PRINT CHR$(205.5+RND(1)); : GOTO 10"
+                  src="//codepen.io/32bitkid/embed/preview/agmYew/?height=300&theme-id=light&default-tab=result"
                   frameBorder="no" allowTransparency="true" allowFullScreen="true">
             See the Pen <a href='https://codepen.io/32bitkid/pen/agmYew/'>10 PRINT CHR$(205.5+RND(1)); : GOTO 10</a> by
             James Holmes
