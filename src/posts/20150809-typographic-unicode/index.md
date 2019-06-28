@@ -70,10 +70,10 @@ There are two other special-case hyphens that might be useful in some cases. The
 | |-:|:-:|:-:|:-:
 | | <mark>&#x0027;</mark>straight single<mark>&#x0027;</mark> | `&#x27;` | | `\0027` |
 | | <mark>&#x0022;</mark>straight double<mark>&#x0022;</mark>  | `&#x22;` | | `\0022` |
-| | <mark>&lsquo;</mark>curly single open&rsquo; | `&#x2018;` | `&lsquot;` | `\2018` |
-| | &lsquo;curly single close<mark>&rsquo;</mark> | `&#x2019;` | `&rsquot;` | `\2019` |
-| | <mark>&ldquo;</mark>curly double open&rdquo; | `&#x201c;` | `&ldquot;` | `\201c` |
-| | &ldquo;curly double close<mark>&rdquo;</mark> | `&#x201d;` | `&rdquot;` | `\201d` |
+| | <mark>&lsquo;</mark>curly single open&rsquo; | `&#x2018;` | `&lsquo;` | `\2018` |
+| | &lsquo;curly single close<mark>&rsquo;</mark> | `&#x2019;` | `&rsquo;` | `\2019` |
+| | <mark>&ldquo;</mark>curly double open&rdquo; | `&#x201c;` | `&ldquo;` | `\201c` |
+| | &ldquo;curly double close<mark>&rdquo;</mark> | `&#x201d;` | `&rdquo;` | `\201d` |
 
 Advanced stylists, pair the CSS property [`quotes`](https://developer.mozilla.org/en-US/docs/Web/CSS/quotes) with the [`<q>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/q) HTML element to markup and style quotations.
 
