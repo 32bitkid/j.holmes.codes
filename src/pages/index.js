@@ -73,7 +73,6 @@ const SelectedProjects = () => (
       <li className={css.project}>
         <dl>
           <dt><ExternalLink href="https://codepen.io/32bitkid/pen/BgwwgG">Quest For Glory II Disks</ExternalLink></dt>
-          <dd className={css.project__desc}>Tribute to the classic designs of the 80's and 90's Sierra On-Line adventure game releases.</dd>
           <dd>
             <iframe height="300" style={{width: "100%"}} scrolling="no" title="Quest For Glory II Disks"
                     src="//codepen.io/32bitkid/embed/preview/BgwwgG/?height=300&theme-id=light&default-tab=result"
@@ -134,7 +133,6 @@ const SelectedProjects = () => (
       </li>
       <li className={css.project}>
         <dt><ExternalLink href="https://codepen.io/32bitkid/pen/agmYew">Interactive 60% Keyboard</ExternalLink></dt>
-        <dd className={css.project__desc}>Tribute to the classic Commodore 64 BASIC one-liner. .</dd>
         <dd>
           <iframe height="300" style={{width: "100%"}} scrolling="no" title="10 PRINT CHR$(205.5+RND(1)); : GOTO 10"
                   src="//codepen.io/32bitkid/embed/preview/agmYew/?height=300&theme-id=light&default-tab=result"
