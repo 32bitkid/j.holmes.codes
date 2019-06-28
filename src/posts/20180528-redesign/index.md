@@ -1,0 +1,51 @@
+---
+title: "Redesign/Reboot"
+date: "2019-05-28"
+---
+After a long hiatus, I've decided to redesign/reboot my previous personal site [refactorman.com](http://refactorman.com). I'll be keeping my old site up, for a little bit longer, until I work out all the kinks here, but I've decided to redesign for a couple different of  reasons, which I'll talk about briefly here.
+
+<!-- more -->
+***
+
+## Upgrading to Gatsby
+
+<aside>&hellip;<em>way</em> back in the day, when I was blogging at <a class="no-ref" href="https://32bitkid.com">32bitkid.com</a> I was using WordPress. <em>*phew!*</em> Not that there is anything wrong with WordPress, but how times change.</aside>
+
+Previously, refactorman.com was built on [Hexo](https://hexo.io/), which I still like. But in hindsight, Hexo has some interesting quirks that don't think I want as constraints anymore:
+
+First, Hexo is pretty specific to blog generation. And while most of what I presently have is blog-centric, I am looking to add some content that is a little different, less &ldquo;blog&rdquo; and more SPA. With that in mind, I think it makes sense to move to a slightly more agnostic site-generator framework.
+
+Second, my tech-stack preferences have evolved since I picked Hexo previously. While Hexo is still quite functional—and, it does it's job well—some of its technology choices are, in my opinion, starting to show their age. Templates are `ejs`/`jade`-based, but that's just not the scene I'm really working in these days. Structurally, it's pretty different from how I would bootstrap a node-based project for a client.
+
+<aside>
+I also considered a few other tools, like <a class="no-ref" href="https://brunch.io/">Brunch</a> and <a class="no-ref" href="https://gohugo.io/">Hugo</a>, but ulimately decided to try out Gatsby, and I am loving it so far.
+</aside>
+
+So, in moving on from Hexo, I've decided to migrate all my old content over to [Gatsby](https://www.gatsbyjs.org/), which supports a stack that is more related to what I'm invested in now: JavaScript, React, and SCSS. This has made it very easy to transition my old content forward, be super productive, and not have to worry about a lot of the boilerplate stuff. A side-benefit is that it uses [`grapql`](https://graphql.org/), which I've been meaning to dive into.
+
+So far, its been pretty great!
+
+## A stylistic refresh
+
+I took some time to refresh the look and feel of my site, and apply some of the newer tricks that I've learned over the years here. It'll still evolve slightly, here-and-there, as I continue to update/add content, but overall I'm pleased with the new look and feel. 
+
+I *am* planning on doing a handful of posts/pens breaking down some of the more interesting `SCSS`/`CSS` tricks and tips that I've used here, distilled down into something more palatable than trying to dig through the source-code and deciphering it yourself. Potential topics include:
+
+- Understanding CSS3 Grids and Columns
+- On the Page: HTML/CSS Print Styling
+- Leveraging CSS Counters
+- *&hellip;and more!*
+
+So, be looking for those to be dropping soon!
+
+## Explore more content beyond blogging
+
+I also wanted to do a refresh/reboot because I'm thinking I want to start producing some other kinds of content; namely, I've been itching to do a YouTube/Blog series on vintage IBM PC*jr* BASIC programming and game-development. I've got my PC*jr* all dusted off and ready to go, and I've been working on developing a few scripts to get started. So, given I have the time and motivation, I'll dive into those *soon*!
+
+Also, I have been considering writing a &ldquo;book&rdquo; on the mathematics behind easing functions and methodologies for approximating them with CSS [`timing-functions`](https://developer.mozilla.org/en-US/docs/Web/CSS/timing-function). I put &ldquo;book&rdquo; in finger quotes, becuase I'm not sure how long it will end up being; it's longer than a single post, but is it long enough for a whole &ldquo;book&rdquo;? I'm not sure. But I have yet to see a concise but thorough resource on the topic, and think it would be useful to people. Well, it would be useful to *me*, and maybe that's all that should *really* matter.
+
+## Wrapping up
+
+This is just the next, exciting chapter in what I've been working on! I'm happy that I finally carved out the time to do all the grunt-work to migrate and upgrade this site to something that can grow with me for the future.
+
+See you soon!
