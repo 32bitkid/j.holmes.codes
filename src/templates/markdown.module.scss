@@ -162,7 +162,7 @@
 		}
 
 
-		a:not(.footnote-ref):not(.footnote-backref):link {
+		a:not(.footnote-ref):not(.footnote-backref):not(.no-ref):link {
 			@include footnote(attr(href));
 
 			&::before {
