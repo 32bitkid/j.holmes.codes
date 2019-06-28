@@ -2,16 +2,16 @@ name: James Holmes
 jobTitle: "Developer \u222A Designer"
 location: Denver, CO.
 summary: |
-  I am a *full-stack* developer with a focus in front-end engineering and
+  I am a *full-stack* developer with a focus on front-end engineering and
   user-experience design.
 
   I craft compelling interactions between people and machines. I bring a
-  diverse background of technologies, experiences and passions. I want to help
-  build the tools and applications that will empower people to work, play,
+  diverse background of technologies, experiences, and passions. I help
+  build the tools and apps that empower people to work, play,
   and&mdash;most importantly&mdash;*create*.
 
-  If you share my love of programming&mdash;whether a fellow developer, a
-  employer, a client, or just someone who wants to learn&mdash;then get in
+  If you share my love of *building*&mdash;whether a fellow developer, a
+  employer, a client, or just someone who wants to learn something new &mdash;then get in
   touch; I'd *love* to hear from you and what you are working on!
 
 links:
@@ -182,7 +182,7 @@ technicalExperience:
 workExperience:
   - company: niolabs
     url: https://niolabs.com
-    title: Innovation Engineer
+    title: Lead Innovation Engineer
     from: '2016-02'
     to: '2019-04'
     tech:
@@ -197,9 +197,19 @@ workExperience:
       - *SCSS
 
     description: |
-      [[WRITE A NEW DESCRIPTION]]
+      At niolabs, I led the Innovation Team; we built the prototypes
+      for the *next-gen* of niolabs&#x2019; IoT dev-platform. Driving
+      innovation was a *full-time* job; I split my time between
+      brain-storming new ideas, prototyping experimental features & tools,
+      designing educational & marketing material, and coordinating with
+      production teams on integration and optimizations
+      across the entire tech stack.
 
-      From Industrial Automation to Viticulture
+      From designing and engineering front-ends for industrial automation
+      at scale & viticulture managment platforms to leading the charge to
+      push the niolabs IoT-platform beyond the *cloud* with deeper
+      integrations with *next-gen* edge devices, I helped drive and guide
+      the platform forward into uncharted, new territory.
 
   - company: Leads To Conversations
     url:     http://leadstoconversations.com

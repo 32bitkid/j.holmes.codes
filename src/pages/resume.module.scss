@@ -52,6 +52,8 @@
 
   @media print {
     margin-top: 0;
+    margin-bottom: $line-height * 1 / 2;
+    padding-bottom: calc(#{$line-height * 1 / 2} - 1px);
   }
 }
 
@@ -73,6 +75,10 @@
   @media print {
     margin-left: unset;
     margin-right: unset;
+    margin-bottom: $line-height * 0.5;
+
+    > p { margin-bottom: $line-height * 0.5; }
+    > p:last-child { margin-bottom: 0; }
   }
 }
 
@@ -80,14 +86,12 @@
   @media screen and (min-width: $content-width) {
     display: grid;
     grid-template-columns: 14rem 1fr;
-    grid-auto-rows: minmax($line-height, auto);
     grid-template-areas:
-            ". B"
-            ". B"
-            ". B"
-            ". B"
-            ". B"
-            ". B";
+            "EDU    EXP"
+            "SKILLS EXP"
+            "SFWR   EXP"
+            /*--------*/
+            ".      EXP";
 
     grid-gap: 0 4ch;
   }
@@ -95,21 +99,30 @@
   @media print {
     display: grid;
     grid-template-columns: 1.75in 1fr;
-    grid-auto-rows: minmax($line-height, auto);
-    grid-template-areas: ". B" ". B" ". B" ". B" ". B";
+    grid-template-areas:
+            "EDU    EXP"
+            "SKILLS EXP"
+            "SFWR   EXP"
+            /*--------*/
+            ".      EXP";
     grid-gap: 0 0.25in;
   }
 }
 
 
 .workExperience {
-  grid-area: B;
+  grid-area: EXP;
 
   .exp {
-    margin-bottom: $line-height;
+    margin-bottom: $line-height * 2;
+    @media print {
+      margin-bottom: $line-height * 1.25;
+    }
 
     &__heading {
       display: block;
+      break-after: avoid;
+      break-inside: avoid;
     }
 
     &__title {
@@ -127,6 +140,13 @@
       margin-bottom: $line-height / 4;
     }
 
+    &__desc {
+      break-before: avoid;
+      break-after: avoid;
+    }
+
+    &__desc > p { margin-bottom: $line-height / 2; }
+
     &__desc > p:last-child {
       margin-bottom: $line-height * 1 / 3;
     }
@@ -138,6 +158,7 @@
       margin-left: 1.5rem;
       margin-right: 0.5rem;
       text-indent: -0.5rem;
+      break-before: avoid;
 
       &::before {
         //content: 'Tech: ';
@@ -147,10 +168,39 @@
 
     &__tech {
       display: inline;
+
+      &__1 { opacity: 0.4; }
+      &__2 { opacity: 0.6; }
+      &__3 { opacity: 0.8; }
+      &__4 { opacity: 1.0; }
+      &__5 { opacity: 1.0; font-weight: bold; }
+
+      &:not(:first-child)::before {
+        content: ', ';
+      }
+
+      &:last-child::before {
+        content: ',\00A0';
+      }
     }
-    &__tech:not(:last-child)::after { content: ', '; }
+
+    @media print {
+      $count: 9;
+      &__tech:nth-child(n + #{$count}) {
+        &::after { content: '\2026'; }
+        &:last-child::after { content: none; }
+      }
+
+      &__tech:nth-child(n + #{$count + 1}) {
+        display: none;
+      }
+    }
   }
 }
+
+.education { grid-area: EDU; }
+.skills { grid-area: SKILLS; }
+.software { grid-area: SFWR; }
 
 .school {
   &__name {

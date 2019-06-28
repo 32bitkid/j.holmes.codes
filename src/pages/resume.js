@@ -9,6 +9,7 @@ import Layout from "../components/layout";
 import resume from './resume.yaml';
 import css from './resume.module.scss';
 import ExternalLink from '../components/external-link';
+import SEO from "../components/seo"
 
 const defaultParser = unified()
   .use(parse)
@@ -54,8 +55,13 @@ const WorkExperience = ({ experience }) => {
         {
           (exp.tech || [])
             .sort(skillSorter)
-            .map(({name}) => (
-              <li className={css.exp__tech}>{name}</li>
+            .map(({name, experience}) => (
+              <li
+                className={[
+                  css.exp__tech,
+                  css[`exp__tech__${experience}`],
+                ].join(' ')}
+              >{name}</li>
             ))
         }
       </ul>
@@ -144,6 +150,7 @@ const skillSorter = (a, b) => {
 
 export default () => (
   <Layout>
+    <SEO title="My Resume" keywords={[`resume`]} />
     <article className={css.resume}>
       <Heading name={resume.name} jobTitle={resume.jobTitle}>
         <Contacts links={resume.links} />
