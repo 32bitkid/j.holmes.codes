@@ -89,9 +89,15 @@ Best to avoid using a <q>-</q> when you really mean <q>&minus;</q>, and don't us
 | | Minus <mark>&minus;</mark> | `&#x2212;` | `&minus;` | `\2212` |
 | | Times <mark>&times;</mark> | `&#xd7;` | `&times;` | `\00d7` |
 | | Divide <mark>&divide;</mark> | `&#xf7;` | `&divide;` | `\00f7` |
+| | Almost-equal-to <mark>&asymp;</mark> | `&#x2248;` | `&asymp;` | `\2248` |
+| | Not-equal-to <mark>&ne;</mark> | `&#x2260;` | `&ne;` | `\2260` |
+| | Less-than-or-equal <mark>&le;</mark> | `&#x2264;` | `&le;` | `\2264` |
+| | Greater-than-or-equal <mark>&ge;</mark> | `&#x2265;` | `&ge;` | `\2265` |
+| | Degrees<mark>&deg;</mark> | `&#xb0;` | `&deg;` | `\00b0` |
 | | Prime<mark>&prime;</mark> | `&#x2032;` | `&prime;` | `\2032` |
 | | Double Prime<mark>&Prime;</mark> | `&#x2033;` | `&Prime;` | `\2033` |
 | | Triple Prime<mark>&#x2034;</mark> | `&#x2034;` | | `\2034` |
+| | Middle dot <mark>&middot;</mark> | `&#xb7;`| `&middot;` | `\00b7` | 
 
 ## Legal
 
