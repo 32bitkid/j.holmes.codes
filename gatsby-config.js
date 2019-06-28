@@ -6,6 +6,17 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
+        ignore: [`**/\.*`],
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -23,30 +34,16 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-sass`,
-      options: {
-        implementation: require("node-sass"),
-      },
-    },
-    {
       resolve: "gatsby-transformer-remark",
       options: {
         excerpt_separator: `<!-- more -->`,
         plugins: [
-          {
-            resolve:`gatsby-remark-details-figure`,
-          },
-          {
-            resolve: `gatsby-remark-prismjs`,
-          },
-          {
-            resolve: `gatsby-remark-katex`,
-          },
+          { resolve:`gatsby-remark-details-figure` },
+          { resolve: `gatsby-remark-prismjs` },
+          { resolve: `gatsby-remark-katex` },
         ],
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     // `gatsby-plugin-feed`,
     // {
     //   resolve: `gatsby-plugin-manifest`,
