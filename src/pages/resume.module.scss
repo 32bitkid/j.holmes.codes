@@ -1,0 +1,149 @@
+@import "../css/variables";
+
+.resume {
+  @extend %primary;
+
+  h5 {
+    margin-bottom: $line-height * 0.25;
+    color: #ccc;
+    display: flex;
+    align-items: baseline;
+    &::after {
+      margin-left: 0.5ch;
+      margin-right: 0.5ch;
+      flex-grow: 1;
+      content: '';
+      border-top: 1px dotted #ddd;
+    }
+  }
+}
+
+.heading {
+  display: grid;
+  grid-template-columns: auto 10rem;
+  margin-top: $line-height;
+  hgroup {
+    h1 {
+      @extend %-f--epic;
+      font-weight: bold;
+      margin-left: 0.5ch;
+      text-indent: -0.5ch;
+    }
+    h2 {
+      @extend %-f--large;
+      font-variant: small-caps;
+      font-feature-settings: "c2sc", "smcp";
+      margin-top: -0.2rem;
+      margin-bottom: 0;
+      text-indent: 3ch;
+    }
+  }
+
+  border-bottom: 1px dotted #ddd;
+  padding-bottom: calc(#{$line-height * 1} - 1px);
+  margin-bottom: $line-height * 1;
+}
+
+.contacts {
+  text-align: right;
+  font-feature-settings: 'onum';
+  font-variant-numeric: oldstyle-nums;
+  @extend %-f--small;
+  line-height: 1.6;
+}
+
+.aboutMe {
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: $line-height * 2;
+  text-align: justify;
+  max-width: $content-width;
+}
+
+.details {
+  @media screen and (min-width: $content-width) {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    grid-auto-rows: minmax($line-height, auto);
+    grid-template-areas:
+            ". B"
+            ". B"
+            ". B"
+            ". B"
+            ". B"
+            ". B";
+
+    grid-gap: 0 4ch;
+  }
+
+  @media print {
+    display: grid;
+    grid-template-columns: 2.25in 1fr;
+    grid-auto-rows: minmax($line-height, auto);
+    grid-template-areas: ". B" ". B" ". B" ". B" ". B";
+    grid-gap: 0 0.25in;
+  }
+}
+
+
+.workExperience {
+  grid-area: B;
+
+  .exp {
+    margin-bottom: $line-height;
+
+    &__title {
+      @extend %-f--large;
+      font-variant: small-caps;
+      font-feature-settings: "c2sc", "smcp";
+    }
+
+    &__dates {
+      @extend %-f--small;
+      font-feature-settings: 'onum';
+      font-variant-numeric: oldstyle-nums;
+      text-indent: 1rem;
+      margin-top: -0.25rem;
+    }
+
+    &__desc {
+      margin-top: $line-height / 4;
+      margin-bottom: $line-height / 4;
+    }
+  }
+}
+
+.school {
+  &__name {
+    font-weight: bold;
+  }
+
+  &__program {
+    font-variant: small-caps;
+    font-feature-settings: "c2sc", "smcp";
+    margin-left: 1rem;
+    text-indent: -1rem;
+  }
+
+  &__dates {
+    @extend %-f--small;
+    font-feature-settings: 'onum';
+    font-variant-numeric: oldstyle-nums;
+    text-indent: 1rem;
+    margin-top: -0.25rem;
+  }
+}
+
+.education, .skills, .software {
+  margin-bottom: $line-height * 0.75;
+}
+
+.skills ul, .software ul {
+  columns: 3 1ch;
+  @media screen and (min-width: $content-width) {
+    columns: 2 1ch;
+  }
+  @media print {
+    columns: 2 1ch;
+  }
+}

@@ -1,13 +1,11 @@
 @import '../css/variables';
 
 .blog {
-  @extend #primary;
-  list-style: none;
-  margin-bottom: 0;
+  @extend %primary;
 }
 
 .when {
-  @extend #-f--small;
+  @extend %-f--small;
   font-feature-settings: 'onum';
   font-variant-numeric: oldstyle-nums;
   line-height: $line-height * 2;
@@ -15,7 +13,7 @@
 }
 
 .title {
-  @extend #-f--x-large;
+  @extend %-f--x-large;
   font-variant: small-caps;
   font-feature-settings: "c2sc", "smcp";
   margin-bottom: $line-height * 0.5;

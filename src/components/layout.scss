@@ -62,9 +62,7 @@ table {
   background-color: white;
 }
 
-p,h1,h2,h3,h4,h5,h6 {
-  margin-bottom: $line-height;
-}
+p { margin-bottom: $line-height; }
 
 small {
   font: inherit;
@@ -74,19 +72,47 @@ small {
   text-decoration: none;
 }
 
-h1,h2,h3,h4,h5,h6 {
-  font-weight: 400;
-  letter-spacing: -0.0125em;
-  font-variant: small-caps;
-  font-feature-settings: "c2sc", "smcp", "onum";
-}
+:not(hgroup) > {
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+    letter-spacing: -0.0125em;
+    font-variant: small-caps;
+    font-feature-settings: "c2sc", "smcp", "onum";
+  }
 
-h6 { font-size: 0.7492rem; }
-h5 { font-size: 1rem; }
-h4 { font-size: 1.3348rem; }
-h3 { font-size: 1.7818rem; }
-h2 { font-size: 2.3784rem; line-height: $line-height * 2; }
-h1 { font-size: 3.1748rem; line-height: $line-height * 2.25; }
+  h6 {
+    font-size: 0.7492rem;
+    line-height: $line-height;
+    margin-bottom: 0;
+  }
+  h5 {
+    font-size: 1rem;
+    line-height: $line-height;
+    margin-bottom: $line-height;
+  }
+  h4 {
+    font-size: 1.3348rem;
+    margin-bottom: $line-height;
+    line-height: $line-height;
+  }
+  h3 {
+    font-size: 1.7818rem;
+    margin-bottom: 0;
+    line-height: $line-height * 2;
+  }
+  h2 {
+    font-size: 2.3784rem;
+    line-height: $line-height * 2;
+    margin-bottom: 0;
+  }
+  h1 {
+    font-size: 3.1748rem;
+    margin-bottom: 0;
+    line-height: $line-height * 2;
+  }
+
+
+}
 
 mark {
   $highlight-color: lighten(#6cf, 17%);
@@ -96,21 +122,17 @@ mark {
 }
 
 hr {
-  border: 0;
   box-sizing: border-box;
-  height: 1px;
-  margin: calc(#{$line-height * 2} - 1px) 0 ($line-height * 2) 0;
+  height: 0;
+
+  border: 1px solid transparent;
+  border-right-width: 6rem;
+  border-bottom: 1px dotted #ddd;
+  border-left-width: 6rem;
+
+  margin: calc(#{$line-height * 3} - 1px) 0 calc(#{$line-height * 3} - 1px) 0;
   position: relative;
   clear: both;
-  &::after {
-    position: absolute;
-    content: '';
-    top: 0;
-    border-bottom: 1px dotted currentColor;
-    left: 10%;
-    right: 10%;
-    opacity: 0.333;
-  }
 }
 
 q {
@@ -168,14 +190,6 @@ kbd {
   }
 }
 
-/* LISTS */
-ul, ol {
-  margin-left: 4ch;
-  margin-bottom: $line-height * 1;
-}
-ul { list-style: square; }
-ol { list-style: decimal; }
-
 // Links
 :link, :visited {
   color: #628da3;
@@ -189,4 +203,9 @@ ol { list-style: decimal; }
 // Patch katex's newline size
 .katex .katex-html>.newline {
   height: 1em;
+}
+
+code:not([class*="language-"]) {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 0.9rem;
 }

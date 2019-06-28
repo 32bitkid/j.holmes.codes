@@ -20,9 +20,10 @@ $glass: repeating-linear-gradient(
                 rgba(255, 255, 255, 0.075) 70vw * $wmod,
                 rgba(255, 255, 255, 0) 100vw * $wmod);
 
-.aboutMe, .blog, .projects {
+
+.blog, .projects {
   &__header {
-    @extend #-f--x-large;
+    @extend %-f--x-large;
     margin-bottom: $line-height;
     font-variant: normal;
     font-feature-settings: unset;
@@ -35,18 +36,34 @@ $glass: repeating-linear-gradient(
 }
 
 .aboutMe, .projects {
-  @extend #primary;
+  @extend %primary;
   padding-top: $line-height;
   padding-bottom: $line-height;
 }
 
 .aboutMe {
+  &__header {
+    h1 {
+      margin-top: $line-height * 4;
+      @extend %-f--epic;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+    h2 {
+      @extend %-f--large;
+      font-variant: small-caps;
+      font-feature-settings: "c2sc", "smcp";
+      $gap: 0.3rem;
+      margin-top: $gap * -1;
+      margin-bottom: $line-height * 4 + $gap;
+      text-indent: 3ch;
+    }
+  }
   p {
     @media screen and (min-width: $content-width) {
       max-width: $content-width - 1rem;
       text-align: justify;
     }
-
   }
 }
 
@@ -57,11 +74,11 @@ $glass: repeating-linear-gradient(
   perspective: 24in;
 
   &__header, &__wrapper, &__more {
-    @extend #primary;
+    @extend %primary;
   }
 
   &__more {
-    @extend #-f--large;
+    @extend %-f--large;
     letter-spacing: -0.05em;
     :link, :visited {
       color: black;
@@ -261,5 +278,32 @@ $timing-slow: 3s;
     font-size: 0.7492rem;
     line-height: 1;
     opacity: 0.25;
+  }
+}
+
+.projects ul {
+  @media screen and (min-width: $article-width) {
+    columns: 2;
+    column-gap: $line-height;
+  }
+}
+
+.project {
+  margin-bottom: $line-height;
+
+  dt {
+    @extend %-f--large;
+  }
+
+  &__meta {
+    @extend %-f--small;
+    font-feature-settings: 'onum';
+    font-variant-numeric: oldstyle-nums;
+    text-indent: 1rem;
+    margin-top: -0.25rem;
+  }
+
+  &__desc {
+    margin: ($line-height * 1/ 4) 1rem ($line-height * 3 / 4);
   }
 }

@@ -32,11 +32,21 @@
 	}
 }
 
-#markdown-styles {
+%markdown-styles {
 	:global {
+		// headings
 		h1 { margin-top: $line-height * 3; }
-		h2 { margin-top: $line-height * 1; }
+		h2 { margin-top: $line-height * 3; }
 
+		// lists
+		ul, ol {
+			margin-left: 4ch;
+			margin-bottom: $line-height * 1;
+		}
+		ul { list-style: square; }
+		ol { list-style: decimal; }
+
+		// tables
 		table {
 			margin-left: auto;
 			margin-right: auto;
@@ -83,6 +93,7 @@
 			}
 		}
 
+		// asides
 		aside {
 			display: none;
 			@include footnote-text();
@@ -102,6 +113,7 @@
 			max-width: $article-width - $content-width - $gutter;
 		}
 
+		// figures
 		figure {
 			margin-bottom: $line-height;
 
@@ -186,9 +198,10 @@
 }
 
 .article {
-	@extend #primary;
-	@extend #primary--full-height;
-	@extend #markdown-styles;
+	@extend %primary;
+	@extend %primary--full-height;
+
+	h1 { margin-top: $line-height * 3; }
 
 	// Decorate End-Of-Text
 	@media screen {
@@ -206,12 +219,11 @@
 }
 
 .byline {
-	line-height: 1.5rem;
+	line-height: $line-height;
 	font-size: 0.7492rem;
 	$yank: 2rem;
-	margin-top: $yank * -1;
 	margin-left: 3ch;
-	margin-bottom: (1.5rem * 1) + $yank;
+	margin-bottom: $line-height * 1;
 }
 
 .tags {
@@ -227,9 +239,12 @@
 }
 
 .content {
+	@extend %markdown-styles;
+
 	position: relative;
 	max-width: $content-width;
 	counter-reset: footnote figures;
+
 	@media print {
 		max-width: unset;
 	}

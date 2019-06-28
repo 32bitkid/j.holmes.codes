@@ -29,9 +29,11 @@ const Layout = ({ children, className }) => (
         <Header siteTitle={data.site.siteMetadata.title} />
         {children}
         <footer className={footerCss.footer}>
-          © {(new Date()).getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          <div>
+            © {(new Date()).getFullYear()} James Holmes, Built with
+            {` `}
+            <a href="https://www.gatsbyjs.org">Gatsby</a>
+          </div>
         </footer>
       </>
     )}
