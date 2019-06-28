@@ -1,0 +1,8 @@
+@import "../css/variables";
+
+.main {
+  @extend %primary, %primary--full-height;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
