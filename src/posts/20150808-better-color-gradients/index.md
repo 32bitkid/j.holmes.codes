@@ -91,8 +91,8 @@ Hue is usually represented as degrees; Saturation and Lightness as percentages. 
 [[figure|Converting our colors to HSL. class:text-table]]
 | | CSS Color | Hue | Saturation | Lightness |
 | |-:|:-:|:-:|:-:|
-| | `yellow` | 60 | 100% | 50% |
-| | `blue` | 240 | 100% | 50% |
+| | `yellow` | 60&deg; | 100% | 50% |
+| | `blue` | 240&deg; | 100% | 50% |
 
 Now, to interpolate between those two color, we need to make a new kind of tween. We need a *circular tween*:
 
