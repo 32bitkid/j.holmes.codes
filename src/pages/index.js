@@ -17,17 +17,16 @@ const AboutMe = () => (
       I am a <em>developer</em> & <em>designer</em> with a focus in
       front-end architecture and interaction design. I have eclectic range
       of interests that currently include: <small>IoT</small> UI Design,
-      80's vintage computers (IBM PCjr, Apple IIe, C64),
+      80's vintage computers (IBM PC<em>jr</em>, Apple //e, C64),
       embedded computing, video codecs, and retro-styled pixel-art.
     </p>
     <p>
       Until mid-<small>2019</small>, I was <small>Director of Innovation</small>{" "}
       at <ExternalLink href="niolabs.com">niolabs</ExternalLink> where I
-      developed the tools and designs for future <small>IoT</small> development and
-      prototypes for <small>IoT/UX</small> patterns and challenges. Often, I straddle
-      the line between engineering and design; equally comfortable in{" "}
-      <ExternalLink href="https://www.sketch.com/">Sketch</ExternalLink> as
-      in <ExternalLink href="https://www.sublimetext.com/">Sublime Text</ExternalLink>.
+      developed the prototypes, tools, and designs for future <small>IoT</small>
+      development. Often, I straddle the line between engineering and design;
+      equally comfortable in <ExternalLink href="https://www.sketch.com/">Sketch</ExternalLink> as
+      I am in <ExternalLink href="https://www.sublimetext.com/">Sublime Text</ExternalLink>.
     </p>
     <p>
       You can find me doodling on <ExternalLink href="https://codepen.io/32bitkid">CodePen</ExternalLink>,
@@ -76,7 +75,7 @@ const SelectedProjects = () => (
           <dd>
             <iframe height="300" style={{width: "100%"}} scrolling="no" title="Quest For Glory II Disks"
                     src="//codepen.io/32bitkid/embed/preview/BgwwgG/?height=300&theme-id=light&default-tab=result"
-                    frameBorder="no" allowTransparency="true" allowFullScreen="true">
+                    frameBorder="no" allowtransparency="true" allowFullScreen={true}>
               See the Pen <a href='https://codepen.io/32bitkid/pen/BgwwgG/'>Quest For Glory II Disks</a> by James Holmes
               (<a href='https://codepen.io/32bitkid'>@32bitkid</a>) on <a href='https://codepen.io'>CodePen</a>.
             </iframe>
@@ -103,7 +102,7 @@ const SelectedProjects = () => (
           <dd>
             <iframe height="300" style={{width: "100%"}} scrolling="no" title="Interactive 60% Keyboard"
                     src="//codepen.io/32bitkid/embed/preview/LKZzMR/?height=300&theme-id=light&default-tab=result"
-                    frameBorder="no" allowTransparency="true" allowFullScreen="true">
+                    frameBorder="no" allowtransparency="true" allowFullScreen={true}>
               See the Pen <a href='https://codepen.io/32bitkid/pen/LKZzMR/'>Interactive 60% Keyboard</a> by James Holmes
               (<a href='https://codepen.io/32bitkid'>@32bitkid</a>) on <a href='https://codepen.io'>CodePen</a>.
             </iframe>
@@ -132,11 +131,11 @@ const SelectedProjects = () => (
         </dl>
       </li>
       <li className={css.project}>
-        <dt><ExternalLink href="https://codepen.io/32bitkid/pen/agmYew">Interactive 60% Keyboard</ExternalLink></dt>
+        <dt><ExternalLink href="https://codepen.io/32bitkid/pen/agmYew">10 PRINT CHR$(205.5+RND(1)); : GOTO 10</ExternalLink></dt>
         <dd>
           <iframe height="300" style={{width: "100%"}} scrolling="no" title="10 PRINT CHR$(205.5+RND(1)); : GOTO 10"
                   src="//codepen.io/32bitkid/embed/preview/agmYew/?height=300&theme-id=light&default-tab=result"
-                  frameBorder="no" allowTransparency="true" allowFullScreen="true">
+                  frameBorder="no" allowtransparency="true" allowFullScreen={true}>
             See the Pen <a href='https://codepen.io/32bitkid/pen/agmYew/'>10 PRINT CHR$(205.5+RND(1)); : GOTO 10</a> by
             James Holmes
             (<a href='https://codepen.io/32bitkid'>@32bitkid</a>) on <a href='https://codepen.io'>CodePen</a>.
