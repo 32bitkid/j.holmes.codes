@@ -12,6 +12,7 @@ import { StaticQuery, graphql } from "gatsby"
 import Header from "./header"
 import "./layout.scss"
 import footerCss from './footer.module.scss';
+import ExternalLink from './external-link';
 
 const Layout = ({ children, className }) => (
   <StaticQuery
@@ -31,7 +32,7 @@ const Layout = ({ children, className }) => (
         <footer className={footerCss.footer}>
           <div>
             &copy; <small>2013&ndash;{(new Date()).getFullYear()} J. Holmes</small>.
-            Built with <a href="https://www.gatsbyjs.org">Gatsby</a>.
+            Built with <ExternalLink href="https://www.gatsbyjs.org">Gatsby</ExternalLink>.
           </div>
         </footer>
       </>
