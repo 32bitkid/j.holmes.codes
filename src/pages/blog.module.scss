@@ -14,8 +14,8 @@
 
 .title {
   @extend %-f--x-large;
-  font-variant: small-caps;
-  font-feature-settings: "c2sc", "smcp";
+  font-family: "Equity Caps B", serif;
+  font-feature-settings: "smcp";
   margin-bottom: $line-height * 0.5;
 }
 

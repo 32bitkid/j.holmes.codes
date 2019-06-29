@@ -1,4 +1,52 @@
-@import url('https://fonts.googleapis.com/css?family=Cardo:400,400i,700&display=swap&subset=latin-ext');
+@font-face {
+  font-family: 'Equity Caps B';
+  src: url('/fonts/equity_caps_b_bold-webfont.woff2') format('woff2'),
+  url('/fonts/equity_caps_b_bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Equity Caps B';
+  src: url('/fonts/equity_caps_b_regular-webfont.woff2') format('woff2'),
+  url('/fonts/equity_caps_b_regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'Equity Text B';
+  src: url('/fonts/equity_text_b_regular-webfont.woff2') format('woff2'),
+  url('/fonts/equity_text_b_regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Equity Text B';
+  src: url('/fonts/equity_text_b_italic-webfont.woff2') format('woff2'),
+  url('/fonts/equity_text_b_italic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Equity Text B';
+  src: url('/fonts/equity_text_b_bold-webfont.woff2') format('woff2'),
+  url('/fonts/equity_text_b_bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Equity Text B';
+  src: url('/fonts/equity_text_b_bold_italic-webfont.woff2') format('woff2'),
+  url('/fonts/equity_text_b_bold_italic-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: italic;
+
+}
+
 @import '../css/variables';
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -52,8 +100,8 @@ table {
 }
 
 :root, body {
-  font: 400 12pt / #{$line-height} 'Cardo', serif, system-ui;
-  font-feature-settings: "liga";
+  font: 400 12pt / #{$line-height} 'Equity Text B', serif, system-ui;
+  font-feature-settings: "ss01", "ss03", "liga";
 }
 
 :root {
@@ -66,8 +114,8 @@ p { margin-bottom: $line-height; }
 
 small {
   font: inherit;
-  font-feature-settings: "c2sc", "smcp";
-  font-variant: small-caps;
+  font-family: 'Equity Caps B', serif;
+  font-feature-settings: "smcp", "onum";
   font-variant-numeric: oldstyle-nums;
   text-decoration: none;
 }
@@ -76,8 +124,8 @@ small {
   h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
     letter-spacing: -0.0125em;
-    font-variant: small-caps;
-    font-feature-settings: "c2sc", "smcp", "onum";
+    font-family: 'Equity Caps B', serif;
+    font-feature-settings: "smcp", "onum";
   }
 
   h6 {

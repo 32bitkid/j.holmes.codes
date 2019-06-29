@@ -27,7 +27,7 @@ $glass: repeating-linear-gradient(
     margin-bottom: $line-height;
     font-variant: normal;
     font-feature-settings: unset;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.03em;
     @media screen and (min-width: $content-width) {
       @include -f--headline;
       color: rgba(#333, 0.333);
@@ -51,7 +51,7 @@ $glass: repeating-linear-gradient(
     }
     h2 {
       @extend %-f--large;
-      font-variant: small-caps;
+      font-family: 'Equity Caps B', serif;
       font-feature-settings: "c2sc", "smcp";
       $gap: 0.3rem;
       margin-top: $gap * -1;
@@ -202,8 +202,8 @@ $timing-slow: 3s;
 }
 
 .title {
-  font-variant: small-caps;
-  font-feature-settings: "c2sc", "smcp";
+  font-family: 'Equity Caps B', serif;
+  font-feature-settings: "smcp";
 
   @media screen and (max-width: $content-width) {
     @include -f--large;

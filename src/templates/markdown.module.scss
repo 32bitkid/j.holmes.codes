@@ -61,8 +61,8 @@
 			}
 
 			thead th {
-				font-size: 74.92%;
 				padding-bottom: 0.5em;
+				font-family: 'Equity Caps B', serif;
 				font-feature-settings: "c2sc", "smcp";
 				&:not(:empty) {
 					$gap: 1.5ch;

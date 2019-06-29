@@ -38,11 +38,11 @@
       font-weight: bold;
       margin-left: 0.5ch;
       text-indent: -0.5ch;
-      letter-spacing: -0.05em;
+      letter-spacing: -0.02em;
     }
     h2 {
       @extend %-f--large;
-      font-variant: small-caps;
+      font-family: "Equity Caps B", serif;
       font-feature-settings: "c2sc", "smcp";
       margin-top: -0.2rem;
       margin-bottom: 0;
@@ -127,7 +127,7 @@
 
     &__title {
       @extend %-f--large;
-      font-variant: small-caps;
+      font-family: "Equity Caps B", serif;
       font-feature-settings: "c2sc", "smcp";
     }
 
@@ -208,7 +208,7 @@
   }
 
   &__program {
-    font-variant: small-caps;
+    font-family: "Equity Caps B", serif;
     font-feature-settings: "c2sc", "smcp";
     margin-left: 1rem;
     text-indent: -1rem;
