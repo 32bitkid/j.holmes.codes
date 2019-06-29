@@ -21,7 +21,7 @@ Second, my tech-stack preferences have evolved since I picked Hexo previously. W
 I also considered a few other tools, like <a class="no-ref" href="https://brunch.io/">Brunch</a> and <a class="no-ref" href="https://gohugo.io/">Hugo</a>, but ulimately decided to try out Gatsby, and I am loving it so far.
 </aside>
 
-So, in moving on from Hexo, I've decided to migrate all my old content over to [Gatsby](https://www.gatsbyjs.org/), which supports a stack that is more related to what I'm invested in now: JavaScript, React, and SCSS. This has made it very easy to transition my old content forward, be super productive, and not have to worry about a lot of the boilerplate stuff. A side-benefit is that it uses [`grapql`](https://graphql.org/), which I've been meaning to dive into.
+So, in moving on from Hexo, I've decided to migrate all my old content over to [Gatsby](https://www.gatsbyjs.org/), which supports a stack that is more related to what I'm invested in now: JavaScript, React, and SCSS. This has made it very easy to transition my old content forward, be super productive, and not have to worry about a lot of the boilerplate stuff. A side-benefit is that it uses [`graphql`](https://graphql.org/), which I've been meaning to dive into.
 
 So far, its been pretty great!
 
@@ -42,7 +42,7 @@ So, be looking for those to be dropping soon!
 
 I also wanted to do a refresh/reboot because I'm thinking I want to start producing some other kinds of content; namely, I've been itching to do a YouTube/Blog series on vintage IBM PC*jr* BASIC programming and game-development. I've got my PC*jr* all dusted off and ready to go, and I've been working on developing a few scripts to get started. So, given I have the time and motivation, I'll dive into those *soon*!
 
-Also, I have been considering writing a &ldquo;book&rdquo; on the mathematics behind easing functions and methodologies for approximating them with CSS [`timing-functions`](https://developer.mozilla.org/en-US/docs/Web/CSS/timing-function). I put &ldquo;book&rdquo; in finger quotes, becuase I'm not sure how long it will end up being; it's longer than a single post, but is it long enough for a whole &ldquo;book&rdquo;? I'm not sure. But I have yet to see a concise but thorough resource on the topic, and think it would be useful to people. Well, it would be useful to *me*, and maybe that's all that should *really* matter.
+Also, I have been considering writing a &ldquo;book&rdquo; on the mathematics behind easing functions and methodologies for approximating them with a CSS [`<timing-function>`](https://developer.mozilla.org/en-US/docs/Web/CSS/timing-function). I put &ldquo;book&rdquo; in finger quotes, because I'm not sure how long it will end up being; it's longer than a single post, but is it long enough for a whole &ldquo;book&rdquo;? I'm not sure. But I have yet to see a concise but thorough resource on the topic, and think it would be useful to people. Well, it would be useful to *me*, and maybe that's all that should *really* matter.
 
 ## Wrapping up
 
