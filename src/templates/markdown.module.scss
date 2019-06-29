@@ -10,7 +10,11 @@
 @mixin footnote-text {
 	@include pullout();
 	box-sizing: border-box;
+
+	overflow-wrap: break-word;
 	word-wrap: break-word;
+	hyphens: auto;
+
 	font-size: 0.7492rem;
 	margin-bottom: 0.7492rem * 0.5;
 	color: #666;
@@ -35,8 +39,8 @@
 %markdown-styles {
 	:global {
 		// headings
-		h1 { margin-top: $line-height * 3; }
-		h2 { margin-top: $line-height * 3; }
+		h1 { margin-top: $line-height * 2; }
+		h2 { margin-top: $line-height * 2; }
 
 		// lists
 		ul, ol {
@@ -203,17 +207,17 @@
 
 	h1 { margin-top: $line-height * 3; }
 
-	// Decorate End-Of-Text
-	@media screen {
-		&::after {
-			clear: both;
-			color: #ccc;
-			font-family: system-ui, sans-serif;
-			display: block;
-			text-align: right;
-			font-size: 5.6569rem;
-			line-height: $line-height * 4;
-			content: '\2404';
+	// Decorate Tombstone
+	&::after {
+		max-width: $content-width;
+		clear: both;
+		content: '\220E';
+		text-align: right;
+		display: block;
+		margin-bottom: $line-height;
+
+		@media print {
+			margin-bottom: 0;
 		}
 	}
 }
@@ -240,7 +244,6 @@
 
 .content {
 	@extend %markdown-styles;
-
 	position: relative;
 	max-width: $content-width;
 	counter-reset: footnote figures;
