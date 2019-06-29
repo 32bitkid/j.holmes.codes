@@ -1,50 +1,55 @@
 @font-face {
   font-family: 'Equity Caps B';
-  src: url('/fonts/equity_caps_b_bold-webfont.woff2') format('woff2'),
-  url('/fonts/equity_caps_b_bold-webfont.woff') format('woff');
+  src:
+    url('/fonts/equity_caps_b_bold-webfont.woff2') format('woff2'),
+    url('/fonts/equity_caps_b_bold-webfont.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Equity Caps B';
-  src: url('/fonts/equity_caps_b_regular-webfont.woff2') format('woff2'),
-  url('/fonts/equity_caps_b_regular-webfont.woff') format('woff');
+  src:
+    url('/fonts/equity_caps_b_regular-webfont.woff2') format('woff2'),
+    url('/fonts/equity_caps_b_regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 
 }
 @font-face {
   font-family: 'Equity Text B';
-  src: url('/fonts/equity_text_b_regular-webfont.woff2') format('woff2'),
-  url('/fonts/equity_text_b_regular-webfont.woff') format('woff');
+  src:
+    url('/fonts/equity_text_b_regular-webfont.woff2') format('woff2'),
+    url('/fonts/equity_text_b_regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Equity Text B';
-  src: url('/fonts/equity_text_b_italic-webfont.woff2') format('woff2'),
-  url('/fonts/equity_text_b_italic-webfont.woff') format('woff');
+  src:
+    url('/fonts/equity_text_b_italic-webfont.woff2') format('woff2'),
+    url('/fonts/equity_text_b_italic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Equity Text B';
-  src: url('/fonts/equity_text_b_bold-webfont.woff2') format('woff2'),
-  url('/fonts/equity_text_b_bold-webfont.woff') format('woff');
+  src:
+    url('/fonts/equity_text_b_bold-webfont.woff2') format('woff2'),
+    url('/fonts/equity_text_b_bold-webfont.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Equity Text B';
-  src: url('/fonts/equity_text_b_bold_italic-webfont.woff2') format('woff2'),
-  url('/fonts/equity_text_b_bold_italic-webfont.woff') format('woff');
+  src:
+    url('/fonts/equity_text_b_bold_italic-webfont.woff2') format('woff2'),
+    url('/fonts/equity_text_b_bold_italic-webfont.woff') format('woff');
   font-weight: bold;
   font-style: italic;
-
 }
 
 @import '../css/variables';
@@ -123,40 +128,29 @@ small {
 :not(hgroup) > {
   h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
-    letter-spacing: -0.0125em;
+    letter-spacing: -0.04em;
     font-family: 'Equity Caps B', serif;
-    font-feature-settings: "smcp", "onum";
   }
 
-  h6 {
-    font-size: 0.7492rem;
-    line-height: $line-height;
-    margin-bottom: 0;
-  }
-  h5 {
-    font-size: 1rem;
-    line-height: $line-height;
-    margin-bottom: $line-height;
-  }
-  h4 {
-    font-size: 1.3348rem;
-    margin-bottom: $line-height;
-    line-height: $line-height;
-  }
   h3 {
-    font-size: 1.7818rem;
-    margin-bottom: 0;
-    line-height: $line-height * 2;
+    font-size: 1.3348rem;
+    line-height: $line-height;
+    margin-bottom: $line-height;
+    font-feature-settings: "c2sc", "smcp", "onum";
   }
+
   h2 {
-    font-size: 2.3784rem;
-    line-height: $line-height * 2;
-    margin-bottom: 0;
+    font-size: 1.7818rem;
+    line-height: $line-height;
+    margin-bottom: $line-height;
+    font-feature-settings: "c2sc", "smcp", "onum";
   }
+
   h1 {
-    font-size: 3.1748rem;
+    font-size: 2.3784rem;
     margin-bottom: 0;
     line-height: $line-height * 2;
+    font-feature-settings: "smcp", "onum";
   }
 
 
@@ -170,24 +164,32 @@ mark {
 }
 
 hr {
-  box-sizing: border-box;
   height: 0;
-
-  border: 1px solid transparent;
-  border-right-width: 6rem;
-  border-bottom: 1px dotted #ddd;
-  border-left-width: 6rem;
-
-  margin: calc(#{$line-height * 3} - 1px) 0 calc(#{$line-height * 3} - 1px) 0;
+  border: 0;
+  margin: $line-height * 2.5 0;
   position: relative;
   clear: both;
+  overflow: visible;
+  text-align: center;
+
+  &::after {
+    $s: $line-height;
+    content: '\2042';
+    position: relative;
+    @extend %-f--large;
+    color: #ddd;
+    top: $s * -1;
+    line-height: $s * 2;
+  }
 }
 
 q {
   quotes: '\201c' '\201d'  "\2018" "\2019" '"' '"' "'" "'";
-  &::before { content: open-quote; }
-  &::after { content: close-quote; }
+  &::before { user-select: text; content: open-quote; }
+  &::after { user-select: text; content: close-quote; }
 }
+
+q+cite::before { content: ' \2014'; }
 
 em { font-style: italic; }
 strong { font-weight: bold; }
@@ -240,12 +242,10 @@ kbd {
 
 // Links
 :link, :visited {
-  color: #628da3;
+  color: $color--primary;
   text-decoration: none;
 
-  &:hover {
-    text-decoration: underline;
-  }
+  &:hover { text-decoration: underline; }
 }
 
 // Patch katex's newline size

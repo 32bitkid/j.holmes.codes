@@ -8,6 +8,8 @@ $article-width: 64rem;
 $content-width: 45rem;
 $gutter: 2rem;
 
+$color--primary: #628da3;
+
 %primary {
   box-sizing: border-box;
   max-width: $content-width;
@@ -44,3 +46,13 @@ $gutter: 2rem;
 %-f--huge { @include -f--huge; }
 %-f--headline { @include -f--headline; }
 %-f--epic { @include -f--epic; }
+
+
+@mixin -debug--rules($color: $color--primary) {
+  background-size: auto $line-height;
+  background-image: linear-gradient(
+                  to bottom,
+                  rgba($color, 0) calc(#{$line-height} - 1px),
+                  $color calc(#{$line-height} - 1px)
+  );
+}

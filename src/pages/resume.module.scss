@@ -3,7 +3,7 @@
 .resume {
   @extend %primary;
 
-  h5 {
+  h3 {
     margin-bottom: $line-height * 0.25;
     color: #ccc;
     display: flex;
@@ -21,6 +21,16 @@
     padding-left: 0;
     padding-right: 0;
     color: black;
+  }
+
+  &::after {
+    content: '\220E';
+    text-align: right;
+    display: block;
+    margin-bottom: $line-height;
+    @media print {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -49,12 +59,6 @@
       text-indent: 3ch;
     }
   }
-
-  @media print {
-    margin-top: 0;
-    margin-bottom: $line-height * 1 / 2;
-    padding-bottom: calc(#{$line-height * 1 / 2} - 1px);
-  }
 }
 
 .contacts {
@@ -75,14 +79,12 @@
   @media print {
     margin-left: unset;
     margin-right: unset;
-    margin-bottom: $line-height * 0.5;
-
-    > p { margin-bottom: $line-height * 0.5; }
-    > p:last-child { margin-bottom: 0; }
   }
 }
 
 .details {
+  margin-bottom: $line-height;
+
   @media screen and (min-width: $content-width) {
     display: grid;
     grid-template-columns: 14rem 1fr;
@@ -105,7 +107,7 @@
             "SFWR   EXP"
             /*--------*/
             ".      EXP";
-    grid-gap: 0 0.25in;
+    grid-gap: 0 0.125in;
   }
 }
 
@@ -118,6 +120,8 @@
     @media print {
       margin-bottom: $line-height * 1.25;
     }
+
+    &:last-child { margin-bottom: 0; }
 
     &__heading {
       display: block;
@@ -161,7 +165,6 @@
       break-before: avoid;
 
       &::before {
-        //content: 'Tech: ';
         font-weight: bold;
       }
     }
@@ -229,10 +232,15 @@
 
 .skills ul, .software ul {
   columns: 3 1ch;
+
   @media screen and (min-width: $content-width) {
     columns: 2 1ch;
+    padding-left: 0.25ch;
+    padding-right: 0.75ch;
   }
   @media print {
     columns: 2 1ch;
+    padding-left: 0.25ch;
+    padding-right: 0.75ch;
   }
 }

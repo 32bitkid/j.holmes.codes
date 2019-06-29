@@ -12,10 +12,12 @@ const Post = ({ fields, frontmatter, timeToRead, excerpt }) => {
   if (frontmatter.tileColor) style.color = frontmatter.tileColor;
   return (
     <li className={css.item}>
-      <div className={css.when}>{frontmatter.date}</div>
-      <div className={css.title}><Link to={fields.slug}>{frontmatter.title}</Link></div>
+      <h2 className={css.title}><Link to={fields.slug}>{frontmatter.title}</Link></h2>
+      <time className={css.when} dateTime={frontmatter.rawDate}>{frontmatter.date}</time>
       <p className={css.excerpt}>{excerpt}</p>
-      <div className={css.cont}><Link to={fields.slug}>continue reading</Link></div>
+      <nav className={css.ttr}>
+        <Link to={fields.slug}>…about a {timeToRead} minute read</Link>
+      </nav>
     </li>
   );
 }
@@ -47,6 +49,7 @@ export const pageQuery = graphql`{
         frontmatter {
           tags
           date(formatString: "MMMM D, YYYY")
+          rawDate: date(formatString: "YYYY-MM-DD")
           title
         }
         timeToRead

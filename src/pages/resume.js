@@ -19,6 +19,22 @@ const md = (text, parser = defaultParser) => (
     parser.processSync(text).contents
 );
 
+const Heading = ({ name, jobTitle, children }) => (
+  <heading className={css.heading}>
+    <hgroup>
+      <h1>{name}</h1>
+      <h2>{jobTitle || 'Software Engineer'}</h2>
+    </hgroup>
+    { children }
+  </heading>
+);
+
+const AboutMe = ({ summary }) => (
+  <section className={css.aboutMe}>
+    {md(summary)}
+  </section>
+);
+
 const Contacts = ({ links }) => {
   const toItem = ([type, link]) => (
     <li className={css[`contacts_${type}`]} key={type}>
@@ -70,29 +86,13 @@ const WorkExperience = ({ experience }) => {
 
   return (
     <section className={css.workExperience}>
-      <h5>Experience</h5>
+      <h3>Experience</h3>
       <ol className={css.workExperience__list}>
         { experience.map(toItem) }
       </ol>
     </section>
   );
 };
-
-const AboutMe = ({ summary }) => (
-  <section className={css.aboutMe}>
-    {md(summary)}
-  </section>
-);
-
-const Heading = ({ name, jobTitle, children }) => (
-  <heading className={css.heading}>
-    <hgroup>
-      <h1>{name}</h1>
-      <h2>{jobTitle || 'Software Engineer'}</h2>
-    </hgroup>
-    { children }
-  </heading>
-);
 
 const Education = ({ education }) => {
   const toItem = (item) => (
@@ -108,7 +108,7 @@ const Education = ({ education }) => {
   );
   return (
     <section className={css.education}>
-      <h5>Education</h5>
+      <h3>Education</h3>
       <ul>{ education.map(toItem) }</ul>
     </section>
   );
@@ -124,7 +124,7 @@ const Skills = ({ skills }) => {
 
   return (
     <section className={css.skills}>
-      <h5>Skills</h5>
+      <h3>Skills</h3>
       <ul>{skills.map(toItem)}</ul>
     </section>
   );
@@ -137,7 +137,7 @@ const Software = ({ software }) => {
 
   return (
     <section className={css.software}>
-      <h5>Software</h5>
+      <h3>Software</h3>
       <ul>{software.map(toItem)}</ul>
     </section>
   );

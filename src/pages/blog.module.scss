@@ -4,39 +4,50 @@
   @extend %primary;
 }
 
-.when {
-  @extend %-f--small;
-  font-feature-settings: 'onum';
-  font-variant-numeric: oldstyle-nums;
-  line-height: $line-height * 2;
-  color: #999;
-}
-
-.title {
-  @extend %-f--x-large;
-  font-family: "Equity Caps B", serif;
-  font-feature-settings: "smcp";
-  margin-bottom: $line-height * 0.5;
-}
-
 .item {
-  @media screen and (min-width: $main-width) {
-    padding-left: ($article-width - $content-width) / 2;
-    padding-right: ($article-width - $content-width) / 2;
+  &:first-child {
+    margin-top: $line-height * 2;
   }
 
   &:not(:last-child) {
     border-bottom: 0.5px dotted #ddd;
     margin-bottom: $line-height;
   }
-}
 
-.excerpt { margin-bottom: 0; }
-.cont {
-  padding-top: $line-height * 0.5;
-  padding-bottom: $line-height * 1;
-
-  a::after {
-    content: ' \00BB'
+  @media screen and (min-width: $main-width) {
+    padding-left: ($article-width - $content-width) / 2;
+    padding-right: ($article-width - $content-width) / 2;
   }
 }
+
+.when {
+  @extend %-f--small;
+  font-feature-settings: 'onum';
+  font-variant-numeric: oldstyle-nums;
+  padding-left: 0.7492rem * 1.5;
+  padding-right: 0.7492rem * 1.5;
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+.excerpt {
+  margin-top: $line-height;
+  margin-bottom: 0;
+  text-indent: 0.7492rem * 1.5;
+}
+
+.ttr {
+  @extend %-f--small;
+  font-feature-settings: 'onum';
+  font-variant-numeric: oldstyle-nums;
+  color: #999;
+  line-height: $line-height * 2;
+  text-align: right;
+
+  a::after {
+    content: ' \00bb';
+  }
+}
+

@@ -20,290 +20,301 @@ $glass: repeating-linear-gradient(
                 rgba(255, 255, 255, 0.075) 70vw * $wmod,
                 rgba(255, 255, 255, 0) 100vw * $wmod);
 
+// About Me
 
-.blog, .projects {
-  &__header {
-    @extend %-f--x-large;
-    margin-bottom: $line-height;
-    font-variant: normal;
-    font-feature-settings: unset;
-    letter-spacing: -0.03em;
-    @media screen and (min-width: $content-width) {
-      @include -f--headline;
-      color: rgba(#333, 0.333);
-    }
-  }
-}
-
-.aboutMe, .projects {
+.aboutMe {
   @extend %primary;
   padding-top: $line-height;
   padding-bottom: $line-height;
-}
 
-.aboutMe {
   &__header {
     h1 {
-      margin-top: $line-height * 4;
+      margin-top: $line-height * 7;
       @extend %-f--epic;
       font-weight: bold;
       margin-bottom: 0;
     }
     h2 {
-      @extend %-f--large;
+      @extend %-f--huge;
       font-family: 'Equity Caps B', serif;
       font-feature-settings: "c2sc", "smcp";
-      $gap: 0.3rem;
+      $gap: 0.4rem;
       margin-top: $gap * -1;
-      margin-bottom: $line-height * 4 + $gap;
+      margin-bottom: $line-height * 2 + $gap;
       text-indent: 3ch;
     }
   }
   p {
-    @media screen and (min-width: $content-width) {
-      max-width: $content-width - 1rem;
-      text-align: justify;
+    @media screen and (min-width: $article-width) {
+      max-width: $content-width * 2 / 3;
     }
   }
 }
+
+// Blog
+
+$shade: radial-gradient(
+    ellipse 70% 70% at center,
+    rgba(white, 0) 75%,
+    rgba(white, 0.125) 100%
+);
+
+$timing-quick: 333ms;
+$timing-slow: 2s;
+$post-indent: 0.7492rem * 1.5;
 
 .blog {
   padding-top: $line-height;
   padding-bottom: $line-height;
 
-  perspective: 24in;
+  // enhanced cards
+  @media screen and (min-width: $content-width) {
+    background-position: -75vw 0;
+    background-attachment: fixed;
+    background-size: 200vw auto;
 
-  &__header, &__wrapper, &__more {
+    background-image: $glass;
+    background-color: #888;
+    box-shadow: inset 0 1.25rem 0.5rem -1rem rgba(black, 0.5);
+    border-bottom: 1px solid gray;
+  }
+
+  $aspect: 9/16;
+
+  &__header, &__list, &__more {
     @extend %primary;
   }
 
-  &__more {
-    @extend %-f--large;
-    letter-spacing: -0.05em;
-    :link, :visited {
-      color: black;
+  &__header {
+    display: none;
+    @media screen and (min-width: $content-width) {
       display: block;
-      text-align: right;
-      padding-top: $line-height;
-      padding-bottom: $line-height;
     }
   }
 
-  // enhanced cards
-  @media screen and (min-width: $content-width) {
-    background-position: 0 0;
-    background-size: 100vw 100vh;
-    background-attachment: fixed;
-    background-image: $glass;
-    background-color: #888;
-  }
-
-  &__wrapper {
+  &__list {
     @media screen and (min-width: $content-width) {
       display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      grid-auto-rows: 10rem;
-      grid-gap: 0.5rem;
     }
 
     @media screen and (min-width: $content-width) and (max-width: $article-width) {
       grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: ($article-width / 3) * (4 / 3);
+      grid-auto-rows: minmax($content-width * $aspect, auto);
       grid-gap: 1.45rem 1.45rem;
     }
 
     @media screen and (min-width: $article-width) {
       grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: ($article-width / 3) * (4 / 3);
-      grid-gap: 1.45rem 1.45rem;
+      grid-auto-rows: minmax($article-width * (2/3) * $aspect, auto);
+      grid-gap: 1rem 1rem;
     }
   }
-}
 
-$timing-quick: 333ms;
-$timing-slow: 3s;
+  &__post {
+    display: list-item;
+    border-top: 1px dotted #ddd;
 
-.item {
-  @media screen and (max-width: $content-width) {
-    padding-bottom: calc(#{$line-height / 2} - 1px);
-    border-bottom: 1px dotted #ddd;
-    margin-bottom: $line-height / 2;
-  }
-
-  @media screen and (min-width: $content-width) {
-    position: relative;
-    background-color: rgba(white, 0.3);
-    box-sizing: border-box;
-    overflow: hidden;
-    border-radius: 4px;
-
-    color: #070f17;
-    transition:
-            transform 2s ease-in-out,
-            background-color $timing-quick ease-in;
-
-    transform: scale(1);
-
-    .post {
-      color: currentColor;
-      transition: color $timing-quick ease-in;
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
+    &:last-child {
+      border-bottom: 1px dotted #ddd;
     }
 
-    &::before {
-      pointer-events: none;
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-position: -75vw 0, 0 0;
+    color: inherit;
+    &:hover { text-decoration: none;}
+
+    @media screen and (min-width: $content-width) {
+      border-top: 0;
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding: 1.5rem;
+      border-radius: 4px;
+      background-color: #aaa;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-end;
+
+      background-position: 0 0, 0 0;
       background-attachment: fixed, scroll;
       background-size: 200vw auto, cover;
+      background-image: $glass, $shade;
+      box-shadow: 0 0 0 0 rgba(white, 0);
+
       transition:
-              background-position $timing-slow cubic-bezier(0.000, 1.000, 0.000, 1);
-      background-image: $glass,
-      radial-gradient(ellipse 100% (($article-width / 3) * (4 / 3)) at center,
-                      rgba(white, 0) 25%,
-                      rgba(#ccc, 0.125) 110%);
+        background-color $timing-quick linear,
+        transform $timing-slow / 2 ease-in-out,
+        box-shadow $timing-slow ease-in-out,
+        background-position $timing-slow cubic-bezier(0.000, 1.000, 0.000, 1);
+
+      &:hover {
+        color: white;
+        background-color: #070f17;
+        background-position: -75.25vw 0, 0 0;
+        transform: scale(1.025);
+        box-shadow: 0 0 2rem 0.125rem rgba(white, 0.5);
+      }
     }
 
-    &:hover {
-      background-color: currentColor;
-      box-shadow: 0 0 2rem 0.125rem rgba(white, 0.5);
-      transform: scale(1.025);
+    @media screen and (min-width: $content-width) and (max-width: $article-width)  {
+      &:nth-child(1), &:nth-child(4), &:nth-child(7) {
+        grid-column: span 2;
+      }
+    }
 
-
-      .post { color: white; }
-
-      &::before {
-        background-position: -0.5rem 0, 0 0;
+    @media screen and (min-width: $article-width) {
+      &:nth-child(1), &:nth-child(7) {
+        grid-column: span 2;
       }
     }
   }
 
-  @media screen and (min-width: $content-width) and (max-width: $article-width)  {
-    &:nth-child(1), &:nth-child(4), &:nth-child(7) {
-      grid-column: span 2;
-    }
-  }
-
-  @media screen and (min-width: $article-width) {
-    &:nth-child(1), &:nth-child(7) {
-      grid-column: span 2;
-    }
-  }
-}
-
-.title {
-  font-family: 'Equity Caps B', serif;
-  font-feature-settings: "smcp";
-
-  @media screen and (max-width: $content-width) {
-    @include -f--large;
-    display: block;
-  }
-
-  @media screen and (min-width: $content-width) {
+  &__title {
+    color: $color--primary;
+    margin-top: $line-height;
+    margin-bottom: 0;
     @include -f--x-large;
-    letter-spacing: -0.0125em;
-    line-height: 1.25;
 
-    position: absolute;
-    left: 1rem;
-    right: 1rem;
-    transition: text-shadow 2s linear;
-    text-shadow:
-            0 0 0 rgba(black, 0),
-            0 0 1rem rgba(white, 0.65);
-
-    bottom: 45%;
-    text-align: left;
     @media screen and (min-width: $content-width) {
-      bottom: calc(50% - 1.7818rem * 1.25);
+      color: inherit;
       text-align: right;
+      text-shadow:
+              0 0 0 rgba(black, 0),
+              0 0 0 rgba(white, 0);
+
+      transition:
+              text-shadow $timing-slow linear;
     }
   }
-}
 
-.item:hover .title {
-  @media screen and (min-width: $content-width) {
-    text-shadow:
-            0 0 0.5em rgba(black, 1),
-            0 0.125em 2.25em rgba(white, 0.65);
-  }
-}
+  &__post:hover > &__title {
+    text-decoration: underline;
 
-.when {
-  @media screen and (min-width: $content-width) {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-    right: 1rem;
-    font-feature-settings: 'onum';
-    font-variant-numeric: oldstyle-nums;
-    opacity: 0.5;
-
-    top: 55%;
-    text-align: left;
     @media screen and (min-width: $content-width) {
-      top: calc(50% + 1.7818rem * 1.33);
-      text-align: right;
+      color: inherit;
+      text-decoration: none;
+      text-shadow:
+              0 0 0.5em rgba(black, 1),
+              0 0.125em 2.25em rgba(white, 1);
     }
   }
-}
 
-.ttr {
-  @media screen and (max-width: $content-width) {
-    @include -f--small;
-    margin-top: -0.25rem;
-    text-indent: 3ch;
-    margin-bottom: 0.25rem;
+  &__when {
+    @extend %-f--small;
+    $pull: 0rem;
+    margin-top: $pull * -1;
+    margin-bottom: $pull;
+
+    padding-left:  $post-indent;
+    padding-right: $post-indent;
+
+    @media screen and (min-width: $content-width) {
+      text-align: right;
+      text-indent: 0;
+    }
   }
 
-  @media screen and (min-width: $content-width) {
-    position: absolute;
-    bottom: 1rem;
-    left: 0;
-    right: 0;
-    text-align: center;
-    margin-top: 0.5rem;
+  &__excerpt {
+    margin-top: $line-height;
+    text-indent: $post-indent;
+
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+
+    @media screen and (min-width: $content-width) {
+      @include -f--small;
+      line-height: 1.45;
+      opacity: 0;
+      transition: opacity $timing-slow linear;
+      flex-basis: $content-width / 8;
+      margin-top: 0;
+      margin-left: auto;
+      text-align: justify;
+      text-align-last: right;
+      max-width: $content-width / 2;
+    }
+  }
+
+  &__post:hover > &__excerpt {
+    @media screen and (min-width: $content-width) {
+      opacity: 0.333;
+    }
+  }
+
+  &__ttr {
+    padding-left:  $post-indent;
+    padding-right: $post-indent;
+
+    @extend %-f--small;
     font-style: italic;
-    font-size: 0.7492rem;
-    line-height: 1;
-    opacity: 0.25;
+    line-height: $line-height * 2;
+    text-align: right;
+    &::after { content: ' \00bb'; }
+
+    @media screen and (min-width: $content-width) {
+      padding: 0;
+      line-height: 1;
+      opacity: 0.25;
+      margin-top: $line-height;
+    }
+  }
+
+  &__more > {
+    :link, :visited {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      &::after { content: '…'; }
+
+      @media screen and (min-width: $content-width) {
+        @include -f--large();
+        display: block;
+        margin-top: $line-height;
+        color: white;
+        text-align: right;
+        padding: 0;
+        &::after { content: ' \2192'; }
+      }
+    }
   }
 }
 
-.projects ul {
-  @media screen and (min-width: $article-width) {
-    columns: 2;
-    column-gap: $line-height;
+// Projects
+
+.projects {
+  @extend %primary;
+  padding-top: $line-height;
+  padding-bottom: $line-height;
+
+  &__header {
+    display: none;
+    @media screen and (min-width: $content-width) {
+      display: block;
+    }
+  }
+
+  ul {
+    @media screen and (min-width: $article-width) {
+      columns: 2;
+      column-gap: $line-height * 2;
+    }
   }
 }
 
 .project {
-  margin-bottom: $line-height;
+  margin-bottom: $line-height * 2;
 
   dt {
-    @extend %-f--large;
+    @extend %-f--x-large;
   }
 
   &__meta {
     @extend %-f--small;
     font-feature-settings: 'onum';
     font-variant-numeric: oldstyle-nums;
-    text-indent: 1rem;
-    margin-top: -0.25rem;
+    text-indent: $post-indent;
   }
 
-  &__desc {
-    margin: ($line-height * 1/ 4) 1rem ($line-height * 3 / 4);
+  dd:not(&__meta) {
+    padding: 0 $post-indent;
+    margin: ($line-height * 1/ 4) 0 ($line-height * 3 / 4);
   }
 }
