@@ -82,7 +82,7 @@ Advanced stylists, pair the CSS property [`quotes`](https://developer.mozilla.or
 Best to avoid using a <q>-</q> when you really mean <q>&minus;</q>, and don't use an <q>x</q> when you mean
 <q>&times;</q>.
 
-[[figure | <q>Ah, what a fine day for science!</q> ]]
+[[figure | <q>Ah, what a fine day for science!</q> <cite>Dexter</cite> ]]
 | || HTML Number  | HTML Name | CSS
 | |-:|:-:|:-:|:-:
 | | Plus <mark>+</mark> | `&#x2b;` | | `\002b` |
