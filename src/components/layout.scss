@@ -255,6 +255,12 @@ kbd {
 }
 
 // Patch katex's newline size
+.katex-display {
+  overflow: scroll;
+  padding-top: $line-height / 2;
+  padding-bottom: $line-height / 2;
+}
+
 .katex .katex-html>.newline {
   height: 1em;
 }
