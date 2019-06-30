@@ -5,6 +5,7 @@
     url('/fonts/equity_caps_b_bold-webfont.woff') format('woff');
   font-weight: bold;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -14,6 +15,7 @@
     url('/fonts/equity_caps_b_regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 
 }
 @font-face {
@@ -23,6 +25,7 @@
     url('/fonts/equity_text_b_regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -32,6 +35,7 @@
     url('/fonts/equity_text_b_italic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -41,6 +45,7 @@
     url('/fonts/equity_text_b_bold-webfont.woff') format('woff');
   font-weight: bold;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -50,6 +55,7 @@
     url('/fonts/equity_text_b_bold_italic-webfont.woff') format('woff');
   font-weight: bold;
   font-style: italic;
+  font-display: swap;
 }
 
 @import '../css/variables';
