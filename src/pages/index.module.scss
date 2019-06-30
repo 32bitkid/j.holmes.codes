@@ -295,6 +295,7 @@ $post-indent: 0.7492rem * 1.5;
     @media screen and (min-width: $article-width) {
       columns: 2;
       column-gap: $line-height * 2;
+      column-fill: balance;
     }
   }
 }
