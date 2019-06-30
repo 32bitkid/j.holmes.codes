@@ -214,7 +214,9 @@
 		content: '\220E';
 		text-align: right;
 		display: block;
+		margin-top: -$line-height;
 		margin-bottom: $line-height;
+		margin-right: 1ch;
 
 		@media print {
 			margin-bottom: 0;
@@ -247,6 +249,7 @@
 	position: relative;
 	max-width: $content-width;
 	counter-reset: footnote figures;
+	margin-bottom: $line-height;
 
 	@media print {
 		max-width: unset;

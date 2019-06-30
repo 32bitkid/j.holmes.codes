@@ -27,7 +27,10 @@
     content: '\220E';
     text-align: right;
     display: block;
+    margin-top: -$line-height;
     margin-bottom: $line-height;
+    margin-right: 1ch;
+
     @media print {
       margin-bottom: 0;
     }
@@ -117,11 +120,12 @@
 
   .exp {
     margin-bottom: $line-height * 2;
+
     @media print {
       margin-bottom: $line-height * 1.25;
     }
 
-    &:last-child { margin-bottom: 0; }
+    &:last-child { margin-bottom: $line-height; }
 
     &__heading {
       display: block;
