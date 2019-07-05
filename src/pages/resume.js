@@ -20,13 +20,13 @@ const md = (text, parser = defaultParser) => (
 );
 
 const Heading = ({ name, jobTitle, children }) => (
-  <heading className={css.heading}>
+  <header className={css.heading}>
     <hgroup>
       <h1>{name}</h1>
       <h2>{jobTitle || 'Software Engineer'}</h2>
     </hgroup>
     { children }
-  </heading>
+  </header>
 );
 
 const AboutMe = ({ summary }) => (
@@ -54,13 +54,13 @@ const Date = ({ date, fallback, short }) => (
 const WorkExperience = ({ experience }) => {
   const toItem = (exp => (
     <li className={css.exp} key={exp.company}>
-      <heading className={css.exp__heading}>
+      <header className={css.exp__heading}>
         <span className={css.exp__title}>{exp.title}</span>
         {" "}&#x00B7;{" "}
         <span className={css.exp__company}>
           <ExternalLink href={exp.url}>{exp.company}</ExternalLink>
         </span>
-      </heading>
+      </header>
       <div className={css.exp__dates}>
         <Date date={exp.from}/>
         &ndash;
@@ -73,6 +73,7 @@ const WorkExperience = ({ experience }) => {
             .sort(skillSorter)
             .map(({name, experience}) => (
               <li
+                key={name}
                 className={[
                   css.exp__tech,
                   css[`exp__tech__${experience}`],
@@ -96,7 +97,7 @@ const WorkExperience = ({ experience }) => {
 
 const Education = ({ education }) => {
   const toItem = (item) => (
-    <li className={css.school}>
+    <li className={css.school} key={item.school}>
       <div className={css.school__name}>{item.school}</div>
       <div className={css.school__program}>{item.program}</div>
       <div className={css.school__dates}>
@@ -143,6 +144,22 @@ const Software = ({ software }) => {
   );
 };
 
+const Projects = ({ projects = [] }) => {
+  const toItem = ({ name, link, description, role = 'contributor' }) => (
+    <li className={`${css.project} ${css[role]}`} key={name}>
+      <div><ExternalLink href={link}>{name}</ExternalLink></div>
+      <div className={css.project__description}>{md(description)}</div>
+    </li>
+  );
+
+  return (
+    <section className={css.projects}>
+      <h3>Projects</h3>
+      <ul>{projects.map(toItem)}</ul>
+    </section>
+  );
+}
+
 const skillSorter = (a, b) => {
   if (a.experience !== b.experience) return b.experience - a.experience;
   return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
@@ -171,6 +188,7 @@ export default () => (
             .sort(skillSorter)
           }
         />
+        <Projects projects={resume.projects} />
       </div>
     </article>
   </Layout>

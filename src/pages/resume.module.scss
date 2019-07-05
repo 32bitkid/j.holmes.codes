@@ -10,7 +10,6 @@
     align-items: baseline;
     &::after {
       margin-left: 0.5ch;
-      margin-right: 0.5ch;
       flex-grow: 1;
       content: '';
       border-top: 1px dotted #ddd;
@@ -62,6 +61,11 @@
       text-indent: 3ch;
     }
   }
+
+  @media print {
+    margin-bottom: $line-height * 0.5;
+    padding-bottom: calc(#{$line-height * 0.5} - 1px);
+  }
 }
 
 .contacts {
@@ -79,9 +83,12 @@
   text-align: justify;
   max-width: $content-width;
 
+  p:last-child { margin-bottom: 0; }
+
   @media print {
     margin-left: unset;
     margin-right: unset;
+    margin-bottom: $line-height * 0.5;
   }
 }
 
@@ -92,11 +99,12 @@
     display: grid;
     grid-template-columns: 14rem 1fr;
     grid-template-areas:
-            "EDU    EXP"
-            "SKILLS EXP"
-            "SFWR   EXP"
+            "EDU      EXP"
+            "SKILLS   EXP"
+            "SFWR     EXP"
+            "PROJECTS EXP"
             /*--------*/
-            ".      EXP";
+            ".        EXP";
 
     grid-gap: 0 4ch;
   }
@@ -105,11 +113,11 @@
     display: grid;
     grid-template-columns: 1.75in 1fr;
     grid-template-areas:
-            "EDU    EXP"
-            "SKILLS EXP"
-            "SFWR   EXP"
-            /*--------*/
-            ".      EXP";
+            "EDU        EXP"
+            "SKILLS     EXP"
+            "SFWR       EXP"
+            ".          EXP"
+            ".     PROJECTS";
     grid-gap: 0 0.125in;
   }
 }
@@ -120,12 +128,12 @@
 
   .exp {
     margin-bottom: $line-height * 2;
+    &:last-child { margin-bottom: $line-height; }
 
     @media print {
-      margin-bottom: $line-height * 1.25;
+      margin-bottom: $line-height * 0.5;
+      &:last-child { margin-bottom: $line-height * 0.5; }
     }
-
-    &:last-child { margin-bottom: $line-height; }
 
     &__heading {
       display: block;
@@ -146,6 +154,8 @@
       text-indent: 1rem;
       margin-top: -0.25rem;
       margin-bottom: $line-height / 4;
+
+      @media print { margin-bottom: 0; }
     }
 
     &__desc {
@@ -180,7 +190,7 @@
       &__2 { opacity: 0.6; }
       &__3 { opacity: 0.8; }
       &__4 { opacity: 1.0; }
-      &__5 { opacity: 1.0; font-weight: bold; }
+      &__5, &__6 { opacity: 1.0; font-weight: bold; }
 
       &:not(:first-child)::before {
         content: ', ';
@@ -208,6 +218,8 @@
 .education { grid-area: EDU; }
 .skills { grid-area: SKILLS; }
 .software { grid-area: SFWR; }
+.projects { grid-area: PROJECTS; }
+
 
 .school {
   &__name {
@@ -246,5 +258,44 @@
     columns: 2 1ch;
     padding-left: 0.25ch;
     padding-right: 0.75ch;
+  }
+}
+
+.projects {
+  @media print {
+    columns: 2;
+
+    h3 { column-span: all; }
+  }
+}
+
+.project {
+  margin-bottom: 0.5rem;
+
+  @media print {
+    break-inside: avoid
+  }
+
+  &.author :link::before {
+    content: '\2605 '
+  }
+
+  &.maintainer :link::before {
+    content: '\2B29 '
+  }
+
+  &.contributor :link::before {
+    content: '\2022 '
+  }
+
+  &__description {
+    @extend %-f--small;
+    text-align: justify;
+    padding-left: 1ch;
+    padding-right: 1ch;
+    line-height: 1.42;
+
+    p { margin-bottom: 1.42em; }
+    p:last-child { margin-bottom: 0; }
   }
 }

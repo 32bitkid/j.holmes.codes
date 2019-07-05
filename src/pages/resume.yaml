@@ -2,17 +2,13 @@ name: James Holmes
 jobTitle: "Developer \u222A Designer"
 location: Denver, CO.
 summary: |
-  I am a *full-stack* developer with a focus on front-end engineering and
-  user-experience design.
+  I am a *full-stack* developer with a focus on high-performance front-end
+  engineering and exceptional user-experience design.
 
-  I craft compelling interactions between people and machines. I bring a
-  diverse background of technologies, experiences, and passions. I help
-  build the tools and apps that empower people to work, play,
-  and&mdash;most importantly&mdash;*create*.
-
-  If you share my love of *building*&mdash;whether a fellow developer, an
-  employer, a client, or just someone who wants to learn something new&mdash;then get in
-  touch; I'd *love* to hear from you and what you are working on!
+  I craft compelling, elegant interactions between people and machines.
+  I bring a diverse background of technologies, experiences, and a passion
+  for outstanding engineering. I build the tools and apps that empower
+  people to work, play, and&mdash;most importantly&mdash;*create*.
 
 links:
   email:         mailto:j@holmes.codes
@@ -123,7 +119,7 @@ technicalExperience:
   - &React
     name: React
     url:  https://facebook.github.io/react/
-    experience: 4
+    experience: 5
     featured: true
   - &Redis
     name: Redis
@@ -178,6 +174,44 @@ technicalExperience:
     url:  https://git-scm.com/
     experience: 5
     featured: true
+  - &tdd
+    name: TDD
+    experience: 5
+    featured: true
+  - &bdd
+    name: BDD
+    experience: 4
+  - &Mocha
+    name: Mocha
+    experience: 4
+  - &Chai
+    name: Chai
+    experience: 4
+  - &Sinon
+    name: Sinon
+    experience: 4
+  - &Redux
+    name: Redux
+    experience: 4
+    featured: true
+  - &GraphQL
+    name: GraphQL
+    experience: 4
+    featured: true
+  - &Webpack
+    name: Webpack
+    experience: 4
+    featured: true
+  - &Gulp
+    name: Gulp
+    experience: 3
+  - &Brunch
+    name: Brunch
+    experience: 4
+  - &Gatsby
+    name: Gatsby
+    experience: 3
+    featured: true
 
 workExperience:
   - company: niolabs
@@ -188,6 +222,7 @@ workExperience:
     tech:
       - *NodeJs
       - *React
+      - *Redux
       - *Python
       - *Golang
       - *Kotlin
@@ -195,6 +230,14 @@ workExperience:
       - *HTML5
       - *CSS3
       - *SCSS
+      - *tdd
+      - *bdd
+      - *GraphQL
+      - *Webpack
+      - *Brunch
+      - *Mocha
+      - *Sinon
+      - *Chai
 
     description: |
       At niolabs, I led the Innovation Team; we built the prototypes
@@ -227,6 +270,11 @@ workExperience:
       - *Redis
       - *HTML5
       - *CSS3
+      - *tdd
+      - *bdd
+      - *Gulp
+      - *Mocha
+
     description: |
       Leads To Conversations is a sales acceleration app start-up, founded by a
       pair previous co-workers. I joined the team as the second
@@ -253,6 +301,9 @@ workExperience:
       - *OrientDB
       - *HTML5
       - *CSS3
+      - *tdd
+      - *Gulp
+
     description: |
       As the lead front-end developer at Skyward, I worked closely with the lead designer
       to realize and iterate the UI/UX of the application: a UAV flight
@@ -281,6 +332,9 @@ workExperience:
       - *WebDriver
       - *HTML5
       - *CSS3
+      - *Gulp
+      - *tdd
+
     description: |
       I greatly enjoyed working at VersionOne; the team was well established and
       full of some of the smartest and most passionate people I've had the
@@ -409,3 +463,37 @@ software:
   - &Monodraw
     name: Monodraw
     featured: true
+
+projects:
+  - name: github.com/32bitkid/mpeg
+    link: https://github.com/32bitkid/mpeg
+    role: author
+    tech:
+      - *Golang
+    description: Author of an experimental MPEG-2 decoder implementation.
+  - name: github.com/32bitkid/sci
+    link: https://github.com/32bitkid/sci
+    role: author
+    tech:
+      - *Golang
+    description: Author of a small collection of data-structures for parsing `SCI01` resources from classic *Sierra On-Line* adventure games.
+  - name: "@pubkeeper/client"
+    link: https://www.npmjs.com/package/@pubkeeper/client
+    role: maintainer
+    tech:
+      - *TypeScript
+    description: Author and npm maintainer of JavaScript client for Pubkeeper, a communications protocol broker for IoT systems.
+
+  - name: gonum
+    link: https://github.com/gonum/gonum
+    role: contributor
+    tech:
+      - *TypeScript
+    description: Contributor to the multigraph and DOT-related codec implementations.
+
+  - name: kefirjs
+    link: https://github.com/kefirjs/kefir
+    role: contributor
+    tech:
+      - *TypeScript
+    description: Contributor to the JavaScript Reactive Programming library.
