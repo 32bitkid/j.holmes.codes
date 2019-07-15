@@ -160,6 +160,22 @@ const Projects = ({ projects = [] }) => {
   );
 }
 
+const Methodologies = ({ methodologies = [] }) => {
+  console.log(methodologies);
+  const toItem = (name) => (
+    <li className="methodology" key={name}>
+      {name}
+    </li>
+  );
+
+  return (
+    <section className={css.methodologies}>
+      <h3>Methodologies</h3>
+      <ul>{methodologies.map(toItem)}</ul>
+    </section>
+  );
+}
+
 const skillSorter = (a, b) => {
   if (a.experience !== b.experience) return b.experience - a.experience;
   return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
@@ -187,6 +203,9 @@ export default () => (
             .filter(s => s.featured )
             .sort(skillSorter)
           }
+        />
+        <Methodologies
+          methodologies={resume.methodologies}
         />
         <Projects projects={resume.projects} />
       </div>

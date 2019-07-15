@@ -6,9 +6,8 @@ summary: |
   engineering and exceptional user-experience design.
 
   I craft compelling, elegant interactions between people and machines.
-  I bring a diverse background of technologies, experiences, and a passion
-  for outstanding engineering. I build the tools and apps that empower
-  people to work, play, and&mdash;most importantly&mdash;*create*.
+  I bring a diverse experience of technologies and a passion for outstanding engineering.
+  I build the tools and apps that empower people to work, play, and&mdash;most importantly&mdash;*create*.
 
 links:
   email:         mailto:j@holmes.codes
@@ -240,7 +239,7 @@ workExperience:
       - *Chai
 
     description: |
-      At niolabs, I led the Innovation Team; we built the prototypes
+      I led the Innovation Team at niolabs; we built the prototypes
       for the *next-gen* of niolabs&#x2019; IoT dev-platform. Driving
       innovation was a *full-time* job; I split my time between
       brain-storming new ideas, prototyping experimental features & tools,
@@ -279,8 +278,8 @@ workExperience:
       Leads To Conversations is a sales acceleration app start-up, founded by a
       pair previous co-workers. I joined the team as the second
       developer&mdash;third employee&mdash;bringing my skills as a UI specialist
-      to the team. My skill-set directly complemented the technical founder and
-      we worked closely to define, architect and build the pilot system. My
+      to the team. My skill-set complemented the technical founder and
+      together we defined, architected and built the pilot system. My
       responsibilities ranged from full-stack pair development to database
       design to devops to graphic/web design to marketing to motion graphics;
       members of small teams wear many hats.
@@ -305,13 +304,13 @@ workExperience:
       - *Gulp
 
     description: |
-      As the lead front-end developer at Skyward, I worked closely with the lead designer
+      As the lead front-end developer at Skyward, I worked with the lead designer
       to realize and iterate the UI/UX of the application: a UAV flight
       planning, logging, and compliance SAAS. Built on Angular.js, I implemented
-      the front-end on-top of the Java backend. Worked dilligently to establish
-      the automated testing and build pipelines. Helped mentor junior developers
-      within the front-end stack, and transitioned the team
-      towards more functional programming paradigms available in Java 8.
+      the front-end on-top of the Java backend. Established
+      the automated testing and build pipelines. I mentored junior developers
+      within the front-end stack. I also mentored the entire engineering team towards
+      Java 8 functional programming paradigms.
 
   - company: VersionOne
     url:     https://www.versionone.com/
@@ -336,18 +335,18 @@ workExperience:
       - *tdd
 
     description: |
-      I greatly enjoyed working at VersionOne; the team was well established and
+      I enjoyed working at VersionOne; the team was well established and
       full of some of the smartest and most passionate people I've had the
       opportunity to work with. It is where I fell in love with
       pair-programming. I joined the team as a full-stack developer; focusing on
       improving UI and the state of the front-end stack.
 
-      While at VersionOne, I was the Feature Lead of a team of four developers on a
+      While at VersionOne, I was the Feature Lead on a
       high-profile, well-received [feature](https://www.versionone.com/product/agile-team-software/)
-      of the flagship application. During my last year at VersionOne, I was
-      tapped to be a Team Lead, one of three on the development team. In
-      that role, I helped guide, mentor, and support the devs and designers on
-      my team and coordinate with the other teams and Product Owners to deliver
+      of the flagship application. During my last year at VersionOne, I
+      had the privilege to be a Team Lead, one of three on the development team. In
+      that role I helped guide, mentor, and support the devs and designers on
+      my team. I coordinated with the other teams and Product Owners to deliver
       high-quality features and releases.
 
   - company: Clearwave
@@ -367,12 +366,12 @@ workExperience:
       - *HTML5
       - *CSS3
     description: |
-      While initially hired as a technical test developer at Clearwave, I was quickly
+      Initially hired as a technical test developer at Clearwave, I was quickly
       conscripted on to the development team where I helped mentor the team in
       ASP.NET MVC, CSS, and JavaScript/jQuery best practices. As a Front-End
-      Developer, over the course of two years, I was helped establish
+      Developer, over the course of two years, I helped establish
       design frameworks and tools for the rest of the development team. I
-      continued to work closely with both the business analysts and development
+      continued to collaborated with both the business analysts and development
       teams to plan, architect, build and maintain the BDD test suite. Finally,
       I served as team ScrumMaster until my departure, assisting in the
       on-going effort to move to a more agile work paradigm.
@@ -470,19 +469,21 @@ projects:
     role: author
     tech:
       - *Golang
-    description: Author of an experimental MPEG-2 decoder implementation.
+    description: Author of an experimental pure-Go MPEG-2 decoder.
+
   - name: github.com/32bitkid/sci
     link: https://github.com/32bitkid/sci
     role: author
     tech:
       - *Golang
-    description: Author of a small collection of data-structures for parsing `SCI01` resources from classic *Sierra On-Line* adventure games.
+    description: Author of a small collection of Go data-structures for parsing `SCI0` resources from classic *Sierra On-Line* adventure games.
+
   - name: "@pubkeeper/client"
     link: https://www.npmjs.com/package/@pubkeeper/client
     role: maintainer
     tech:
       - *TypeScript
-    description: Author and npm maintainer of JavaScript client for Pubkeeper, a communications protocol broker for IoT systems.
+    description: Author and npm maintainer of TypeScript/JS client for Pubkeeper, a communications protocol broker for IoT systems.
 
   - name: gonum
     link: https://github.com/gonum/gonum
@@ -497,3 +498,9 @@ projects:
     tech:
       - *TypeScript
     description: Contributor to the JavaScript Reactive Programming library.
+
+methodologies:
+  - Agile
+  - TDD
+  - BDD
+  - XP/Pairing
