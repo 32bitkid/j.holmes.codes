@@ -1,0 +1,27 @@
+---
+const { tags } = Astro.props;
+---
+<style>
+  ul {
+    display: inline;
+    margin: unset;
+    padding: unset;
+  }
+
+  li {
+    margin: unset;
+    padding: unset;
+    display: inline;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-transform: uppercase;
+  }
+
+</style>
+<ul>
+  {[...tags].sort().flatMap((tag, idx, arr) =>
+      <Fragment key={tag}>
+        <li>{tag}</li>
+        {idx !== arr.length - 1 && ", "}
+      </Fragment>
+  )}
+</ul>
