@@ -15,8 +15,8 @@ const allBlogPosts = (await getCollection(
             .map(blog =>
                 <li>
                     <a href={`/${blog.slug}`}>{blog.data.title}</a>
-                    &numsp;
-                    <Date date={blog.data.date} />
+                    <div class="byline"><Date date={blog.data.date} /></div>
+
                 </li>
             )
         }
@@ -28,13 +28,17 @@ const allBlogPosts = (await getCollection(
         margin-bottom: var(--line-height);
 
     }
-    .posts {
-        list-style: "\2043";
-        padding-left: 1.5ch;
-    }
+    .posts { }
 
     .posts li {
         padding-inline-start: 0.5ch;
-        margin-bottom: calc(var(--line-height) * 0.25);
+        margin-bottom: calc(var(--line-height) * 0.5);
+    }
+
+    .posts li a {}
+
+    .byline {
+        color: #999;
+        font-size: 0.7492rem;
     }
 </style>

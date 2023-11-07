@@ -52,10 +52,32 @@ p {
 :link, :visited {
     color: var(--colors-primary);
     text-decoration: none;
+}
 
-    &:hover {
-        text-decoration: underline;
-    }
+:link:hover, :visited:hover {
+    text-decoration: underline;
+}
+
+:link[href^="http:"], :link[href^="https:"], :link[href^="mailto:"] {
+    text-decoration: underline dashed rgba(98,141,163,0.4);
+    text-decoration-thickness: 1px;
+}
+
+:link[href^="http:"]:hover, :link[href^="https:"]:hover, :link[href^="mailto:"]:hover {
+    text-decoration: underline solid rgba(98,141,163,1);
+    text-decoration-thickness: 1px;
+}
+
+:link[href^="http:"]::after, :link[href^="https:"]::after {
+    content: "\2005\1F86D";
+    font-size: 0.4em;
+    vertical-align: super;
+    margin-right: -0.5ch;
+}
+
+:link[href^="mailto:"]::after {
+    content: "\2709";
+    vertical-align: super;
 }
 
 mark {
@@ -146,12 +168,7 @@ kbd {
     }
 }
 
-a[href^="http"]::after {
-    content: "\2005\1F86D";
-    font-size: 0.4em;
-    vertical-align: super;
-    margin-right: -0.5ch;
-}
+
 
 em {
     font-style: italic;
