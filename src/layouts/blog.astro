@@ -1,400 +1,151 @@
 ---
 import { format, parseISO } from "date-fns"
-import Tags from "../components/Tags.astro";
+import Tags from "@components/Tags.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import "../../public/css/reset.css";
+import "../../public/css/font.css";
+import "../styles/core.css";
+
 const { title, date, tags } = Astro.props.frontmatter ?? Astro.props;
 ---
 <html>
 <head>
   <meta charset="utf-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{title} : j.holmes.codes</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
         integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ" crossorigin="anonymous">
-  <style is:global>
-    @font-face {
-      font-family: 'Equity Caps B';
-      src: url('/fonts/equity_caps_b_bold-webfont.woff2') format('woff2'),
-      url('/fonts/equity_caps_b_bold-webfont.woff') format('woff');
-      font-weight: bold;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'Equity Caps B';
-      src: url('/fonts/equity_caps_b_regular-webfont.woff2') format('woff2'),
-      url('/fonts/equity_caps_b_regular-webfont.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
-
-    }
-
-    @font-face {
-      font-family: 'Equity Text B';
-      src: url('/fonts/equity_text_b_regular-webfont.woff2') format('woff2'),
-      url('/fonts/equity_text_b_regular-webfont.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'Equity Text B';
-      src: url('/fonts/equity_text_b_italic-webfont.woff2') format('woff2'),
-      url('/fonts/equity_text_b_italic-webfont.woff') format('woff');
-      font-weight: normal;
-      font-style: italic;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'Equity Text B';
-      src: url('/fonts/equity_text_b_bold-webfont.woff2') format('woff2'),
-      url('/fonts/equity_text_b_bold-webfont.woff') format('woff');
-      font-weight: bold;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'Equity Text B';
-      src: url('/fonts/equity_text_b_bold_italic-webfont.woff2') format('woff2'),
-      url('/fonts/equity_text_b_bold_italic-webfont.woff') format('woff');
-      font-weight: bold;
-      font-style: italic;
-      font-display: swap;
-    }
-
-    /* http://meyerweb.com/eric/tools/css/reset/
-       v2.0 | 20110126
-       License: none (public domain)
-    */
-    html, body, div, span, applet, object, iframe,
-    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-    a, abbr, acronym, address, big, cite, code,
-    del, dfn, em, img, ins, kbd, q, s, samp,
-    small, strike, strong, sub, sup, tt, var,
-    b, u, i, center,
-    dl, dt, dd, ol, ul, li,
-    fieldset, form, label, legend,
-    table, caption, tbody, tfoot, thead, tr, th, td,
-    article, aside, canvas, details, embed,
-    figure, figcaption, footer, header, hgroup,
-    menu, nav, output, ruby, section, summary,
-    time, mark, audio, video {
-      margin: 0;
-      padding: 0;
-      border: 0;
-      font-size: 100%;
-      font: inherit;
-      vertical-align: baseline;
-    }
-
-    /* HTML5 display-role reset for older browsers */
-    article, aside, details, figcaption, figure,
-    footer, header, hgroup, menu, nav, section {
-      display: block;
-    }
-
-    strong {
-      font-weight: 600;
-    }
-
-    em {
-      font-style: italic;
-    }
-
-    ol, ul {
-      list-style: none;
-    }
-
-    blockquote, q {
-      quotes: none;
-    }
-
-    blockquote:before, blockquote:after,
-    q:before, q:after {
-      content: '';
-      content: none;
-    }
-
-    table {
-      border-collapse: collapse;
-      border-spacing: 0;
-    }
-    /* end reset */
-
-    :root {
-      --line-height: 1.414rem;
-      --colors-primary: #628da3;
-
-      color: #333;
-      background-color: white;
-    }
-
-    body {
-
-    }
-
-    :root, body {
-      font: 400 12pt / var(--line-height) 'Equity Text B', serif, system-ui;
-      font-feature-settings: "ss01", "ss03", "liga";
-    }
-
-
-    :not(hgroup) > h1, h2, h3, h4, h5, h6 {
-      font-weight: 400;
-      letter-spacing: -0.04em;
-      font-family: 'Equity Caps B', serif;
-    }
-
-    :not(hgroup) h3 {
-      font-size: 1.3348rem;
-      line-height: var(--line-height);
-      margin-block: 0 var(--line-height);
-      font-feature-settings: "c2sc", "smcp", "onum";
-    }
-
-    :not(hgroup) h2 {
-      font-size: 1.7818rem;
-      line-height: var(--line-height);
-      margin-block: calc(var(--line-height) * 2) var(--line-height);
-      font-feature-settings: "smcp", "onum";
-    }
-
-    :not(hgroup) h1 {
-      font-size: 2.3784rem;
-      margin-block: calc(var(--line-height) * 2) 0;
-      line-height: calc(var(--line-height) * 2);
-      font-feature-settings: "smcp", "onum";
-      font-weight: 600;
-    }
-
-    p {
-      margin-bottom: var(--line-height);
-    }
-
-    :link, :visited {
-      color: var(--colors-primary);
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    mark {
-      mix-blend-mode: multiply;
-      background-color: #bde9ff;
-      color: black;
-    }
-
-    hr {
-      height: 0;
-      border: 0;
-      margin: calc(var(--line-height) * 2.5) 0;
-      position: relative;
-      clear: both;
-      overflow: visible;
-      text-align: center;
-      color: #ddd;
-      border-bottom: 1px dotted currentColor;
-
-      &::after {
-        content: '\2042';
-        position: relative;
-        font-size: 1.3348rem;
-        color: currentColor;
-        top: calc(var(--line-height) * -1);
-        line-height: calc(var(--line-height) * 2);
-        background-color: white;
-        padding: 1rem;
-        border-radius: 50%;
-
-      }
-    }
-
-    q {
-      quotes: '\201c' '\201d' "\2018" "\2019" '"' '"' "'" "'";
-
-      &::before {
-        user-select: text;
-        content: open-quote;
-      }
-
-      &::after {
-        user-select: text;
-        content: close-quote;
-      }
-    }
-
-    q+cite::before { content: ' \2014'; }
-
-    kbd {
-      display: inline-block;
-      font-family: system-ui, sans-serif;
-      font-size: 0.625em;
-      border: 3px solid #dedad6;
-      border-top: 2px solid #ece8e4;
-      border-bottom: 6px solid #c9c4c4;
-      border-radius: 3px;
-      line-height: 1;
-      padding: 0.33em 0.66em;
-      box-shadow:
-          0 -0.125em 0 -0.063em #c9c4c4,
-          0 0.125em 0 -0.063em rgba(0,0,0,0.5);
-      background-color: #e7e7e7;
-      position: relative;
-      color: rgba(0,0,0,0.75);
-      vertical-align: middle;
-      margin-top: -50%;
-      margin-bottom: -50%;
-      font-weight: 400;
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: 0px; left: 0px;
-        bottom: -1px; right: 0px;
-        border-radius: 4px;
-        border-left: 1px solid #efe7e7;
-        border-right: 1px solid #efe7e7;
-        border-bottom: 1px solid #c3c0c0;
-        box-shadow: 0 4px 4px -3px rgba(0,0,0,0.15);
-        background-image:
-            linear-gradient(to right,
-            #dedad6,
-            transparent 10%,
-            transparent 90%,
-            #dedad6);
-
-      }
-    }
-  </style>
-  <style>
-    article {
-      max-width: 45rem;
-      padding: 0 0.5rem 0;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .byline {
-      font-variant-numeric: oldstyle-nums;
-      line-height: calc(var(--line-height) * 1);
-      font-size: 0.7492rem;
-      margin-left: 3ch;
-      margin-bottom: calc(var(--line-height) * 1);
-    }
-
-    .markdown {}
-    .markdown :global(:not(pre) > code) {
-      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-      background: #f5f2f0;
-      padding: 0.2em 0.5ch;
-      border-radius: 0.3em;
-      white-space: normal;
-    }
-
-    .markdown :global(.astro-code) {
-      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-      padding: 1rem;
-      border-radius: 0.5rem;
-    }
-
-    .markdown :global(figure) {
-      margin-bottom: var(--line-height);
-    }
-
-    .markdown :global(ul, ol) {
-      margin-left: 4ch;
-      margin-bottom: var(--line-height);
-    }
-
-    .markdown :global(ul) {
-      list-style: square;
-    }
-
-    .markdown :global(ol) {
-      list-style: decimal;
-    }
-
-    .markdown :global(table) {
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: var(--line-height);
-      font-feature-settings: 'tnum';
-      min-width: 22.5rem;
-    }
-
-    .markdown :global(table thead th) {
-      font-weight: 400;
-      letter-spacing: -0.04em;
-      font-family: 'Equity Caps B', serif;
-      font-feature-settings: "c2sc", "smcp", "onum";
-      line-height: calc(var(--line-height) * 1);
-      font-size: 0.7492rem;
-      margin-left: 3ch;
-      margin-bottom: calc(var(--line-height) * 1);
-      padding-inline: 2ch;
-    }
-
-    .markdown :global(table tbody td) {
-      padding-inline: 2ch;
-      padding-block: 0.5rem;
-    }
-
-    .markdown :global(table tbody td:empty:before) {
-      content: '\2014';
-      color: rgba(0, 0, 0, 0.25);
-    }
-
-    .markdown :global(tbody > tr:nth-child(3n+1):not(:empty) td),
-    .markdown :global(tbody > tr:nth-child(3n+1):not(:empty) th){
-      border-top: 0.25px dashed #ddd;
-    }
-
-    .markdown :global(sup) {
-      vertical-align: super;
-      font-size: 0.707em;
-    }
-
-    .markdown :global(.footnotes ol) {
-      font-variant-numeric: oldstyle-nums;
-      line-height: calc(var(--line-height) * 1);
-      font-size: 0.7492rem;
-      margin-bottom: calc(var(--line-height) * 1);
-      padding-inline-start: 4ch;
-    }
-
-    .markdown :global(.footnotes li p) {
-      margin-bottom: calc(var(--line-height) * 0.25);
-    }
-
-    h1 {
-      margin-block-start: max(10rem, 33vh);
-    }
-
-  </style>
 </head>
 <body>
-<header>
-</header>
+<Header />
 <article>
   <h1>{title}</h1>
   <div class="byline">
-    Posted on
     <time dateTime={date}>
       {format(parseISO(date), "MMMM d, yyyy")}
     </time>
     {tags &&
         <>{' in '}
           <Tags tags={tags}/>
-        </>}.
+        </>}
   </div>
   <div class="markdown">
     <slot/>
   </div>
 </article>
-<footer></footer>
+<Footer />
 </body>
 </html>
+
+<style>
+  article {
+    max-width: var(--max-content);
+    padding-inline: 1.5ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .byline {
+    font-variant-numeric: tabular-nums;
+    line-height: calc(var(--line-height) * 1);
+    font-size: 0.7492rem;
+    margin-left: 3ch;
+    margin-bottom: calc(var(--line-height) * 1);
+  }
+
+  .markdown {}
+  .markdown :global(:not(pre) > code) {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    background: #f5f2f0;
+    padding: 0.2em 0.5ch;
+    border-radius: 0.3em;
+    white-space: normal;
+  }
+
+  .markdown :global(.astro-code) {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.85em;
+  }
+
+  .markdown :global(figure) {
+    margin-bottom: var(--line-height);
+  }
+
+  .markdown :global(ul, ol) {
+    margin-left: 4ch;
+    margin-bottom: var(--line-height);
+  }
+
+  .markdown :global(ul) {
+    list-style: "\25E6\2007";
+  }
+
+  .markdown :global(ol) {
+    list-style: decimal;
+  }
+
+  .markdown :global(table) {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: var(--line-height);
+    font-variant-numeric: tabular-nums oldstyle-nums;
+  }
+
+  .markdown :global(table thead th) {
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    font-family: 'Equity Caps B', serif;
+    font-feature-settings: "c2sc", "smcp", "onum";
+    line-height: calc(var(--line-height) * 1);
+    font-size: 0.7492rem;
+    margin-left: 3ch;
+    margin-bottom: calc(var(--line-height) * 1);
+    padding-inline: 2ch;
+  }
+
+  .markdown :global(table tbody td) {
+    padding-inline: 2ch;
+    padding-block: 0.5rem;
+  }
+
+  .markdown :global(table tbody td:empty:before) {
+    content: '\2014';
+    color: rgba(0, 0, 0, 0.25);
+  }
+
+  .markdown :global(tbody > tr:nth-child(3n+1):not(:empty) td),
+  .markdown :global(tbody > tr:nth-child(3n+1):not(:empty) th){
+    border-top: 0.25px dashed #ddd;
+  }
+
+  .markdown :global(sup) {
+    vertical-align: super;
+    font-size: 0.707em;
+  }
+
+  .markdown :global(.footnotes ol) {
+    font-variant-numeric: oldstyle-nums;
+    line-height: calc(var(--line-height) * 1);
+    font-size: 0.7492rem;
+    margin-bottom: calc(var(--line-height) * 1);
+    padding-inline-start: 4ch;
+  }
+
+  .markdown :global(.footnotes li p) {
+    margin-bottom: calc(var(--line-height) * 0.25);
+  }
+
+  .markdown :global(pre:not(figure pre)) {
+    margin-bottom: var(--line-height);
+  }
+
+  h1 {
+    margin-block-start: max(10rem, 25vh);
+  }
+
+</style>

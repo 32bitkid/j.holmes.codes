@@ -1,0 +1,33 @@
+---
+const currentYear = (new Date()).getFullYear();
+---
+<style>
+    footer {
+        box-sizing: border-box;;
+        height: calc(var(--line-height) * 7);
+        padding-block: calc(var(--line-height) * 4);
+    }
+
+    .wrapper {
+        max-width: var(--max-content);
+        padding-inline: 1.5ch;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .copyright {
+        font-variant-numeric: oldstyle-nums;
+        font-variant-caps: small-caps;
+        font-size: 0.7492rem;
+        line-height: calc(var(--line-height) * 1);
+        color: #ddd;
+    }
+</style>
+<footer>
+    <div class="wrapper">
+        <div class="copyright">
+        &copy; 2013&ndash;{currentYear} J. Holmes
+        </div>
+    </div>
+</footer>

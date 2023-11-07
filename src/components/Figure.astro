@@ -28,7 +28,7 @@ const figure = table !== true && code !== true;
   }
 
   figure.code > figcaption:not(:empty):before {
-    content: "Example " counter(code) ": ";
+    content: "Example Code " counter(code) ": ";
   }
 
   figcaption {
@@ -38,13 +38,28 @@ const figure = table !== true && code !== true;
     line-height: calc(var(--line-height) * 1);
   }
 
-  figure.centered {
+
+  div.centered {
     text-align: center;
+  }
+
+  main {
+    display: flex;
+    align-items: center;
+  }
+
+  main :last-child {
+    flex-grow: 1;
   }
 </style>
 
-<figure class:list={{centered, figure, table, code }}>
-  <slot />
+<figure class:list={{ figure, table, code }}>
+  <main>
+    <slot name="aside" />
+    <div class:list={{ centered }}>
+      <slot />
+    </div>
+  </main>
   <figcaption>
     <slot name="caption">{caption}</slot>
   </figcaption>

@@ -1,16 +1,168 @@
 ---
+import { getCollection } from 'astro:content';
+import Page from "@layouts/page.astro";
+import Date from "@components/Date.astro";
+import "../../public/css/reset.css";
+import "../../public/css/font.css";
+import "../styles/core.css";
 
+const max = 5;
+const allBlogPosts = (await getCollection(
+		'blog', ({ data }) => import.meta.env.PROD ? data.draft !== true : true,
+	))
+	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const showMore = allBlogPosts.length > max;
 ---
+<Page>
+	<h1>About me…</h1>
+	<p>
+		I am a <em>developer</em> & <em>designer</em> with a focus in
+		front-end architecture and interaction design. My interests range
+		from UI-design to 80's vintage computers (IBM PC<em>jr</em>, Apple //e, C64) to
+		embedded computing, video codecs, CRTs and pixel-art.
+	</p>
+	<p>
+		Until late-<small>2023</small> I was the <em>Frontend Engineering Lead</em>{" "}
+		at <a href="https://formant.io">Formant</a>, where I
+		developed prototypes, tools, and designs for the future of robotic fleet{" "}
+		monitoring and teleoperation. I love getting my hands dirty, learning new things
+		and exploring new domains. To me, there isn't a line between engineering and design;
+		I'm equally comfortable in <a href="https://www.sketch.com/">Sketch</a> as
+		I'm in <a href="https://www.sublimetext.com/">Sublime Text</a>.
+	</p>
+	<p>
+		You can find me doodling on <a href="https://codepen.io/32bitkid">CodePen</a>,
+		helping other engineers on <a href="https://stackoverflow.com/users/373378">StackOverflow</a>,
+		pushing code to <a href="https://github.com/32bitkid">GitHub</a>,
+		or posting on <a href="https://twitter.com/32bitkid">Twitter</a> about
+		stuff I think is cool.
+	</p>
+	<p class="get-in-touch">
+		&hellip;to get in touch, e-mail me at <a href="mailto:j@holmes.codes">j@holmes.codes</a>.
+	</p>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+	<h2>Recent Posts</h2>
+	<ul class="posts">
+		{allBlogPosts
+			.slice(0, max)
+			.map(blog =>
+				<li>
+					<a href={`/${blog.slug}`}>{blog.data.title}</a>
+					&numsp;
+					<Date date={blog.data.date} />
+				</li>
+			)
+		}
+	</ul>
+	{showMore && <p class="more"><a  href="/blog">more posts</a></p> }
+
+	<h2>Code &amp; Links</h2>
+	<ul class="projects">
+		<li class="project">
+			<iframe height="300" style={{width: "100%"}} scrolling="no" title="Quest For Glory II Disks"
+					src="//codepen.io/32bitkid/embed/preview/BgwwgG/?height=300&theme-id=light&default-tab=result"
+					frameBorder="no" allowtransparency="true" allowFullScreen={true}>
+				See the Pen <a href='https://codepen.io/32bitkid/pen/BgwwgG/'>Quest For Glory II Disks</a> by James Holmes
+				(<a href='https://codepen.io/32bitkid'>@32bitkid</a>) on <a href='https://codepen.io'>CodePen</a>.
+			</iframe>
+		</li>
+		<li class="project">
+			<dl>
+				<dt class="project__link"><a href="https://github.com/32bitkid/mpeg">github.com/32bitkid/mpeg</a></dt>
+				<dd class="project__meta">[Author] golang, video, mpeg-2</dd>
+				<dd class="project__desc">A <em>pure</em>-Go implementation of a MPEG-2 decoder.</dd>
+			</dl>
+		</li>
+		<li class="project">
+			<dl>
+				<dt class="project__link"><a href="https://github.com/32bitkid/bitreader">github.com/32bitkid/bitreader</a></dt>
+				<dd class="project__meta">[Author] golang, bits</dd>
+				<dd class="project__desc">Provides basic interfaces to read and traverse an io.Reader as a stream of bits, rather than a stream of bytes.</dd>
+			</dl>
+		</li>
+		<li class="project">
+			<iframe height="300" style={{width: "100%"}} scrolling="no" title="Interactive 60% Keyboard"
+					src="//codepen.io/32bitkid/embed/preview/LKZzMR/?height=300&theme-id=light&default-tab=result"
+					frameBorder="no" allowtransparency="true" allowFullScreen={true}>
+				See the Pen <a href='https://codepen.io/32bitkid/pen/LKZzMR/'>Interactive 60% Keyboard</a> by James Holmes
+				(<a href='https://codepen.io/32bitkid'>@32bitkid</a>) on <a href='https://codepen.io'>CodePen</a>.
+			</iframe>
+		</li>
+		<li class="project">
+			<dl>
+				<dt class="project__link"><a href="https://github.com/32bitkid/sci">github.com/32bitkid/sci</a></dt>
+				<dd class="project__meta">[Author] Sierra On-Line, sci01, EGA</dd>
+				<dd class="project__desc">A small collection of utilities/structures for parsing and manipulating SCI0/SCI01 resources from classic Sierra adventure games.</dd>
+			</dl>
+		</li>
+		<li class="project">
+			<dl>
+				<dt class="project__link"><a href="https://github.com/kefirjs/kefir">github.com/kefirjs/kefir</a></dt>
+				<dd class="project__meta">[Contributor] JavaScript</dd>
+				<dd class="project__desc">A Reactive Programming library for JavaScript.</dd>
+			</dl>
+		</li>
+		<li class="project">
+			<dl>
+				<dt class="project__link"><a href="https://github.com/gonum/gonum">github.com/gonum/gonum</a></dt>
+				<dd class="project__meta">[Contributor] Go</dd>
+				<dd class="project__desc">Gonum is a set of numeric libraries for the Go programming language. It contains libraries for matrices, statistics, optimization, and more.</dd>
+			</dl>
+		</li>
+		<li class="project">
+			<iframe height="300" style={{width: "100%"}} scrolling="no" title="10 PRINT CHR$(205.5+RND(1)); : GOTO 10"
+					src="//codepen.io/32bitkid/embed/preview/agmYew/?height=300&theme-id=light&default-tab=result"
+					frameBorder="no" allowtransparency="true" allowFullScreen={true}>
+				See the Pen <a href='https://codepen.io/32bitkid/pen/agmYew/'>10 PRINT CHR$(205.5+RND(1)); : GOTO 10</a> by
+				James Holmes
+				(<a href='https://codepen.io/32bitkid'>@32bitkid</a>) on <a href='https://codepen.io'>CodePen</a>.
+			</iframe>
+		</li>
+	</ul>
+</Page>
+
+<style>
+	h1 {
+		margin-bottom: var(--line-height);
+	}
+
+	.posts {
+		list-style: "\2043";
+		padding-left: 1.5ch;
+	}
+
+
+	.posts li {
+		padding-inline-start: 0.5ch;
+		margin-bottom: calc(var(--line-height) * 0.25);
+	}
+
+	p.more {
+		text-align: right;
+		padding-inline-start: 2ch;
+	}
+
+	p.more a::after {
+		content: " \2192";
+	}
+
+
+	.project {
+		margin-bottom: calc(var(--line-height) * 2);
+	}
+
+	.project__link {
+		font-size: 1.7818rem;
+		line-height: var(--line-height);
+	}
+
+	.project__meta {
+		font-size: 0.7492rem;
+		margin-bottom: calc(var(--line-height) * 0.125);
+	}
+
+	.project__meta, .project__desc {
+		padding-left: 1rem;
+	}
+
+</style>

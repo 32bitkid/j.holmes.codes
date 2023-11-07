@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Page from "@layouts/page.astro";
+import Date from "../components/Date.astro";
+
+const allBlogPosts = (await getCollection(
+    'blog',
+    ({ data }) => import.meta.env.PROD ? data.draft !== true : true,
+)).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+<Page title="Blog">
+    <h1>All Posts</h1>
+    <ul class="posts">
+        {allBlogPosts
+            .map(blog =>
+                <li>
+                    <a href={`/${blog.slug}`}>{blog.data.title}</a>
+                    &numsp;
+                    <Date date={blog.data.date} />
+                </li>
+            )
+        }
+    </ul>
+</Page>
+
+<style>
+    h1 {
+        margin-bottom: var(--line-height);
+
+    }
+    .posts {
+        list-style: "\2043";
+        padding-left: 1.5ch;
+    }
+
+    .posts li {
+        padding-inline-start: 0.5ch;
+        margin-bottom: calc(var(--line-height) * 0.25);
+    }
+</style>
