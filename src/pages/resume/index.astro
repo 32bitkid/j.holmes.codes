@@ -1,0 +1,117 @@
+---
+import Header from "@components/Header.astro";
+import { marked } from 'marked';
+import "@styles/core.css";
+import resume from "../../data/resume.yaml";
+import Date from "../../components/Date.astro";
+
+const md = (frag) => frag ? marked.parse(frag) : "";
+---
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Résumé : j.holmes.codes</title>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/font.css" />
+</head>
+<body>
+<Header/>
+    <header id="intro">
+        <hgroup>
+            <h1>James Holmes</h1>
+            <h2>Developer ∪ Designer</h2>
+        </hgroup>
+        <ul class="contacts">
+            <li><a target="_blank" rel="noopener noreferrer" href="mailto:j@holmes.codes">mailto:j@holmes.codes</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="tel:+1-678-313-0813">tel:+1-678-313-0813</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://j.holmes.codes">https://j.holmes.codes</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/32bitkid">https://github.com/32bitkid</a></li>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://codepen.io/32bitkid">https://codepen.io/32bitkid</a></li>
+        </ul>
+    </header>
+    <section id="summary" set:html={md(resume.summary)}  />
+    <main>
+        <section id="work-experience">
+            <h3>Experience</h3>
+            <ol>
+                {resume.workExperience.map(job =>
+                  <li >
+                      <div>
+                          <span class="title">{job.title}</span>
+                          {" "}&middot;{" "}
+                          <a target="_blank" rel="noopener noreferrer" href={job.url}>
+                              {job.company}
+                          </a>
+                      </div>
+                      <div class="span">
+                          <Date date={job.from} day={false} />&ndash;{job.to ? <Date date={job.to} day={false} /> : <em>present</em>}
+                      </div>
+                      <div class="description" set:html={md(job.description)} />
+                  </li>
+                )}
+            </ol>
+        </section>
+    </main>
+</body>
+</html>
+
+<style>
+    #intro, #summary, #work-experience {
+        max-width: var(--max-content);
+        margin-inline: auto;
+        padding-inline: 1.5ch;
+    }
+
+    header {
+        display: grid;
+        grid-template-columns: auto 10rem;
+        margin-block: var(--line-height);
+        border-bottom: 1px solid #ddd;
+        padding-bottom: var(--line-height);
+    }
+
+    hgroup h1 {
+        font-size: var(--f-epic);
+        line-height: calc(var(--line-height) * 3);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+
+    hgroup h2 {
+        font-family: 'Equity Caps B', serif;
+        margin-top: -0.2rem;
+        margin-bottom: 0;
+        text-indent: 3ch;
+        font-size: var(--f-large);
+        line-height: calc(var(--line-height) * 1);
+        font-feature-settings: "c2sc","smcp";
+    }
+
+    h3 {
+        text-transform: lowercase;
+        font-feature-settings: unset;
+    }
+
+    .contacts {
+        text-align: right;
+        font-variant-numeric: oldstyle-nums;
+        font-size: var(--f-small);
+        line-height: 1.4;
+    }
+
+    #work-experience .title {
+        font-family: "Equity Caps B", serif;
+        font-feature-settings: "c2sc","smcp";
+        font-size: var(--f-large);
+    }
+
+    #work-experience .span {
+        font-size: var(--f-small);
+        margin-top: -0.5em;
+        text-indent: 3ch;
+        margin-bottom: calc(var(--line-height) * 0.25);
+    }
+</style>

@@ -3,6 +3,15 @@
     --colors-primary: #628da3;
     --max-content: 45rem;
 
+    --f-root:     1.3348398541700344rem; /* calc(pow(2, 5 / 12)); */
+    --f-small:    0.7491535384383408rem; /* calc(pow(var(--f-root), -1)); */
+    --f-normal:   1rem;                  /* calc(pow(var(--f-root), 0)); */
+    --f-large:    1.3348398541700344rem; /* calc(pow(var(--f-root), 1)); */
+    --f-x-large:  1.7817974362806785rem; /* calc(pow(var(--f-root), 2)); */
+    --f-huge:     2.378414230005442rem;  /* calc(pow(var(--f-root), 3)); */
+    --f-headline: 3.174802103936399rem;  /* calc(pow(var(--f-root), 4)); */
+    --f-epic:     4.237852377437181rem;  /* calc(pow(var(--f-root), 5)); */
+
     color: #333;
     background-color: white;
 }
@@ -11,7 +20,6 @@
     font: 400 12pt / var(--line-height) 'Equity Text B', serif, system-ui;
     font-feature-settings: "ss01", "ss03", "liga";
 }
-
 
 h1:not(hgroup > h1),
 h2:not(hgroup > h2),
@@ -55,17 +63,7 @@ p {
 }
 
 :link:hover, :visited:hover {
-    text-decoration: underline;
-}
-
-:link[href^="http:"], :link[href^="https:"], :link[href^="mailto:"] {
-    text-decoration: underline dashed rgba(98,141,163,0.4);
-    text-decoration-thickness: 1px;
-}
-
-:link[href^="http:"]:hover, :link[href^="https:"]:hover, :link[href^="mailto:"]:hover {
-    text-decoration: underline solid rgba(98,141,163,1);
-    text-decoration-thickness: 1px;
+    text-decoration: underline solid 1px;
 }
 
 :link[href^="http:"]::after, :link[href^="https:"]::after {
@@ -73,12 +71,21 @@ p {
     font-size: 0.4em;
     vertical-align: super;
     margin-right: -0.5ch;
+    line-height: 0;
 }
 
 :link[href^="mailto:"]::after {
     content: "\2709";
     vertical-align: super;
+    line-height: 0;
 }
+
+:link[href^="tel:"]::after {
+    content: "\2706";
+    vertical-align: super;
+    line-height: 0;
+}
+
 
 mark {
     mix-blend-mode: multiply;

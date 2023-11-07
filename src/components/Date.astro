@@ -1,14 +1,13 @@
 ---
-const { date } = Astro.props;
+const { date, day = true } = Astro.props;
+const dateObj = typeof date === "string" ? new Date(date) : date;
+const format = day
+  ? { year: 'numeric', month: 'short', day: 'numeric' }
+  : { year: 'numeric', month: 'short' }
 ---
 <style>
     time {
         font-variant-numeric: tabular-nums oldstyle-nums;
     }
 </style>
-<time datetime={date.toISOString()}>{date.toLocaleDateString("en-US", {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-
-})}</time>
+<time datetime={dateObj.toISOString()}>{dateObj.toLocaleDateString("en-US", format)}</time>

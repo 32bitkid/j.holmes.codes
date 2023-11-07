@@ -1,0 +1,524 @@
+name: James Holmes
+jobTitle: "Developer \u222A Designer"
+location: Denver, CO.
+summary: |
+  I am a *full-stack* developer with a focus on high-performance front-end
+  engineering and exceptional user-experience design.
+
+  I craft compelling, elegant interactions between people and machines.
+  I bring a diverse experience of technologies and a passion for outstanding engineering.
+  I build the tools and apps that empower people to work, play, and&mdash;most importantly&mdash;*create*.
+
+links:
+  email:         mailto:j@holmes.codes
+  tel:           tel:+1-678-313-0813
+  blog:          https://j.holmes.codes
+  github:        https://github.com/32bitkid
+  codepen:       https://codepen.io/32bitkid
+
+technicalExperience:
+  - &ActionScript
+    name: ActionScript
+    experience: 5
+    url:  http://www.adobe.com/devnet/actionscript.html
+  - &AngularJs
+    name: Angular
+    url:  https://angularjs.org/
+    experience: 3
+  - &ASPNet
+    name: ASP.Net
+    url:  http://www.asp.net/
+    experience: 2
+  - &BackboneJs
+    name: Backbone.js
+    url: http://backbonejs.org/
+    expereience: 4
+  - &BaconJs
+    name: Bacon.js
+    url:  https://baconjs.github.io/
+    experience: 3
+  - &Bootstrap
+    name: Bootstrap
+    url:  http://getbootstrap.com/javascript/
+    experience: 4
+  - &CoffeeScript
+    name: CoffeeScript
+    url:  http://coffeescript.org/
+    experience: 3
+  - &CSharp
+    name: "C#"
+    url:  https://msdn.microsoft.com/en-us/library/ms228593.aspx
+    experience: 3
+  - &Cucumber
+    name: Cucumber
+    url:  https://cucumber.io/
+    experience: 3
+  - &Express
+    name: Express
+    url:  http://expressjs.com/
+    experience: 3
+  - &Flex
+    name: Flex
+    url:  http://www.adobe.com/products/flex.html
+    experience: 3
+  - &Golang
+    name: Go
+    url:  https://golang.org/
+    experience: 4
+    featured: true
+  - &IIS
+    name: IIS
+    url:  https://www.iis.net/
+    experience: 2
+  - &Java8
+    name: Java 8
+    url:  https://docs.oracle.com/javase/specs/
+    experience: 3
+  - &JavaScript
+    name: JavaScript
+    url:  http://www.ecma-international.org/ecma-262/6.0/index.html
+    experience: 5
+    featured: true
+  - &jQuery
+    name: jQuery
+    url:  https://jquery.com/
+    experience: 4
+  - &Knockout
+    name: Knockout
+    url:  http://knockoutjs.com/
+    experience: 4
+  - &Leaflet
+    name: Leaflet
+    url:  http://leafletjs.com/
+    experience: 3
+  - &Less
+    name: Less
+    url:  http://lesscss.org/
+    experience: 5
+  - &MSSQLServer
+    name: MS SQL Server
+    url:  https://www.microsoft.com/en-us/server-cloud/products/sql-server/features.aspx
+    experience: 3
+  - &MySQL
+    name: MySQL
+    url:  https://www.mysql.com/
+    experience: 2
+  - &NodeJs
+    name: Node.js
+    url:  https://nodejs.org/en/
+    experience: 4
+  - &OrientDB
+    name: OrientDB
+    url:  http://orientdb.com/orientdb/
+    experience: 2
+  - &Postgres
+    name: Postgres
+    url:  http://www.postgresql.org/
+    experience: 3
+  - &React
+    name: React
+    url:  https://facebook.github.io/react/
+    experience: 5
+    featured: true
+  - &Redis
+    name: Redis
+    url:  http://redis.io/
+    experience: 2
+  - &Rails
+    name: Ruby on Rails
+    url:  http://rubyonrails.org/
+    experience: 2
+  - &Ruby
+    name: Ruby
+    url:  https://www.ruby-lang.org/en/
+    experience: 4
+  - &Spring
+    name: Spring
+    url:  http://projects.spring.io/spring-framework/
+    experience: 1
+  - &WebDriver
+    name: WebDriver
+    url:  http://www.seleniumhq.org/projects/webdriver/
+    experience: 3
+  - &Python
+    name: Python
+    experience: 3
+  - &Kotlin
+    name: Kotlin
+    url: https://kotlinlang.org/
+    experience: 3
+    featured: true
+  - &TypeScript
+    name: TypeScript
+    url: https://www.typescriptlang.org/
+    experience: 4
+    featured: true
+  - &HTML5
+    name: HTML5
+    experience: 5
+    url: https://www.w3.org/TR/html52/
+    featured: true
+  - &CSS3
+    name: CSS3
+    experience: 5
+    url: https://www.w3.org/TR/css-2018/
+    featured: true
+  - &SCSS
+    name: SCSS
+    url:  https://sass-lang.com
+    experience: 5
+    featured: true
+  - &Git
+    name: Git
+    url:  https://git-scm.com/
+    experience: 5
+    featured: true
+  - &tdd
+    name: TDD
+    experience: 5
+    featured: true
+  - &bdd
+    name: BDD
+    experience: 4
+  - &Mocha
+    name: Mocha
+    experience: 4
+  - &Chai
+    name: Chai
+    experience: 4
+  - &Sinon
+    name: Sinon
+    experience: 4
+  - &Redux
+    name: Redux
+    experience: 4
+    featured: true
+  - &GraphQL
+    name: GraphQL
+    experience: 4
+    featured: true
+  - &Webpack
+    name: Webpack
+    experience: 4
+    featured: true
+  - &Gulp
+    name: Gulp
+    experience: 3
+  - &Brunch
+    name: Brunch
+    experience: 4
+  - &Gatsby
+    name: Gatsby
+    experience: 3
+    featured: true
+
+workExperience:
+  - company: Formant
+    url: https://www.formant.io/
+    title: Senior Frontend Engineer/Design
+    from: '2022-04'
+    to: '2023-11'
+
+  - company: WorkBoard
+    url: https://www.workboard.com/
+    title: Senior Frontend Engineer
+    from: '2021-08'
+    to: '2022-04'
+
+  - company: Pinnacol Assurance
+    url: https://www.pinnacol.com/
+    title: Lead Engineer
+    from: '2019-08'
+    to: '2021-08'
+
+  - company: niolabs
+    url: https://niolabs.com
+    title: Lead Innovation Engineer
+    from: '2016-02'
+    to: '2019-04'
+    tech:
+      - *NodeJs
+      - *React
+      - *Redux
+      - *Python
+      - *Golang
+      - *Kotlin
+      - *TypeScript
+      - *HTML5
+      - *CSS3
+      - *SCSS
+      - *tdd
+      - *bdd
+      - *GraphQL
+      - *Webpack
+      - *Brunch
+      - *Mocha
+      - *Sinon
+      - *Chai
+
+    description: |
+      I led the Innovation Team at niolabs; we built the prototypes
+      for the *next-gen* of niolabs&#x2019; IoT dev-platform. Driving
+      innovation was a *full-time* job; I split my time between
+      brain-storming new ideas, prototyping experimental features & tools,
+      designing educational & marketing material, and coordinating with
+      production teams on integration and optimizations
+      across the entire tech stack.
+
+      From designing and engineering front-ends for industrial automation
+      at scale & viticulture management platforms to leading the charge to
+      push the niolabs IoT-platform beyond the *cloud* with deeper
+      integrations with *next-gen* edge devices, I helped drive and guide
+      the platform forward into uncharted, new territory.
+
+  - company: Leads To Conversations
+    url:     http://leadstoconversations.com
+    title:   Designgineer
+    from:    '2015-05'
+    to:      '2015-11'
+    tech:
+      - *NodeJs
+      - *Express
+      - *Less
+      - *JavaScript
+      - *Knockout
+      - *BaconJs
+      - *Postgres
+      - *Redis
+      - *HTML5
+      - *CSS3
+      - *tdd
+      - *bdd
+      - *Gulp
+      - *Mocha
+
+    description: |
+      Leads To Conversations is a sales acceleration app start-up, founded by a
+      pair previous co-workers. I joined the team as the second
+      developer&mdash;third employee&mdash;bringing my skills as a UI specialist
+      to the team. My skill-set complemented the technical founder and
+      together we defined, architected and built the pilot system. My
+      responsibilities ranged from full-stack pair development to database
+      design to devops to graphic/web design to marketing to motion graphics;
+      members of small teams wear many hats.
+
+  - company: Skyward.io
+    url:     http://skyward.io/
+    title:   Lead Front-End Developer
+    from:    '2014-08'
+    to:      '2015-04'
+    tech:
+      - *JavaScript
+      - *Bootstrap
+      - *AngularJs
+      - *Less
+      - *Leaflet
+      - *Java8
+      - *Spring
+      - *OrientDB
+      - *HTML5
+      - *CSS3
+      - *tdd
+      - *Gulp
+
+    description: |
+      As the lead front-end developer at Skyward, I worked with the lead designer
+      to realize and iterate the UI/UX of the application: a UAV flight
+      planning, logging, and compliance SAAS. Built on Angular.js, I implemented
+      the front-end on-top of the Java backend. Established
+      the automated testing and build pipelines. I mentored junior developers
+      within the front-end stack. I also mentored the entire engineering team towards
+      Java 8 functional programming paradigms.
+
+  - company: VersionOne
+    url:     https://www.versionone.com/
+    title:   Team Lead
+    from:    '2012-02'
+    to:      '2014-08'
+    tech:
+      - *JavaScript
+      - *Less
+      - *CoffeeScript
+      - *BackboneJs
+      - *CSharp
+      - *ASPNet
+      - *MSSQLServer
+      - *IIS
+      - *Ruby
+      - *Cucumber
+      - *WebDriver
+      - *HTML5
+      - *CSS3
+      - *Gulp
+      - *tdd
+
+    description: |
+      I enjoyed working at VersionOne; the team was well established and
+      full of some of the smartest and most passionate people I've had the
+      opportunity to work with. It is where I fell in love with
+      pair-programming. I joined the team as a full-stack developer; focusing on
+      improving UI and the state of the front-end stack.
+
+      While at VersionOne, I was the Feature Lead on a
+      high-profile, well-received [feature](https://www.versionone.com/product/agile-team-software/)
+      of the flagship application. During my last year at VersionOne, I
+      had the privilege to be a Team Lead, one of three on the development team. In
+      that role I helped guide, mentor, and support the devs and designers on
+      my team. I coordinated with the other teams and Product Owners to deliver
+      high-quality features and releases.
+
+  - company: Clearwave
+    url:     http://www.clearwaveinc.com/
+    title:   ScrumMaster / Team Lead
+    from:    '2009-08'
+    to:      '2011-09'
+    tech:
+      - *JavaScript
+      - *jQuery
+      - *CSharp
+      - *ASPNet
+      - *MSSQLServer
+      - *Ruby
+      - *Cucumber
+      - *WebDriver
+      - *HTML5
+      - *CSS3
+    description: |
+      Initially hired as a technical test developer at Clearwave, I was quickly
+      conscripted on to the development team where I helped mentor the team in
+      ASP.NET MVC, CSS, and JavaScript/jQuery best practices. As a Front-End
+      Developer, over the course of two years, I helped establish
+      design frameworks and tools for the rest of the development team. I
+      continued to collaborated with both the business analysts and development
+      teams to plan, architect, build and maintain the BDD test suite. Finally,
+      I served as team ScrumMaster until my departure, assisting in the
+      on-going effort to move to a more agile work paradigm.
+
+
+olderWorkExperience:
+  - company: Bluechip Athletic Solutions
+    url:     http://www.bas-llc.net/
+    title:   ActionScript Consultant
+    from:    '2011-06'
+    to:      '2012-06'
+    tech:
+      - *ActionScript
+      - { name: AGAL }
+      - { name: Flash }
+    description: |
+      The work I did while consulting for BAS was some of the *most interesting*
+      work I've gotten to do professionally. They needed a library of reusable
+      custom UI-framework components, the most ambitious was a custom
+      mobile/desktop ready real-time 3D panoramic viewer compoment in Flash/AS3.
+      I had to dust off several math textbooks from college and refresh my
+      working memory of vector and matrix math. However, it was great fun to
+      implement a 3D renderer from almost first principals. A lot more work went
+      into optimizing performance and building an API and documentation for RAD
+      consumption by graphic designers and other junior developers on their team.
+
+  - company: FourSpots
+    title:   Web Application Developer
+    from:    '2008-02'
+    to:      '2009-06'
+    tech:
+      - *Ruby
+      - *Rails
+      - *MySQL
+      - *ActionScript
+      - *Flex
+    description: |
+      FourSpots was an ambitious self-service advertising platform and
+      market-place start-up, where I helped implement front-end design and hack
+      together back-end. I created API interfaces for custom video editing and
+      rendering services on top of FFMPEG and Avisynth, as well as custom
+      SWF packing for advertisment distribution.
+
+
+teaching:
+  - organization: CoderDojo Ponce Springs
+    title:        Volunteer Mentor
+    from:         '2013-05'
+    to:           '2014-08'
+    notes: |
+      I had a *ton* of fun mentoring at the CoderDojo. The effort was
+      spearheaded by a fellow co-worker. Having buy&#x2011;in/support from our
+      employer, we had access to both hardware and facilities to build our curriculum.
+      With a half-dozen volunteer mentors and teachers, we had classes and
+      self-directed sessions for dozens of children between the ages of 10 and
+      17. The environment could be chaotic and challenging, but the reward was
+      helping expose the next generation to fundamentals of technology and
+      programming.
+
+education:
+  - school:   Art Institute of Atlanta
+    location: Atlanta, GA
+    program:  BFA Media Arts and Animation
+    from:     '2000-07'
+    to:       '2004-04'
+    notes: |
+      My college experience helped solidify my interest in the intersection
+      between visual arts and code. Classes like Color Theory, Typography and
+      Life Drawing have made an unexpected impact during my professional career.
+      And the 3D Modeling and Animation classes were my first exposure to the
+      confluence art and mathematics. During my senior year, I was the teaching
+      assistant for most of the 3D Modeling and Animation classes; my first
+      foray into teaching and education.i
+
+software:
+  - &Sketch
+    name: Sketch
+    featured: true
+  - &Photoshop
+    name: Photoshop
+    featured: true
+  - &Illustrator
+    name: Illustrator
+    featured: true
+  - &AfterEffects
+    name: After Effects
+    featured: true
+  - &Monodraw
+    name: Monodraw
+    featured: true
+
+projects:
+  - name: github.com/32bitkid/mpeg
+    link: https://github.com/32bitkid/mpeg
+    role: author
+    tech:
+      - *Golang
+    description: Author of an experimental pure-Go MPEG-2 decoder.
+
+  - name: github.com/32bitkid/sci
+    link: https://github.com/32bitkid/sci
+    role: author
+    tech:
+      - *Golang
+    description: Author of a small collection of Go data-structures for parsing `SCI0` resources from classic *Sierra On-Line* adventure games.
+
+  - name: "@pubkeeper/client"
+    link: https://www.npmjs.com/package/@pubkeeper/client
+    role: maintainer
+    tech:
+      - *TypeScript
+    description: Author and npm maintainer of TypeScript/JS client for Pubkeeper, a communications protocol broker for IoT systems.
+
+  - name: gonum
+    link: https://github.com/gonum/gonum
+    role: contributor
+    tech:
+      - *TypeScript
+    description: Contributor to the multigraph and DOT-related codec implementations.
+
+  - name: kefirjs
+    link: https://github.com/kefirjs/kefir
+    role: contributor
+    tech:
+      - *TypeScript
+    description: Contributor to the JavaScript Reactive Programming library.
+
+methodologies:
+  - Agile
+  - TDD
+  - BDD
+  - XP/Pairing

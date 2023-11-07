@@ -17,7 +17,9 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@modyfi/vite-plugin-yaml": "^1.0.4",
     "date-fns": "^2.30.0",
+    "marked": "^9.1.5",
     "rehype-katex": "^7.0.0"
   }
 }
