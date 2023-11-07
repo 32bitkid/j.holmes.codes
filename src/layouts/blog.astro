@@ -56,19 +56,11 @@ const { title, date, tags } = Astro.props.frontmatter ?? Astro.props;
   }
 
   .markdown {}
-  .markdown :global(:not(pre) > code) {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    background: #f5f2f0;
-    padding: 0.2em 0.5ch;
-    border-radius: 0.3em;
-    white-space: normal;
-  }
 
   .markdown :global(.astro-code) {
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     padding: 1rem;
     border-radius: 0.5rem;
-    font-size: 0.85em;
   }
 
   .markdown :global(figure) {

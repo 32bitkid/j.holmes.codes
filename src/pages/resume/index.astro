@@ -35,16 +35,18 @@ const md = (frag) => frag ? marked.parse(frag) : "";
     <section id="summary" set:html={md(resume.summary)}  />
     <main>
         <section id="work-experience">
-            <h3>Experience</h3>
+            <h2>Experience</h2>
             <ol>
                 {resume.workExperience.map(job =>
                   <li >
                       <div>
                           <span class="title">{job.title}</span>
                           {" "}&middot;{" "}
-                          <a target="_blank" rel="noopener noreferrer" href={job.url}>
-                              {job.company}
-                          </a>
+                          {job.url
+                            ? <a target="_blank" rel="noopener noreferrer" href={job.url}>{job.company}</a>
+                            : job.company
+                          }
+
                       </div>
                       <div class="span">
                           <Date date={job.from} day={false} />&ndash;{job.to ? <Date date={job.to} day={false} /> : <em>present</em>}
@@ -55,6 +57,78 @@ const md = (frag) => frag ? marked.parse(frag) : "";
             </ol>
         </section>
     </main>
+    <aside>
+        <section id="projects">
+            <h2>Projects</h2>
+            <ol>
+                {resume.projects
+                  .map(project =>
+                    <li class:list={[project.role]}>
+                        <details open>
+                            <summary>
+                                <a href={project.link} class:list={["title"]}>{project.name}</a>
+                            </summary>
+                            <Fragment set:html={md(project.description)} />
+                        </details>
+                    </li>
+                  )}
+            </ol>
+        </section>
+
+        <section id="education">
+            <h2>Education</h2>
+            <ol>
+                {resume.education.map(edu =>
+                  <li >
+                      <div><span class="title">{edu.name}</span></div>
+                      <div><span class="program">{edu.program}</span></div>
+                      <div class="span">
+                          <Date date={edu.from} day={false} month={false} />&ndash;{edu.to ? <Date date={edu.to} day={false} month={false} /> : <em>present</em>}
+                      </div>
+                  </li>
+                )}
+            </ol>
+        </section>
+        <section id="skills">
+            <h2>Skills</h2>
+            <ol>
+                {resume.technicalExperience
+                  .filter(it => it.featured)
+                  .sort((a,b) => {
+                      const exp = b.experience - a.experience;
+                      if (exp !== 0) {
+                          return exp;
+                      }
+                      return a.name.localeCompare(b.name);
+                  })
+                  .map(skill =>
+                    <li>{skill.name}</li>
+                  )}
+            </ol>
+        </section>
+        <section id="software">
+            <h2>Software</h2>
+            <ol>
+                {resume.software
+                  .slice()
+                  .sort((a,b) => a.name.localeCompare(b.name))
+                  .map(software =>
+                      <li>{software.name}</li>
+                    )}
+            </ol>
+        </section>
+        <section id="methodologies">
+            <h2>Methodologies</h2>
+            <ol>
+                {resume.methodologies
+                  .slice()
+                  .sort((a,b) => a.localeCompare(b))
+                  .map(methodology =>
+                    <li>{methodology}</li>
+                  )}
+            </ol>
+        </section>
+    </aside>
 </body>
 </html>
 
@@ -104,14 +178,71 @@ const md = (frag) => frag ? marked.parse(frag) : "";
 
     #work-experience .title {
         font-family: "Equity Caps B", serif;
-        font-feature-settings: "c2sc","smcp";
         font-size: var(--f-large);
+        letter-spacing: -0.06em;
+    }
+
+    #work-experience li {
+        margin-block-end: calc(var(--line-height) * 1.5)
+    }
+
+    #work-experience :global(p) {
+        margin-block-end: calc(var(--line-height) * 0.333)
+    }
+
+    #work-experience :global(p:not(:first-of-type)) {
+        text-indent: 4ch;
+    }
+
+    #projects :global(p) {
+        font-size: var(--f-small);
+    }
+
+    #projects details {
+        padding-inline-start: 2ch;
+        margin-block-end: calc(var(--line-height) * 0.333);
+    }
+
+    #projects details :global(p:last-child) {
+        margin-bottom: 0;
+    }
+
+    #projects .author summary {
+        list-style: "\2605\0020";
+    }
+
+    #projects .maintainer summary {
+        list-style: "\2B2A\0020";
+    }
+
+    #projects .contributor summary {
+        list-style: "\2022\0020";
+    }
+
+    #projects .title {
+        letter-spacing: -0.02em;
     }
 
     #work-experience .span {
         font-size: var(--f-small);
         margin-top: -0.5em;
         text-indent: 3ch;
-        margin-bottom: calc(var(--line-height) * 0.25);
+        margin-bottom: calc(var(--line-height) * 0.333);
+    }
+
+    aside {
+        display: grid;
+        max-width: var(--max-content);
+        margin-inline: auto;
+        padding-inline: 1.5ch;
+        grid-template-columns: repeat(3, 33%);
+    }
+
+    aside h2 {
+        margin-top: 0;
+    }
+
+    aside section {
+        margin-bottom: var(--line-height);
     }
 </style>

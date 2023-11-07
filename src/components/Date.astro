@@ -1,9 +1,11 @@
 ---
-const { date, day = true } = Astro.props;
+const { date, day = true, month = true } = Astro.props;
 const dateObj = typeof date === "string" ? new Date(date) : date;
-const format = day
-  ? { year: 'numeric', month: 'short', day: 'numeric' }
-  : { year: 'numeric', month: 'short' }
+const format = !month
+  ? { year: 'numeric' }
+  : !day
+  ? {year: 'numeric', month: 'short'}
+  : {year: 'numeric', month: 'short', day: 'numeric'}
 ---
 <style>
     time {

@@ -2,7 +2,7 @@ name: James Holmes
 jobTitle: "Developer \u222A Designer"
 location: Denver, CO.
 summary: |
-  I am a *full-stack* developer with a focus on high-performance front-end
+  I&rsquo;m a *full-stack* developer, with a focus on high-performance front-end
   engineering and exceptional user-experience design.
 
   I craft compelling, elegant interactions between people and machines.
@@ -115,6 +115,7 @@ technicalExperience:
     name: Postgres
     url:  http://www.postgresql.org/
     experience: 3
+    featured: true
   - &React
     name: React
     url:  https://facebook.github.io/react/
@@ -207,10 +208,29 @@ technicalExperience:
   - &Brunch
     name: Brunch
     experience: 4
-  - &Gatsby
-    name: Gatsby
+  - &Salesforce
+    name: Salesforce/Apex
     experience: 3
+  - &LWC
+    name: LWC
+    experience: 3
+  - &styled-components
+    name: styled-components
+    experience: 4
+  - &emotion
+    name: Emotion
+    experience: 4
+  - &mobx
+    name: MobX
+    experience: 5
     featured: true
+  - &webrtc
+    name: WebRTC
+    experience: 3
+  - &jest
+    name: Jest
+    experience: 3
+
 
 workExperience:
   - company: Formant
@@ -218,21 +238,47 @@ workExperience:
     title: Senior Frontend Engineer/Design
     from: '2022-04'
     to: '2023-11'
+    tech:
+      - *NodeJs
+      - *Express
+      - *React
+      - *TypeScript
+      - *mobx
+      - *styled-components
+      - *emotion
+      - *webrtc
+      - *Golang
+      - *jest
 
   - company: WorkBoard
     url: https://www.workboard.com/
     title: Senior Frontend Engineer
     from: '2021-08'
     to: '2022-04'
+    tech:
+      - *NodeJs
+      - *Express
+      - *React
+      - *Redux
+      - *TypeScript
+      - *HTML5
+      - *CSS3
+      - *styled-components
+      - *jest
 
   - company: Pinnacol Assurance
     url: https://www.pinnacol.com/
     title: Lead Engineer
     from: '2019-08'
     to: '2021-08'
+    tech:
+      - *Salesforce
+      - *LWC
+      - *React
+      - *TypeScript
+      - *jest
 
   - company: niolabs
-    url: https://niolabs.com
     title: Lead Innovation Engineer
     from: '2016-02'
     to: '2019-04'
@@ -255,9 +301,8 @@ workExperience:
       - *Mocha
       - *Sinon
       - *Chai
-
     description: |
-      I led the Innovation Team at niolabs; we built the prototypes
+      At <small>niolabs</small>, I led the Innovation Team; we built the prototypes
       for the *next-gen* of niolabs&#x2019; IoT dev-platform. Driving
       innovation was a *full-time* job; I split my time between
       brain-storming new ideas, prototyping experimental features & tools,
@@ -272,7 +317,6 @@ workExperience:
       the platform forward into uncharted, new territory.
 
   - company: Leads To Conversations
-    url:     http://leadstoconversations.com
     title:   Designgineer
     from:    '2015-05'
     to:      '2015-11'
@@ -291,9 +335,8 @@ workExperience:
       - *bdd
       - *Gulp
       - *Mocha
-
     description: |
-      Leads To Conversations is a sales acceleration app start-up, founded by a
+      <small>Leads To Conversations</small> is a sales acceleration app start-up, founded by a
       pair previous co-workers. I joined the team as the second
       developer&mdash;third employee&mdash;bringing my skills as a UI specialist
       to the team. My skill-set complemented the technical founder and
@@ -303,7 +346,6 @@ workExperience:
       members of small teams wear many hats.
 
   - company: Skyward.io
-    url:     http://skyward.io/
     title:   Lead Front-End Developer
     from:    '2014-08'
     to:      '2015-04'
@@ -320,9 +362,8 @@ workExperience:
       - *CSS3
       - *tdd
       - *Gulp
-
     description: |
-      As the lead front-end developer at Skyward, I worked with the lead designer
+      As the lead front-end developer at <small>Skyward</small>, I worked with the lead designer
       to realize and iterate the UI/UX of the application: a UAV flight
       planning, logging, and compliance SAAS. Built on Angular.js, I implemented
       the front-end on-top of the Java backend. Established
@@ -331,7 +372,7 @@ workExperience:
       Java 8 functional programming paradigms.
 
   - company: VersionOne
-    url:     https://www.versionone.com/
+    url:     https://digital.ai/
     title:   Team Lead
     from:    '2012-02'
     to:      '2014-08'
@@ -351,21 +392,19 @@ workExperience:
       - *CSS3
       - *Gulp
       - *tdd
-
     description: |
-      I enjoyed working at VersionOne; the team was well established and
-      full of some of the smartest and most passionate people I've had the
-      opportunity to work with. It is where I fell in love with
-      pair-programming. I joined the team as a full-stack developer; focusing on
-      improving UI and the state of the front-end stack.
+      I loved working at <small>VersionOne</small>; the team was well established and
+      full of some of the smartest and most passionate people I&rsquo;ve ever 
+      had the opportunity to work with. It is where I fell in love with
+      pair-programming and XP. I joined the team as a full-stack developer; 
+      focusing on improving UI and the state of the front-end stack.
 
       While at VersionOne, I was the Feature Lead on a
-      high-profile, well-received [feature](https://www.versionone.com/product/agile-team-software/)
-      of the flagship application. During my last year at VersionOne, I
-      had the privilege to be a Team Lead, one of three on the development team. In
-      that role I helped guide, mentor, and support the devs and designers on
-      my team. I coordinated with the other teams and Product Owners to deliver
-      high-quality features and releases.
+      high-profile, well-received feature of the flagship application. During my 
+      last year at VersionOne, I had the privilege to be a Team Lead, one of 
+      three on the development team. In that role I helped guide, mentor, and 
+      support the devs and designers on my team. I coordinated with the other 
+      teams and Product Owners to deliver high-quality features and releases.
 
   - company: Clearwave
     url:     http://www.clearwaveinc.com/
@@ -384,8 +423,8 @@ workExperience:
       - *HTML5
       - *CSS3
     description: |
-      Initially hired as a technical test developer at Clearwave, I was quickly
-      conscripted on to the development team where I helped mentor the team in
+      Initially hired as a technical test developer at <small>Clearwave</small>, 
+      I was quickly conscripted on to the development team where I helped mentor the team in
       ASP.NET MVC, CSS, and JavaScript/jQuery best practices. As a Front-End
       Developer, over the course of two years, I helped establish
       design frameworks and tools for the rest of the development team. I
@@ -407,7 +446,7 @@ olderWorkExperience:
       - { name: Flash }
     description: |
       The work I did while consulting for BAS was some of the *most interesting*
-      work I've gotten to do professionally. They needed a library of reusable
+      work I&rsquo;ve gotten to do professionally. They needed a library of reusable
       custom UI-framework components, the most ambitious was a custom
       mobile/desktop ready real-time 3D panoramic viewer compoment in Flash/AS3.
       I had to dust off several math textbooks from college and refresh my
@@ -450,7 +489,7 @@ teaching:
       programming.
 
 education:
-  - school:   Art Institute of Atlanta
+  - name:   Art Institute of Atlanta
     location: Atlanta, GA
     program:  BFA Media Arts and Animation
     from:     '2000-07'
@@ -480,8 +519,18 @@ software:
   - &Monodraw
     name: Monodraw
     featured: true
+  - &JetBrains
+    name: JetBrains IDEs
+    featured: true
 
 projects:
+  - name: github.com/32bitkid/sci.js
+    link: https://github.com/32bitkid/sci.js
+    role: author
+    tech:
+      - *TypeScript
+    description: JavaScript library and data-structures for parsing and manipulating `SCI0` resources from classic *Sierra On-Line* adventure games.
+
   - name: github.com/32bitkid/mpeg
     link: https://github.com/32bitkid/mpeg
     role: author
@@ -494,7 +543,7 @@ projects:
     role: author
     tech:
       - *Golang
-    description: Author of a small collection of Go data-structures for parsing `SCI0` resources from classic *Sierra On-Line* adventure games.
+    description: Go library and data-structures for parsing and manipulating `SCI0` resources from classic *Sierra On-Line* adventure games.
 
   - name: "@pubkeeper/client"
     link: https://www.npmjs.com/package/@pubkeeper/client
