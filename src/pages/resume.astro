@@ -43,7 +43,7 @@ const md = (frag) => frag ? marked.parse(frag) : "";
                   .filter(job => !job.filtered)
                   .sort((a,b) => a.from < b.from ? 1 : a == b ? 0 : -1)
                   .map(job =>
-                      <li >
+                      <li>
                           <div>
                               <span class="title">{job.title}</span>
                               {" "}&middot;{" "}

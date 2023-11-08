@@ -1,25 +1,26 @@
 ---
 import { getCollection } from 'astro:content';
 import Page from "@layouts/page.astro";
-import Date from "../components/Date.astro";
+import BlogItem from "../components/BlogItem.astro";
 
-const allBlogPosts = (await getCollection(
+const allBlogPosts =
+  (await getCollection(
     'blog',
-    ({ data }) => import.meta.env.PROD ? data.draft !== true : true,
-)).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+    ({ data }) => (import.meta.env.PROD) ? data.pubDate !== undefined : true,
+  ))
+  .sort((a, b) => {
+      const aPubDate = a.data.pubDate;
+      const bPubDate = b.data.pubDate;
+      if (!aPubDate && !bPubDate) return 0;
+      if (!aPubDate) return 1;
+      if (!bPubDate) return -1;
+      return bPubDate.getTime() - aPubDate.getTime();
+  });
 ---
 <Page title="Blog">
     <h1>All Posts</h1>
     <ul class="posts">
-        {allBlogPosts
-            .map(blog =>
-                <li>
-                    <a href={`/${blog.slug}`}>{blog.data.title}</a>
-                    <div class="byline"><Date date={blog.data.date} /></div>
-
-                </li>
-            )
-        }
+        {allBlogPosts.map((blog) => <BlogItem blog={blog} />)}
     </ul>
 </Page>
 
@@ -27,18 +28,5 @@ const allBlogPosts = (await getCollection(
     h1 {
         margin-bottom: var(--line-height);
 
-    }
-    .posts { }
-
-    .posts li {
-        padding-inline-start: 0.5ch;
-        margin-bottom: calc(var(--line-height) * 0.5);
-    }
-
-    .posts li a {}
-
-    .byline {
-        color: #999;
-        font-size: 0.7492rem;
     }
 </style>

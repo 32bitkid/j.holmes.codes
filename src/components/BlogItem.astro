@@ -1,0 +1,42 @@
+---
+import Date from "./Date.astro";
+const { blog } = Astro.props;
+---
+<li class:list={{ draft: !!blog.data.pubDate }}>
+  {blog.data.pubDate === undefined && <div class="draft-marker">Draft</div>}
+  <a href={`/${blog.slug}`}>{blog.data.title}</a>
+  {
+    blog.data.pubDate &&
+      <div class="byline"><Date date={blog.data.pubDate}/></div>
+  }
+</li>
+
+
+<style>
+    li {
+        padding-inline-start: 0.5ch;
+        margin-bottom: calc(var(--line-height) * 0.5);
+    }
+
+    .byline {
+        color: #999;
+        font-size: var(--f-small);
+        line-height: 1;
+        text-indent: 2ch;
+    }
+
+    .draft-marker {
+        display: inline-block;
+        font-family: "Equity Caps B", serif;
+        letter-spacing: -0.04em;
+        font-feature-settings: "c2sc", "smcp", "onum";
+        font-size: var(--f-x-small);
+        line-height: 1;
+        border: 1px solid currentColor;
+        margin-inline-end: 1ch;
+        border-radius: 0.25rem;
+        padding: 1px 4px;
+        color: var(--colors-primary);
+        vertical-align: 0.125rem;
+    }
+</style>

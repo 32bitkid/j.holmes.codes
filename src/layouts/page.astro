@@ -24,9 +24,19 @@ const titlePart = title ? `${title} : ` : "";
 </html>
 
 <style>
+    body {
+        display: grid;
+        min-height: calc(100vh - var(--line-height) * 1.5);
+        grid-template-rows: 1fr min-content;
+        justify-items: stretch;
+        align-items: stretch;
+    }
+
     main {
+        width: 100%;
+        box-sizing: border-box;
+        justify-self: center;
         max-width: var(--max-content);
-        margin-inline: auto;
         padding-inline: 1.5ch;
     }
 </style>

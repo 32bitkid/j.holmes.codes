@@ -1,16 +1,24 @@
 ---
 import { getCollection } from 'astro:content';
 import Page from "@layouts/page.astro";
-import Date from "@components/Date.astro";
 import "../../public/css/reset.css";
 import "../../public/css/font.css";
 import "../styles/core.css";
+import BlogItem from "../components/BlogItem.astro";
 
 const max = 5;
 const allBlogPosts = (await getCollection(
-		'blog', ({ data }) => import.meta.env.PROD ? data.draft !== true : true,
+		'blog',
+		({ data }) => import.meta.env.PROD ? data.pubDate !== undefined : true,
 	))
-	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+	.sort((a, b) => {
+		const aPubDate = a.data.pubDate;
+		const bPubDate = b.data.pubDate;
+		if (!aPubDate && !bPubDate) return 0;
+		if (!aPubDate) return 1;
+		if (!bPubDate) return -1;
+		return bPubDate.getTime() - aPubDate.getTime();
+	});
 const showMore = allBlogPosts.length > max;
 ---
 <Page>
@@ -41,24 +49,16 @@ const showMore = allBlogPosts.length > max;
 		&hellip;to get in touch, e-mail me at <a href="mailto:j@holmes.codes">j@holmes.codes</a>.
 	</p>
 
-	<h2>Recent Posts</h2>
+	<h2>Thoughts…</h2>
 	<ul class="posts">
 		{allBlogPosts
 			.slice(0, max)
-			.map(blog =>
-				<li>
-					<a href={`/${blog.slug}`}>{blog.data.title}</a>
-					&numsp;
-					<div class="byline">
-						<Date date={blog.data.date} />
-					</div>
-				</li>
-			)
+			.map((blog) => <BlogItem blog={blog} />)
 		}
 	</ul>
 	{showMore && <p class="more"><a  href="/blog">more posts</a></p> }
 
-	<h2>Code &amp; Links</h2>
+	<h2>Code &amp; Links…</h2>
 	<ul class="projects">
 		<li class="project">
 			<dl>
@@ -139,20 +139,6 @@ const showMore = allBlogPosts.length > max;
 		margin-bottom: var(--line-height);
 	}
 
-	.posts {}
-
-	.posts li {
-		padding-inline-start: 0.5ch;
-		margin-bottom: calc(var(--line-height) * 0.5);
-	}
-
-	.posts li a {}
-
-	.byline {
-		color: #999;
-		font-size: 0.7492rem;
-	}
-
 	p.more {
 		text-align: center;
 		padding-inline-start: 2ch;
@@ -168,7 +154,7 @@ const showMore = allBlogPosts.length > max;
 	}
 
 	.project__link {
-		font-size: var(--f-x-large);
+		font-size: var(--f-large);
 		line-height: var(--line-height);
 		margin-bottom: calc(var(--line-height) * 0.5);
 	}
