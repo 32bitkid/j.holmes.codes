@@ -1,17 +1,19 @@
 ---
+import { format } from "date-fns";
 import { parseDate } from "./parseDate";
-const { date, day = true, month = true } = Astro.props;
-const format = !month
-  ? { year: 'numeric' } as const
+const { date: inputDate, day = true, month = true } = Astro.props;
+const formatStr = !month
+  ? "yyyy"
   : !day
-  ? {year: 'numeric', month: 'short'} as const
-  : {year: 'numeric', month: 'short', day: 'numeric'} as const;
+  ? "MMM yyyy"
+  : "MMM d, yyyy";
 
-const dateObj = parseDate(date);
+const dt = parseDate(inputDate);
+const date = new Date(dt.valueOf() + dt.getTimezoneOffset() * 60 * 1000)
 ---
 <style>
     time {
         font-variant-numeric: tabular-nums oldstyle-nums;
     }
 </style>
-<time datetime={dateObj.toISOString()}>{dateObj.toLocaleDateString("en-US", format)}</time>
+<time datetime={date.toISOString()}>{format(date, formatStr)}</time>
