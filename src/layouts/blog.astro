@@ -27,7 +27,7 @@ const isPublished = typeof pubDate !== "undefined";
   <div class="byline">
     {
       isPublished
-        ? <time dateTime={date}>{format(parseISO(date), "MMMM d, yyyy")}</time>
+        ? <time datetime={date}>{format(parseISO(date), "MMMM d, yyyy")}</time>
         : <strong><small>unpublished</small></strong>
     }
     {tags && <>{' in '}<Tags tags={tags}/></>}

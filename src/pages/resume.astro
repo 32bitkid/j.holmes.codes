@@ -6,7 +6,26 @@ import { marked } from 'marked';
 import "../styles/core.css";
 import resume from "../data/resume.yaml";
 
-const md = (frag) => frag ? marked.parse(frag) : "";
+interface IJob {
+    readonly company: string;
+    readonly description: string;
+    readonly filtered: boolean;
+    readonly from: string;
+    readonly tech: unknown[];
+    readonly title: string;
+    readonly to: string
+    readonly url: string;
+}
+
+interface IProject {
+    readonly description: string;
+    readonly hidden: boolean;
+    readonly link: string;
+    readonly name: string;
+    readonly role: string;
+}
+
+const md = (frag: string) => frag ? marked.parse(frag) : "";
 ---
 <html lang="en">
 <head>
@@ -39,7 +58,7 @@ const md = (frag) => frag ? marked.parse(frag) : "";
         <section id="work-experience">
             <h2>Experience</h2>
             <ol>
-                {resume.workExperience
+                {(resume.workExperience as IJob[])
                   .filter(job => !job.filtered)
                   .sort((a,b) => a.from < b.from ? 1 : a == b ? 0 : -1)
                   .map(job =>
@@ -61,14 +80,14 @@ const md = (frag) => frag ? marked.parse(frag) : "";
                       </li>
                   )}
             </ol>
-            {resume.workExperience.some(it => it.filtered) && <>Full work-history is available on request…</>}
+            {(resume.workExperience as IJob[]).some(it => it.filtered) && <>Full work-history is available on request…</>}
         </section>
     </main>
     <hr />
     <section id="projects">
         <h2>Projects</h2>
         <ul>
-            {resume.projects
+            {(resume.projects as IProject[])
               .filter(project => !project.hidden)
               .map(project =>
                 <li class:list={[project.role]}>

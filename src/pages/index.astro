@@ -1,8 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import Page from "@layouts/page.astro";
-import "../../public/css/reset.css";
-import "../../public/css/font.css";
 import "../styles/core.css";
 import BlogItem from "../components/BlogItem.astro";
 
@@ -72,9 +70,9 @@ const showMore = allBlogPosts.length > max;
 					<a href='https://codepen.io/32bitkid/pen/BgwwgG/'>CSS 3&half;&Prime; Floppy Diskettes Sketch</a>
 				</dt>
 				<dd>
-					<iframe height="400" style={{width: "100%"}} scrolling="no" title="Quest For Glory II Disks"
+					<iframe height="400" style={{width: "100%"}} title="Quest For Glory II Disks"
 									src="//codepen.io/32bitkid/embed/preview/BgwwgG/?height=300&theme-id=light&default-tab=result"
-									frameBorder="no" allowtransparency="true" allowFullScreen={true}>
+									allowtransparency="true" allowfullscreen={true}>
 						See the Pen <a href='https://codepen.io/32bitkid/pen/BgwwgG/'>Quest For Glory II Disks</a> by James Holmes
 						(<a href='https://codepen.io/32bitkid'>@32bitkid</a>) on <a href='https://codepen.io'>CodePen</a>.
 					</iframe>
@@ -100,9 +98,9 @@ const showMore = allBlogPosts.length > max;
 					<a href='https://codepen.io/32bitkid/pen/LKZzMR/'>60% Keyboard Sketch</a>
 				</dt>
 				<dd>
-					<iframe height="400" style={{width: "100%"}} scrolling="no" title="Interactive 60% Keyboard"
+					<iframe height="400" style={{width: "100%"}} title="Interactive 60% Keyboard"
 							src="//codepen.io/32bitkid/embed/preview/LKZzMR/?height=300&theme-id=light&default-tab=result"
-							frameBorder="no" allowtransparency="true" allowFullScreen={true}>
+							allowtransparency="true" allowfullscreen={true}>
 						See the Pen <a href='https://codepen.io/32bitkid/pen/LKZzMR/'>Interactive 60% Keyboard</a> by James Holmes
 						(<a href='https://codepen.io/32bitkid'>@32bitkid</a>) on <a href='https://codepen.io'>CodePen</a>.
 					</iframe>
@@ -121,9 +119,9 @@ const showMore = allBlogPosts.length > max;
 					<a href='https://codepen.io/32bitkid/pen/agmYew/'>Tribute to a <code>BASIC</code> classic</a>
 				</dt>
 				<dd>
-					<iframe height="400" style={{width: "100%"}} scrolling="no" title="10 PRINT CHR$(205.5+RND(1)); : GOTO 10"
+					<iframe height="400" style={{width: "100%"}} title="10 PRINT CHR$(205.5+RND(1)); : GOTO 10"
 							src="//codepen.io/32bitkid/embed/preview/agmYew/?height=300&theme-id=light&default-tab=result"
-							frameBorder="no" allowtransparency="true" allowFullScreen={true}>
+							allowtransparency="true" allowfullscreen={true}>
 						See the Pen <a href='https://codepen.io/32bitkid/pen/agmYew/'>10 PRINT CHR$(205.5+RND(1)); : GOTO 10</a> by
 						James Holmes
 						(<a href='https://codepen.io/32bitkid'>@32bitkid</a>) on <a href='https://codepen.io'>CodePen</a>.
@@ -161,6 +159,11 @@ const showMore = allBlogPosts.length > max;
 
 	.project__meta, .project__desc {
 		padding-left: 1rem;
+	}
+
+	.projects iframe {
+		border: 0;
+		overflow: hidden;
 	}
 
 </style>

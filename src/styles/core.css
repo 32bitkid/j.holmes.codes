@@ -72,8 +72,8 @@ p {
 }
 
 :link[href^="http:"]::after, :link[href^="https:"]::after {
-    content: "\2005\1F86D";
-    font-size: 0.4em;
+    content: "\2005\2197";
+    font-size: 0.5em;
     vertical-align: super;
     margin-right: -0.5ch;
     line-height: 0;
@@ -108,7 +108,7 @@ hr {
     text-align: center;
     color: #ddd;
     border-bottom: 1px dotted currentColor;
-    page-break-after: never;
+    page-break-after: avoid;
 
     &::after {
         content: '\2042';

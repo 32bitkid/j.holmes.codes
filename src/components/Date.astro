@@ -1,11 +1,13 @@
 ---
+import { parseDate } from "./parseDate";
 const { date, day = true, month = true } = Astro.props;
-const dateObj = typeof date === "string" ? new Date(date) : date;
 const format = !month
-  ? { year: 'numeric' }
+  ? { year: 'numeric' } as const
   : !day
-  ? {year: 'numeric', month: 'short'}
-  : {year: 'numeric', month: 'short', day: 'numeric'}
+  ? {year: 'numeric', month: 'short'} as const
+  : {year: 'numeric', month: 'short', day: 'numeric'} as const;
+
+const dateObj = parseDate(date);
 ---
 <style>
     time {

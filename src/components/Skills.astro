@@ -1,6 +1,12 @@
 ---
+interface Exp {
+  name: string;
+  featured: boolean;
+  experience: number;
+}
+
 const { tech } = Astro.props;
-const sortedTech = tech.slice().sort((a, b) => {
+const sortedTech = (tech as Exp[]).slice().sort((a, b) => {
   const expDiff = b.experience - a.experience;
   if (expDiff !== 0) return expDiff;
 
@@ -11,8 +17,8 @@ const sortedTech = tech.slice().sort((a, b) => {
 })
 ---
 <ul>
-  {sortedTech.map(exp =>
-      <li class:list={{[`exp${exp.experience|0}`]: true, featured: exp.featured }}>
+  {sortedTech.map((exp) =>
+      <li class:list={{[`exp${Math.floor(exp.experience)}`]: true, featured: exp.featured }}>
         {exp.name}
       </li>
   )}
