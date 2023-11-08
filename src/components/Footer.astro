@@ -1,33 +1,64 @@
 ---
 const currentYear = (new Date()).getFullYear();
 ---
+<footer>
+    <div class="wrapper">
+        <div id="copyright">
+            <p>j.holmes.codes</p>
+            <p>&copy; 2013&ndash;{currentYear} J. Holmes</p>
+        </div>
+    </div>
+</footer>
+
 <style>
     footer {
-        box-sizing: border-box;;
-        height: calc(var(--line-height) * 7);
-        padding-block: calc(var(--line-height) * 4);
+        border-top: 1px dotted #ddd;
+        background-clip: content-box;
+        background-image: linear-gradient(180deg, #ddd, #aaaab2);
+        color: white;
     }
 
     .wrapper {
         max-width: var(--max-content);
+        padding-block: 4ch;
         padding-inline: 1.5ch;
         margin-left: auto;
         margin-right: auto;
+        display: grid;
+
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, min-content);
+        grid-template-areas: "-" "-" "copyright";
+    }
+
+    #copyright {
+        grid-area: copyright;
+        font-size: var(--f-small);
+        line-height: 1.2;
         text-align: center;
     }
 
-    .copyright {
+    #copyright p {
+        margin-block-end: 0;
+    }
+
+    #copyright p:nth-child(2) {
         font-variant-numeric: oldstyle-nums;
         font-variant-caps: small-caps;
-        font-size: 0.7492rem;
-        line-height: calc(var(--line-height) * 1);
-        color: #ddd;
+    }
+
+    @media screen and (min-width: 640px) {
+        .wrapper {
+            grid-template-columns: 2fr 1fr 2fr;
+            grid-template-rows: 1fr;
+            grid-gap: 1.5ch;
+            grid-template-areas: "copyright - -";
+            height: calc(var(--line-height) * 7);
+        }
+
+        #copyright {
+            text-align: left;
+            align-self: center;
+        }
     }
 </style>
-<footer>
-    <div class="wrapper">
-        <div class="copyright">
-        &copy; 2013&ndash;{currentYear} J. Holmes
-        </div>
-    </div>
-</footer>

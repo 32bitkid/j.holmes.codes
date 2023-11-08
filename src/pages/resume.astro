@@ -1,10 +1,10 @@
 ---
-import Header from "@components/Header.astro";
-import Date from "@components/Date.astro";
-import Skills from "@components/Skills.astro"
+import Header from "../components/Header.astro";
+import Date from "../components/Date.astro";
+import Skills from "../components/Skills.astro"
 import { marked } from 'marked';
-import "@styles/core.css";
-import resume from "../../data/resume.yaml";
+import "../styles/core.css";
+import resume from "../data/resume.yaml";
 
 const md = (frag) => frag ? marked.parse(frag) : "";
 ---
@@ -40,7 +40,8 @@ const md = (frag) => frag ? marked.parse(frag) : "";
             <h2>Experience</h2>
             <ol>
                 {resume.workExperience
-                  .filter(project => !project.hidden)
+                  .filter(job => !job.filtered)
+                  .sort((a,b) => a.from < b.from ? 1 : a == b ? 0 : -1)
                   .map(job =>
                       <li >
                           <div>
@@ -60,12 +61,13 @@ const md = (frag) => frag ? marked.parse(frag) : "";
                       </li>
                   )}
             </ol>
+            {resume.workExperience.some(it => it.filtered) && <>Full work-history is available on request…</>}
         </section>
     </main>
     <hr />
     <section id="projects">
         <h2>Projects</h2>
-        <ol>
+        <ul>
             {resume.projects
               .filter(project => !project.hidden)
               .map(project =>
@@ -74,7 +76,7 @@ const md = (frag) => frag ? marked.parse(frag) : "";
                     <Fragment set:html={md(project.description)} />
                 </li>
               )}
-        </ol>
+        </ul>
     </section>
     <!--
     <hr/>
@@ -223,7 +225,7 @@ const md = (frag) => frag ? marked.parse(frag) : "";
         margin-bottom: calc(var(--line-height) * 0.333);
     }
 
-    #projects ol {
+    #projects ul {
         display: grid;
         grid-gap: 0 4ch;
         grid-template-columns: repeat(3, 1fr);
@@ -270,8 +272,21 @@ const md = (frag) => frag ? marked.parse(frag) : "";
             font-size: 9pt;
         }
 
-        #intro, #summary, #work-experience, #projects, #education {
+        #intro, #summary, #work-experience, #projects, #education, hr {
             max-width: unset;
         }
+
+        #work-experience li, #projects li {
+            break-inside: avoid;
+        }
+
+        :root {
+           padding-top: 0;
+        }
+
+        #intro {
+            margin-block-start: 0;
+        }
+
     }
 </style>

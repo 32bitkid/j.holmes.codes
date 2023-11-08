@@ -45,17 +45,17 @@
         display: block;
         width: 2rem;
         height: 2rem;
-        padding: 0.125rem;
         box-sizing: border-box;
         opacity: 0.25;
         filter: grayscale(100%) brightness(0);
+        transform: scale(0.8);
         transition: filter 500ms, opacity 500ms, transform 250ms ease-in;
     }
 
     a.icon-link:hover::after {
         opacity: 1;
         filter: grayscale(0%);
-        transform: scale(1.25);
+        transform: scale(1);
     }
 
     a.icon-link.codepen::after {

@@ -255,6 +255,7 @@ workExperience:
       - *Golang
       - *jest
       - *Git
+    description: |
 
   - company: WorkBoard
     url: https://www.workboard.com/
@@ -363,7 +364,7 @@ workExperience:
       - *Mocha
       - *Git
     description: |
-      <small>Leads To Conversations</small> is a sales acceleration app start‑up, founded by a
+      <small>Leads To Conversations</small> was a sales acceleration app start‑up, founded by a
       pair previous co‑workers. I joined the team as the second
       developer&mdash;third employee&mdash;bringing my skills as a UI specialist
       to the team. My skill‑set complemented the technical founder and
@@ -430,9 +431,8 @@ workExperience:
       support the devs and designers on my team. I coordinated with the other 
       teams and Product Owners to deliver high‑quality features and releases.
 
-
-olderWorkExperience:
   - company: Clearwave
+    filtered: true
     url:     http://www.clearwaveinc.com/
     title:   ScrumMaster / Team Lead
     from:    '2009-08'
@@ -460,6 +460,7 @@ olderWorkExperience:
       on‑going effort to move to a more agile work paradigm.
 
   - company: Bluechip Athletic Solutions
+    filtered: true
     url:     http://www.bas-llc.net/
     title:   ActionScript Consultant
     from:    '2011-06'
@@ -480,6 +481,7 @@ olderWorkExperience:
       consumption by graphic designers and other junior developers on their team.
 
   - company: FourSpots
+    filtered: true
     title:   Web Application Developer
     from:    '2008-02'
     to:      '2009-06'
@@ -563,42 +565,51 @@ projects:
     role: author
     tech:
       - *TypeScript
-    description: "JavaScript library and data‑structures for parsing and manipulating `SCI0` resources from classic *Sierra On\u2011Line* adventure games."
+    description: |
+      JavaScript library and data‑structures for parsing and manipulating `SCI0` resources from 
+      classic *Sierra On&#x2011;Line* adventure games.
 
   - name: github.com/32bitkid/mpeg
     link: https://github.com/32bitkid/mpeg
     role: author
     tech:
       - *Golang
-    description: "**Author** of an experimental/educational pure\u2011Go MPEG\u20112 decoder."
+    description: |
+      **Author** of an experimental/educational pure&#x2011;Go MPEG&#x2011;2 decoder.
 
   - name: "@pubkeeper/client"
     link: https://www.npmjs.com/package/@pubkeeper/client
     role: maintainer
     tech:
       - *TypeScript
-    description: "**Author** and npm **maintainer** of TypeScript/JS client for Pubkeeper, a communications protocol broker for IoT systems."
+    description: |
+      **Author** and npm **maintainer** of TypeScript/JS client for Pubkeeper, a communications 
+      protocol broker for IoT systems.
 
   - name: github.com/32bitkid/sci
     link: https://github.com/32bitkid/sci
     role: author
     tech:
       - *Golang
-    description: "Go library and data‑structures for parsing and manipulating `SCI0` resources from classic *Sierra On\u2011Line* adventure games."
+    description: |
+      Go library and data‑structures for parsing and manipulating `SCI0` resources from classic 
+      *Sierra On&#x2011;Line* adventure games.
 
   - name: gonum
     link: https://github.com/gonum/gonum
     role: contributor
     tech:
       - *TypeScript
-    description: "**Contributor** on the multi\u2011graph and DOT-related codec implementations."
+    description: |
+      **Contributor** on the multi&#x2011;graph and DOT-related codec implementations.
 
   - name: kefirjs
     link: https://github.com/kefirjs/kefir
     role: contributor
     tech:
       - *TypeScript
-    description: "**Contributor** on the JavaScript Reactive Programming library."
+    description: |
+      **Contributor** on the JavaScript Reactive Programming library.
 
 methodologies:
   - Agile
