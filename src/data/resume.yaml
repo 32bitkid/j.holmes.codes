@@ -2,7 +2,7 @@ name: James Holmes
 jobTitle: "Developer \u222A Designer"
 location: Denver, CO.
 summary: |
-  I&rsquo;m a *full-stack* developer, with a focus on high-performance front-end
+  I&rsquo;m a *full‑stack* developer, with a focus on high-performance front-end
   engineering and exceptional user-experience design.
 
   I craft compelling, elegant interactions between people and machines.
@@ -119,7 +119,7 @@ technicalExperience:
   - &React
     name: React
     url:  https://facebook.github.io/react/
-    experience: 5
+    experience: 5.1
     featured: true
   - &Redis
     name: Redis
@@ -152,7 +152,7 @@ technicalExperience:
   - &TypeScript
     name: TypeScript
     url: https://www.typescriptlang.org/
-    experience: 4
+    experience: 5.1
     featured: true
   - &HTML5
     name: HTML5
@@ -165,7 +165,7 @@ technicalExperience:
     url: https://www.w3.org/TR/css-2018/
     featured: true
   - &SCSS
-    name: SCSS
+    name: Sass/SCSS
     url:  https://sass-lang.com
     experience: 5
     featured: true
@@ -212,7 +212,7 @@ technicalExperience:
     name: Salesforce/Apex
     experience: 3
   - &LWC
-    name: LWC
+    name: Lightning Web Components
     experience: 3
   - &styled-components
     name: styled-components
@@ -230,12 +230,17 @@ technicalExperience:
   - &jest
     name: Jest
     experience: 3
+  - &socketio
+    name: Socket.io
+    experience: 5
+    url: https://socket.io/
+    featured: true
 
 
 workExperience:
   - company: Formant
     url: https://www.formant.io/
-    title: Senior Frontend Engineer/Design
+    title: Senior Frontend/Design Engineer
     from: '2022-04'
     to: '2023-11'
     tech:
@@ -249,10 +254,11 @@ workExperience:
       - *webrtc
       - *Golang
       - *jest
+      - *Git
 
   - company: WorkBoard
     url: https://www.workboard.com/
-    title: Senior Frontend Engineer
+    title: Principal Engineer
     from: '2021-08'
     to: '2022-04'
     tech:
@@ -265,10 +271,25 @@ workExperience:
       - *CSS3
       - *styled-components
       - *jest
+      - *socketio
+      - *Git
+    description: |
+      At <small>Workboard</small>, I led a cross-functional, product-delivery team. We 
+      developed a collaborative, real-time communication tool for OKR brain-storming 
+      sessions: think Figma for OKRs. From product-inception to production-deployment, 
+      my responsibilities ranged from UI/UX to data-modeling. We developed a reusable 
+      high-performance, infinite-canvas React rendering engine. Using a microservices 
+      architecture, we attacked challenges from API specification/design to managing 
+      real-time websocket communication. Envisioned as a core architectural building-block 
+      for next-gen tools, this product was a first-of-its-kind at Workboard.
+      
+      I worked to establish team best-practices and maintainable microservice
+      architectures for the future. In just under six-months, we released the product to
+      customer acclaim.
 
   - company: Pinnacol Assurance
     url: https://www.pinnacol.com/
-    title: Lead Engineer
+    title: Senior Software Engineer (FE)
     from: '2019-08'
     to: '2021-08'
     tech:
@@ -277,34 +298,43 @@ workExperience:
       - *React
       - *TypeScript
       - *jest
+      - *Git
+      - *styled-components
+    description: |
+      As a senior front-end software engineer at <small>Pinnacol Assurance</small>, my role
+      was function across teams to ensure engineering standards, quality, and shared knowledge
+      of the shared code-base. My primary responsibility was to develop and maintain the internal
+      React component library. I worked in close-collaboration with the product teams to create
+      and refine shared components. I mentored the other front-end engineers on design and 
+      implementation considerations. As such, I provided technical oversight and code-reviews 
+      for React development, Salesforce API design best-practices, database schema feedback
+      for several teams, and worked closely with DevSec-team to investigate and resolve issues.
+      
+      My role also included build-pipeline design and maintenance for product teams.
+      An effort which culminated in a new unified front-end tooling and deployment 
+      processes used by all front-end teams. This resulted in increased organizational 
+      knowledge and understanding of front-end deployments and updates across the entire 
+      engineering corps.      
 
   - company: niolabs
     title: Lead Innovation Engineer
     from: '2016-02'
     to: '2019-04'
     tech:
-      - *NodeJs
       - *React
       - *Redux
       - *Python
       - *Golang
       - *Kotlin
       - *TypeScript
-      - *HTML5
-      - *CSS3
       - *SCSS
-      - *tdd
-      - *bdd
-      - *GraphQL
-      - *Webpack
-      - *Brunch
-      - *Mocha
-      - *Sinon
-      - *Chai
+      - *socketio
+      - *webrtc
+      - *Git
     description: |
       At <small>niolabs</small>, I led the Innovation Team; we built the prototypes
       for the *next-gen* of niolabs&#x2019; IoT dev-platform. Driving
-      innovation was a *full-time* job; I split my time between
+      innovation was a *full‑time* job; I split my time between
       brain-storming new ideas, prototyping experimental features & tools,
       designing educational & marketing material, and coordinating with
       production teams on integration and optimizations
@@ -312,7 +342,7 @@ workExperience:
 
       From designing and engineering front-ends for industrial automation
       at scale & viticulture management platforms to leading the charge to
-      push the niolabs IoT-platform beyond the *cloud* with deeper
+      push the niolabs IoT‑platform beyond the *cloud* with deeper
       integrations with *next-gen* edge devices, I helped drive and guide
       the platform forward into uncharted, new territory.
 
@@ -325,28 +355,25 @@ workExperience:
       - *Express
       - *Less
       - *JavaScript
-      - *Knockout
-      - *BaconJs
       - *Postgres
       - *Redis
       - *HTML5
       - *CSS3
-      - *tdd
-      - *bdd
       - *Gulp
       - *Mocha
+      - *Git
     description: |
-      <small>Leads To Conversations</small> is a sales acceleration app start-up, founded by a
-      pair previous co-workers. I joined the team as the second
+      <small>Leads To Conversations</small> is a sales acceleration app start‑up, founded by a
+      pair previous co‑workers. I joined the team as the second
       developer&mdash;third employee&mdash;bringing my skills as a UI specialist
-      to the team. My skill-set complemented the technical founder and
+      to the team. My skill‑set complemented the technical founder and
       together we defined, architected and built the pilot system. My
-      responsibilities ranged from full-stack pair development to database
+      responsibilities ranged from full‑stack pair development to database
       design to devops to graphic/web design to marketing to motion graphics;
       members of small teams wear many hats.
 
   - company: Skyward.io
-    title:   Lead Front-End Developer
+    title:   Lead Front‑End Developer
     from:    '2014-08'
     to:      '2015-04'
     tech:
@@ -360,15 +387,14 @@ workExperience:
       - *OrientDB
       - *HTML5
       - *CSS3
-      - *tdd
       - *Gulp
     description: |
-      As the lead front-end developer at <small>Skyward</small>, I worked with the lead designer
+      As the lead front‑end developer at <small>Skyward</small>, I worked with the lead designer
       to realize and iterate the UI/UX of the application: a UAV flight
       planning, logging, and compliance SAAS. Built on Angular.js, I implemented
-      the front-end on-top of the Java backend. Established
+      the front‑end on‑top of the Java backend. Established
       the automated testing and build pipelines. I mentored junior developers
-      within the front-end stack. I also mentored the entire engineering team towards
+      within the front‑end stack. I also mentored the entire engineering team towards
       Java 8 functional programming paradigms.
 
   - company: VersionOne
@@ -390,22 +416,22 @@ workExperience:
       - *WebDriver
       - *HTML5
       - *CSS3
-      - *Gulp
-      - *tdd
     description: |
       I loved working at <small>VersionOne</small>; the team was well established and
       full of some of the smartest and most passionate people I&rsquo;ve ever 
       had the opportunity to work with. It is where I fell in love with
-      pair-programming and XP. I joined the team as a full-stack developer; 
-      focusing on improving UI and the state of the front-end stack.
+      pair‑programming and XP. I joined the team as a full‑stack developer; 
+      focusing on improving UI and the state of the front‑end stack.
 
       While at VersionOne, I was the Feature Lead on a
-      high-profile, well-received feature of the flagship application. During my 
+      high‑profile, well‑received feature of the flagship application. During my 
       last year at VersionOne, I had the privilege to be a Team Lead, one of 
       three on the development team. In that role I helped guide, mentor, and 
       support the devs and designers on my team. I coordinated with the other 
-      teams and Product Owners to deliver high-quality features and releases.
+      teams and Product Owners to deliver high‑quality features and releases.
 
+
+olderWorkExperience:
   - company: Clearwave
     url:     http://www.clearwaveinc.com/
     title:   ScrumMaster / Team Lead
@@ -425,16 +451,14 @@ workExperience:
     description: |
       Initially hired as a technical test developer at <small>Clearwave</small>, 
       I was quickly conscripted on to the development team where I helped mentor the team in
-      ASP.NET MVC, CSS, and JavaScript/jQuery best practices. As a Front-End
+      ASP.NET MVC, CSS, and JavaScript/jQuery best practices. As a Front‑End
       Developer, over the course of two years, I helped establish
       design frameworks and tools for the rest of the development team. I
       continued to collaborated with both the business analysts and development
       teams to plan, architect, build and maintain the BDD test suite. Finally,
       I served as team ScrumMaster until my departure, assisting in the
-      on-going effort to move to a more agile work paradigm.
+      on‑going effort to move to a more agile work paradigm.
 
-
-olderWorkExperience:
   - company: Bluechip Athletic Solutions
     url:     http://www.bas-llc.net/
     title:   ActionScript Consultant
@@ -447,8 +471,8 @@ olderWorkExperience:
     description: |
       The work I did while consulting for BAS was some of the *most interesting*
       work I&rsquo;ve gotten to do professionally. They needed a library of reusable
-      custom UI-framework components, the most ambitious was a custom
-      mobile/desktop ready real-time 3D panoramic viewer compoment in Flash/AS3.
+      custom UI‑framework components, the most ambitious was a custom
+      mobile/desktop ready real‑time 3D panoramic viewer component in Flash/AS3.
       I had to dust off several math textbooks from college and refresh my
       working memory of vector and matrix math. However, it was great fun to
       implement a 3D renderer from almost first principals. A lot more work went
@@ -467,7 +491,7 @@ olderWorkExperience:
       - *Flex
     description: |
       FourSpots was an ambitious self-service advertising platform and
-      market-place start-up, where I helped implement front-end design and hack
+      market-place start‑up, where I helped implement front‑end design and hack
       together back-end. I created API interfaces for custom video editing and
       rendering services on top of FFMPEG and Avisynth, as well as custom
       SWF packing for advertisment distribution.
@@ -480,16 +504,20 @@ teaching:
     to:           '2014-08'
     notes: |
       I had a *ton* of fun mentoring at the CoderDojo. The effort was
-      spearheaded by a fellow co-worker. Having buy&#x2011;in/support from our
+      spearheaded by a fellow co‑worker. Having buy&#x2011;in/support from our
       employer, we had access to both hardware and facilities to build our curriculum.
-      With a half-dozen volunteer mentors and teachers, we had classes and
-      self-directed sessions for dozens of children between the ages of 10 and
+      With a half‑dozen volunteer mentors and teachers, we had classes and
+      self‑directed sessions for dozens of children between the ages of 10 and
       17. The environment could be chaotic and challenging, but the reward was
       helping expose the next generation to fundamentals of technology and
       programming.
+  - organization: ITT Technical Institute
+    title:        Adjunct Instructor
+    from:         '2006'
+    to:           '2010'
 
 education:
-  - name:   Art Institute of Atlanta
+  - name:     Art Institute of Atlanta
     location: Atlanta, GA
     program:  BFA Media Arts and Animation
     from:     '2000-07'
@@ -501,7 +529,13 @@ education:
       And the 3D Modeling and Animation classes were my first exposure to the
       confluence art and mathematics. During my senior year, I was the teaching
       assistant for most of the 3D Modeling and Animation classes; my first
-      foray into teaching and education.i
+      foray into teaching and education.
+  - name:     Macomb Community College
+    location: Warren, MI
+    program:  Software Engineering
+    from:     '1997'
+    to:       '2000'
+    hidden:    true
 
 software:
   - &Sketch
@@ -529,42 +563,42 @@ projects:
     role: author
     tech:
       - *TypeScript
-    description: JavaScript library and data-structures for parsing and manipulating `SCI0` resources from classic *Sierra On-Line* adventure games.
+    description: "JavaScript library and data‑structures for parsing and manipulating `SCI0` resources from classic *Sierra On\u2011Line* adventure games."
 
   - name: github.com/32bitkid/mpeg
     link: https://github.com/32bitkid/mpeg
     role: author
     tech:
       - *Golang
-    description: Author of an experimental pure-Go MPEG-2 decoder.
-
-  - name: github.com/32bitkid/sci
-    link: https://github.com/32bitkid/sci
-    role: author
-    tech:
-      - *Golang
-    description: Go library and data-structures for parsing and manipulating `SCI0` resources from classic *Sierra On-Line* adventure games.
+    description: "**Author** of an experimental/educational pure\u2011Go MPEG\u20112 decoder."
 
   - name: "@pubkeeper/client"
     link: https://www.npmjs.com/package/@pubkeeper/client
     role: maintainer
     tech:
       - *TypeScript
-    description: Author and npm maintainer of TypeScript/JS client for Pubkeeper, a communications protocol broker for IoT systems.
+    description: "**Author** and npm **maintainer** of TypeScript/JS client for Pubkeeper, a communications protocol broker for IoT systems."
+
+  - name: github.com/32bitkid/sci
+    link: https://github.com/32bitkid/sci
+    role: author
+    tech:
+      - *Golang
+    description: "Go library and data‑structures for parsing and manipulating `SCI0` resources from classic *Sierra On\u2011Line* adventure games."
 
   - name: gonum
     link: https://github.com/gonum/gonum
     role: contributor
     tech:
       - *TypeScript
-    description: Contributor to the multigraph and DOT-related codec implementations.
+    description: "**Contributor** on the multi\u2011graph and DOT-related codec implementations."
 
   - name: kefirjs
     link: https://github.com/kefirjs/kefir
     role: contributor
     tech:
       - *TypeScript
-    description: Contributor to the JavaScript Reactive Programming library.
+    description: "**Contributor** on the JavaScript Reactive Programming library."
 
 methodologies:
   - Agile

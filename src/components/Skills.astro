@@ -1,0 +1,55 @@
+---
+const { tech } = Astro.props;
+const sortedTech = tech.slice().sort((a, b) => {
+  const expDiff = b.experience - a.experience;
+  if (expDiff !== 0) return expDiff;
+
+  const featuredDiff = (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+  if (featuredDiff) return featuredDiff;
+
+  return a.name.localeCompare(b.name);
+})
+---
+<ul>
+  {sortedTech.map(exp =>
+      <li class:list={{[`exp${exp.experience|0}`]: true, featured: exp.featured }}>
+        {exp.name}
+      </li>
+  )}
+</ul>
+
+<style>
+  ul {
+      font-size: var(--f-small);
+      padding-left: 6ch;
+      text-indent: -3ch;
+  }
+
+  li {
+      display: inline;
+  }
+
+  li:not(:last-of-type)::after {
+      content: ", ";
+  }
+
+  li:last-of-type::after {
+      content: ".";
+  }
+
+  li.featured:not(:last-of-type)::after {
+      content: "*, ";
+  }
+
+  li.featured::after {
+      content: "*";
+  }
+
+  li.exp1 { color: rgb( 60%  60%  60%); }
+  li.exp2 { color: rgb( 40%  40%  40%); }
+  li.exp3 { color: rgb( 20%  20%  20%); }
+  li.exp4 { color: rgb(  0%   0%   0%); }
+  li.exp5 { color: rgb(  0%   0%   0%); font-weight: bold; }
+
+
+</style>

@@ -14,11 +14,14 @@
 
     color: #333;
     background-color: white;
+    font-family: 'Equity Text B', serif, system-ui;
+    font-feature-settings: "ss01", "ss03", "liga";
+    font-size: 12pt;
+    font-weight: 400;
 }
 
-:root, body {
-    font: 400 12pt / var(--line-height) 'Equity Text B', serif, system-ui;
-    font-feature-settings: "ss01", "ss03", "liga";
+body {
+    line-height: var(--line-height);
 }
 
 h1:not(hgroup > h1),

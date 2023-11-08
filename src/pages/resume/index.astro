@@ -1,9 +1,10 @@
 ---
 import Header from "@components/Header.astro";
+import Date from "@components/Date.astro";
+import Skills from "@components/Skills.astro"
 import { marked } from 'marked';
 import "@styles/core.css";
 import resume from "../../data/resume.yaml";
-import Date from "../../components/Date.astro";
 
 const md = (frag) => frag ? marked.parse(frag) : "";
 ---
@@ -33,52 +34,56 @@ const md = (frag) => frag ? marked.parse(frag) : "";
         </ul>
     </header>
     <section id="summary" set:html={md(resume.summary)}  />
+    <hr />
     <main>
         <section id="work-experience">
             <h2>Experience</h2>
             <ol>
-                {resume.workExperience.map(job =>
-                  <li >
-                      <div>
-                          <span class="title">{job.title}</span>
-                          {" "}&middot;{" "}
-                          {job.url
-                            ? <a target="_blank" rel="noopener noreferrer" href={job.url}>{job.company}</a>
-                            : job.company
-                          }
+                {resume.workExperience
+                  .filter(project => !project.hidden)
+                  .map(job =>
+                      <li >
+                          <div>
+                              <span class="title">{job.title}</span>
+                              {" "}&middot;{" "}
+                              {job.url
+                                ? <a target="_blank" rel="noopener noreferrer" href={job.url}>{job.company}</a>
+                                : job.company
+                              }
 
-                      </div>
-                      <div class="span">
-                          <Date date={job.from} day={false} />&ndash;{job.to ? <Date date={job.to} day={false} /> : <em>present</em>}
-                      </div>
-                      <div class="description" set:html={md(job.description)} />
-                  </li>
-                )}
-            </ol>
-        </section>
-    </main>
-    <aside>
-        <section id="projects">
-            <h2>Projects</h2>
-            <ol>
-                {resume.projects
-                  .map(project =>
-                    <li class:list={[project.role]}>
-                        <details open>
-                            <summary>
-                                <a href={project.link} class:list={["title"]}>{project.name}</a>
-                            </summary>
-                            <Fragment set:html={md(project.description)} />
-                        </details>
-                    </li>
+                          </div>
+                          <div class="span">
+                              <Date date={job.from} day={false} />&ndash;{job.to ? <Date date={job.to} day={false} /> : <em>present</em>}
+                          </div>
+                          <div class="description" set:html={md(job.description)} />
+                          <Skills tech={job.tech} />
+                      </li>
                   )}
             </ol>
         </section>
-
-        <section id="education">
-            <h2>Education</h2>
-            <ol>
-                {resume.education.map(edu =>
+    </main>
+    <hr />
+    <section id="projects">
+        <h2>Projects</h2>
+        <ol>
+            {resume.projects
+              .filter(project => !project.hidden)
+              .map(project =>
+                <li class:list={[project.role]}>
+                    <a href={project.link} class:list={["title"]}>{project.name}</a>
+                    <Fragment set:html={md(project.description)} />
+                </li>
+              )}
+        </ol>
+    </section>
+    <!--
+    <hr/>
+    <section id="education">
+        <h2>Education</h2>
+        <ol>
+            {resume.education
+              .filter(edu => !edu.hidden)
+              .map(edu =>
                   <li >
                       <div><span class="title">{edu.name}</span></div>
                       <div><span class="program">{edu.program}</span></div>
@@ -86,64 +91,75 @@ const md = (frag) => frag ? marked.parse(frag) : "";
                           <Date date={edu.from} day={false} month={false} />&ndash;{edu.to ? <Date date={edu.to} day={false} month={false} /> : <em>present</em>}
                       </div>
                   </li>
+              )}
+        </ol>
+    </section>
+    <section id="skills">
+        <h2>Skills</h2>
+        <ol>
+            {resume.technicalExperience
+              .filter(it => it.featured)
+              .sort((a,b) => {
+                  const exp = b.experience - a.experience;
+                  if (exp !== 0) {
+                      return exp;
+                  }
+                  return a.name.localeCompare(b.name);
+              })
+              .map(skill =>
+                <li>{skill.name}</li>
+              )}
+        </ol>
+    </section>
+    <section id="software">
+        <h2>Software</h2>
+        <ol>
+            {resume.software
+              .slice()
+              .sort((a,b) => a.name.localeCompare(b.name))
+              .map(software =>
+                  <li>{software.name}</li>
                 )}
-            </ol>
-        </section>
-        <section id="skills">
-            <h2>Skills</h2>
-            <ol>
-                {resume.technicalExperience
-                  .filter(it => it.featured)
-                  .sort((a,b) => {
-                      const exp = b.experience - a.experience;
-                      if (exp !== 0) {
-                          return exp;
-                      }
-                      return a.name.localeCompare(b.name);
-                  })
-                  .map(skill =>
-                    <li>{skill.name}</li>
-                  )}
-            </ol>
-        </section>
-        <section id="software">
-            <h2>Software</h2>
-            <ol>
-                {resume.software
-                  .slice()
-                  .sort((a,b) => a.name.localeCompare(b.name))
-                  .map(software =>
-                      <li>{software.name}</li>
-                    )}
-            </ol>
-        </section>
-        <section id="methodologies">
-            <h2>Methodologies</h2>
-            <ol>
-                {resume.methodologies
-                  .slice()
-                  .sort((a,b) => a.localeCompare(b))
-                  .map(methodology =>
-                    <li>{methodology}</li>
-                  )}
-            </ol>
-        </section>
-    </aside>
+        </ol>
+    </section>
+    <section id="methodologies">
+        <h2>Methodologies</h2>
+        <ol>
+            {resume.methodologies
+              .slice()
+              .sort((a,b) => a.localeCompare(b))
+              .map(methodology =>
+                <li>{methodology}</li>
+              )}
+        </ol>
+    </section>
+    -->
 </body>
 </html>
 
 <style>
-    #intro, #summary, #work-experience {
+    :global(p) {
+        text-align: justify;
+    }
+
+    #intro, #summary, #work-experience, #projects, #education {
         max-width: var(--max-content);
         margin-inline: auto;
         padding-inline: 1.5ch;
     }
 
+    hr {
+        max-width: var(--max-content);
+        margin-inline: auto;
+        margin-block: calc(var(--line-height) * 1.5);
+    }
+
     header {
+        box-sizing: border-box;
         display: grid;
         grid-template-columns: auto 10rem;
         margin-block: var(--line-height);
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px dotted #ddd;
         padding-bottom: var(--line-height);
     }
 
@@ -162,6 +178,16 @@ const md = (frag) => frag ? marked.parse(frag) : "";
         font-size: var(--f-large);
         line-height: calc(var(--line-height) * 1);
         font-feature-settings: "c2sc","smcp";
+    }
+
+    aside h2 {
+        font-size: var(--f-large);
+        line-height: var(--line-height);
+        margin-block-end: 0;
+    }
+
+    h2:not(hgroup h2) {
+        margin-top: 0;
     }
 
     h3 {
@@ -183,44 +209,11 @@ const md = (frag) => frag ? marked.parse(frag) : "";
     }
 
     #work-experience li {
-        margin-block-end: calc(var(--line-height) * 1.5)
+        margin-block-end: calc(var(--line-height) * 1);
     }
 
     #work-experience :global(p) {
-        margin-block-end: calc(var(--line-height) * 0.333)
-    }
-
-    #work-experience :global(p:not(:first-of-type)) {
-        text-indent: 4ch;
-    }
-
-    #projects :global(p) {
-        font-size: var(--f-small);
-    }
-
-    #projects details {
-        padding-inline-start: 2ch;
         margin-block-end: calc(var(--line-height) * 0.333);
-    }
-
-    #projects details :global(p:last-child) {
-        margin-bottom: 0;
-    }
-
-    #projects .author summary {
-        list-style: "\2605\0020";
-    }
-
-    #projects .maintainer summary {
-        list-style: "\2B2A\0020";
-    }
-
-    #projects .contributor summary {
-        list-style: "\2022\0020";
-    }
-
-    #projects .title {
-        letter-spacing: -0.02em;
     }
 
     #work-experience .span {
@@ -230,19 +223,55 @@ const md = (frag) => frag ? marked.parse(frag) : "";
         margin-bottom: calc(var(--line-height) * 0.333);
     }
 
-    aside {
+    #projects ol {
         display: grid;
-        max-width: var(--max-content);
-        margin-inline: auto;
-        padding-inline: 1.5ch;
-        grid-template-columns: repeat(3, 33%);
+        grid-gap: 0 4ch;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
     }
 
-    aside h2 {
-        margin-top: 0;
+    #projects details {
+        margin-block-end: calc(var(--line-height) * 0.333);
     }
 
-    aside section {
-        margin-bottom: var(--line-height);
+    #projects li :global(p) {
+        line-height: 1.5;
+        text-align: left;
+        padding-inline-start: 2ch;
+    }
+
+    #projects details :global(p:last-child) {
+        margin-bottom: 0;
+    }
+
+    #projects :global(p) {
+        font-size: var(--f-small);
+    }
+
+    #projects .author .title::before {
+        content: "\2605\0020";
+    }
+
+    #projects .maintainer .title::before {
+        content: "\2B2A\0020";
+    }
+
+    #projects .contributor .title::before {
+        content: "\2022\0020";
+    }
+
+    #projects .title {
+        letter-spacing: -0.02em;
+        display: block;
+    }
+
+    @media print {
+        :root {
+            font-size: 9pt;
+        }
+
+        #intro, #summary, #work-experience, #projects, #education {
+            max-width: unset;
+        }
     }
 </style>
