@@ -1,6 +1,6 @@
 ---
 import { format } from "date-fns";
-import { parseDate } from "./parseDate";
+import { parseDate, toDay } from "./parseDate";
 const { date: inputDate, day = true, month = true } = Astro.props;
 const formatStr = !month
   ? "yyyy"
@@ -8,8 +8,7 @@ const formatStr = !month
   ? "MMM yyyy"
   : "MMM d, yyyy";
 
-const dt = parseDate(inputDate);
-const date = new Date(dt.valueOf() + dt.getTimezoneOffset() * 60 * 1000)
+const date = toDay(parseDate(inputDate));
 ---
 <style>
     time {

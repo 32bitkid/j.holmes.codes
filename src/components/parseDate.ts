@@ -6,3 +6,5 @@ export const parseDate = (input: unknown): Date => {
   if (typeof input === "number") return new Date(input);
   return new Date();
 }
+
+export const toDay = (dt: Date) => new Date(dt.valueOf() + dt.getTimezoneOffset() * 60 * 1000);
