@@ -10,12 +10,12 @@ const allBlogPosts = (await getCollection(
 		({ data }) => import.meta.env.PROD ? data.pubDate !== undefined : true,
 	))
 	.sort((a, b) => {
-		const aPubDate = a.data.pubDate;
-		const bPubDate = b.data.pubDate;
-		if (!aPubDate && !bPubDate) return 0;
-		if (!aPubDate) return 1;
-		if (!bPubDate) return -1;
-		return bPubDate.getTime() - aPubDate.getTime();
+		const aDate = a.data.authorDate ?? a.data.pubDate;
+		const bDate = b.data.authorDate ?? b.data.pubDate;
+		if (!aDate && !bDate) return 0;
+		if (!aDate) return 1;
+		if (!bDate) return -1;
+		return bDate.getTime() - aDate.getTime();
 	});
 const showMore = allBlogPosts.length > max;
 ---

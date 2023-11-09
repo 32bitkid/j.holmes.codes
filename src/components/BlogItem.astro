@@ -1,13 +1,16 @@
 ---
 import Date from "./Date.astro";
 const { blog } = Astro.props;
+
+const date = blog.data.authorDate ?? blog.data.pubDate;
+const isDraft = blog.data.pubDate === undefined;
 ---
-<li class:list={{ draft: !!blog.data.pubDate }}>
-  {blog.data.pubDate === undefined && <div class="draft-marker">Draft</div>}
+<li class:list={{ draft: isDraft }}>
+  {isDraft && <div class="draft-marker">Draft</div>}
   <a href={`/${blog.slug}`}>{blog.data.title}</a>
   {
-    blog.data.pubDate &&
-      <div class="byline"><Date date={blog.data.pubDate}/></div>
+    date &&
+      <div class="byline"><Date date={date}/></div>
   }
 </li>
 

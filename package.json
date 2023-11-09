@@ -7,7 +7,9 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "predeploy": "astro build",
+    "deploy": "rsync -avh --delete  dist/ j.holmes.codes:~/j.holmes.codes/"
   },
   "dependencies": {
     "@astrojs/check": "^0.3.1",

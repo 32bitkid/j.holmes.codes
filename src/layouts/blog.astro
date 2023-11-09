@@ -5,8 +5,8 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import "../styles/core.css";
 
-const { title, pubDate, tags } = Astro.props.frontmatter ?? Astro.props;
-const date = pubDate ?? new Date();
+const { title, authorDate, pubDate, tags } = Astro.props.frontmatter ?? Astro.props;
+const date = authorDate ?? pubDate ?? new Date();
 const isPublished = typeof pubDate !== "undefined";
 ---
 <html class:list={{ draft: !isPublished }}>
@@ -25,11 +25,8 @@ const isPublished = typeof pubDate !== "undefined";
 <article>
   <h1>{title}</h1>
   <div class="byline">
-    {
-      isPublished
-        ? <time datetime={date}>{format(parseISO(date), "MMMM d, yyyy")}</time>
-        : <strong><small>unpublished</small></strong>
-    }
+    { date && <time datetime={date}>{format(parseISO(date), "MMMM d, yyyy")}</time> }
+    { !isPublished && <strong><small> [unpublished]</small></strong>}
     {tags && <>{' in '}<Tags tags={tags}/></>}
   </div>
   <div class="markdown">
@@ -60,7 +57,7 @@ const isPublished = typeof pubDate !== "undefined";
   :root.draft {
       background-repeat: repeat;
       background-size: 100px 100px;
-      background-image :url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><text x="0" y="50" font-size="30" fill="rgba(0,0,0,0.1)">Draft</text></svg>');
+      background-image :url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><text x="0" y="50" font-size="30" fill="rgba(0,0,0,0.025)">Draft</text></svg>');
   }
 
   .byline {
