@@ -1,5 +1,4 @@
 ---
-layout: "@layouts/blog.astro"
 title: Let's Write a MPEG-2 Decoder in Go
 date: 2013-11-05
 tags: ["mpeg2", "go"]

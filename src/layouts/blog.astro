@@ -3,10 +3,9 @@ import { format, parseISO } from "date-fns"
 import Tags from "@components/Tags.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import "../styles/core.css";
 
 const { title, authorDate, pubDate, tags } = Astro.props.frontmatter ?? Astro.props;
-const date = authorDate ?? pubDate ?? new Date();
+const date = authorDate ?? pubDate ?? (new Date().toISOString());
 const isPublished = typeof pubDate !== "undefined";
 ---
 <html class:list={{ draft: !isPublished }}>
@@ -18,6 +17,7 @@ const isPublished = typeof pubDate !== "undefined";
   <title>{title} : j.holmes.codes</title>
   <link rel="stylesheet" href="/css/reset.css" />
   <link rel="stylesheet" href="/css/font.css" />
+  <link rel="stylesheet" href="/css/core.css" />
   <link rel="stylesheet" href="/css/katex.min.css" integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ">
 </head>
 <body>
@@ -29,9 +29,9 @@ const isPublished = typeof pubDate !== "undefined";
     { !isPublished && <strong><small> [unpublished]</small></strong>}
     {tags && <>{' in '}<Tags tags={tags}/></>}
   </div>
-  <div class="markdown">
+  <section class="content">
     <slot/>
-  </div>
+  </section>
 </article>
 <Footer />
 </body>
@@ -68,39 +68,39 @@ const isPublished = typeof pubDate !== "undefined";
     margin-bottom: calc(var(--line-height) * 1);
   }
 
-  .markdown {}
+  .content {}
 
-  .markdown :global(.astro-code) {
+  .content :global(.astro-code) {
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     padding: 1rem;
     border-radius: 0.5rem;
   }
 
-  .markdown :global(figure) {
+  .content :global(figure) {
     margin-bottom: var(--line-height);
   }
 
-  .markdown :global(ul, ol) {
+  .content :global(ul, ol) {
     margin-left: 4ch;
     margin-bottom: var(--line-height);
   }
 
-  .markdown :global(ul) {
+  .content :global(ul) {
     list-style: "\25E6\2007";
   }
 
-  .markdown :global(ol) {
+  .content :global(ol) {
     list-style: decimal;
   }
 
-  .markdown :global(table) {
+  .content :global(table) {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: var(--line-height);
     font-variant-numeric: tabular-nums oldstyle-nums;
   }
 
-  .markdown :global(table thead th) {
+  .content :global(table thead th) {
     font-weight: 400;
     letter-spacing: -0.04em;
     font-family: 'Equity Caps B', serif;
@@ -112,27 +112,27 @@ const isPublished = typeof pubDate !== "undefined";
     padding-inline: 2ch;
   }
 
-  .markdown :global(table tbody td) {
+  .content :global(table tbody td) {
     padding-inline: 2ch;
     padding-block: 0.5rem;
   }
 
-  .markdown :global(table tbody td:empty:before) {
+  .content :global(table tbody td:empty:before) {
     content: '\2014';
     color: rgba(0, 0, 0, 0.25);
   }
 
-  .markdown :global(tbody > tr:nth-child(3n+1):not(:empty) td),
-  .markdown :global(tbody > tr:nth-child(3n+1):not(:empty) th){
+  .content :global(tbody > tr:nth-child(3n+1):not(:empty) td),
+  .content :global(tbody > tr:nth-child(3n+1):not(:empty) th){
     border-top: 0.25px dashed #ddd;
   }
 
-  .markdown :global(sup) {
+  .content :global(sup) {
     vertical-align: super;
     font-size: 0.707em;
   }
 
-  .markdown :global(.footnotes ol) {
+  .content :global(.footnotes ol) {
     font-variant-numeric: oldstyle-nums;
     line-height: calc(var(--line-height) * 1);
     font-size: 0.7492rem;
@@ -140,11 +140,11 @@ const isPublished = typeof pubDate !== "undefined";
     padding-inline-start: 4ch;
   }
 
-  .markdown :global(.footnotes li p) {
+  .content :global(.footnotes li p) {
     margin-bottom: calc(var(--line-height) * 0.25);
   }
 
-  .markdown :global(pre:not(figure pre)) {
+  .content :global(pre:not(figure pre)) {
     margin-bottom: var(--line-height);
   }
 

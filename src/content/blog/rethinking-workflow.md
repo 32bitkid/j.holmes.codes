@@ -1,5 +1,4 @@
 ---
-layout: "@layouts/blog.astro"
 title: Rethinking Workflows
 ---
 Move from flow-based process management to needs-based.

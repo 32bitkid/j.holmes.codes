@@ -1,4 +1,5 @@
 ---
+import { blogSorting } from "../utils/blogSorting";
 import { getCollection } from 'astro:content';
 import Page from "@layouts/page.astro";
 import BlogItem from "../components/BlogItem.astro";
@@ -8,14 +9,7 @@ const allBlogPosts =
     'blog',
     ({ data }) => (import.meta.env.PROD) ? data.pubDate !== undefined : true,
   ))
-  .sort((a, b) => {
-      const aDate = a.data.authorDate ?? a.data.pubDate;
-      const bDate = b.data.authorDate ?? b.data.pubDate;
-      if (!aDate && !bDate) return 0;
-      if (!aDate) return 1;
-      if (!bDate) return -1;
-      return bDate.getTime() - aDate.getTime();
-  });
+  .sort(blogSorting);
 ---
 <Page title="Blog">
     <h1>All Posts</h1>

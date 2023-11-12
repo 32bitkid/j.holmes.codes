@@ -3,7 +3,6 @@ import Header from "../components/Header.astro";
 import Date from "../components/Date.astro";
 import Skills from "../components/Skills.astro"
 import { marked } from 'marked';
-import "../styles/core.css";
 import resume from "../data/resume.yaml";
 
 interface IJob {
@@ -36,6 +35,7 @@ const md = (frag: string) => frag ? marked.parse(frag) : "";
     <title>Résumé : j.holmes.codes</title>
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/font.css" />
+    <link rel="stylesheet" href="/css/core.css" />
 </head>
 <body>
 <Header/>

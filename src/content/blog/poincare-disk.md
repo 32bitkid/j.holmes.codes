@@ -1,5 +1,4 @@
 ---
-layout: "@layouts/blog.astro"
 title: Poincaré disk model
 ---
 

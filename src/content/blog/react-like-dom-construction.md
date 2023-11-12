@@ -1,5 +1,4 @@
 ---
-layout: "@layouts/blog.astro"
 title: React-like DOM construction in 8 lines.
 notes: >-
   I think this should get reworked into a helper that can generate

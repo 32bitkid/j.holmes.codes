@@ -1,22 +1,15 @@
 ---
 import { getCollection } from 'astro:content';
 import Page from "@layouts/page.astro";
-import "../styles/core.css";
 import BlogItem from "../components/BlogItem.astro";
+import { blogSorting } from "../utils/blogSorting";
 
 const max = 5;
 const allBlogPosts = (await getCollection(
 		'blog',
 		({ data }) => import.meta.env.PROD ? data.pubDate !== undefined : true,
 	))
-	.sort((a, b) => {
-		const aDate = a.data.authorDate ?? a.data.pubDate;
-		const bDate = b.data.authorDate ?? b.data.pubDate;
-		if (!aDate && !bDate) return 0;
-		if (!aDate) return 1;
-		if (!bDate) return -1;
-		return bDate.getTime() - aDate.getTime();
-	});
+	.sort(blogSorting);
 const showMore = allBlogPosts.length > max;
 ---
 <Page>
@@ -28,8 +21,8 @@ const showMore = allBlogPosts.length > max;
 		embedded computing, video codecs, CRTs and pixel-art.
 	</p>
 	<p>
-		Until late-<small>2023</small> I was the <em>Frontend Engineering Lead</em>{" "}
-		at <a href="https://formant.io">Formant</a>, where I
+		Until late-<small>2023</small>, I was the <em>Frontend Engineering Lead</em>{" "}
+		at <a href="https://formant.io">Formant</a> where I
 		developed prototypes, tools, and designs for the future of robotic fleet{" "}
 		monitoring and teleoperation. I love getting my hands dirty, learning new things
 		and exploring new domains. To me, there isn't a line between engineering and design;

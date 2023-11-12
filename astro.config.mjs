@@ -3,7 +3,8 @@ import { defineConfig } from 'astro/config';
 import remarkMath from "remark-math";
 import ViteYaml from '@modyfi/vite-plugin-yaml';
 import rehypeKatex from "rehype-katex";
-
+import remarkHint from "remark-hint";
+import remarkCapitalizeHeading from "remark-capitalize-headings";
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,8 +13,14 @@ export default defineConfig({
     plugins: [ViteYaml()],
   },
   markdown: {
-    remarkPlugins: [remarkMath],
-    rehypePlugins: [[rehypeKatex, {}]],
+    remarkPlugins: [
+      remarkMath,
+      remarkHint,
+      remarkCapitalizeHeading,
+    ],
+    rehypePlugins: [
+      [rehypeKatex, {}],
+    ],
     shikiConfig: {
       theme: "monokai",
       wrap: true

@@ -1,5 +1,4 @@
 ---
-layout: "@layouts/blog.astro"
 title: Hiding data in a JPEG
 ---
 
