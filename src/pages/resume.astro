@@ -5,6 +5,10 @@ import Skills from "../components/Skills.astro"
 import { marked } from 'marked';
 import resume from "../data/resume.yaml";
 
+import "@styles/reset.css";
+import "@styles/font.css";
+import "@styles/core.css";
+
 interface IJob {
     readonly company: string;
     readonly description: string;
@@ -33,9 +37,6 @@ const md = (frag: string) => frag ? marked.parse(frag) : "";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Résumé : j.holmes.codes</title>
-    <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/font.css" />
-    <link rel="stylesheet" href="/css/core.css" />
 </head>
 <body>
 <Header/>
