@@ -8,6 +8,7 @@ import remarkCapitalizeHeading from "remark-capitalize-headings";
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://j.holmes.codes',
   integrations: [mdx()],
   vite: {
     plugins: [ViteYaml()],

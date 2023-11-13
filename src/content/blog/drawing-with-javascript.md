@@ -1,5 +1,4 @@
 ---
-
 title: Drawing with JavaScript
 ---
 
