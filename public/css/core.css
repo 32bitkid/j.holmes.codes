@@ -16,7 +16,7 @@
     color: #333;
     background-color: white;
     font-family: 'Equity Text B', serif, system-ui;
-    font-feature-settings: "ss01", "ss03", "liga";
+    font-feature-settings: "ss01", "calt", "liga";
     font-size: 12pt;
     font-weight: 400;
 }
