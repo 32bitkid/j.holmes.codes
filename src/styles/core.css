@@ -58,6 +58,10 @@ h1:not(hgroup > h1) {
     font-weight: 600;
 }
 
+time {
+    font-variant-numeric: oldstyle-nums;
+}
+
 p {
     margin-bottom: var(--line-height);
 }
