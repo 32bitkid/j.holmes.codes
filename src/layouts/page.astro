@@ -6,7 +6,7 @@ import "@styles/reset.css";
 import "@styles/font.css";
 import "@styles/core.css";
 
-const { title, description } = Astro.props;
+const { title, description, image } = Astro.props;
 const pageTitle = title ? `${title} \u2236 j.holmes.codes` : "j.holmes.codes";
 ---
 <html lang="en">
@@ -25,7 +25,8 @@ const pageTitle = title ? `${title} \u2236 j.holmes.codes` : "j.holmes.codes";
     <meta property="og:type" content="website">
     <meta property="og:title" content={pageTitle}>
     <meta property="og:description" content={description}>
-    <meta property="og:image" content="">
+    { image && image.url && <meta property="og:image" content={image.url}>}
+
     <meta property="og:site_name" content="j.holmes.codes" />
 
     <meta name="twitter:card" content="summary_large_image">
@@ -34,7 +35,7 @@ const pageTitle = title ? `${title} \u2236 j.holmes.codes` : "j.holmes.codes";
     <meta property="twitter:url" content={Astro.url.href}>
     <meta name="twitter:title" content={pageTitle}>
     <meta name="twitter:description" content={description}>
-    <meta name="twitter:image" content="">
+    { image && image.url && <meta property="twitter:image" content={image.url}>}
 </head>
 <body>
 <Header/>

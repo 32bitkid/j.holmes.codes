@@ -11,7 +11,7 @@ const allBlogPosts =
   ))
   .sort(blogSorting);
 ---
-<Page title="Blog">
+<Page title="Blog" description="A collection of thoughts and blog posts by J. Holmes">
     <h1>Thoughts on thoughts…</h1>
     <ul class="posts">
         {allBlogPosts.map((blog, i) => <BlogItem blog={blog} showSummary={i < 5} highlight={i < 5} />)}

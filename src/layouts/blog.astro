@@ -14,6 +14,7 @@ const {
   authorDate,
   pubDate,
   tags,
+  image,
   summary = "Thoughts on thoughts…"
 } = Astro.props.frontmatter ?? Astro.props;
 
@@ -37,7 +38,7 @@ const pageTitle = `${title} \u2236 j.holmes.codes`
   <meta property="og:type" content="website">
   <meta property="og:title" content={pageTitle}>
   <meta property="og:description" content={summary}>
-  <meta property="og:image" content="">
+  { image && image.url && <meta property="og:image" content={image.url}>}
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:creator" content="@32bitkid" />
@@ -45,7 +46,7 @@ const pageTitle = `${title} \u2236 j.holmes.codes`
   <meta property="twitter:url" content={Astro.url.href}>
   <meta name="twitter:title" content={pageTitle}>
   <meta name="twitter:description" content={summary}>
-  <meta name="twitter:image" content="">
+  { image && image.url && <meta property="twitter:image" content={image.url}>}
 
   <link rel="stylesheet" href="/css/katex.min.css" integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ">
 </head>
