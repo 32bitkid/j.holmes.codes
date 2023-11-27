@@ -3,6 +3,8 @@ title: Let's Write a MPEG-2 Decoder in Go
 pubDate: 2023-11-13
 authorDate: 2013-11-05
 tags: ["mpeg2", "go"]
+summary: >-
+    Random thoughts on MPEG-2 decoding.
 ---
 Looking back over my career so far as a programmer, there have been a lot of things that I'm really proud of working on/figuring out. However, one thing&mdash;to me&mdash;easily stands out above the rest as an "achievement". While it is not the "best" thing I've ever engineered &ndash; hell, if I'm going to be honest, it really wasn't even that *good*, really &ndash; it was one of those projects where when I finally got it working, I felt *amazing*. I wrote a MPEG-2 frame decoder&hellip; in managed C#&hellip; from scratch&hellip;
 

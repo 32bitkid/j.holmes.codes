@@ -1,31 +1,31 @@
 ---
 import Date from "./Date.astro";
-const { blog } = Astro.props;
+const { blog, highlight = false, showSummary = false } = Astro.props;
+const { summary } = blog.data;
 
 const date = blog.data.authorDate ?? blog.data.pubDate;
 const isDraft = blog.data.pubDate === undefined;
 ---
-<li class:list={{ draft: isDraft }}>
+<li class:list={{ draft: isDraft, highlight, showSummary }}>
   {isDraft && <div class="draft-marker">Draft</div>}
   <a href={`/${blog.slug}`}>{blog.data.title}</a>
-  {
-    date &&
-      <div class="byline"><Date date={date}/></div>
-  }
+  {date && <div class="byline"><Date date={date}/></div>}
+  {showSummary && <p>{summary}</p>}
 </li>
 
 
 <style>
-    li {
-        padding-inline-start: 0.5ch;
-        margin-bottom: calc(var(--line-height) * 0.5);
+
+    li.draft {
+        opacity: 0.5;
     }
 
     .byline {
         color: #999;
+        margin-bottom: calc(var(--line-height) * 0.25);
         font-size: var(--f-small);
         line-height: 1;
-        text-indent: 2ch;
+        text-indent: 1rem;
     }
 
     .draft-marker {
@@ -42,4 +42,21 @@ const isDraft = blog.data.pubDate === undefined;
         color: var(--colors-primary);
         vertical-align: 0.125rem;
     }
+
+    p {
+        text-align: justify;
+        font-size: var(--f-small);
+        line-height: 1.414;
+        margin-block-end: 0;
+        margin-inline: 1rem;
+    }
+
+    li.highlight a {
+        font-size: var(--f-large);
+    }
+
+    li.highlight .byline {
+        font-size: var(--f-small);
+    }
+
 </style>

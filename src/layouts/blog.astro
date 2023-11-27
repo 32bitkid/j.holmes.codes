@@ -9,17 +9,44 @@ import "@styles/font.css";
 import "@styles/core.css";
 
 
-const { title, authorDate, pubDate, tags } = Astro.props.frontmatter ?? Astro.props;
+const {
+  title,
+  authorDate,
+  pubDate,
+  tags,
+  summary = "Thoughts on thoughts…"
+} = Astro.props.frontmatter ?? Astro.props;
+
 const date = authorDate ?? pubDate ?? (new Date().toISOString());
 const isPublished = typeof pubDate !== "undefined";
+
+const pageTitle = `${title} \u2236 j.holmes.codes`
+
 ---
 <html class:list={{ draft: !isPublished }}>
 <head>
   <meta charset="utf-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <title>{pageTitle}</title>
+
   <meta name="viewport" content="width=device-width" />
   <meta name="generator" content={Astro.generator} />
-  <title>{title} : j.holmes.codes</title>
+
+  <meta property="og:url" content={Astro.url.href}>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content={pageTitle}>
+  <meta property="og:description" content={summary}>
+  <meta property="og:image" content="">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@32bitkid" />
+  <meta property="twitter:domain" content={Astro.url.hostname}>
+  <meta property="twitter:url" content={Astro.url.href}>
+  <meta name="twitter:title" content={pageTitle}>
+  <meta name="twitter:description" content={summary}>
+  <meta name="twitter:image" content="">
+
   <link rel="stylesheet" href="/css/katex.min.css" integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ">
 </head>
 <body>
@@ -59,7 +86,7 @@ const isPublished = typeof pubDate !== "undefined";
   :root.draft {
       background-repeat: repeat;
       background-size: 100px 100px;
-      background-image :url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><text x="0" y="50" font-size="30" fill="rgba(0,0,0,0.025)">Draft</text></svg>');
+      background-image :url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><g transform="rotate(25)"><text x="15" y="15" font-size="30" fill="rgba(200,200,200,0.1)">Draft</text></g></svg>');
   }
 
   .byline {
