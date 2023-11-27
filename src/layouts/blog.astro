@@ -37,7 +37,7 @@ const pageTitle = `${title} \u2236 j.holmes.codes`
 
   <meta property="og:url" content={Astro.url.href}>
   <meta property="og:type" content="website">
-  <meta property="og:title" content={ogSafe(pageTitle)}>
+  <meta property="og:title" content={ogSafe(title)}>
   <meta property="og:description" content={ogSafe(summary)}>
   { image && image.url && <meta property="og:image" content={image.url}>}
 
@@ -45,7 +45,7 @@ const pageTitle = `${title} \u2236 j.holmes.codes`
   <meta name="twitter:creator" content="@32bitkid" />
   <meta property="twitter:domain" content={Astro.url.hostname}>
   <meta property="twitter:url" content={Astro.url.href}>
-  <meta name="twitter:title" content={ogSafe(pageTitle)}>
+  <meta name="twitter:title" content={ogSafe(title)}>
   <meta name="twitter:description" content={ogSafe(summary)}>
   { image && image.url && <meta property="twitter:image" content={image.url}>}
 
