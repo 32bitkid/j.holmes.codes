@@ -3,6 +3,7 @@ import { format, parseISO } from "date-fns"
 import Tags from "@components/Tags.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
+import { ogSafe } from "../utils/ogSafe";
 
 import "@styles/reset.css";
 import "@styles/font.css";
@@ -36,16 +37,16 @@ const pageTitle = `${title} \u2236 j.holmes.codes`
 
   <meta property="og:url" content={Astro.url.href}>
   <meta property="og:type" content="website">
-  <meta property="og:title" content={pageTitle}>
-  <meta property="og:description" content={summary}>
+  <meta property="og:title" content={ogSafe(pageTitle)}>
+  <meta property="og:description" content={ogSafe(summary)}>
   { image && image.url && <meta property="og:image" content={image.url}>}
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:creator" content="@32bitkid" />
   <meta property="twitter:domain" content={Astro.url.hostname}>
   <meta property="twitter:url" content={Astro.url.href}>
-  <meta name="twitter:title" content={pageTitle}>
-  <meta name="twitter:description" content={summary}>
+  <meta name="twitter:title" content={ogSafe(pageTitle)}>
+  <meta name="twitter:description" content={ogSafe(summary)}>
   { image && image.url && <meta property="twitter:image" content={image.url}>}
 
   <link rel="stylesheet" href="/css/katex.min.css" integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ">
