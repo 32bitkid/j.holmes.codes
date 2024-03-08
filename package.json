@@ -12,9 +12,10 @@
     "deploy": "rsync -avh --delete  dist/ j.holmes.codes:~/j.holmes.codes/"
   },
   "dependencies": {
-    "@astrojs/check": "^0.3.1",
-    "@astrojs/mdx": "^1.1.4",
-    "astro": "^3.5.3",
+    "@astrojs/check": "^0.5.6",
+    "@astrojs/mdx": "^2.1.1",
+    "@astrojs/react": "^3.0.10",
+    "astro": "^4.4.15",
     "remark-math": "^6.0.0",
     "typescript": "^5.2.2"
   },
