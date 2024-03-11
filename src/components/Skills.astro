@@ -18,9 +18,7 @@ const sortedTech = (tech as Exp[]).slice().sort((a, b) => {
 ---
 <ul>
   {sortedTech.map((exp) =>
-      <li class:list={{[`exp${Math.floor(exp.experience)}`]: true, featured: exp.featured }}>
-        {exp.name}
-      </li>
+      <li class:list={{[`exp${Math.floor(exp.experience)}`]: true, featured: exp.featured }}>{exp.name}</li>
   )}
 </ul>
 
@@ -35,20 +33,25 @@ const sortedTech = (tech as Exp[]).slice().sort((a, b) => {
       display: inline;
   }
 
+  li:not(:first-of-type)::before {
+      content: " ";
+  }
+
+
+  li.featured::before {
+      font-weight: normal;
+      vertical-align: 7.5%;
+      content: "\2605\200a";
+  }
+
   li:not(:last-of-type)::after {
+      font-weight: normal;
       content: ", ";
   }
 
   li:last-of-type::after {
+      font-weight: normal;
       content: ".";
-  }
-
-  li.featured:not(:last-of-type)::after {
-      content: "*, ";
-  }
-
-  li.featured::after {
-      content: "*";
   }
 
   li.exp1 { color: rgb( 60%  60%  60%); }

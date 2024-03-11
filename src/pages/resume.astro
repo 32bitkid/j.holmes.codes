@@ -305,6 +305,11 @@ const md = (frag: string) => frag ? marked.parse(frag) : "";
         display: block;
     }
 
+    @page {
+        margin: 0.4in 0.4in;
+        size: Letter portrait;
+    }
+
     @media print {
         :root {
             font-size: 9pt;
@@ -326,5 +331,11 @@ const md = (frag: string) => frag ? marked.parse(frag) : "";
             margin-block-start: 0;
         }
 
+        h2, h3, h4, h5, h6 {
+            break-after: avoid-page;
+        }
+        img, svg, table, canvas {
+            break-inside: avoid;
+        }
     }
 </style>

@@ -7,7 +7,8 @@ summary: |
 
   I craft compelling, elegant interactions between people and machines.
   I bring a diverse experience of technologies and a passion for outstanding engineering.
-  I build the tools and apps that empower people to work, play, and&mdash;most importantly&mdash;*create*.
+  I build the tools and apps that empower people everywhere to work, play, and&mdash;most 
+  importantly&mdash;*create*.
 
 links:
   email:         mailto:j@holmes.codes
@@ -235,12 +236,30 @@ technicalExperience:
     experience: 5
     url: https://socket.io/
     featured: true
-
+  - &webgl
+    name: WebGL
+    experience: 3
+    url: https://webgl.org
 
 workExperience:
+  - company:
+    url: http://j.holmes.codes
+    title: Independent Consultant
+    from: 2024-01
+    tech:
+      - *React
+      - *JavaScript
+      - *TypeScript
+      - *Redux
+      - *mobx
+      - *webgl
+    description: |
+      Bringing years of experience in web-development, worked with companies and organizations to provide insight 
+      and optimizations for their React applications.  Includes browser rendering performance optimizations, 
+      data&#8209;modeling, and reactive&#8209;state optimizations.
   - company: Formant
     url: https://www.formant.io/
-    title: Senior Frontend/Design Engineer
+    title: Senior Frontend & Design Engineer
     from: '2022-04'
     to: '2023-11'
     tech:
@@ -249,13 +268,24 @@ workExperience:
       - *React
       - *TypeScript
       - *mobx
-      - *styled-components
       - *emotion
+      - *styled-components
+      - *SCSS
       - *webrtc
       - *Golang
       - *jest
       - *Git
     description: |
+      As Senior Frontend & Design Engineer at <small>Formant</small>, I was responsible for the health and 
+      maintainability of the front-end stack of Formant's robotic-observation and remote-operation application. During 
+      my time there, I helped coordinate across multiple teams to resolve performance bottlenecks and resolve 
+      reactive-data rendering problems. I worked closely with the design-team to implement and replace legacy components 
+      with accessible and usable alternatives that aligned with the design-team's UI/UX objectives. I took 
+      responsibility for resolving critical dependency-updates and took broad efforts towards refactoring and improving
+      problematic areas of the code-base for future support, maintainability and security. Working hand-in-hand with 
+      design, we established the internal UI component documentation/playground for other frontend engineers. This 
+      served as foundation for collapsing and consolidating a swathe of legacy, analogous styles and components strewn 
+      through the codebase.
 
   - company: WorkBoard
     url: https://www.workboard.com/
@@ -318,6 +348,7 @@ workExperience:
       engineering corps.      
 
   - company: niolabs
+    url: https://github.com/niolabs
     title: Lead Innovation Engineer
     from: '2016-02'
     to: '2019-04'
@@ -348,6 +379,7 @@ workExperience:
       the platform forward into uncharted, new territory.
 
   - company: Leads To Conversations
+    url: https://www.linkedin.com/company/leads-to-conversations/
     title:   Designgineer
     from:    '2015-05'
     to:      '2015-11'
