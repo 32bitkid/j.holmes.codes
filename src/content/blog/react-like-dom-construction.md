@@ -11,12 +11,12 @@ summary: >-
 ```js
 var $text = document.createTextNode.bind(document);
 var $comment = document.createComment.bind(document);
-var $html = function(tag, attrs, c) {
-    var el = document.createElement(tag), key, i, len = c && c.length;
-    for (k in attrs) if(attrs.hasOwnProperty(k)) el.setAttribute(k, attrs[k]);
-    for (i = 0; i < en; i++) el.appendChild(c[i]);
-    return el;
-  };
+var $html = function (tag, attrs, c) {
+  var el = document.createElement(tag);
+  for (var k in attrs) attrs.hasOwnProperty(k) && el.setAttribute(k, attrs[k]);
+  for (var i = 0; i < (c ? c.length : 0); i++) el.appendChild(c[i]);
+  return el;
+};
 ```
 
 ## Usage
@@ -26,9 +26,9 @@ A lot of people recommend using [JSX](https://facebook.github.io/react/docs/jsx-
 This is a minimalistic implementation of similar syntax; simple, terse DOM construction in JavaScript.
 
 ```js
-var el = $html('div', {'class': 'foo bar'}, [
-  $html('h1', null, [ $text('Hello World') ]),
-  $text('Lorem ipsum dolor sit amet!')
+var el = $html('div', { class: 'foo bar' }, [
+  $html('h1', null, [$text('Hello World')]),
+  $text('Lorem ipsum dolor sit amet!'),
 ]);
 
 document.body.appendChild(el);
@@ -37,7 +37,7 @@ document.body.appendChild(el);
 Will create the following DOM:
 
 ```html
-<div class='foo bar'>
+<div class="foo bar">
   <h1>Hello World</h1>
   Lorem ipsum dolor sit amet!
 </div>
@@ -46,13 +46,15 @@ Will create the following DOM:
 It makes simple work of transforming lists into DOM using `.map()`.
 
 ```js
-var data = [/*...*/];
+var data = [
+  /*...*/
+];
 
 function renderItem(item) {
-  return $html('div', { 'id': item.id }, [$text(item.name)])
-};
+  return $html('div', { id: item.id }, [$text(item.name)]);
+}
 
-var results = $html('div', { 'class': 'result' }, elements);
+var results = $html('div', { class: 'result' }, elements);
 ```
 
 ## Good for what?
