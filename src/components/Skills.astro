@@ -14,51 +14,69 @@ const sortedTech = (tech as Exp[]).slice().sort((a, b) => {
   if (featuredDiff) return featuredDiff;
 
   return a.name.localeCompare(b.name);
-})
+});
 ---
+
 <ul>
-  {sortedTech.map((exp) =>
-      <li class:list={{[`exp${Math.floor(exp.experience)}`]: true, featured: exp.featured }}>{exp.name}</li>
-  )}
+  {
+    sortedTech.map((exp) => (
+      <li
+        class:list={{
+          [`exp${Math.floor(exp.experience)}`]: true,
+          featured: exp.featured,
+        }}
+      >
+        {exp.name}
+      </li>
+    ))
+  }
 </ul>
 
 <style>
   ul {
-      font-size: var(--f-small);
-      padding-left: 6ch;
-      text-indent: -3ch;
+    font-size: var(--f-small);
+    padding-left: 6ch;
+    text-indent: -3ch;
   }
 
   li {
-      display: inline;
+    display: inline;
   }
 
   li:not(:first-of-type)::before {
-      content: " ";
+    content: ' ';
   }
 
-
   li.featured::before {
-      font-weight: normal;
-      vertical-align: 7.5%;
-      content: "\2605\200a";
+    font-weight: normal;
+    vertical-align: 7.5%;
+    content: '\2605\200a';
   }
 
   li:not(:last-of-type)::after {
-      font-weight: normal;
-      content: ", ";
+    font-weight: normal;
+    content: ', ';
   }
 
   li:last-of-type::after {
-      font-weight: normal;
-      content: ".";
+    font-weight: normal;
+    content: '.';
   }
 
-  li.exp1 { color: rgb( 60%  60%  60%); }
-  li.exp2 { color: rgb( 40%  40%  40%); }
-  li.exp3 { color: rgb( 20%  20%  20%); }
-  li.exp4 { color: rgb(  0%   0%   0%); }
-  li.exp5 { color: rgb(  0%   0%   0%); font-weight: bold; }
-
-
+  li.exp1 {
+    color: rgb(60% 60% 60%);
+  }
+  li.exp2 {
+    color: rgb(40% 40% 40%);
+  }
+  li.exp3 {
+    color: rgb(20% 20% 20%);
+  }
+  li.exp4 {
+    color: rgb(0% 0% 0%);
+  }
+  li.exp5 {
+    color: rgb(0% 0% 0%);
+    font-weight: bold;
+  }
 </style>

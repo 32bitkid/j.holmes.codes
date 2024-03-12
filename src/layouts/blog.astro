@@ -1,14 +1,13 @@
 ---
-import { format, parseISO } from "date-fns"
-import Tags from "@components/Tags.astro";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import { ogSafe } from "../utils/ogSafe";
+import { format, parseISO } from 'date-fns';
+import Tags from '@components/Tags.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { ogSafe } from '../utils/ogSafe';
 
-import "@styles/reset.css";
-import "@styles/font.css";
-import "@styles/core.css";
-
+import '@styles/reset.css';
+import '@styles/font.css';
+import '@styles/core.css';
 
 const {
   title,
@@ -16,79 +15,106 @@ const {
   pubDate,
   tags,
   image,
-  summary = "Thoughts on thoughts…"
+  summary = 'Thoughts on thoughts…',
 } = Astro.props.frontmatter ?? Astro.props;
 
-const date = authorDate ?? pubDate ?? (new Date().toISOString());
-const isPublished = typeof pubDate !== "undefined";
+const date = authorDate ?? pubDate ?? new Date().toISOString();
+const isPublished = typeof pubDate !== 'undefined';
 
-const pageTitle = `${title} \u2236 j.holmes.codes`
-
+const pageTitle = `${title} \u2236 j.holmes.codes`;
 ---
+
 <html class:list={{ draft: !isPublished }}>
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-  <title>{pageTitle}</title>
+    <title>{pageTitle}</title>
 
-  <meta name="viewport" content="width=device-width" />
-  <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
 
-  <meta property="og:url" content={Astro.url.href}>
-  <meta property="og:type" content="website">
-  <meta property="og:title" content={ogSafe(title)}>
-  <meta property="og:description" content={ogSafe(summary)}>
-  { image && image.url && <meta property="og:image" content={image.url}>}
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={ogSafe(title)} />
+    <meta property="og:description" content={ogSafe(summary)} />
+    {image && image.url && <meta property="og:image" content={image.url} />}
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:creator" content="@32bitkid" />
-  <meta property="twitter:domain" content={Astro.url.hostname}>
-  <meta property="twitter:url" content={Astro.url.href}>
-  <meta name="twitter:title" content={ogSafe(title)}>
-  <meta name="twitter:description" content={ogSafe(summary)}>
-  { image && image.url && <meta property="twitter:image" content={image.url}>}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@32bitkid" />
+    <meta property="twitter:domain" content={Astro.url.hostname} />
+    <meta property="twitter:url" content={Astro.url.href} />
+    <meta name="twitter:title" content={ogSafe(title)} />
+    <meta name="twitter:description" content={ogSafe(summary)} />
+    {
+      image && image.url && (
+        <meta property="twitter:image" content={image.url} />
+      )
+    }
 
-  <link rel="stylesheet" href="/css/katex.min.css" integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ">
-</head>
-<body>
-<Header />
-<article>
-  <h1>{title}</h1>
-  <div class="byline">
-    { date && <time datetime={date}>{format(parseISO(date), "MMMM d, yyyy")}</time> }
-    { !isPublished && <strong><small> [unpublished]</small></strong>}
-    {tags && <>{' in '}<Tags tags={tags}/></>}
-  </div>
-  <section class="content">
-    <slot/>
-  </section>
-</article>
-<Footer />
-</body>
+    <link
+      rel="stylesheet"
+      href="/css/katex.min.css"
+      integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"
+    />
+  </head>
+  <body>
+    <Header />
+    <article>
+      <h1>{title}</h1>
+      <div class="byline">
+        {
+          date && (
+            <time datetime={date}>
+              {format(parseISO(date), 'MMMM d, yyyy')}
+            </time>
+          )
+        }
+        {
+          !isPublished && (
+            <strong>
+              <small> [unpublished]</small>
+            </strong>
+          )
+        }
+        {
+          tags && (
+            <>
+              {' in '}
+              <Tags tags={tags} />
+            </>
+          )
+        }
+      </div>
+      <section class="content">
+        <slot />
+      </section>
+    </article>
+    <Footer />
+  </body>
 </html>
 
 <style>
-    body {
-        display: grid;
-        min-height: calc(100vh - var(--line-height) * 1.5);
-        grid-template-rows: 1fr min-content;
-        justify-items: stretch;
-        align-items: stretch;
-    }
+  body {
+    display: grid;
+    min-height: calc(100vh - var(--line-height) * 1.5);
+    grid-template-rows: 1fr min-content;
+    justify-items: stretch;
+    align-items: stretch;
+  }
 
   article {
-      width: 100%;
-      max-width: var(--max-content);
-      padding-inline: 1.5ch;
-      box-sizing: border-box;
-      justify-self: center;
+    width: 100%;
+    max-width: var(--max-content);
+    padding-inline: 1.5ch;
+    box-sizing: border-box;
+    justify-self: center;
   }
 
   :root.draft {
-      background-repeat: repeat;
-      background-size: 100px 100px;
-      background-image :url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><g transform="rotate(25)"><text x="15" y="15" font-size="30" fill="rgba(200,200,200,0.1)">Draft</text></g></svg>');
+    background-repeat: repeat;
+    background-size: 100px 100px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><g transform="rotate(25)"><text x="15" y="15" font-size="30" fill="rgba(200,200,200,0.1)">Draft</text></g></svg>');
   }
 
   .byline {
@@ -99,7 +125,8 @@ const pageTitle = `${title} \u2236 j.holmes.codes`
     margin-bottom: calc(var(--line-height) * 1);
   }
 
-  .content {}
+  .content {
+  }
 
   .content :global(.astro-code) {
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
@@ -117,7 +144,7 @@ const pageTitle = `${title} \u2236 j.holmes.codes`
   }
 
   .content :global(ul) {
-    list-style: "\25E6\2007";
+    list-style: '\25E6\2007';
   }
 
   .content :global(ol) {
@@ -135,7 +162,7 @@ const pageTitle = `${title} \u2236 j.holmes.codes`
     font-weight: 400;
     letter-spacing: -0.04em;
     font-family: 'Equity Caps B', serif;
-    font-feature-settings: "c2sc", "smcp", "onum";
+    font-feature-settings: 'c2sc', 'smcp', 'onum';
     line-height: calc(var(--line-height) * 1);
     font-size: 0.7492rem;
     margin-left: 3ch;
@@ -153,8 +180,8 @@ const pageTitle = `${title} \u2236 j.holmes.codes`
     color: rgba(0, 0, 0, 0.25);
   }
 
-  .content :global(tbody > tr:nth-child(3n+1):not(:empty) td),
-  .content :global(tbody > tr:nth-child(3n+1):not(:empty) th){
+  .content :global(tbody > tr:nth-child(3n + 1):not(:empty) td),
+  .content :global(tbody > tr:nth-child(3n + 1):not(:empty) th) {
     border-top: 0.25px dashed #ddd;
   }
 
@@ -182,5 +209,4 @@ const pageTitle = `${title} \u2236 j.holmes.codes`
   h1 {
     margin-block-start: max(10rem, 25vh);
   }
-
 </style>

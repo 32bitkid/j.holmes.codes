@@ -1,120 +1,171 @@
 ---
-import Header from "../components/Header.astro";
-import Date from "../components/Date.astro";
-import Skills from "../components/Skills.astro"
+import Header from '../components/Header.astro';
+import Date from '../components/Date.astro';
+import Skills from '../components/Skills.astro';
 import { marked } from 'marked';
-import resume from "../data/resume.yaml";
+import resume from '../data/resume.yaml';
 
-import "@styles/reset.css";
-import "@styles/font.css";
-import "@styles/core.css";
+import '@styles/reset.css';
+import '@styles/font.css';
+import '@styles/core.css';
 
 interface IJob {
-    readonly company: string;
-    readonly description: string;
-    readonly filtered: boolean;
-    readonly from: string;
-    readonly tech: unknown[];
-    readonly title: string;
-    readonly to: string
-    readonly url: string;
+  readonly company: string;
+  readonly description: string;
+  readonly filtered: boolean;
+  readonly from: string;
+  readonly tech: unknown[];
+  readonly title: string;
+  readonly to: string;
+  readonly url: string;
 }
 
 interface IProject {
-    readonly description: string;
-    readonly hidden: boolean;
-    readonly link: string;
-    readonly name: string;
-    readonly role: string;
+  readonly description: string;
+  readonly hidden: boolean;
+  readonly link: string;
+  readonly name: string;
+  readonly role: string;
 }
 
-const md = (frag: string) => frag ? marked.parse(frag) : "";
+const md = (frag: string) => (frag ? marked.parse(frag) : '');
 ---
+
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Résumé : j.holmes.codes</title>
 
+    <meta property="title" content="Résumé by J Holmes" />
+    <meta name="author" content="J Holmes" />
 
-    <meta property="title" content="Résumé by J Holmes">
-    <meta name="author" content="J Holmes">
-
-    <meta property="og:url" content={Astro.url.href}>
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Résumé by J Holmes">
-    <meta property="og:description" content="Résumé by J Holmes">
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Résumé by J Holmes" />
+    <meta property="og:description" content="Résumé by J Holmes" />
 
     <meta property="og:site_name" content="j.holmes.codes" />
 
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@32bitkid" />
-    <meta property="twitter:domain" content={Astro.url.hostname}>
-    <meta property="twitter:url" content={Astro.url.href}>
-    <meta name="twitter:title" content="Résumé by J Holmes">
-    <meta name="twitter:description" content="Résumé by J Holmes">
-</head>
-<body>
-<Header/>
+    <meta property="twitter:domain" content={Astro.url.hostname} />
+    <meta property="twitter:url" content={Astro.url.href} />
+    <meta name="twitter:title" content="Résumé by J Holmes" />
+    <meta name="twitter:description" content="Résumé by J Holmes" />
+  </head>
+  <body>
+    <Header />
     <header id="intro">
-        <hgroup>
-            <h1>James Holmes</h1>
-            <h2>Developer ∪ Designer</h2>
-        </hgroup>
-        <ul class="contacts">
-            <li><a target="_blank" rel="noopener noreferrer" href="mailto:j@holmes.codes">mailto:j@holmes.codes</a></li>
-            <li><a target="_blank" rel="noopener noreferrer" href="tel:+1-678-313-0813">tel:+1-678-313-0813</a></li>
-            <li><a target="_blank" rel="noopener noreferrer" href="https://j.holmes.codes">https://j.holmes.codes</a></li>
-            <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/32bitkid">https://github.com/32bitkid</a></li>
-            <li><a target="_blank" rel="noopener noreferrer" href="https://codepen.io/32bitkid">https://codepen.io/32bitkid</a></li>
-        </ul>
+      <hgroup>
+        <h1>James Holmes</h1>
+        <h2>Developer ∪ Designer</h2>
+      </hgroup>
+      <ul class="contacts">
+        <li>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="mailto:j@holmes.codes">mailto:j@holmes.codes</a
+          >
+        </li>
+        <li>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="tel:+1-678-313-0813">tel:+1-678-313-0813</a
+          >
+        </li>
+        <li>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://j.holmes.codes">https://j.holmes.codes</a
+          >
+        </li>
+        <li>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/32bitkid">https://github.com/32bitkid</a
+          >
+        </li>
+        <li>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://codepen.io/32bitkid">https://codepen.io/32bitkid</a
+          >
+        </li>
+      </ul>
     </header>
-    <section id="summary" set:html={md(resume.summary)}  />
+    <section id="summary" set:html={md(resume.summary)} />
     <hr />
     <main>
-        <section id="work-experience">
-            <h2>Experience</h2>
-            <ol>
-                {(resume.workExperience as IJob[])
-                  .filter(job => !job.filtered)
-                  .sort((a,b) => a.from < b.from ? 1 : a == b ? 0 : -1)
-                  .map(job =>
-                      <li>
-                          <div>
-                              <span class="title">{job.title}</span>
-                              {" "}&middot;{" "}
-                              {job.url
-                                ? <a target="_blank" rel="noopener noreferrer" href={job.url}>{job.company}</a>
-                                : job.company
-                              }
-
-                          </div>
-                          <div class="span">
-                              <Date date={job.from} day={false} />&ndash;{job.to ? <Date date={job.to} day={false} /> : <em>present</em>}
-                          </div>
-                          <div class="description" set:html={md(job.description)} />
-                          <Skills tech={job.tech} />
-                      </li>
-                  )}
-            </ol>
-            {(resume.workExperience as IJob[]).some(it => it.filtered) && <>Full work-history is available on request…</>}
-        </section>
+      <section id="work-experience">
+        <h2>Experience</h2>
+        <ol>
+          {
+            (resume.workExperience as IJob[])
+              .filter((job) => !job.filtered)
+              .sort((a, b) => (a.from < b.from ? 1 : a == b ? 0 : -1))
+              .map((job) => (
+                <li>
+                  <div>
+                    <span class="title">{job.title}</span> &middot;{' '}
+                    {job.url ? (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={job.url}
+                      >
+                        {job.company}
+                      </a>
+                    ) : (
+                      job.company
+                    )}
+                  </div>
+                  <div class="span">
+                    <Date date={job.from} day={false} />
+                    &ndash;
+                    {job.to ? (
+                      <Date date={job.to} day={false} />
+                    ) : (
+                      <em>present</em>
+                    )}
+                  </div>
+                  <div class="description" set:html={md(job.description)} />
+                  <Skills tech={job.tech} />
+                </li>
+              ))
+          }
+        </ol>
+        {
+          (resume.workExperience as IJob[]).some((it) => it.filtered) && (
+            <>Full work-history is available on request…</>
+          )
+        }
+      </section>
     </main>
     <hr />
     <section id="projects">
-        <h2>Projects</h2>
-        <ul>
-            {(resume.projects as IProject[])
-              .filter(project => !project.hidden)
-              .map(project =>
-                <li class:list={[project.role]}>
-                    <a href={project.link} class:list={["title"]}>{project.name}</a>
-                    <Fragment set:html={md(project.description)} />
-                </li>
-              )}
-        </ul>
+      <h2>Projects</h2>
+      <ul>
+        {
+          (resume.projects as IProject[])
+            .filter((project) => !project.hidden)
+            .map((project) => (
+              <li class:list={[project.role]}>
+                <a href={project.link} class:list={['title']}>
+                  {project.name}
+                </a>
+                <Fragment set:html={md(project.description)} />
+              </li>
+            ))
+        }
+      </ul>
     </section>
     <!--
     <hr/>
@@ -174,168 +225,185 @@ const md = (frag: string) => frag ? marked.parse(frag) : "";
         </ol>
     </section>
     -->
-</body>
+  </body>
 </html>
 
 <style>
-    :global(p) {
-        text-align: justify;
+  :global(p) {
+    text-align: justify;
+  }
+
+  #intro,
+  #summary,
+  #work-experience,
+  #projects,
+  #education {
+    max-width: var(--max-content);
+    margin-inline: auto;
+    padding-inline: 1.5ch;
+  }
+
+  hr {
+    max-width: var(--max-content);
+    margin-inline: auto;
+    margin-block: calc(var(--line-height) * 1.5);
+  }
+
+  header {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: auto 10rem;
+    margin-block: var(--line-height);
+    border-bottom: 1px dotted #ddd;
+    padding-bottom: var(--line-height);
+  }
+
+  hgroup h1 {
+    font-size: var(--f-epic);
+    line-height: calc(var(--line-height) * 3);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  hgroup h2 {
+    font-family: 'Equity Caps B', serif;
+    margin-top: -0.2rem;
+    margin-bottom: 0;
+    text-indent: 3ch;
+    font-size: var(--f-large);
+    line-height: calc(var(--line-height) * 1);
+    font-feature-settings: 'c2sc', 'smcp';
+  }
+
+  aside h2 {
+    font-size: var(--f-large);
+    line-height: var(--line-height);
+    margin-block-end: 0;
+  }
+
+  h2:not(hgroup h2) {
+    margin-top: 0;
+  }
+
+  h3 {
+    text-transform: lowercase;
+    font-feature-settings: unset;
+  }
+
+  .contacts {
+    text-align: right;
+    font-variant-numeric: oldstyle-nums;
+    font-size: var(--f-small);
+    line-height: 1.4;
+  }
+
+  #work-experience .title {
+    font-family: 'Equity Caps B', serif;
+    font-size: var(--f-large);
+    letter-spacing: -0.06em;
+  }
+
+  #work-experience li {
+    margin-block-end: calc(var(--line-height) * 1);
+  }
+
+  #work-experience :global(p) {
+    margin-block-end: calc(var(--line-height) * 0.333);
+  }
+
+  #work-experience .span {
+    font-size: var(--f-small);
+    margin-top: -0.5em;
+    text-indent: 3ch;
+    margin-bottom: calc(var(--line-height) * 0.333);
+  }
+
+  #projects ul {
+    display: grid;
+    grid-gap: 0 4ch;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+  }
+
+  #projects details {
+    margin-block-end: calc(var(--line-height) * 0.333);
+  }
+
+  #projects li :global(p) {
+    line-height: 1.5;
+    text-align: left;
+    padding-inline-start: 2ch;
+  }
+
+  #projects details :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  #projects :global(p) {
+    font-size: var(--f-small);
+  }
+
+  #projects .author .title::before {
+    content: '\2605\0020';
+  }
+
+  #projects .maintainer .title::before {
+    content: '\2B2A\0020';
+  }
+
+  #projects .contributor .title::before {
+    content: '\2022\0020';
+  }
+
+  #projects .title {
+    letter-spacing: -0.02em;
+    display: block;
+  }
+
+  @page {
+    margin: 0.4in 0.4in;
+    size: Letter portrait;
+  }
+
+  @media print {
+    :root {
+      font-size: 9pt;
     }
 
-    #intro, #summary, #work-experience, #projects, #education {
-        max-width: var(--max-content);
-        margin-inline: auto;
-        padding-inline: 1.5ch;
-    }
-
+    #intro,
+    #summary,
+    #work-experience,
+    #projects,
+    #education,
     hr {
-        max-width: var(--max-content);
-        margin-inline: auto;
-        margin-block: calc(var(--line-height) * 1.5);
+      max-width: unset;
     }
 
-    header {
-        box-sizing: border-box;
-        display: grid;
-        grid-template-columns: auto 10rem;
-        margin-block: var(--line-height);
-        border-bottom: 1px dotted #ddd;
-        padding-bottom: var(--line-height);
+    #work-experience li,
+    #projects li {
+      break-inside: avoid;
     }
 
-    hgroup h1 {
-        font-size: var(--f-epic);
-        line-height: calc(var(--line-height) * 3);
-        font-weight: 700;
-        letter-spacing: -0.02em;
+    :root {
+      padding-top: 0;
     }
 
-    hgroup h2 {
-        font-family: 'Equity Caps B', serif;
-        margin-top: -0.2rem;
-        margin-bottom: 0;
-        text-indent: 3ch;
-        font-size: var(--f-large);
-        line-height: calc(var(--line-height) * 1);
-        font-feature-settings: "c2sc","smcp";
+    #intro {
+      margin-block-start: 0;
     }
 
-    aside h2 {
-        font-size: var(--f-large);
-        line-height: var(--line-height);
-        margin-block-end: 0;
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      break-after: avoid-page;
     }
-
-    h2:not(hgroup h2) {
-        margin-top: 0;
+    img,
+    svg,
+    table,
+    canvas {
+      break-inside: avoid;
     }
-
-    h3 {
-        text-transform: lowercase;
-        font-feature-settings: unset;
-    }
-
-    .contacts {
-        text-align: right;
-        font-variant-numeric: oldstyle-nums;
-        font-size: var(--f-small);
-        line-height: 1.4;
-    }
-
-    #work-experience .title {
-        font-family: "Equity Caps B", serif;
-        font-size: var(--f-large);
-        letter-spacing: -0.06em;
-    }
-
-    #work-experience li {
-        margin-block-end: calc(var(--line-height) * 1);
-    }
-
-    #work-experience :global(p) {
-        margin-block-end: calc(var(--line-height) * 0.333);
-    }
-
-    #work-experience .span {
-        font-size: var(--f-small);
-        margin-top: -0.5em;
-        text-indent: 3ch;
-        margin-bottom: calc(var(--line-height) * 0.333);
-    }
-
-    #projects ul {
-        display: grid;
-        grid-gap: 0 4ch;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: auto;
-    }
-
-    #projects details {
-        margin-block-end: calc(var(--line-height) * 0.333);
-    }
-
-    #projects li :global(p) {
-        line-height: 1.5;
-        text-align: left;
-        padding-inline-start: 2ch;
-    }
-
-    #projects details :global(p:last-child) {
-        margin-bottom: 0;
-    }
-
-    #projects :global(p) {
-        font-size: var(--f-small);
-    }
-
-    #projects .author .title::before {
-        content: "\2605\0020";
-    }
-
-    #projects .maintainer .title::before {
-        content: "\2B2A\0020";
-    }
-
-    #projects .contributor .title::before {
-        content: "\2022\0020";
-    }
-
-    #projects .title {
-        letter-spacing: -0.02em;
-        display: block;
-    }
-
-    @page {
-        margin: 0.4in 0.4in;
-        size: Letter portrait;
-    }
-
-    @media print {
-        :root {
-            font-size: 9pt;
-        }
-
-        #intro, #summary, #work-experience, #projects, #education, hr {
-            max-width: unset;
-        }
-
-        #work-experience li, #projects li {
-            break-inside: avoid;
-        }
-
-        :root {
-           padding-top: 0;
-        }
-
-        #intro {
-            margin-block-start: 0;
-        }
-
-        h2, h3, h4, h5, h6 {
-            break-after: avoid-page;
-        }
-        img, svg, table, canvas {
-            break-inside: avoid;
-        }
-    }
+  }
 </style>

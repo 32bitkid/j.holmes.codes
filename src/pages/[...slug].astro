@@ -1,74 +1,95 @@
 ---
 import { getCollection } from 'astro:content';
-import { blogSorting } from "../utils/blogSorting";
-import Blog from "@layouts/blog.astro";
+import { blogSorting } from '../utils/blogSorting';
+import Blog from '@layouts/blog.astro';
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection(
-    'blog',
-    ({ data }) => (import.meta.env.PROD) ? data.pubDate !== undefined : true,
+  const blogEntries = await getCollection('blog', ({ data }) =>
+    import.meta.env.PROD ? data.pubDate !== undefined : true,
   );
 
-  return blogEntries
-    .sort(blogSorting)
-    .map((entry, i, list) => ({
-      params: {
-        slug: entry.slug,
-      },
-      props: {
-        entry,
-        prev: list[i - 1] ? {
-          title: list[i - 1].data.title,
-          slug: list[i - 1].slug
-        } : undefined,
-        next: list[i + 1] ? {
-          title: list[i + 1].data.title,
-          slug: list[i + 1].slug
-        } : undefined,
-      },
-    }));
+  return blogEntries.sort(blogSorting).map((entry, i, list) => ({
+    params: {
+      slug: entry.slug,
+    },
+    props: {
+      entry,
+      prev: list[i - 1]
+        ? {
+            title: list[i - 1].data.title,
+            slug: list[i - 1].slug,
+          }
+        : undefined,
+      next: list[i + 1]
+        ? {
+            title: list[i + 1].data.title,
+            slug: list[i + 1].slug,
+          }
+        : undefined,
+    },
+  }));
 }
 
 const { entry, prev, next } = Astro.props;
 const { Content, remarkPluginFrontmatter } = await entry.render();
 ---
+
 <Blog {...remarkPluginFrontmatter}>
   <Content />
   <nav>
-    {prev && <a href={`/${prev.slug}`} class="previous">{prev.title}</a>}
-    {next && <a href={`/${next.slug}`} class="next">{next.title}</a>}
+    {
+      prev && (
+        <a href={`/${prev.slug}`} class="previous">
+          {prev.title}
+        </a>
+      )
+    }
+    {
+      next && (
+        <a href={`/${next.slug}`} class="next">
+          {next.title}
+        </a>
+      )
+    }
   </nav>
 </Blog>
 
 <style>
   nav {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-areas: "previous" "next";
-      row-gap: calc(var(--line-height) * 0.5);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: 'previous' 'next';
+    row-gap: calc(var(--line-height) * 0.5);
   }
 
-  .previous { text-align: left; }
-  .next { text-align: right; }
+  .previous {
+    text-align: left;
+  }
+  .next {
+    text-align: right;
+  }
 
   @media screen and (min-width: 45rem) {
     nav {
-        grid-template-columns: max-content max-content;
-        grid-template-areas: "previous next";
-        justify-content: space-between;
-        align-items: baseline;
-        column-gap: 4ch;
+      grid-template-columns: max-content max-content;
+      grid-template-areas: 'previous next';
+      justify-content: space-between;
+      align-items: baseline;
+      column-gap: 4ch;
     }
   }
 
-  .previous { grid-area: previous; }
-  .next { grid-area: next; }
+  .previous {
+    grid-area: previous;
+  }
+  .next {
+    grid-area: next;
+  }
 
   .previous::before {
-      content: "\2190\00A0";
+    content: '\2190\00A0';
   }
   .next::after {
-      content: "\00A0\2192";
+    content: '\00A0\2192';
   }
 </style>
-

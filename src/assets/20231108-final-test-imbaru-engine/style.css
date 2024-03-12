@@ -1,13 +1,13 @@
 .rune {
-    width: 6ch;
-    height: 6ch;
+  width: 6ch;
+  height: 6ch;
 }
 
 .rune.small {
-    width: 3.5ch;
-    height: 3.5ch;
+  width: 3.5ch;
+  height: 3.5ch;
 }
 
 .rune.off {
-    opacity: 0.1;
+  opacity: 0.1;
 }

@@ -11,24 +11,24 @@ summary: |
   importantly&mdash;*create*.
 
 links:
-  email:         mailto:j@holmes.codes
-  tel:           tel:+1-678-313-0813
-  blog:          https://j.holmes.codes
-  github:        https://github.com/32bitkid
-  codepen:       https://codepen.io/32bitkid
+  email: mailto:j@holmes.codes
+  tel: tel:+1-678-313-0813
+  blog: https://j.holmes.codes
+  github: https://github.com/32bitkid
+  codepen: https://codepen.io/32bitkid
 
 technicalExperience:
   - &ActionScript
     name: ActionScript
     experience: 5
-    url:  http://www.adobe.com/devnet/actionscript.html
+    url: http://www.adobe.com/devnet/actionscript.html
   - &AngularJs
     name: Angular
-    url:  https://angularjs.org/
+    url: https://angularjs.org/
     experience: 3
   - &ASPNet
     name: ASP.Net
-    url:  http://www.asp.net/
+    url: http://www.asp.net/
     experience: 2
   - &BackboneJs
     name: Backbone.js
@@ -36,111 +36,111 @@ technicalExperience:
     expereience: 4
   - &BaconJs
     name: Bacon.js
-    url:  https://baconjs.github.io/
+    url: https://baconjs.github.io/
     experience: 3
   - &Bootstrap
     name: Bootstrap
-    url:  http://getbootstrap.com/javascript/
+    url: http://getbootstrap.com/javascript/
     experience: 4
   - &CoffeeScript
     name: CoffeeScript
-    url:  http://coffeescript.org/
+    url: http://coffeescript.org/
     experience: 3
   - &CSharp
-    name: "C#"
-    url:  https://msdn.microsoft.com/en-us/library/ms228593.aspx
+    name: 'C#'
+    url: https://msdn.microsoft.com/en-us/library/ms228593.aspx
     experience: 3
   - &Cucumber
     name: Cucumber
-    url:  https://cucumber.io/
+    url: https://cucumber.io/
     experience: 3
   - &Express
     name: Express
-    url:  http://expressjs.com/
+    url: http://expressjs.com/
     experience: 3
   - &Flex
     name: Flex
-    url:  http://www.adobe.com/products/flex.html
+    url: http://www.adobe.com/products/flex.html
     experience: 3
   - &Golang
     name: Go
-    url:  https://golang.org/
+    url: https://golang.org/
     experience: 4
     featured: true
   - &IIS
     name: IIS
-    url:  https://www.iis.net/
+    url: https://www.iis.net/
     experience: 2
   - &Java8
     name: Java 8
-    url:  https://docs.oracle.com/javase/specs/
+    url: https://docs.oracle.com/javase/specs/
     experience: 3
   - &JavaScript
     name: JavaScript
-    url:  http://www.ecma-international.org/ecma-262/6.0/index.html
+    url: http://www.ecma-international.org/ecma-262/6.0/index.html
     experience: 5
     featured: true
   - &jQuery
     name: jQuery
-    url:  https://jquery.com/
+    url: https://jquery.com/
     experience: 4
   - &Knockout
     name: Knockout
-    url:  http://knockoutjs.com/
+    url: http://knockoutjs.com/
     experience: 4
   - &Leaflet
     name: Leaflet
-    url:  http://leafletjs.com/
+    url: http://leafletjs.com/
     experience: 3
   - &Less
     name: Less
-    url:  http://lesscss.org/
+    url: http://lesscss.org/
     experience: 5
   - &MSSQLServer
     name: MS SQL Server
-    url:  https://www.microsoft.com/en-us/server-cloud/products/sql-server/features.aspx
+    url: https://www.microsoft.com/en-us/server-cloud/products/sql-server/features.aspx
     experience: 3
   - &MySQL
     name: MySQL
-    url:  https://www.mysql.com/
+    url: https://www.mysql.com/
     experience: 2
   - &NodeJs
     name: Node.js
-    url:  https://nodejs.org/en/
+    url: https://nodejs.org/en/
     experience: 4
   - &OrientDB
     name: OrientDB
-    url:  http://orientdb.com/orientdb/
+    url: http://orientdb.com/orientdb/
     experience: 2
   - &Postgres
     name: Postgres
-    url:  http://www.postgresql.org/
+    url: http://www.postgresql.org/
     experience: 3
     featured: true
   - &React
     name: React
-    url:  https://facebook.github.io/react/
+    url: https://facebook.github.io/react/
     experience: 5.1
     featured: true
   - &Redis
     name: Redis
-    url:  http://redis.io/
+    url: http://redis.io/
     experience: 2
   - &Rails
     name: Ruby on Rails
-    url:  http://rubyonrails.org/
+    url: http://rubyonrails.org/
     experience: 2
   - &Ruby
     name: Ruby
-    url:  https://www.ruby-lang.org/en/
+    url: https://www.ruby-lang.org/en/
     experience: 4
   - &Spring
     name: Spring
-    url:  http://projects.spring.io/spring-framework/
+    url: http://projects.spring.io/spring-framework/
     experience: 1
   - &WebDriver
     name: WebDriver
-    url:  http://www.seleniumhq.org/projects/webdriver/
+    url: http://www.seleniumhq.org/projects/webdriver/
     experience: 3
   - &Python
     name: Python
@@ -167,12 +167,12 @@ technicalExperience:
     featured: true
   - &SCSS
     name: Sass/SCSS
-    url:  https://sass-lang.com
+    url: https://sass-lang.com
     experience: 5
     featured: true
   - &Git
     name: Git
-    url:  https://git-scm.com/
+    url: https://git-scm.com/
     experience: 5
     featured: true
   - &tdd
@@ -313,7 +313,7 @@ workExperience:
       architecture, we attacked challenges from API specification/design to managing 
       real-time websocket communication. Envisioned as a core architectural building-block 
       for next-gen tools, this product was a first-of-its-kind at Workboard.
-      
+
       I worked to establish team best-practices and maintainable microservice
       architectures for the future. In just under six-months, we released the product to
       customer acclaim.
@@ -340,12 +340,12 @@ workExperience:
       implementation considerations. As such, I provided technical oversight and code-reviews 
       for React development, Salesforce API design best-practices, database schema feedback
       for several teams, and worked closely with DevSec-team to investigate and resolve issues.
-      
+
       My role also included build-pipeline design and maintenance for product teams.
       An effort which culminated in a new unified front-end tooling and deployment 
       processes used by all front-end teams. This resulted in increased organizational 
       knowledge and understanding of front-end deployments and updates across the entire 
-      engineering corps.      
+      engineering corps.
 
   - company: niolabs
     url: https://github.com/niolabs
@@ -380,9 +380,9 @@ workExperience:
 
   - company: Leads To Conversations
     url: https://www.linkedin.com/company/leads-to-conversations/
-    title:   Designgineer
-    from:    '2015-05'
-    to:      '2015-11'
+    title: Designgineer
+    from: '2015-05'
+    to: '2015-11'
     tech:
       - *NodeJs
       - *Express
@@ -406,9 +406,9 @@ workExperience:
       members of small teams wear many hats.
 
   - company: Skyward.io
-    title:   Lead Front‑End Developer
-    from:    '2014-08'
-    to:      '2015-04'
+    title: Lead Front‑End Developer
+    from: '2014-08'
+    to: '2015-04'
     tech:
       - *JavaScript
       - *Bootstrap
@@ -431,10 +431,10 @@ workExperience:
       Java 8 functional programming paradigms.
 
   - company: VersionOne
-    url:     https://digital.ai/
-    title:   Team Lead
-    from:    '2012-02'
-    to:      '2014-08'
+    url: https://digital.ai/
+    title: Team Lead
+    from: '2012-02'
+    to: '2014-08'
     tech:
       - *JavaScript
       - *Less
@@ -465,10 +465,10 @@ workExperience:
 
   - company: Clearwave
     filtered: true
-    url:     http://www.clearwaveinc.com/
-    title:   ScrumMaster / Team Lead
-    from:    '2009-08'
-    to:      '2011-09'
+    url: http://www.clearwaveinc.com/
+    title: ScrumMaster / Team Lead
+    from: '2009-08'
+    to: '2011-09'
     tech:
       - *JavaScript
       - *jQuery
@@ -493,10 +493,10 @@ workExperience:
 
   - company: Bluechip Athletic Solutions
     filtered: true
-    url:     http://www.bas-llc.net/
-    title:   ActionScript Consultant
-    from:    '2011-06'
-    to:      '2012-06'
+    url: http://www.bas-llc.net/
+    title: ActionScript Consultant
+    from: '2011-06'
+    to: '2012-06'
     tech:
       - *ActionScript
       - { name: AGAL }
@@ -514,9 +514,9 @@ workExperience:
 
   - company: FourSpots
     filtered: true
-    title:   Web Application Developer
-    from:    '2008-02'
-    to:      '2009-06'
+    title: Web Application Developer
+    from: '2008-02'
+    to: '2009-06'
     tech:
       - *Ruby
       - *Rails
@@ -530,12 +530,11 @@ workExperience:
       rendering services on top of FFMPEG and Avisynth, as well as custom
       SWF packing for advertisment distribution.
 
-
 teaching:
   - organization: CoderDojo Ponce Springs
-    title:        Volunteer Mentor
-    from:         '2013-05'
-    to:           '2014-08'
+    title: Volunteer Mentor
+    from: '2013-05'
+    to: '2014-08'
     notes: |
       I had a *ton* of fun mentoring at the CoderDojo. The effort was
       spearheaded by a fellow co‑worker. Having buy&#x2011;in/support from our
@@ -546,16 +545,16 @@ teaching:
       helping expose the next generation to fundamentals of technology and
       programming.
   - organization: ITT Technical Institute
-    title:        Adjunct Instructor
-    from:         '2006'
-    to:           '2010'
+    title: Adjunct Instructor
+    from: '2006'
+    to: '2010'
 
 education:
-  - name:     Art Institute of Atlanta
+  - name: Art Institute of Atlanta
     location: Atlanta, GA
-    program:  BFA Media Arts and Animation
-    from:     '2000-07'
-    to:       '2004-04'
+    program: BFA Media Arts and Animation
+    from: '2000-07'
+    to: '2004-04'
     notes: |
       My college experience helped solidify my interest in the intersection
       between visual arts and code. Classes like Color Theory, Typography and
@@ -564,12 +563,12 @@ education:
       confluence art and mathematics. During my senior year, I was the teaching
       assistant for most of the 3D Modeling and Animation classes; my first
       foray into teaching and education.
-  - name:     Macomb Community College
+  - name: Macomb Community College
     location: Warren, MI
-    program:  Software Engineering
-    from:     '1997'
-    to:       '2000'
-    hidden:    true
+    program: Software Engineering
+    from: '1997'
+    to: '2000'
+    hidden: true
 
 software:
   - &Sketch
@@ -609,7 +608,7 @@ projects:
     description: |
       **Author** of an experimental/educational pure&#x2011;Go MPEG&#x2011;2 decoder.
 
-  - name: "@pubkeeper/client"
+  - name: '@pubkeeper/client'
     link: https://www.npmjs.com/package/@pubkeeper/client
     role: maintainer
     tech:

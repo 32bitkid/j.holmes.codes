@@ -2,6 +2,7 @@
 const { caption, centered = false, table = false, code = false } = Astro.props;
 const figure = table !== true && code !== true;
 ---
+
 <style>
   :global(article) {
     counter-reset: figure table code;
@@ -12,7 +13,7 @@ const figure = table !== true && code !== true;
   }
 
   figure.figure > figcaption:not(:empty):before {
-    content: "Figure " counter(figure) ": ";
+    content: 'Figure ' counter(figure) ': ';
   }
 
   figure.table > figcaption:not(:empty) {
@@ -20,7 +21,7 @@ const figure = table !== true && code !== true;
   }
 
   figure.table > figcaption:not(:empty):before {
-    content: "Table " counter(table) ": ";
+    content: 'Table ' counter(table) ': ';
   }
 
   figure.code > figcaption:not(:empty) {
@@ -28,7 +29,7 @@ const figure = table !== true && code !== true;
   }
 
   figure.code > figcaption:not(:empty):before {
-    content: "Example Code " counter(code) ": ";
+    content: 'Example Code ' counter(code) ': ';
   }
 
   figcaption {
@@ -37,7 +38,6 @@ const figure = table !== true && code !== true;
     font-size: 0.7492rem;
     line-height: calc(var(--line-height) * 1);
   }
-
 
   div.centered {
     text-align: center;

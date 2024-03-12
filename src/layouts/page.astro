@@ -1,17 +1,18 @@
 ---
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import { ogSafe } from "../utils/ogSafe";
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { ogSafe } from '../utils/ogSafe';
 
-import "@styles/reset.css";
-import "@styles/font.css";
-import "@styles/core.css";
+import '@styles/reset.css';
+import '@styles/font.css';
+import '@styles/core.css';
 
-const { title, description = "Thoughts on thoughts", image } = Astro.props;
-const pageTitle = title ? `${title} \u2236 j.holmes.codes` : "j.holmes.codes";
+const { title, description = 'Thoughts on thoughts', image } = Astro.props;
+const pageTitle = title ? `${title} \u2236 j.holmes.codes` : 'j.holmes.codes';
 ---
+
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{pageTitle}</title>
@@ -19,46 +20,50 @@ const pageTitle = title ? `${title} \u2236 j.holmes.codes` : "j.holmes.codes";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
-    <meta property="title" content={pageTitle}>
-    <meta name="author" content="J Holmes">
+    <meta property="title" content={pageTitle} />
+    <meta name="author" content="J Holmes" />
 
-    <meta property="og:url" content={Astro.url.href}>
-    <meta property="og:type" content="website">
-    <meta property="og:title" content={ogSafe(pageTitle)}>
-    <meta property="og:description" content={ogSafe(description)}>
-    { image && image.url && <meta property="og:image" content={image.url}>}
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={ogSafe(pageTitle)} />
+    <meta property="og:description" content={ogSafe(description)} />
+    {image && image.url && <meta property="og:image" content={image.url} />}
 
     <meta property="og:site_name" content="j.holmes.codes" />
 
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@32bitkid" />
-    <meta property="twitter:domain" content={Astro.url.hostname}>
-    <meta property="twitter:url" content={Astro.url.href}>
-    <meta name="twitter:title" content={ogSafe(pageTitle)}>
-    <meta name="twitter:description" content={ogSafe(description)}>
-    { image && image.url && <meta property="twitter:image" content={image.url}>}
-</head>
-<body>
-<Header/>
-<main><slot /></main>
-<Footer />
-</body>
+    <meta property="twitter:domain" content={Astro.url.hostname} />
+    <meta property="twitter:url" content={Astro.url.href} />
+    <meta name="twitter:title" content={ogSafe(pageTitle)} />
+    <meta name="twitter:description" content={ogSafe(description)} />
+    {
+      image && image.url && (
+        <meta property="twitter:image" content={image.url} />
+      )
+    }
+  </head>
+  <body>
+    <Header />
+    <main><slot /></main>
+    <Footer />
+  </body>
 </html>
 
 <style>
-    body {
-        display: grid;
-        min-height: calc(100vh - var(--line-height) * 1.5);
-        grid-template-rows: 1fr min-content;
-        justify-items: stretch;
-        align-items: stretch;
-    }
+  body {
+    display: grid;
+    min-height: calc(100vh - var(--line-height) * 1.5);
+    grid-template-rows: 1fr min-content;
+    justify-items: stretch;
+    align-items: stretch;
+  }
 
-    main {
-        width: 100%;
-        box-sizing: border-box;
-        justify-self: center;
-        max-width: var(--max-content);
-        padding-inline: 1.5ch;
-    }
+  main {
+    width: 100%;
+    box-sizing: border-box;
+    justify-self: center;
+    max-width: var(--max-content);
+    padding-inline: 1.5ch;
+  }
 </style>
