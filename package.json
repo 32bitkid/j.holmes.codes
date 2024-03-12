@@ -13,19 +13,22 @@
     "deploy": "rsync -avh --delete  dist/ j.holmes.codes:~/j.holmes.codes/"
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "@astrojs/check": "^0.5.6",
     "@astrojs/mdx": "^2.1.1",
     "@astrojs/react": "^3.0.10",
-    "astro": "^4.4.15",
-    "remark-math": "^6.0.0",
-    "typescript": "^5.2.2"
-  },
-  "devDependencies": {
     "@modyfi/vite-plugin-yaml": "^1.0.4",
+    "@types/lodash.throttle": "^4.1.9",
+    "astro": "^4.4.15",
     "date-fns": "^3.3.1",
     "marked": "^12.0.1",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0",
     "rehype-katex": "^7.0.0",
     "remark-capitalize-headings": "^2.0.1",
-    "remark-hint": "^1.0.10"
+    "remark-hint": "^1.0.10",
+    "remark-math": "^6.0.0",
+    "typescript": "^5.2.2"
   }
 }
