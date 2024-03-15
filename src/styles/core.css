@@ -133,11 +133,13 @@ q {
   quotes: '\201c' '\201d' '\2018' '\2019' '"' '"' "'" "'";
 
   &::before {
+    -webkit-user-select: text;
     user-select: text;
     content: open-quote;
   }
 
   &::after {
+    -webkit-user-select: text;
     user-select: text;
     content: close-quote;
   }

@@ -13,6 +13,13 @@
     "deploy": "rsync -avh --delete  dist/ j.holmes.codes:~/j.holmes.codes/"
   },
   "dependencies": {
+    "@4bitlabs/color": "^1.1.1",
+    "@4bitlabs/image": "^2.1.1",
+    "@4bitlabs/sci0": "^1.2.1",
+    "base64-js": "^1.5.1",
+    "lodash.throttle": "^4.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.5.6",

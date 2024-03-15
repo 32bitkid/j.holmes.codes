@@ -2,6 +2,7 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "types": ["@modyfi/vite-plugin-yaml/modules"],
+    "jsx": "react",
     "baseUrl": ".",
     "paths": {
       "@public/*": ["public/*"],
