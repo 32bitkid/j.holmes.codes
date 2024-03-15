@@ -1,0 +1,50 @@
+.fieldset {
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--colors-primary);
+  display: grid;
+  justify-items: start;
+  align-items: end;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem;
+}
+
+.fieldset > legend {
+  font-family: 'Equity Caps B', serif;
+  font-feature-settings: 'c2sc', 'smcp', 'onum';
+  margin-bottom: 0.5rem;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  margin-left: 0;
+  margin-block-start: 2rem;
+  margin-block-end: 1rem;
+  outline: 0.5rem solid black;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+@media print {
+  .canvas {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media screen and (min-width: 65rem) {
+  .canvas {
+    width: calc(100vw - 4rem);
+    margin-left: calc(-0.5 * (100vw - 4rem - 100%));
+    outline: 1.25rem solid black;
+    margin-block-end: 2rem;
+  }
+}
+
+@media screen and (min-width: 104rem) {
+  .canvas {
+    width: 100rem;
+    margin-left: calc(-0.5 * (100rem - 100%));
+  }
+}

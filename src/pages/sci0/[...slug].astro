@@ -12,12 +12,13 @@ export async function getStaticPaths() {
       content: it.data.content.replace(/\s/g, ''),
       compression: it.data.compression,
       engine: it.data.engine,
+      aspectRatio: it.data.aspectRatio,
       pic: it.data.pic,
     },
   }));
 }
 
-const { content, compression, engine, pic } = Astro.props;
+const { aspectRatio, content, compression, engine, pic } = Astro.props;
 ---
 
 <Page>
@@ -26,49 +27,7 @@ const { content, compression, engine, pic } = Astro.props;
     client:load
     compression={compression as 0 | 1 | 2}
     data={content}
+    initialAspectRatio={aspectRatio as '1:1.2' | '1:1'}
     engine={engine}
   />
 </Page>
-<style is:global>
-  label {
-    font-family: 'Equity Caps B', serif;
-    font-feature-settings: 'c2sc', 'smcp', 'onum';
-    display: inline-block;
-    min-width: 12ch;
-  }
-
-  #canvas {
-    display: block;
-    width: 100%;
-    margin-left: 0;
-    aspect-ratio: 80 / 57;
-    border: 1em solid black;
-    background-color: #fff;
-    box-sizing: border-box;
-
-    transition:
-      width 250ms,
-      margin-left 250ms;
-  }
-
-  @media print {
-    #canvas {
-      width: 100%;
-      margin-left: 0;
-    }
-  }
-
-  @media screen and (min-width: 65rem) {
-    #canvas {
-      width: calc(100% + 20rem);
-      margin-left: -10rem;
-    }
-  }
-
-  @media screen and (min-width: 100rem) {
-    #canvas {
-      width: calc(100% + 30rem);
-      margin-left: -15rem;
-    }
-  }
-</style>

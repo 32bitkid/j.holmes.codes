@@ -2,6 +2,7 @@ title: betrayed-alliance
 pic: 99
 engine: sci0
 compression: 0
+aspectRatio: '1:1'
 content: >-
   /gEAABEiM0RVZneImaq7zN3uiIgBAgMEBQaIiPn6+/z9/v8IkSo7TF1uiP4BAQARIjNEVW
   Z3iJmqu8zd7oiIAQIDBAUGiIj5+vv8/f7/CJEqO0xdboj+AQIAESIzRFVmd4iZqrvM3e6I

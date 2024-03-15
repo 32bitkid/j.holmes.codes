@@ -20,6 +20,7 @@ const sci0PicsCollection = defineCollection({
     engine: z.enum(['sci0', 'sci01']),
     compression: z.number(),
     content: z.string(),
+    aspectRatio: z.enum(['1:1.2', '1:1']),
   }),
 });
 
