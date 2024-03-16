@@ -3,6 +3,8 @@ pic: 99
 engine: sci0
 compression: 0
 aspectRatio: '1:1'
+thumbnail: ./betrayed-alliance.099.png
+thumbnailAlt: The skull-cave entrace from Betrayed Alliance.
 content: >-
   /gEAABEiM0RVZneImaq7zN3uiIgBAgMEBQaIiPn6+/z9/v8IkSo7TF1uiP4BAQARIjNEVW
   Z3iJmqu8zd7oiIAQIDBAUGiIj5+vv8/f7/CJEqO0xdboj+AQIAESIzRFVmd4iZqrvM3e6I

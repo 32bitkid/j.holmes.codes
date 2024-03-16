@@ -14,14 +14,17 @@ const blogCollection = defineCollection({
 
 const sci0PicsCollection = defineCollection({
   type: 'data',
-  schema: z.object({
-    title: z.string(),
-    pic: z.number().int(),
-    engine: z.enum(['sci0', 'sci01']),
-    compression: z.number(),
-    content: z.string(),
-    aspectRatio: z.enum(['1:1.2', '1:1']),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      pic: z.number().int(),
+      engine: z.enum(['sci0', 'sci01']),
+      compression: z.number(),
+      content: z.string(),
+      aspectRatio: z.enum(['1:1.2', '1:1']),
+      thumbnail: image(),
+      thumbnailAlt: z.string(),
+    }),
 });
 
 export const collections = {

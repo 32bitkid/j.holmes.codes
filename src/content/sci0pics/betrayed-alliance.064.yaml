@@ -3,6 +3,8 @@ pic: 64
 engine: sci0
 compression: 0
 aspectRatio: '1:1'
+thumbnail: ./betrayed-alliance.064.png
+thumbnailAlt: The hill overlooking the dock on the lake from Betrayed Alliance.
 content: >-
   /gEAABEiM0RVZneImaq7zN3uiIgBAgMEBQaIiPn6+/z9/v8IkSo7TF1uiP4BAQABAgMEBQYH
   CIGCg4SF5oeHcXJzdHV2eIeJiouMjY6P+PH6O/z9/vj+AQIAURIjJGXGNwhZGissbc64iNGS

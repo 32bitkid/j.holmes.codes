@@ -1,5 +1,7 @@
 ---
 import Page from '@layouts/page.astro';
+import { getImage } from 'astro:assets';
+
 import { Sci0Renderer } from '@components/react/sci0-renderer';
 
 import { getCollection } from 'astro:content';
@@ -14,19 +16,37 @@ export async function getStaticPaths() {
       engine: it.data.engine,
       aspectRatio: it.data.aspectRatio,
       pic: it.data.pic,
+      thumbnail: it.data.thumbnail,
+      thumbnailAlt: it.data.thumbnailAlt,
     },
   }));
 }
 
-const { aspectRatio, content, compression, engine, pic } = Astro.props;
+const { aspectRatio, content, compression, engine, pic, thumbnailAlt } =
+  Astro.props;
+
+const thumbnail = await getImage({
+  src: Astro.props.thumbnail,
+  width: 380,
+  height: 380,
+  format: 'png',
+});
+
+const pageTitle = `Sci0 Playground: PIC-${pic.toString(10).padStart(3, '0')} from Betrayed Alliance (2023)`;
 ---
 
-<Page>
-  <h1>Betrayed Alliance (2023): PIC.{pic.toString(10).padStart(3, '0')}</h1>
+<Page
+  title={pageTitle}
+  image={{
+    src: new URL(thumbnail.src, Astro.url),
+    alt: thumbnailAlt ?? pageTitle,
+  }}
+>
+  <h1>{pageTitle}</h1>
   <Sci0Renderer
     client:load
-    compression={compression as 0 | 1 | 2}
     data={content}
+    compression={compression as 0 | 1 | 2}
     initialAspectRatio={aspectRatio as '1:1.2' | '1:1'}
     engine={engine}
   />
