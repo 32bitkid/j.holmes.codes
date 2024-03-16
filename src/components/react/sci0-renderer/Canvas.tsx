@@ -39,23 +39,20 @@ export function Canvas(props: RenderCanvasProps) {
       return;
     }
 
-    const ctx = canvasEl.getContext('2d')!;
+    const ctx = canvasEl.getContext('bitmaprenderer')!;
 
     let imgData: ImageData;
-    updateFnRef.current = (pixels: ImageDataLike) => {
+    updateFnRef.current = ({ data, width, height }: ImageDataLike) => {
       const uninitialized =
-        !imgData ||
-        canvasEl.width !== pixels.width ||
-        canvasEl.height !== pixels.height;
+        !imgData || imgData.width !== width || imgData.height !== height;
 
       if (uninitialized) {
-        canvasEl.width = pixels.width;
-        canvasEl.height = pixels.height;
-        imgData = ctx.createImageData(pixels.width, pixels.height);
+        canvasEl.width = width;
+        canvasEl.height = height;
+        imgData = new ImageData(width, height);
       }
-
-      imgData.data.set(pixels.data);
-      ctx.putImageData(imgData, 0, 0);
+      imgData.data.set(data);
+      createImageBitmap(imgData).then((it) => ctx.transferFromImageBitmap(it));
     };
   }, []);
 
