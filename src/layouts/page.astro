@@ -26,7 +26,7 @@ const pageTitle = title ? `${title} \u2236 j.holmes.codes` : 'j.holmes.codes';
     <meta name="generator" content={Astro.generator} />
     <meta property="og:url" content={Astro.url.href} />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={ogSafe(pageTitle)} />
+    <meta property="og:title" content={ogSafe(title ?? 'j.holmes.codes')} />
     <meta property="og:description" content={ogSafe(description)} />
     {image && image.src && <meta property="og:image" content={image.src} />}
     {image && image.alt && <meta property="og:image:alt" content={image.alt} />}
@@ -37,7 +37,7 @@ const pageTitle = title ? `${title} \u2236 j.holmes.codes` : 'j.holmes.codes';
     <meta name="twitter:creator" content="@32bitkid" />
     <meta property="twitter:domain" content={Astro.url.hostname} />
     <meta property="twitter:url" content={Astro.url.href} />
-    <meta name="twitter:title" content={ogSafe(pageTitle)} />
+    <meta name="twitter:title" content={ogSafe(title ?? 'j.holmes.codes')} />
     <meta name="twitter:description" content={ogSafe(description)} />
     {
       image && image.src && (

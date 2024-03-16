@@ -24,6 +24,9 @@
   outline: 0.5rem solid black;
   background-color: #fff;
   box-sizing: border-box;
+  transition:
+    width 200ms,
+    margin-left 200ms;
 }
 
 @media print {
@@ -34,7 +37,7 @@
 }
 
 @media screen and (min-width: 65rem) {
-  .canvas {
+  .canvas.maximize {
     width: calc(100vw - 4rem);
     margin-left: calc(-0.5 * (100vw - 4rem - 100%));
     outline: 1.25rem solid black;
@@ -43,7 +46,7 @@
 }
 
 @media screen and (min-width: 104rem) {
-  .canvas {
+  .canvas.maximize {
     width: 100rem;
     margin-left: calc(-0.5 * (100rem - 100%));
   }

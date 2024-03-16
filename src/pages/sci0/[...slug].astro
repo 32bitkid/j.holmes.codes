@@ -1,6 +1,6 @@
 ---
-import Page from '@layouts/page.astro';
 import { getImage } from 'astro:assets';
+import Page from '@layouts/page.astro';
 
 import { Sci0Renderer } from '@components/react/sci0-renderer';
 
@@ -32,7 +32,7 @@ const thumbnail = await getImage({
   format: 'png',
 });
 
-const pageTitle = `Sci0 Playground: PIC-${pic.toString(10).padStart(3, '0')} from Betrayed Alliance (2023)`;
+const pageTitle = `SCI-0 Playground: Betrayed Alliance, PIC-${pic.toString(10).padStart(3, '0')}`;
 ---
 
 <Page

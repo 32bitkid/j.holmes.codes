@@ -14,7 +14,11 @@ export interface RenderCanvasProps {
   limit?: number;
   pixelAspectRatio: keyof typeof PIXEL_ASPECT_RATIOS;
   renderPipeline: FilterPipeline;
+  maximize: boolean;
 }
+
+const clsn = (...items: (string | undefined | false)[]) =>
+  items.filter((it) => it).join(' ');
 
 export function Canvas(props: RenderCanvasProps) {
   const {
@@ -22,6 +26,7 @@ export function Canvas(props: RenderCanvasProps) {
     renderPipeline,
     limit = Number.POSITIVE_INFINITY,
     pixelAspectRatio,
+    maximize,
   } = props;
 
   const updateFnRef = useRef<((pixels: ImageDataLike) => void) | undefined>(
@@ -65,7 +70,7 @@ export function Canvas(props: RenderCanvasProps) {
   return (
     <>
       <canvas
-        className={styles.canvas}
+        className={clsn(styles.canvas, maximize && styles.maximize)}
         ref={init}
         style={{
           aspectRatio: PIXEL_ASPECT_RATIOS[pixelAspectRatio],

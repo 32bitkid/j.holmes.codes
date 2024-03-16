@@ -34,6 +34,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
     return Pic.parseFrom(bytes);
   }, [data, engine, compression]);
 
+  const [maximize, setMaximize] = useState(false);
   const [progress, setProgress] = useState(picData.length);
   const [palette, setPalette] = useState<keyof typeof PALETTES>('CGA');
   const [grayscale, setGrayscale] = useState(false);
@@ -83,6 +84,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         limit={progress}
         pixelAspectRatio={pixelAspectRatio}
         renderPipeline={pipeline}
+        maximize={maximize}
       />
       <Controls
         maxProgress={picData.length}
@@ -97,6 +99,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         postScaler={postScaler}
         blur={blur}
         blurAmount={blurAmount}
+        maximize={maximize}
         // events
         onChangeProgress={setProgress}
         onChangePalette={setPalette}
@@ -109,6 +112,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         onChangePostScaler={setPostSCaler}
         onChangeBlur={setBlur}
         onChangeBlurAmount={setBlurAmount}
+        onChangeMaximize={setMaximize}
       />
     </>
   );

@@ -1,7 +1,7 @@
 import React, {
   type Dispatch,
   type SetStateAction,
-  type ChangeEvent,
+  type ChangeEventHandler,
   useCallback,
 } from 'react';
 
@@ -30,6 +30,7 @@ export interface ControlsProps {
   postScaler: keyof typeof SCALERS;
   blur: keyof typeof BLURS;
   blurAmount: number;
+  maximize: boolean;
 
   onChangeProgress: Dispatch<SetStateAction<number>>;
   onChangePalette: Dispatch<SetStateAction<keyof typeof PALETTES>>;
@@ -44,7 +45,24 @@ export interface ControlsProps {
   onChangePostScaler: Dispatch<SetStateAction<keyof typeof SCALERS>>;
   onChangeBlur: Dispatch<SetStateAction<keyof typeof BLURS>>;
   onChangeBlurAmount: Dispatch<SetStateAction<number>>;
+  onChangeMaximize: Dispatch<SetStateAction<boolean>>;
 }
+
+const useCheckboxCallback = (
+  setter: Dispatch<SetStateAction<boolean>>,
+): ChangeEventHandler<HTMLInputElement> =>
+  useCallback((e) => setter(e.target.checked), [setter]);
+
+const useNumericCallback = (
+  setter: Dispatch<SetStateAction<number>>,
+  mapFn: (n: number) => number = (n) => n,
+): ChangeEventHandler<HTMLInputElement> =>
+  useCallback((e) => setter(mapFn(parseInt(e.target.value, 10))), [setter]);
+
+const useEnumCallback = <T extends string>(
+  setter: Dispatch<SetStateAction<T>>,
+): ChangeEventHandler<HTMLSelectElement> =>
+  useCallback((e) => setter(e.target.value as T), [setter]);
 
 export function Controls(props: ControlsProps) {
   const {
@@ -60,6 +78,7 @@ export function Controls(props: ControlsProps) {
     postScaler,
     blur,
     blurAmount,
+    maximize,
     // setters
     onChangeProgress,
     onChangePalette,
@@ -72,86 +91,8 @@ export function Controls(props: ControlsProps) {
     onChangePostScaler,
     onChangeBlur,
     onChangeBlurAmount,
+    onChangeMaximize,
   } = props;
-
-  const handleChangeProgress = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      onChangeProgress(parseInt(e.target.value, 10));
-    },
-    [onChangeProgress],
-  );
-
-  const handleChangePalette = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      onChangePalette(e.target.value as keyof typeof PALETTES);
-    },
-    [onChangePalette],
-  );
-
-  const handleChangeGrayscale = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      onChangeGrayscale(e.target.checked);
-    },
-    [onChangeGrayscale],
-  );
-
-  const handleChangeMixer = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      onChangeMixer(e.target.value as keyof typeof MIXERS);
-    },
-    [onChangeMixer],
-  );
-
-  const handleChangeDimmer = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      onChangeDimmer(parseInt(e.target.value, 10) / 100);
-    },
-    [onChangeDimmer],
-  );
-
-  const handleChangeDither = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      onChangeDither(e.target.value as keyof typeof DITHERS);
-    },
-    [onChangeDither],
-  );
-
-  const handleChangeScaler = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      onChangeScaler(e.target.value as keyof typeof SCALERS);
-    },
-    [onChangeScaler],
-  );
-
-  const handleChangePixelAspectRatio = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      onChangePixelAspectRatio(
-        e.target.value as keyof typeof PIXEL_ASPECT_RATIOS,
-      );
-    },
-    [onChangeScaler],
-  );
-
-  const handleChangePostScaler = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      onChangePostScaler(e.target.value as keyof typeof SCALERS);
-    },
-    [onChangePostScaler],
-  );
-
-  const handleChangeBlur = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      onChangeBlur(e.target.value as keyof typeof BLURS);
-    },
-    [onChangeBlur],
-  );
-
-  const handleChangeBlurAmount = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      onChangeBlurAmount(parseInt(e.target.value, 10));
-    },
-    [onChangeBlurAmount],
-  );
 
   return (
     <>
@@ -160,7 +101,7 @@ export function Controls(props: ControlsProps) {
         value={progress}
         min={1}
         max={maxProgress}
-        onChange={handleChangeProgress}
+        onChange={useNumericCallback(onChangeProgress)}
         style={{
           display: 'block',
           width: '100%',
@@ -169,7 +110,11 @@ export function Controls(props: ControlsProps) {
       <fieldset className={styles.fieldset}>
         <legend>Pre-dither</legend>
         <label htmlFor="scaler">Pre-Scaler:</label>
-        <select id="scaler" value={scaler} onChange={handleChangeScaler}>
+        <select
+          id="scaler"
+          value={scaler}
+          onChange={useEnumCallback(onChangeScaler)}
+        >
           {Object.keys(SCALERS).map((key) => (
             <option value={key} key={key}>
               {key.replace('x', '×')}
@@ -180,7 +125,11 @@ export function Controls(props: ControlsProps) {
       <fieldset className={styles.fieldset}>
         <legend>Dithering</legend>
         <label htmlFor="dither">Dither Size:</label>
-        <select id="dither" value={dither} onChange={handleChangeDither}>
+        <select
+          id="dither"
+          value={dither}
+          onChange={useEnumCallback(onChangeDither)}
+        >
           <optgroup label="Square">
             {defaultDithers.map((key) => (
               <option value={key} key={key}>
@@ -198,7 +147,11 @@ export function Controls(props: ControlsProps) {
         </select>
 
         <label htmlFor="palette">Palette:</label>
-        <select id="palette" value={palette} onChange={handleChangePalette}>
+        <select
+          id="palette"
+          value={palette}
+          onChange={useEnumCallback(onChangePalette)}
+        >
           <option value="CGA">CGA</option>
           <option value="TrueCGA">TrueCGA</option>
           <option value="DGA">AAP-DGA16</option>
@@ -209,10 +162,14 @@ export function Controls(props: ControlsProps) {
           id="grayscale"
           type="checkbox"
           checked={grayscale}
-          onChange={handleChangeGrayscale}
+          onChange={useCheckboxCallback(onChangeGrayscale)}
         />
         <label htmlFor="mixer">Mixer:</label>
-        <select id="mixer" value={mixer} onChange={handleChangeMixer}>
+        <select
+          id="mixer"
+          value={mixer}
+          onChange={useEnumCallback(onChangeMixer)}
+        >
           <option value="none">None</option>
           <option value="mix-10">Mix 10%</option>
           <option value="mix-25">Mix 25%</option>
@@ -226,7 +183,7 @@ export function Controls(props: ControlsProps) {
           min="0"
           max="100"
           value={dimmer * 100}
-          onChange={handleChangeDimmer}
+          onChange={useNumericCallback(onChangeDimmer, (n) => n / 100)}
         />
       </fieldset>
       <fieldset className={styles.fieldset}>
@@ -235,7 +192,7 @@ export function Controls(props: ControlsProps) {
         <select
           id="postScaler"
           value={postScaler}
-          onChange={handleChangePostScaler}
+          onChange={useEnumCallback(onChangePostScaler)}
         >
           {Object.keys(SCALERS).map((key) => (
             <option value={key} key={key}>
@@ -246,7 +203,11 @@ export function Controls(props: ControlsProps) {
         <label htmlFor="blur-type">
           Blur <small>(CPU)</small>:
         </label>
-        <select id="blur-type" value={blur} onChange={handleChangeBlur}>
+        <select
+          id="blur-type"
+          value={blur}
+          onChange={useEnumCallback(onChangeBlur)}
+        >
           {Object.keys(BLURS).map((key) => (
             <option value={key} key={key}>
               {key}
@@ -261,13 +222,13 @@ export function Controls(props: ControlsProps) {
           min="1"
           max="10"
           value={blurAmount}
-          onChange={handleChangeBlurAmount}
+          onChange={useNumericCallback(onChangeBlurAmount)}
         />
         <label htmlFor="pixel-aspect-ratio">Pixel Aspect Ratio:</label>
         <select
           id="pixel-aspect-ratio"
           value={pixelAspectRatio}
-          onChange={handleChangePixelAspectRatio}
+          onChange={useEnumCallback(onChangePixelAspectRatio)}
         >
           {Object.keys(PIXEL_ASPECT_RATIOS).map((key) => (
             <option value={key} key={key}>
@@ -275,6 +236,13 @@ export function Controls(props: ControlsProps) {
             </option>
           ))}
         </select>
+        <label htmlFor="maximize">Maximize:</label>
+        <input
+          id="maximize"
+          type="checkbox"
+          checked={maximize}
+          onChange={useCheckboxCallback(onChangeMaximize)}
+        />
       </fieldset>
     </>
   );
