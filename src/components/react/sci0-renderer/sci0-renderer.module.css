@@ -22,8 +22,8 @@
   margin-left: 0;
   margin-block-start: 2rem;
   margin-block-end: 1rem;
-  outline: 0.5rem solid black;
-  background-color: #fff;
+  outline: 0.5rem solid #000;
+  background-color: #000;
   box-sizing: border-box;
   transition: width, margin-left, outline;
   transition-duration: 1000ms;
