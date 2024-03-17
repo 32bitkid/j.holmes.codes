@@ -85,6 +85,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         pixelAspectRatio={pixelAspectRatio}
         renderPipeline={pipeline}
         maximize={maximize}
+        onChangeMaximize={setMaximize}
       />
       <Controls
         maxProgress={picData.length}

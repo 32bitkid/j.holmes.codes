@@ -17,6 +17,7 @@
 
 .canvas {
   display: block;
+  user-select: none;
   width: 100%;
   margin-left: 0;
   margin-block-start: 2rem;
@@ -24,9 +25,9 @@
   outline: 0.5rem solid black;
   background-color: #fff;
   box-sizing: border-box;
-  transition:
-    width 200ms,
-    margin-left 200ms;
+  transition: width, margin-left, outline;
+  transition-duration: 1000ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media print {

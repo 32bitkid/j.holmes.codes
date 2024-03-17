@@ -1,4 +1,11 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, {
+  useRef,
+  useEffect,
+  useCallback,
+  type Dispatch,
+  type SetStateAction,
+  type MouseEvent,
+} from 'react';
 import {
   renderPic,
   type DrawCommand,
@@ -15,6 +22,7 @@ export interface RenderCanvasProps {
   pixelAspectRatio: keyof typeof PIXEL_ASPECT_RATIOS;
   renderPipeline: FilterPipeline;
   maximize: boolean;
+  onChangeMaximize: Dispatch<SetStateAction<boolean>>;
 }
 
 const clsn = (...items: (string | undefined | false)[]) =>
@@ -27,6 +35,7 @@ export function Canvas(props: RenderCanvasProps) {
     limit = Number.POSITIVE_INFINITY,
     pixelAspectRatio,
     maximize,
+    onChangeMaximize,
   } = props;
 
   const updateFnRef = useRef<((pixels: ImageDataLike) => void) | undefined>(
@@ -64,6 +73,14 @@ export function Canvas(props: RenderCanvasProps) {
     updateFn(visible);
   }, [picData, limit, renderPipeline]);
 
+  const handleChangeMaximize = useCallback(
+    (e: MouseEvent<HTMLCanvasElement>) => {
+      e.preventDefault();
+      onChangeMaximize((it) => !it);
+    },
+    [onChangeMaximize],
+  );
+
   return (
     <>
       <canvas
@@ -72,6 +89,7 @@ export function Canvas(props: RenderCanvasProps) {
         style={{
           aspectRatio: PIXEL_ASPECT_RATIOS[pixelAspectRatio],
         }}
+        onDoubleClick={handleChangeMaximize}
       >
         Canvas not supported…
       </canvas>
