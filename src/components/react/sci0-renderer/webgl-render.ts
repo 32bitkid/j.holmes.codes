@@ -16,63 +16,69 @@ function assertCompilation<T extends WebGLShader>(
 }
 
 const vertexShaderSource = `
-attribute highp vec3 aVertexPosition;
-attribute mediump vec2 aTextureCoord;
-varying highp vec3 vPosition;
-varying mediump vec2 vTextureCoord;
-
-void main(void){
-  vPosition = aVertexPosition;
-  vTextureCoord = aTextureCoord;
-  gl_Position = vec4(vPosition, 1.0);
-}`;
+  attribute highp vec3 aVertexPosition;
+  attribute mediump vec2 aTextureCoord;
+  varying highp vec3 vPosition;
+  varying mediump vec2 vTextureCoord;
+  
+  void main(void){
+    vPosition = aVertexPosition;
+    vTextureCoord = aTextureCoord;
+    gl_Position = vec4(vPosition, 1.0);
+  }
+`;
 
 const fragShaderSource = `
-uniform highp vec3 uLensS;
-uniform highp vec2 uLensF;
-uniform sampler2D uSampler;
-uniform highp vec2 u_resolution;
-varying highp vec3 vPosition;
-varying mediump vec2 vTextureCoord;
-
-mediump vec2 getMapping(highp vec2 c) {
-  return c * vec2(1.0, -1.0) / 2.0 + vec2(0.5, 0.5);
-}
-
-
-void main(void){
-  mediump vec4 texture;
-
-  // Barrel Distortion
-  {
-    highp float scale = uLensS.z;
-    highp vec3 vPos = vPosition;
-    highp float Fx = uLensF.x;
-    highp float Fy = uLensF.y;
-    mediump vec2 vMapping = vPos.xy;
-    vMapping.x = vMapping.x + ((pow(vPos.y, 2.0) / scale) * vPos.x/scale) * -Fx;
-    vMapping.y = vMapping.y + ((pow(vPos.x, 2.0) / scale) * vPos.y/scale) * -Fy;
-    vMapping = vMapping * uLensS.xy;
-    vMapping = getMapping(vMapping/scale);
-    texture = texture2D(uSampler, vMapping);
-    
-    if(vMapping.x > 0.99 || vMapping.x < 0.01 || vMapping.y > 0.99 || vMapping.y < 0.01){
-      texture = vec4(0.0);
+  uniform highp vec3 uLensS;
+  uniform highp vec2 uLensF;
+  uniform sampler2D uSampler;
+  uniform highp vec2 u_resolution;
+  varying highp vec3 vPosition;
+  varying mediump vec2 vTextureCoord;
+  
+  highp vec2 trim = vec2(0.0);
+  
+  mediump vec2 getMapping(highp vec2 c) {
+    return c * vec2(1.0, -1.0) / 2.0 + vec2(0.5, 0.5);
+  }
+  
+  void main(void){
+    mediump vec4 texture;
+  
+    // Barrel Distortion
+    {
+      highp float scale = uLensS.z;
+      highp vec3 vPos = vPosition;
+      highp float Fx = uLensF.x;
+      highp float Fy = uLensF.y;
+      mediump vec2 vMapping = vPos.xy;
+      vMapping.x = vMapping.x + ((pow(vPos.y, 2.0) / scale) * vPos.x/scale) * -Fx;
+      vMapping.y = vMapping.y + ((pow(vPos.x, 2.0) / scale) * vPos.y/scale) * -Fy;
+      vMapping = vMapping * uLensS.xy;
+      vMapping = getMapping(vMapping/scale);
+      texture = texture2D(uSampler, vMapping);
+      
+      if(
+        vMapping.x > (1.0 - trim.x) || 
+        vMapping.x < (trim.x) || 
+        vMapping.y > (1.0 - trim.y) || 
+        vMapping.y < (trim.y)
+      ) {
+        texture = vec4(0.0);
+      }      
     }
+    
+    // Vingette
+    {
+      highp float radius = 0.9;
+      highp float smoothness = 0.6;
+      highp vec2 pos = gl_FragCoord.xy / u_resolution;
+      highp float diff = radius - distance(pos, vec2(0.5));
+      texture = mix(vec4(0.0), texture, clamp(smoothstep(-smoothness, smoothness, diff), 0.0, 1.0));
+    }
+        
+    gl_FragColor = texture;
   }
-  
-  // Vingette
-  {
-    highp float radius = 0.9;
-    highp float smoothness = 0.6;
-    highp vec2 pos = gl_FragCoord.xy / u_resolution;
-    highp float diff = radius - distance(pos, vec2(0.5));
-    texture = mix(vec4(0.0), texture, smoothstep(-smoothness, smoothness, diff));
-  }
-
-  
-  gl_FragColor = texture;
-}
 `;
 
 function compileShader(
@@ -119,14 +125,9 @@ function updateTexture(
     imgData.data,
   );
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  gl.texParameteri(
-    gl.TEXTURE_2D,
-    gl.TEXTURE_MIN_FILTER,
-    gl.NEAREST_MIPMAP_LINEAR,
-  );
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  gl.generateMipmap(gl.TEXTURE_2D);
 }
 
 export function createRenderGL(

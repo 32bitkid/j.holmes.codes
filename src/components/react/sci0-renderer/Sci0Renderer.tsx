@@ -48,10 +48,10 @@ export function Sci0Renderer(props: Sci0RenderProps) {
   );
   const [pixelAspectRatio, setPixelAspectRatio] =
     useState<keyof typeof PIXEL_ASPECT_RATIOS>(initialAspectRatio);
-
   const [postScaler, setPostSCaler] = useState<keyof typeof SCALERS>('(none)');
   const [blur, setBlur] = useState<keyof typeof BLURS>('(none)');
   const [blurAmount, setBlurAmount] = useState<number>(1);
+  const [mode, setMode] = useState<'2d' | 'webgl2'>('webgl2');
 
   const pipeline = useMemo(() => {
     const basePalette = [
@@ -86,6 +86,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         renderPipeline={pipeline}
         maximize={maximize}
         onChangeMaximize={setMaximize}
+        mode={mode}
       />
       <Controls
         maxProgress={picData.length}
@@ -101,6 +102,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         blur={blur}
         blurAmount={blurAmount}
         maximize={maximize}
+        mode={mode}
         // events
         onChangeProgress={setProgress}
         onChangePalette={setPalette}
@@ -114,6 +116,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         onChangeBlur={setBlur}
         onChangeBlurAmount={setBlurAmount}
         onChangeMaximize={setMaximize}
+        onChangeMode={setMode}
       />
     </>
   );

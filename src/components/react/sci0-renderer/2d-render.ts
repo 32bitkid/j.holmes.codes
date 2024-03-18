@@ -1,6 +1,6 @@
 import { type ImageDataLike } from '@4bitlabs/image';
 
-function createRender2D(
+export function createRender2d(
   canvasEl: HTMLCanvasElement,
 ): (imageData: ImageDataLike) => void {
   const ctx = canvasEl.getContext('bitmaprenderer')!;

@@ -16,6 +16,7 @@ import { type ImageDataLike } from '@4bitlabs/image';
 import { PIXEL_ASPECT_RATIOS } from '@components/react/sci0-renderer/options.ts';
 import styles from './sci0-renderer.module.css';
 import { createRenderGL } from './webgl-render.ts';
+import { createRender2d } from './2d-render.ts';
 
 export interface RenderCanvasProps {
   picData: DrawCommand[];
@@ -24,6 +25,7 @@ export interface RenderCanvasProps {
   renderPipeline: FilterPipeline;
   maximize: boolean;
   onChangeMaximize: Dispatch<SetStateAction<boolean>>;
+  mode: 'webgl2' | '2d';
 }
 
 const clsn = (...items: (string | undefined | false)[]) =>
@@ -37,27 +39,34 @@ export function Canvas(props: RenderCanvasProps) {
     pixelAspectRatio,
     maximize,
     onChangeMaximize,
+    mode,
   } = props;
 
-  const updateFnRef = useRef<((pixels: ImageDataLike) => void) | undefined>(
-    undefined,
+  const updateFnRef = useRef<((pixels: ImageDataLike) => void) | null>(null);
+
+  const init = useCallback(
+    (canvasEl: HTMLCanvasElement | null) => {
+      if (canvasEl === null) {
+        updateFnRef.current = null;
+        return;
+      }
+
+      updateFnRef.current = {
+        '2d': createRender2d,
+        webgl2: createRenderGL,
+      }[mode](canvasEl);
+    },
+    [mode],
   );
 
-  const init = useCallback((canvasEl: HTMLCanvasElement | null) => {
-    if (canvasEl === null) {
-      updateFnRef.current = undefined;
-      return;
-    }
-    updateFnRef.current = createRenderGL(canvasEl);
-  }, []);
-
   useEffect(() => {
-    const updateFn = updateFnRef.current;
+    let updateFn = updateFnRef.current;
     if (!updateFn) return;
+
     const actual = picData.slice(0, limit);
     const { visible } = renderPic(actual, { pipeline: renderPipeline });
     updateFn(visible);
-  }, [picData, limit, renderPipeline, updateFnRef]);
+  }, [picData, limit, renderPipeline, updateFnRef, mode]);
 
   const handleChangeMaximize = useCallback(
     (e: MouseEvent<HTMLCanvasElement>) => {
@@ -70,6 +79,7 @@ export function Canvas(props: RenderCanvasProps) {
   return (
     <>
       <canvas
+        key={mode}
         className={clsn(styles.canvas, maximize && styles.maximize)}
         ref={init}
         style={{

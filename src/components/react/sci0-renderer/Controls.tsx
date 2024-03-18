@@ -31,6 +31,7 @@ export interface ControlsProps {
   blur: keyof typeof BLURS;
   blurAmount: number;
   maximize: boolean;
+  mode: '2d' | 'webgl2';
 
   onChangeProgress: Dispatch<SetStateAction<number>>;
   onChangePalette: Dispatch<SetStateAction<keyof typeof PALETTES>>;
@@ -46,6 +47,7 @@ export interface ControlsProps {
   onChangeBlur: Dispatch<SetStateAction<keyof typeof BLURS>>;
   onChangeBlurAmount: Dispatch<SetStateAction<number>>;
   onChangeMaximize: Dispatch<SetStateAction<boolean>>;
+  onChangeMode: Dispatch<SetStateAction<'2d' | 'webgl2'>>;
 }
 
 const useCheckboxCallback = (
@@ -79,6 +81,7 @@ export function Controls(props: ControlsProps) {
     blur,
     blurAmount,
     maximize,
+    mode,
     // setters
     onChangeProgress,
     onChangePalette,
@@ -92,6 +95,7 @@ export function Controls(props: ControlsProps) {
     onChangeBlur,
     onChangeBlurAmount,
     onChangeMaximize,
+    onChangeMode,
   } = props;
 
   return (
@@ -243,6 +247,12 @@ export function Controls(props: ControlsProps) {
           checked={maximize}
           onChange={useCheckboxCallback(onChangeMaximize)}
         />
+
+        <label htmlFor="mode">Mode:</label>
+        <select id="mode" value={mode} onChange={useEnumCallback(onChangeMode)}>
+          <option value="2d">Software</option>
+          <option value="webgl2">WebGL2</option>
+        </select>
       </fieldset>
     </>
   );
