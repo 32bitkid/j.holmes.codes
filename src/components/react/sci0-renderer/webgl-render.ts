@@ -42,41 +42,58 @@ const fragShaderSource = `
     return c * vec2(1.0, -1.0) / 2.0 + vec2(0.5, 0.5);
   }
   
+  mediump vec4 vignette(
+    mediump vec4 texture, 
+    highp vec4 color,
+    highp float radius, 
+    highp float smoothness,
+    highp float intensity
+  ) {
+      highp float dim = max(u_resolution.x, u_resolution.y);
+      highp vec2 pos = gl_FragCoord.xy / max(u_resolution.x, u_resolution.y);
+      highp vec2 center = vec2(u_resolution) / dim * 0.5;
+      
+      highp float diff = radius - distance(pos, center);
+      return mix(color, texture, clamp(smoothstep(-smoothness, smoothness, diff), 1.0 - intensity, 1.0));
+  } 
+  
   void main(void){
     mediump vec4 texture;
   
+    highp vec3 vPos = vPosition;
+    mediump vec2 vMapping = vPos.xy;
+      
     // Barrel Distortion
     {
       highp float scale = uLensS.z;
-      highp vec3 vPos = vPosition;
       highp float Fx = uLensF.x;
       highp float Fy = uLensF.y;
-      mediump vec2 vMapping = vPos.xy;
       vMapping.x = vMapping.x + ((pow(vPos.y, 2.0) / scale) * vPos.x/scale) * -Fx;
       vMapping.y = vMapping.y + ((pow(vPos.x, 2.0) / scale) * vPos.y/scale) * -Fy;
       vMapping = vMapping * uLensS.xy;
       vMapping = getMapping(vMapping/scale);
       texture = texture2D(uSampler, vMapping);
       
-      if(
-        vMapping.x > (1.0 - trim.x) || 
-        vMapping.x < (trim.x) || 
-        vMapping.y > (1.0 - trim.y) || 
-        vMapping.y < (trim.y)
-      ) {
-        texture = vec4(0.0);
-      }      
+      // Vignette
+      texture = vignette(texture, vec4(0.0, 0.0, 0.0, 1.0), 0.85, 0.65, 1.0);
+      texture = vignette(texture, vec4(0.0, 0.0, 0.0, 1.0), 0.7, 0.25, 0.2);
     }
     
-    // Vingette
+    // Glare
     {
-      highp float radius = 0.9;
-      highp float smoothness = 0.6;
-      highp vec2 pos = gl_FragCoord.xy / u_resolution;
-      highp float diff = radius - distance(pos, vec2(0.5));
-      texture = mix(vec4(0.0), texture, clamp(smoothstep(-smoothness, smoothness, diff), 0.0, 1.0));
+      highp vec2 uv = gl_FragCoord.xy / u_resolution;
     }
-        
+
+    // Clipping    
+    if(
+      vMapping.x > (1.0 - trim.x) || 
+      vMapping.x < (trim.x) || 
+      vMapping.y > (1.0 - trim.y) || 
+      vMapping.y < (trim.y)
+    ) {
+      texture = vec4(0.0);
+    }   
+      
     gl_FragColor = texture;
   }
 `;
@@ -189,7 +206,7 @@ export function createRenderGL(
     a: 1.0,
     b: 1.0,
     Fx: -0.025,
-    Fy: -0.025,
+    Fy: -0.03,
     scale: 1,
   };
 
