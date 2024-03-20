@@ -1,10 +1,38 @@
+.progress input {
+  display: block;
+  width: 100%;
+  height: var(--line-height);
+}
+
+.progress label {
+  display: block;
+  text-align: right;
+  font-size: var(--f-small);
+}
+
+.progress {
+  margin-bottom: calc(var(--line-height) * 0.5);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 65rem) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
 .fieldset {
   padding-left: 1rem;
   margin-bottom: 1rem;
   border-left: 4px solid var(--colors-primary);
   display: grid;
   justify-items: start;
-  align-items: end;
+  align-items: center;
   grid-template-columns: max-content 1fr;
   gap: 0.5rem;
 }
@@ -13,6 +41,10 @@
   font-family: 'Equity Caps B', serif;
   font-feature-settings: 'c2sc', 'smcp', 'onum';
   margin-bottom: 0.5rem;
+}
+
+.fieldset label small {
+  font-size: var(--f-small);
 }
 
 .canvas {
@@ -30,8 +62,8 @@
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-:global(:root:fullscreen) {
-  background-color: black;
+.noOptions {
+  opacity: 0.5;
 }
 
 @media print {

@@ -19,6 +19,7 @@ import { PIXEL_ASPECT_RATIOS } from '@components/react/sci0-renderer/options.ts'
 import styles from './sci0-renderer.module.css';
 import { createRenderGL } from './webgl-render.ts';
 import { createRender2d } from './2d-render.ts';
+import { type RenderMode } from './types.ts';
 
 export interface RenderCanvasProps {
   picData: DrawCommand[];
@@ -28,7 +29,7 @@ export interface RenderCanvasProps {
   renderPipeline: FilterPipeline;
   maximize: boolean;
   onChangeMaximize: Dispatch<SetStateAction<boolean>>;
-  mode: 'webgl2' | '2d';
+  mode: RenderMode;
 }
 
 const useTicker = (): [unknown, () => void] => {
@@ -47,14 +48,16 @@ export function Canvas(props: RenderCanvasProps) {
     pixelAspectRatio,
     maximize,
     onChangeMaximize,
-    mode,
+    mode: [mode, modeOptions],
     label,
   } = props;
 
   const [resized, onResized] = useTicker();
   const unobserveFnRef = useRef<(() => void) | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const updateFnRef = useRef<((pixels: ImageDataLike) => void) | null>(null);
+  const updateFnRef = useRef<
+    ((pixels: ImageDataLike, options?: Record<string, any>) => void) | null
+  >(null);
 
   const init = useCallback(
     (canvasEl: HTMLCanvasElement | null) => {
@@ -90,8 +93,8 @@ export function Canvas(props: RenderCanvasProps) {
 
     const actual = picData.slice(0, limit);
     const { visible } = renderPic(actual, { pipeline: renderPipeline });
-    updateFn(visible);
-  }, [picData, limit, renderPipeline, updateFnRef, mode, resized]);
+    updateFn(visible, modeOptions);
+  }, [picData, limit, renderPipeline, updateFnRef, mode, modeOptions, resized]);
 
   const handleChangeMaximize = useCallback(
     (e: MouseEvent<HTMLCanvasElement>) => {

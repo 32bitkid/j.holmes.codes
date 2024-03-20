@@ -36,15 +36,15 @@ const fragShaderSource = `
 
   precision highp float;
 
-  uniform vec3 uLens;
+  uniform vec3 u_Lens;
   uniform sampler2D uSampler;
   uniform vec2 u_resolution;
   uniform vec2 u_textureSize;
   uniform float u_hBlurSize;
+  uniform float u_grainAmount;
+  uniform float u_vignetteAmount; 
   varying vec3 vPosition;
   varying mediump vec2 vTextureCoord;
-  
-  vec2 trim = vec2(0.0);
   
   mediump vec2 getMapping(vec2 c) {
     return c * vec2(1.0, -1.0) / 2.0 + vec2(0.5, 0.5);
@@ -77,26 +77,29 @@ const fragShaderSource = `
   
   void main(void){
     vec2 uv = gl_FragCoord.xy / u_resolution;
-    mediump vec4 texture = vec4(0.0, 0.0, 0.0, 1.0);
+    vec2 onePixel = vec2(1.0, 1.0) / u_textureSize;
+    mediump vec4 texture = vec4(0.0);
     mediump vec2 vMapping = vPosition.xy;
       
     // Barrel Distortion
     {
-      vMapping += ((vPosition.yx * vPosition.yx) / uLens.z) * (vPosition.xy / uLens.z) * (uLens.xy * -1.0);
-      vMapping = getMapping(vMapping / uLens.z);
+      vMapping += ((vPosition.yx * vPosition.yx) / u_Lens.z) * (vPosition.xy / u_Lens.z) * (u_Lens.xy * -1.0);
+      vMapping = getMapping(vMapping / u_Lens.z);
       texture.rgb = texture2D(uSampler, vMapping).rgb;
     }
     
     // H-Box Blur 
     {
-      mediump vec2 onePixel = vec2(1.0, 1.0) / u_textureSize;
-      mediump vec3 sum = texture.rgb;
-      for (float i = 0.0; i < MAX_H_BLUR_SIZE; i+=1.0) {
-        if (i >= u_hBlurSize) break; 
-        sum += texture2D(uSampler, vMapping + onePixel * vec2(-1.0 * (i + 1.0), 0.0)).rgb;
-        sum += texture2D(uSampler, vMapping + onePixel * vec2(1.0 * (i + 1.0), 0.0)).rgb;
-      }
-      texture.rgb = sum / (min(MAX_H_BLUR_SIZE, u_hBlurSize) * 2.0 + 1.0);
+      if (u_hBlurSize > 0.0) {
+
+        mediump vec3 sum = texture.rgb;
+        for (float i = 0.0; i < MAX_H_BLUR_SIZE; i+=1.0) {
+          if (i >= u_hBlurSize) break; 
+          sum += texture2D(uSampler, vMapping + onePixel * vec2(-1.0 * (i + 1.0), 0.0)).rgb;
+          sum += texture2D(uSampler, vMapping + onePixel * vec2(1.0 * (i + 1.0), 0.0)).rgb;
+        }
+        texture.rgb = sum / (min(MAX_H_BLUR_SIZE, u_hBlurSize) * 2.0 + 1.0);
+      }      
     }
     
     // Scanlines
@@ -106,32 +109,34 @@ const fragShaderSource = `
 
     // Vignette    
     {
-      texture.rgb = vignette(texture.rgb, vec3(0.0, 0.0, 0.0), 0.85, 0.55, 1.0);
-      texture.rgb = vignette(texture.rgb, vec3(0.15, 0.15, 0.15), 0.66, 0.145, 0.2);
-      texture.rgb = vignette(texture.rgb, vec3(1.0, 1.0, 1.0), 0.66, 0.145, 0.2);
+      if (u_vignetteAmount > 0.0) {
+        texture.rgb = vignette(texture.rgb, vec3(-0.05), 0.85, 0.55, 1.0 * u_vignetteAmount);
+        texture.rgb = vignette(texture.rgb, vec3(0.05), 0.66, 0.145, 0.2 * u_vignetteAmount);
+      }
     }
     
     // Grain
     {
-      float grainAmount = 0.125;
-      float l = luma(texture.rgb);
-      float diff = ((rand(gl_FragCoord.xy) - 0.5) * grainAmount * (1.0 - l));
-      texture.rgb += diff;
+      if (u_grainAmount > 0.0) { 
+        float l = luma(texture.rgb);
+        float diff = ((rand(gl_FragCoord.xy) - 0.5) * u_grainAmount * (1.0 - l));
+        texture.rgb += diff;
+      }
     }
 
     // Clipping    
     if(
-      vMapping.x > (1.0 - trim.x) || 
-      vMapping.x < (trim.x) || 
-      vMapping.y > (1.0 - trim.y) || 
-      vMapping.y < (trim.y)
+      vMapping.x > 1.0 || vMapping.x < 0.0 || 
+      vMapping.y > 1.0 || vMapping.y < 0.0
     ) {
-      texture = vec4(0.0);
+      vec2 oob = 1.5 - (abs(vMapping - 0.5) - 0.5) / (vec2(1.0, 1.0) / u_resolution);
+      float a = clamp(min(oob.x, oob.y), 0.0, 1.0);
+      texture = mix(vec4(0.0),texture,  a);
     } 
     
     // Glare
     {
-
+      // TODO
     }  
       
     gl_FragColor = texture;
@@ -187,15 +192,58 @@ function updateTexture(
     gl.TEXTURE_MIN_FILTER,
     gl.LINEAR_MIPMAP_NEAREST,
   );
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.MIRRORED_REPEAT);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
   gl.generateMipmap(gl.TEXTURE_2D);
 }
+
+var lens = {
+  Fx: -0.025,
+  Fy: -0.035,
+  scale: 0.999,
+  grain: 0.125,
+  vignette: 1.0,
+};
+
+export interface RenderGlOptions {
+  Fx?: number;
+  Fy?: number;
+  S?: number;
+  hBlur?: number;
+  grain?: number;
+  vignette?: number;
+}
+
+const model = {
+  // prettier-ignore
+  vertex: Float32Array.of(
+    -1.0, -1.0, 0.0,
+    1.0, -1.0, 0.0,
+    1.0,  1.0, 0.0,
+    -1.0,  1.0, 0.0,
+  ),
+  // prettier-ignore
+  indices: Uint8Array.of(
+    0, 1, 2,
+    0, 2, 3,
+    2, 1, 0,
+    3, 2, 0
+  ),
+  // prettier-ignore
+  textureCoords: Float32Array.of(
+    0.0, 1.0,
+    1.0, 1.0,
+    1.0, 0.0,
+    0.0, 0.0,
+  ),
+};
 
 export function createRenderGL(
   canvasEl: HTMLCanvasElement,
 ): (imageData: ImageDataLike) => void {
-  const gl = canvasEl.getContext('webgl2')!;
+  const gl = canvasEl.getContext('webgl2', {
+    desynchronized: true,
+  })!;
 
   const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
   const fragShader = compileShader(gl, gl.FRAGMENT_SHADER, fragShaderSource);
@@ -207,50 +255,23 @@ export function createRenderGL(
   gl.linkProgram(program);
   gl.useProgram(program);
 
-  const model = {
-    // prettier-ignore
-    vertex: Float32Array.of(
-      -1.0, -1.0, 0.0,
-       1.0, -1.0, 0.0,
-       1.0,  1.0, 0.0,
-      -1.0,  1.0, 0.0,
-    ),
-    // prettier-ignore
-    indices: Uint8Array.of(
-      0, 1, 2,
-      0, 2, 3,
-      2, 1, 0,
-      3, 2, 0
-    ),
-    // prettier-ignore
-    textureCoords: Float32Array.of(
-      0.0, 1.0,
-      1.0, 1.0,
-      1.0, 0.0,
-      0.0, 0.0,
-    ),
-  };
-
   const attrs = {
     aVertexPosition: gl.getAttribLocation(program, 'aVertexPosition'),
     aTextureCoord: gl.getAttribLocation(program, 'aTextureCoord'),
     uSampler: gl.getUniformLocation(program, 'uSampler'),
-    uLens: gl.getUniformLocation(program, 'uLens'),
+
+    u_Lens: gl.getUniformLocation(program, 'u_Lens'),
     u_resolution: gl.getUniformLocation(program, 'u_resolution'),
     u_textureSize: gl.getUniformLocation(program, 'u_textureSize'),
     u_hBlurSize: gl.getUniformLocation(program, 'u_hBlurSize'),
+    u_grainAmount: gl.getUniformLocation(program, 'u_grainAmount'),
+    u_vignetteAmount: gl.getUniformLocation(program, 'u_vignetteAmount'),
   };
 
   const buffers = {
     vertex: createBuffer(gl, gl.ARRAY_BUFFER, model.vertex),
     index: createBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, model.indices),
     texture: createBuffer(gl, gl.ARRAY_BUFFER, model.textureCoords),
-  };
-
-  var lens = {
-    Fx: -0.025,
-    Fy: -0.035,
-    scale: 0.999,
   };
 
   const texture = gl.createTexture();
@@ -262,7 +283,7 @@ export function createRenderGL(
   });
   gl.bindTexture(gl.TEXTURE_2D, null);
 
-  return function renderGL(imageData) {
+  return function renderGL(imageData, options: RenderGlOptions = {}) {
     let { width, height } = canvasEl.getBoundingClientRect();
 
     const imageAspectRatio = imageData.width / imageData.height;
@@ -293,10 +314,24 @@ export function createRenderGL(
     updateTexture(gl, texture, imageData);
 
     gl.uniform1i(attrs.uSampler, 0);
-    gl.uniform3fv(attrs.uLens, [lens.Fx, lens.Fy, lens.scale]);
     gl.uniform2fv(attrs.u_resolution, [width, height]);
     gl.uniform2fv(attrs.u_textureSize, [imageData.width, imageData.height]);
-    gl.uniform1f(attrs.u_hBlurSize, 3.0);
+
+    {
+      const {
+        Fx = -0.0,
+        Fy = -0.0,
+        S = 1.0,
+        hBlur = 0.0,
+        grain = 0.0,
+        vignette = 0.0,
+      } = options;
+
+      gl.uniform3fv(attrs.u_Lens, [Fx, Fy, S]);
+      gl.uniform1f(attrs.u_hBlurSize, hBlur);
+      gl.uniform1f(attrs.u_grainAmount, grain);
+      gl.uniform1f(attrs.u_vignetteAmount, vignette);
+    }
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.index);
     gl.drawElements(gl.TRIANGLES, model.indices.length, gl.UNSIGNED_BYTE, 0);

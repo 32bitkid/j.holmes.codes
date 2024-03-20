@@ -1,9 +1,16 @@
 import React, {
+  useCallback,
   type Dispatch,
   type SetStateAction,
-  type ChangeEventHandler,
-  useCallback,
+  type ChangeEvent,
 } from 'react';
+
+import {
+  useCheckboxCallback,
+  useNumericCallback,
+  useEnumCallback,
+} from './hooks.ts';
+import { RenderOptions } from './render-options.tsx';
 
 import {
   PIXEL_ASPECT_RATIOS,
@@ -16,11 +23,10 @@ import {
   BLURS,
 } from './options.ts';
 import styles from './sci0-renderer.module.css';
+import { DEFAULT_WEBGL2_OPTIONS, type RenderMode } from './types.ts';
 
 export interface ControlsProps {
-  maxProgress: number;
   palette: keyof typeof PALETTES;
-  progress: number;
   grayscale: boolean;
   mixer: keyof typeof MIXERS;
   contrast: number;
@@ -31,9 +37,8 @@ export interface ControlsProps {
   blur: keyof typeof BLURS;
   blurAmount: number;
   maximize: boolean;
-  mode: '2d' | 'webgl2';
+  mode: RenderMode;
 
-  onChangeProgress: Dispatch<SetStateAction<number>>;
   onChangePalette: Dispatch<SetStateAction<keyof typeof PALETTES>>;
   onChangeGrayscale: Dispatch<SetStateAction<boolean>>;
   onChangeMixer: Dispatch<SetStateAction<keyof typeof MIXERS>>;
@@ -47,29 +52,11 @@ export interface ControlsProps {
   onChangeBlur: Dispatch<SetStateAction<keyof typeof BLURS>>;
   onChangeBlurAmount: Dispatch<SetStateAction<number>>;
   onChangeMaximize: Dispatch<SetStateAction<boolean>>;
-  onChangeMode: Dispatch<SetStateAction<'2d' | 'webgl2'>>;
+  onChangeMode: Dispatch<SetStateAction<RenderMode>>;
 }
-
-const useCheckboxCallback = (
-  setter: Dispatch<SetStateAction<boolean>>,
-): ChangeEventHandler<HTMLInputElement> =>
-  useCallback((e) => setter(e.target.checked), [setter]);
-
-const useNumericCallback = (
-  setter: Dispatch<SetStateAction<number>>,
-  mapFn: (n: number) => number = (n) => n,
-): ChangeEventHandler<HTMLInputElement> =>
-  useCallback((e) => setter(mapFn(parseInt(e.target.value, 10))), [setter]);
-
-const useEnumCallback = <T extends string>(
-  setter: Dispatch<SetStateAction<T>>,
-): ChangeEventHandler<HTMLSelectElement> =>
-  useCallback((e) => setter(e.target.value as T), [setter]);
 
 export function Controls(props: ControlsProps) {
   const {
-    maxProgress,
-    progress,
     palette,
     grayscale,
     mixer,
@@ -83,7 +70,6 @@ export function Controls(props: ControlsProps) {
     maximize,
     mode,
     // setters
-    onChangeProgress,
     onChangePalette,
     onChangeGrayscale,
     onChangeMixer,
@@ -98,19 +84,20 @@ export function Controls(props: ControlsProps) {
     onChangeMode,
   } = props;
 
+  const handleModeSwitch = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      const newMode = e.target.value as RenderMode[0];
+      if (newMode === 'webgl2') {
+        onChangeMode(['webgl2', DEFAULT_WEBGL2_OPTIONS]);
+      } else {
+        onChangeMode([newMode, {}]);
+      }
+    },
+    [onChangeMode],
+  );
+
   return (
-    <>
-      <input
-        type="range"
-        value={progress}
-        min={1}
-        max={maxProgress}
-        onChange={useNumericCallback(onChangeProgress)}
-        style={{
-          display: 'block',
-          width: '100%',
-        }}
-      />
+    <div className={styles.container}>
       <fieldset className={styles.fieldset}>
         <legend>Pre-dither</legend>
         <label htmlFor="scaler">Pre-Scaler:</label>
@@ -125,6 +112,25 @@ export function Controls(props: ControlsProps) {
             </option>
           ))}
         </select>
+        <label htmlFor="pixel-aspect-ratio">Pixel Aspect Ratio:</label>
+        <select
+          id="pixel-aspect-ratio"
+          value={pixelAspectRatio}
+          onChange={useEnumCallback(onChangePixelAspectRatio)}
+        >
+          {Object.keys(PIXEL_ASPECT_RATIOS).map((key) => (
+            <option value={key} key={key}>
+              {key.replace(':', '∶')}
+            </option>
+          ))}
+        </select>
+        <label htmlFor="maximize">Maximize:</label>
+        <input
+          id="maximize"
+          type="checkbox"
+          checked={maximize}
+          onChange={useCheckboxCallback(onChangeMaximize)}
+        />
       </fieldset>
       <fieldset className={styles.fieldset}>
         <legend>Dithering</legend>
@@ -187,7 +193,10 @@ export function Controls(props: ControlsProps) {
           min="0"
           max="100"
           value={contrast * 100}
-          onChange={useNumericCallback(onChangeContrast, (n) => n / 100)}
+          onChange={useNumericCallback(
+            onChangeContrast,
+            useCallback((n: number) => n / 100, []),
+          )}
         />
       </fieldset>
       <fieldset className={styles.fieldset}>
@@ -205,7 +214,7 @@ export function Controls(props: ControlsProps) {
           ))}
         </select>
         <label htmlFor="blur-type">
-          Blur <small>(CPU)</small>:
+          Blur<small>(sw)</small>:
         </label>
         <select
           id="blur-type"
@@ -228,40 +237,18 @@ export function Controls(props: ControlsProps) {
           value={blurAmount}
           onChange={useNumericCallback(onChangeBlurAmount)}
         />
-        <label htmlFor="pixel-aspect-ratio">Pixel Aspect Ratio:</label>
-        <select
-          id="pixel-aspect-ratio"
-          value={pixelAspectRatio}
-          onChange={useEnumCallback(onChangePixelAspectRatio)}
-        >
-          {Object.keys(PIXEL_ASPECT_RATIOS).map((key) => (
-            <option value={key} key={key}>
-              {key.replace(':', '∶')}
-            </option>
-          ))}
-        </select>
-        <label htmlFor="maximize">Maximize:</label>
-        <input
-          id="maximize"
-          type="checkbox"
-          checked={maximize}
-          onChange={useCheckboxCallback(onChangeMaximize)}
-        />
       </fieldset>
 
       <fieldset className={styles.fieldset}>
         <legend>
-          <label htmlFor="mode">Mode:</label>{' '}
-          <select
-            id="mode"
-            value={mode}
-            onChange={useEnumCallback(onChangeMode)}
-          >
+          <label htmlFor="mode">Canvas</label>{' '}
+          <select id="mode" value={mode[0]} onChange={handleModeSwitch}>
             <option value="2d">Software</option>
             <option value="webgl2">WebGL2</option>
           </select>
         </legend>
+        <RenderOptions mode={mode} onChangeMode={onChangeMode} />
       </fieldset>
-    </>
+    </div>
   );
 }

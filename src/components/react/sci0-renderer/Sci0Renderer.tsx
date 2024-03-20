@@ -18,6 +18,12 @@ import {
 } from './options.ts';
 import { Canvas } from './Canvas.tsx';
 import { Controls } from './Controls.tsx';
+import {
+  DEFAULT_WEBGL2_OPTIONS,
+  type RenderMode,
+} from '@components/react/sci0-renderer/types.ts';
+import styles from '@components/react/sci0-renderer/sci0-renderer.module.css';
+import { useNumericCallback } from '@components/react/sci0-renderer/hooks.ts';
 
 interface Sci0RenderProps {
   readonly data: string;
@@ -50,7 +56,10 @@ export function Sci0Renderer(props: Sci0RenderProps) {
   );
   const [blur, setBlur] = useState<keyof typeof BLURS>('(none)');
   const [blurAmount, setBlurAmount] = useState<number>(1);
-  const [mode, setMode] = useState<'2d' | 'webgl2'>('webgl2');
+  const [mode, setMode] = useState<RenderMode>([
+    'webgl2',
+    DEFAULT_WEBGL2_OPTIONS,
+  ]);
 
   const pipeline = useMemo(() => {
     const basePalette = [
@@ -88,9 +97,21 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         mode={mode}
         label={label}
       />
+      <div className={styles.progress}>
+        <input
+          id="progress"
+          type="range"
+          value={progress}
+          min={1}
+          max={picData.length}
+          onChange={useNumericCallback(setProgress)}
+          style={{}}
+        />
+        <label htmlFor="progress">
+          {progress.toLocaleString()} of {picData.length.toLocaleString()}
+        </label>
+      </div>
       <Controls
-        maxProgress={picData.length}
-        progress={progress}
         palette={palette}
         grayscale={grayscale}
         mixer={mixer}
@@ -104,7 +125,6 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         maximize={maximize}
         mode={mode}
         // events
-        onChangeProgress={setProgress}
         onChangePalette={setPalette}
         onChangeGrayscale={setGrayscale}
         onChangeMixer={setMixer}
