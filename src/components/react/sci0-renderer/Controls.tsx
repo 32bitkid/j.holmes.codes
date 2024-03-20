@@ -23,7 +23,7 @@ export interface ControlsProps {
   progress: number;
   grayscale: boolean;
   mixer: keyof typeof MIXERS;
-  dimmer: number;
+  contrast: number;
   dither: keyof typeof DITHERS;
   scaler: keyof typeof SCALERS;
   pixelAspectRatio: keyof typeof PIXEL_ASPECT_RATIOS;
@@ -37,7 +37,7 @@ export interface ControlsProps {
   onChangePalette: Dispatch<SetStateAction<keyof typeof PALETTES>>;
   onChangeGrayscale: Dispatch<SetStateAction<boolean>>;
   onChangeMixer: Dispatch<SetStateAction<keyof typeof MIXERS>>;
-  onChangeDimmer: Dispatch<SetStateAction<number>>;
+  onChangeContrast: Dispatch<SetStateAction<number>>;
   onChangeDither: Dispatch<SetStateAction<keyof typeof DITHERS>>;
   onChangeScaler: Dispatch<SetStateAction<keyof typeof SCALERS>>;
   onChangePixelAspectRatio: Dispatch<
@@ -73,7 +73,7 @@ export function Controls(props: ControlsProps) {
     palette,
     grayscale,
     mixer,
-    dimmer,
+    contrast,
     dither,
     scaler,
     pixelAspectRatio,
@@ -87,7 +87,7 @@ export function Controls(props: ControlsProps) {
     onChangePalette,
     onChangeGrayscale,
     onChangeMixer,
-    onChangeDimmer,
+    onChangeContrast,
     onChangeDither,
     onChangeScaler,
     onChangePixelAspectRatio,
@@ -180,14 +180,14 @@ export function Controls(props: ControlsProps) {
           <option value="mix-50">Mix 50%</option>
           <option value="soft">Soft</option>
         </select>
-        <label htmlFor="dimmer"> Dimmer:</label>
+        <label htmlFor="contrast">Contrast:</label>
         <input
-          id="dimmer"
+          id="contrast"
           type="range"
           min="0"
           max="100"
-          value={dimmer * 100}
-          onChange={useNumericCallback(onChangeDimmer, (n) => n / 100)}
+          value={contrast * 100}
+          onChange={useNumericCallback(onChangeContrast, (n) => n / 100)}
         />
       </fieldset>
       <fieldset className={styles.fieldset}>
@@ -247,12 +247,20 @@ export function Controls(props: ControlsProps) {
           checked={maximize}
           onChange={useCheckboxCallback(onChangeMaximize)}
         />
+      </fieldset>
 
-        <label htmlFor="mode">Mode:</label>
-        <select id="mode" value={mode} onChange={useEnumCallback(onChangeMode)}>
-          <option value="2d">Software</option>
-          <option value="webgl2">WebGL2</option>
-        </select>
+      <fieldset className={styles.fieldset}>
+        <legend>
+          <label htmlFor="mode">Mode:</label>{' '}
+          <select
+            id="mode"
+            value={mode}
+            onChange={useEnumCallback(onChangeMode)}
+          >
+            <option value="2d">Software</option>
+            <option value="webgl2">WebGL2</option>
+          </select>
+        </legend>
       </fieldset>
     </>
   );

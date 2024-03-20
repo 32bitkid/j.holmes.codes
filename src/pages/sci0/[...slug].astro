@@ -1,10 +1,9 @@
 ---
 import { getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import Page from '@layouts/page.astro';
 
 import { Sci0Renderer } from '@components/react/sci0-renderer';
-
-import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const sci0Pics = await getCollection('sci0pics');
@@ -32,22 +31,28 @@ const thumbnail = await getImage({
   format: 'png',
 });
 
-const pageTitle = `SCI-0 Playground: Betrayed Alliance, PIC-${pic.toString(10).padStart(3, '0')}`;
+const text = `Betrayed Alliance - pic.${pic.toString(10).padStart(3, '0')}`;
+const altText =
+  thumbnailAlt ??
+  `Rendering of Betrayed Alliance asset pic.${pic.toString(10).padStart(3, '0')}`;
 ---
 
 <Page
-  title={pageTitle}
+  title={`SCI0 Explorer: ${text}`}
   image={{
     src: new URL(thumbnail.src, Astro.url),
-    alt: thumbnailAlt ?? pageTitle,
+    alt: altText,
   }}
 >
-  <h1>{pageTitle}</h1>
+  <h1>
+    Betrayed Alliance - <code>pic.{pic.toString(10).padStart(3, '0')}</code>
+  </h1>
   <Sci0Renderer
     client:load
     data={content}
     compression={compression as 0 | 1 | 2}
     initialAspectRatio={aspectRatio as '1:1.2' | '1:1'}
     engine={engine}
+    label={altText}
   />
 </Page>

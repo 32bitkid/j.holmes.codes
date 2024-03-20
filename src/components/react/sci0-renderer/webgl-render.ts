@@ -16,9 +16,12 @@ function assertCompilation<T extends WebGLShader>(
 }
 
 const vertexShaderSource = `
-  attribute highp vec3 aVertexPosition;
+  precision highp float;
+  
+  attribute vec3 aVertexPosition;
+  varying vec3 vPosition;
+  
   attribute mediump vec2 aTextureCoord;
-  varying highp vec3 vPosition;
   varying mediump vec2 vTextureCoord;
   
   void main(void){
@@ -29,59 +32,91 @@ const vertexShaderSource = `
 `;
 
 const fragShaderSource = `
-  uniform highp vec3 uLensS;
-  uniform highp vec2 uLensF;
+  #define MAX_H_BLUR_SIZE 20.0
+
+  precision highp float;
+
+  uniform vec3 uLens;
   uniform sampler2D uSampler;
-  uniform highp vec2 u_resolution;
-  varying highp vec3 vPosition;
+  uniform vec2 u_resolution;
+  uniform vec2 u_textureSize;
+  uniform float u_hBlurSize;
+  varying vec3 vPosition;
   varying mediump vec2 vTextureCoord;
   
-  highp vec2 trim = vec2(0.0);
+  vec2 trim = vec2(0.0);
   
-  mediump vec2 getMapping(highp vec2 c) {
+  mediump vec2 getMapping(vec2 c) {
     return c * vec2(1.0, -1.0) / 2.0 + vec2(0.5, 0.5);
   }
   
-  mediump vec4 vignette(
-    mediump vec4 texture, 
-    highp vec4 color,
-    highp float radius, 
-    highp float smoothness,
-    highp float intensity
+  float rand(vec2 co){
+    return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+  }
+  
+  float luma(vec3 color) {
+    return dot(color, vec3(0.2989, 0.5866, 0.1145));
+  }
+  
+  mediump vec3 vignette(
+    mediump vec3 texture, 
+    vec3 color,
+    float radius, 
+    float smoothness,
+    float intensity
   ) {
-      highp float dim = max(u_resolution.x, u_resolution.y);
-      highp vec2 pos = gl_FragCoord.xy / max(u_resolution.x, u_resolution.y);
-      highp vec2 center = vec2(u_resolution) / dim * 0.5;
+      float dim = max(u_resolution.x, u_resolution.y);
+      vec2 pos = gl_FragCoord.xy / max(u_resolution.x, u_resolution.y);
+      vec2 center = vec2(u_resolution) / dim * 0.5;
       
-      highp float diff = radius - distance(pos, center);
-      return mix(color, texture, clamp(smoothstep(-smoothness, smoothness, diff), 1.0 - intensity, 1.0));
+      float diff = radius - distance(pos, center);
+      float l = luma(texture);
+      float d = clamp(smoothstep(-smoothness, smoothness, diff), 1.0 - (intensity * l), 1.0);
+      return mix(color, texture, d);
   } 
   
   void main(void){
-    mediump vec4 texture;
-  
-    highp vec3 vPos = vPosition;
-    mediump vec2 vMapping = vPos.xy;
+    vec2 uv = gl_FragCoord.xy / u_resolution;
+    mediump vec4 texture = vec4(0.0, 0.0, 0.0, 1.0);
+    mediump vec2 vMapping = vPosition.xy;
       
     // Barrel Distortion
     {
-      highp float scale = uLensS.z;
-      highp float Fx = uLensF.x;
-      highp float Fy = uLensF.y;
-      vMapping.x = vMapping.x + ((pow(vPos.y, 2.0) / scale) * vPos.x/scale) * -Fx;
-      vMapping.y = vMapping.y + ((pow(vPos.x, 2.0) / scale) * vPos.y/scale) * -Fy;
-      vMapping = vMapping * uLensS.xy;
-      vMapping = getMapping(vMapping/scale);
-      texture = texture2D(uSampler, vMapping);
-      
-      // Vignette
-      texture = vignette(texture, vec4(0.0, 0.0, 0.0, 1.0), 0.85, 0.65, 1.0);
-      texture = vignette(texture, vec4(0.0, 0.0, 0.0, 1.0), 0.7, 0.25, 0.2);
+      vMapping += ((vPosition.yx * vPosition.yx) / uLens.z) * (vPosition.xy / uLens.z) * (uLens.xy * -1.0);
+      vMapping = getMapping(vMapping / uLens.z);
+      texture.rgb = texture2D(uSampler, vMapping).rgb;
     }
     
-    // Glare
+    // H-Box Blur 
     {
-      highp vec2 uv = gl_FragCoord.xy / u_resolution;
+      mediump vec2 onePixel = vec2(1.0, 1.0) / u_textureSize;
+      mediump vec3 sum = texture.rgb;
+      for (float i = 0.0; i < MAX_H_BLUR_SIZE; i+=1.0) {
+        if (i >= u_hBlurSize) break; 
+        sum += texture2D(uSampler, vMapping + onePixel * vec2(-1.0 * (i + 1.0), 0.0)).rgb;
+        sum += texture2D(uSampler, vMapping + onePixel * vec2(1.0 * (i + 1.0), 0.0)).rgb;
+      }
+      texture.rgb = sum / (min(MAX_H_BLUR_SIZE, u_hBlurSize) * 2.0 + 1.0);
+    }
+    
+    // Scanlines
+    {
+
+    }
+
+    // Vignette    
+    {
+      texture.rgb = vignette(texture.rgb, vec3(0.0, 0.0, 0.0), 0.85, 0.55, 1.0);
+      texture.rgb = vignette(texture.rgb, vec3(0.15, 0.15, 0.15), 0.66, 0.145, 0.2);
+      texture.rgb = vignette(texture.rgb, vec3(1.0, 1.0, 1.0), 0.66, 0.145, 0.2);
+    }
+    
+    // Grain
+    {
+      float grainAmount = 0.125;
+      float l = luma(texture.rgb);
+      float diff = ((rand(gl_FragCoord.xy) - 0.5) * grainAmount * (1.0 - l));
+      texture.rgb += diff;
     }
 
     // Clipping    
@@ -92,7 +127,12 @@ const fragShaderSource = `
       vMapping.y < (trim.y)
     ) {
       texture = vec4(0.0);
-    }   
+    } 
+    
+    // Glare
+    {
+
+    }  
       
     gl_FragColor = texture;
   }
@@ -142,9 +182,14 @@ function updateTexture(
     imgData.data,
   );
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MIN_FILTER,
+    gl.LINEAR_MIPMAP_NEAREST,
+  );
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.generateMipmap(gl.TEXTURE_2D);
 }
 
 export function createRenderGL(
@@ -190,10 +235,10 @@ export function createRenderGL(
     aVertexPosition: gl.getAttribLocation(program, 'aVertexPosition'),
     aTextureCoord: gl.getAttribLocation(program, 'aTextureCoord'),
     uSampler: gl.getUniformLocation(program, 'uSampler'),
-    uLensS: gl.getUniformLocation(program, 'uLensS'),
-    uLensF: gl.getUniformLocation(program, 'uLensF'),
-    uFov: gl.getUniformLocation(program, 'uFov'),
+    uLens: gl.getUniformLocation(program, 'uLens'),
     u_resolution: gl.getUniformLocation(program, 'u_resolution'),
+    u_textureSize: gl.getUniformLocation(program, 'u_textureSize'),
+    u_hBlurSize: gl.getUniformLocation(program, 'u_hBlurSize'),
   };
 
   const buffers = {
@@ -203,11 +248,9 @@ export function createRenderGL(
   };
 
   var lens = {
-    a: 1.0,
-    b: 1.0,
     Fx: -0.025,
-    Fy: -0.03,
-    scale: 1,
+    Fy: -0.035,
+    scale: 0.999,
   };
 
   const texture = gl.createTexture();
@@ -220,14 +263,19 @@ export function createRenderGL(
   gl.bindTexture(gl.TEXTURE_2D, null);
 
   return function renderGL(imageData) {
-    if (
-      canvasEl.width === imageData.width ||
-      canvasEl.height !== imageData.height
-    ) {
-      gl.viewport(0, 0, imageData.width, imageData.height);
-      canvasEl.width = imageData.width;
-      canvasEl.height = imageData.height;
+    let { width, height } = canvasEl.getBoundingClientRect();
+
+    const imageAspectRatio = imageData.width / imageData.height;
+    const canvasAspectRatio = width / height;
+    if (imageAspectRatio > canvasAspectRatio) {
+      width = height * imageAspectRatio;
+    } else {
+      height = width * (1 / imageAspectRatio);
     }
+
+    canvasEl.width = width;
+    canvasEl.height = height;
+    gl.viewport(0, 0, canvasEl.width, canvasEl.height);
 
     gl.clearColor(1.0, 0.0, 0.0, 1.0);
     gl.enable(gl.DEPTH_TEST);
@@ -245,9 +293,10 @@ export function createRenderGL(
     updateTexture(gl, texture, imageData);
 
     gl.uniform1i(attrs.uSampler, 0);
-    gl.uniform3fv(attrs.uLensS, [lens.a, lens.b, lens.scale]);
-    gl.uniform2fv(attrs.uLensF, [lens.Fx, lens.Fy]);
-    gl.uniform2fv(attrs.u_resolution, [imageData.width, imageData.height]);
+    gl.uniform3fv(attrs.uLens, [lens.Fx, lens.Fy, lens.scale]);
+    gl.uniform2fv(attrs.u_resolution, [width, height]);
+    gl.uniform2fv(attrs.u_textureSize, [imageData.width, imageData.height]);
+    gl.uniform1f(attrs.u_hBlurSize, 3.0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.index);
     gl.drawElements(gl.TRIANGLES, model.indices.length, gl.UNSIGNED_BYTE, 0);

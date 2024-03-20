@@ -80,6 +80,10 @@ export const BLURS = {
     (radius: number) =>
     (it: ImageDataLike): ImageDataLike =>
       BlurFilters.boxBlur(radius)(it),
+  'hbox (sw)':
+    (radius: number) =>
+    (it: ImageDataLike): ImageDataLike =>
+      BlurFilters.hBoxBlur(radius)(it),
   'gaussian (sw)':
     (sigma: number) =>
     (it: ImageDataLike): ImageDataLike =>

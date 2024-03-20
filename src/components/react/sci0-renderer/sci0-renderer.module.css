@@ -30,10 +30,15 @@
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+:global(:root:fullscreen) {
+  background-color: black;
+}
+
 @media print {
   .canvas {
     width: 100%;
     margin-left: 0;
+    outline: none;
   }
 }
 

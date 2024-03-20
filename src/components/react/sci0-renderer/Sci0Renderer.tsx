@@ -24,10 +24,11 @@ interface Sci0RenderProps {
   readonly engine: 'sci0' | 'sci01';
   readonly compression: 0 | 1 | 2;
   readonly initialAspectRatio: '1:1' | '1:1.2';
+  readonly label: string;
 }
 
 export function Sci0Renderer(props: Sci0RenderProps) {
-  const { data, engine, compression, initialAspectRatio } = props;
+  const { data, engine, compression, initialAspectRatio, label } = props;
   const picData = useMemo(() => {
     const rawBytes = toByteArray(data);
     const bytes = decompress(engine, compression, rawBytes);
@@ -39,23 +40,21 @@ export function Sci0Renderer(props: Sci0RenderProps) {
   const [palette, setPalette] = useState<keyof typeof PALETTES>('CGA');
   const [grayscale, setGrayscale] = useState(false);
   const [mixer, setMixer] = useState<keyof typeof MIXERS>('none');
-  const [dimmer, setDimmer] = useState<number>(1);
-  const [dither, setDither] = useState<keyof typeof DITHERS>(
-    initialAspectRatio === '1:1' ? '5x5' : '5x6',
-  );
-  const [scaler, setScaler] = useState<keyof typeof SCALERS>(
-    initialAspectRatio === '1:1' ? '5x5' : '5x6',
-  );
+  const [contrast, setContrast] = useState<number>(1);
+  const [scaler, setScaler] = useState<keyof typeof SCALERS>('(none)');
+  const [dither, setDither] = useState<keyof typeof DITHERS>('1:1');
   const [pixelAspectRatio, setPixelAspectRatio] =
     useState<keyof typeof PIXEL_ASPECT_RATIOS>(initialAspectRatio);
-  const [postScaler, setPostSCaler] = useState<keyof typeof SCALERS>('(none)');
+  const [postScaler, setPostSCaler] = useState<keyof typeof SCALERS>(
+    initialAspectRatio === '1:1' ? '5x5' : '5x6',
+  );
   const [blur, setBlur] = useState<keyof typeof BLURS>('(none)');
   const [blurAmount, setBlurAmount] = useState<number>(1);
   const [mode, setMode] = useState<'2d' | 'webgl2'>('webgl2');
 
   const pipeline = useMemo(() => {
     const basePalette = [
-      dimmer < 1 && ((pal: Uint32Array) => IBM5153Dimmer(pal, dimmer)),
+      contrast < 1 && ((pal: Uint32Array) => IBM5153Dimmer(pal, contrast)),
       grayscale && toGrayscale,
     ].reduce((pal, fn) => (fn ? fn(pal) : pal), PALETTES[palette]);
     const pairs = generateSciDitherPairs(basePalette, MIXERS[mixer]);
@@ -69,7 +68,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
     palette,
     grayscale,
     mixer,
-    dimmer,
+    contrast,
     dither,
     scaler,
     postScaler,
@@ -87,6 +86,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         maximize={maximize}
         onChangeMaximize={setMaximize}
         mode={mode}
+        label={label}
       />
       <Controls
         maxProgress={picData.length}
@@ -94,7 +94,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         palette={palette}
         grayscale={grayscale}
         mixer={mixer}
-        dimmer={dimmer}
+        contrast={contrast}
         dither={dither}
         scaler={scaler}
         pixelAspectRatio={pixelAspectRatio}
@@ -108,7 +108,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         onChangePalette={setPalette}
         onChangeGrayscale={setGrayscale}
         onChangeMixer={setMixer}
-        onChangeDimmer={setDimmer}
+        onChangeContrast={setContrast}
         onChangeDither={setDither}
         onChangeScaler={setScaler}
         onChangePixelAspectRatio={setPixelAspectRatio}
