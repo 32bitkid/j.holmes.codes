@@ -35,6 +35,7 @@ interface Sci0RenderProps {
 
 export function Sci0Renderer(props: Sci0RenderProps) {
   const { data, engine, compression, initialAspectRatio, label } = props;
+
   const picData = useMemo(() => {
     const rawBytes = toByteArray(data);
     const bytes = decompress(engine, compression, rawBytes);
@@ -102,7 +103,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
           id="progress"
           type="range"
           value={progress}
-          min={1}
+          min={0}
           max={picData.length}
           onChange={useNumericCallback(setProgress)}
           style={{}}

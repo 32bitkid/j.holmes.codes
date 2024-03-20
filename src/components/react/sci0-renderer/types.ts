@@ -8,7 +8,7 @@ export const DEFAULT_WEBGL2_OPTIONS = {
   Fx: -0.025,
   Fy: -0.035,
   S: 0.995,
-  hBlur: 2,
+  hBlur: 0,
   grain: 0.125,
   vignette: 1.0,
 };

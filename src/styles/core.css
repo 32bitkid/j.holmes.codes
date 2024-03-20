@@ -19,6 +19,8 @@
   font-feature-settings: 'ss01', 'calt', 'liga';
   font-size: 12pt;
   font-weight: 400;
+  scrollbar-width: thin;
+  scrollbar-color: #ddd transparent;
 }
 
 body {

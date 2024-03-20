@@ -1,55 +1,62 @@
 ---
 import { getImage } from 'astro:assets';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Page from '@layouts/page.astro';
 
 import { Sci0Renderer } from '@components/react/sci0-renderer';
 
 export async function getStaticPaths() {
   const sci0Pics = await getCollection('sci0pics');
-  return sci0Pics.map((it) => ({
-    params: { slug: `${it.data.title}/pic/${it.data.pic}` },
-    props: {
-      content: it.data.content.replace(/\s/g, ''),
-      compression: it.data.compression,
-      engine: it.data.engine,
-      aspectRatio: it.data.aspectRatio,
-      pic: it.data.pic,
-      thumbnail: it.data.thumbnail,
-      thumbnailAlt: it.data.thumbnailAlt,
-    },
-  }));
+  return sci0Pics.map((it) => {
+    return {
+      params: { slug: `${it.data.title.id}/pic/${it.data.pic}` },
+      props: { id: it.id },
+    };
+  });
 }
 
-const { aspectRatio, content, compression, engine, pic, thumbnailAlt } =
-  Astro.props;
+const { id } = Astro.props;
+
+const { data: picData } = await getEntry('sci0pics', id);
+const {
+  content,
+  pic,
+  thumbnailAlt,
+  compression,
+  title: { id: titleId },
+} = picData;
+
+const { data: titleData } = await getEntry('sci0games', titleId);
+const { engine, aspectRatio } = titleData;
 
 const thumbnail = await getImage({
-  src: Astro.props.thumbnail,
+  src: picData.thumbnail,
   width: 380,
   height: 380,
   format: 'png',
 });
 
-const text = `Betrayed Alliance - pic.${pic.toString(10).padStart(3, '0')}`;
+const text = `${titleData.name} - pic.${pic.toString(10).padStart(3, '0')}`;
 const altText =
   thumbnailAlt ??
-  `Rendering of Betrayed Alliance asset pic.${pic.toString(10).padStart(3, '0')}`;
+  `Rendering of ${titleData.name} asset pic.${pic.toString(10).padStart(3, '0')}`;
 ---
 
 <Page
-  title={`SCI0 Explorer: ${text}`}
+  title={`SCI-0 Explorer: ${text}`}
   image={{
     src: new URL(thumbnail.src, Astro.url),
     alt: altText,
   }}
 >
   <h1>
-    Betrayed Alliance - <code>pic.{pic.toString(10).padStart(3, '0')}</code>
+    {titleData.name} ({titleData.year}) - <code
+      >pic.{pic.toString(10).padStart(3, '0')}</code
+    >
   </h1>
   <Sci0Renderer
     client:load
-    data={content}
+    data={content.replace(/\s/g, '')}
     compression={compression as 0 | 1 | 2}
     initialAspectRatio={aspectRatio as '1:1.2' | '1:1'}
     engine={engine}
