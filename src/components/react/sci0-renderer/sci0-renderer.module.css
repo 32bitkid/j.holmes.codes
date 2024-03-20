@@ -1,0 +1,91 @@
+.progress input {
+  display: block;
+  width: 100%;
+  height: var(--line-height);
+}
+
+.progress label {
+  display: block;
+  text-align: right;
+  font-size: var(--f-small);
+}
+
+.progress {
+  margin-bottom: calc(var(--line-height) * 0.5);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 45rem) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.fieldset {
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--colors-primary);
+  display: grid;
+  justify-items: start;
+  align-items: center;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem;
+}
+
+.fieldset > legend {
+  font-family: 'Equity Caps B', serif;
+  font-feature-settings: 'c2sc', 'smcp', 'onum';
+  margin-bottom: 0.5rem;
+}
+
+.fieldset label small {
+  font-size: var(--f-small);
+}
+
+.canvas {
+  display: block;
+  user-select: none;
+  width: 100%;
+  margin-left: 0;
+  margin-block-start: 2rem;
+  margin-block-end: 1rem;
+  outline: 0.5rem solid #000;
+  background-color: #000;
+  box-sizing: border-box;
+  transition: width, margin-left, outline;
+  transition-duration: 1000ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.noOptions {
+  opacity: 0.5;
+}
+
+@media print {
+  .canvas {
+    width: 100%;
+    margin-left: 0;
+    outline: none;
+  }
+}
+
+@media screen and (min-width: 65rem) {
+  .canvas.maximize {
+    width: calc(100vw - 4rem);
+    margin-left: calc(-0.5 * (100vw - 4rem - 100%));
+    outline: 1.25rem solid black;
+    margin-block-end: 2rem;
+  }
+}
+
+@media screen and (min-width: 104rem) {
+  .canvas.maximize {
+    width: 100rem;
+    margin-left: calc(-0.5 * (100rem - 100%));
+  }
+}

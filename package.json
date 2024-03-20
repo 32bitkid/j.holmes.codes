@@ -1,18 +1,27 @@
 {
-  "name": "",
+  "name": "j.holmes.codes",
   "private": true,
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "check": "astro check --minimumSeverity=warning",
+    "build": "astro check --minimumSeverity=warning && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "predeploy": "astro build",
     "deploy": "rsync -avh --delete  dist/ j.holmes.codes:~/j.holmes.codes/"
   },
   "dependencies": {
+    "@4bitlabs/color": "^1.1.2",
+    "@4bitlabs/image": "^2.2.2",
+    "@4bitlabs/sci0": "^1.3.2",
+    "base64-js": "^1.5.1",
+    "lodash.throttle": "^4.1.1",
+    "lodash.debounce": "^4.0.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.5.6",
@@ -20,6 +29,7 @@
     "@astrojs/react": "^3.0.10",
     "@modyfi/vite-plugin-yaml": "^1.0.4",
     "@types/lodash.throttle": "^4.1.9",
+    "@types/lodash.debounce": "^4.0.9",
     "astro": "^4.4.15",
     "date-fns": "^3.3.1",
     "marked": "^12.0.1",
