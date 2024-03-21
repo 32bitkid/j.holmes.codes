@@ -34,6 +34,7 @@ const sci0PicsCollection = defineCollection({
       content: z.string(),
       thumbnail: image(),
       thumbnailAlt: z.string(),
+      description: z.string().optional(),
     }),
 });
 

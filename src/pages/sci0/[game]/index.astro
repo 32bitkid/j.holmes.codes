@@ -1,9 +1,7 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { getCollection, getEntry } from 'astro:content';
 import Page from '@layouts/page.astro';
-
-import { Sci0Renderer } from '@components/react/sci0-renderer';
 
 export async function getStaticPaths() {
   const sci0Games = await getCollection('sci0games');
@@ -18,13 +16,23 @@ export async function getStaticPaths() {
 const { id } = Astro.props;
 const entry = await getEntry('sci0games', id);
 const { data: titleData } = entry;
-const { engine, aspectRatio, name, year } = titleData;
+const { name, year } = titleData;
 const pics = await getCollection('sci0pics', ({ data }) => data.game.id === id);
+
+const thumbnail = await getImage({
+  src: titleData.cover,
+  width: 380,
+  height: 380,
+  format: 'png',
+});
 ---
 
-<Page title={name}>
+<Page
+  title={name}
+  image={{ src: new URL(thumbnail.src, Astro.url), alt: `${name}` }}
+>
   <h1>
-    {name} ({titleData.year})
+    {name} ({year})
   </h1>
 
   <h2>Pics</h2>

@@ -197,14 +197,6 @@ function updateTexture(
   gl.generateMipmap(gl.TEXTURE_2D);
 }
 
-var lens = {
-  Fx: -0.025,
-  Fy: -0.035,
-  scale: 0.999,
-  grain: 0.125,
-  vignette: 1.0,
-};
-
 export interface RenderGlOptions {
   Fx?: number;
   Fy?: number;
