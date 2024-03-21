@@ -14,12 +14,14 @@ const blogCollection = defineCollection({
 
 const sci0GamesCollection = defineCollection({
   type: 'data',
-  schema: z.object({
-    name: z.string(),
-    year: z.number(),
-    engine: z.enum(['sci0', 'sci01']),
-    aspectRatio: z.enum(['1:1.2', '1:1']),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      year: z.number(),
+      engine: z.enum(['sci0', 'sci01']),
+      aspectRatio: z.enum(['1:1.2', '1:1']),
+      cover: image(),
+    }),
 });
 
 const sci0PicsCollection = defineCollection({

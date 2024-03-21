@@ -1,7 +1,56 @@
 ---
+import { Picture } from 'astro:assets';
 import Page from '../../layouts/page.astro';
+import { getCollection } from 'astro:content';
+
+const list = (await getCollection('sci0games')).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+);
 ---
 
-<Page title="Coming soon…">
-  <h1>Coming Soon…</h1>
+<Page title="SCI Explorer">
+  <h1>SCI Explorer</h1>
+
+  <ul>
+    {
+      list.map(({ id, data: it }) => (
+        <li>
+          <a href={`/sci0/${id}`}>
+            <Picture class="cover" src={it.cover} alt="Cover Art" width="600" />
+            {it.name} ({it.year})
+          </a>
+        </li>
+      ))
+    }
+  </ul>
 </Page>
+
+<style>
+  h1 {
+    margin-bottom: calc(var(--line-height) * 1);
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--line-height) 1ch;
+  }
+
+  ul a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1ch;
+  }
+
+  .cover {
+    width: 12rem;
+    height: 15rem;
+    object-fit: cover;
+    background-color: #999;
+    display: block;
+    border-radius: 3px;
+    border: 3px solid #999;
+    box-shadow: 0 0.5ch 1ch rgba(0, 0, 0, 0.2);
+  }
+</style>

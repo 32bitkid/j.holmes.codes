@@ -26,6 +26,7 @@ const {
   pic,
   thumbnailAlt,
   compression,
+  description,
   game: { id: gameId },
 } = picData;
 
@@ -46,17 +47,15 @@ const altText =
 ---
 
 <Page
-  title={`Sci0 Explorer: ${text}`}
+  title={`SCI Explorer: ${text}`}
   image={{
     src: new URL(thumbnail.src, Astro.url),
     alt: altText,
   }}
 >
-  <h1>
-    {gameData.name} ({gameData.year}) - <code
-      >pic.{pic.toString(10).padStart(3, '0')}</code
-    >
-  </h1>
+  <h1><a href={`/sci0/${gameId}`}>{gameData.name}</a> ({gameData.year})</h1>
+  <h2><code>pic.{pic.toString(10).padStart(3, '0')}</code></h2>
+  {description && <p>{description}</p>}
   <Sci0Renderer
     client:load
     data={content.replace(/\s/g, '')}
@@ -66,3 +65,9 @@ const altText =
     label={altText}
   />
 </Page>
+
+<style>
+  h2 {
+    margin-block-start: calc(var(--line-height) * 0.5);
+  }
+</style>
