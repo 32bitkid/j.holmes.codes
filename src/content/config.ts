@@ -26,7 +26,7 @@ const sci0PicsCollection = defineCollection({
   type: 'data',
   schema: ({ image }) =>
     z.object({
-      title: reference('sci0games'),
+      game: reference('sci0games'),
       pic: z.number().int(),
       compression: z.number(),
       content: z.string(),

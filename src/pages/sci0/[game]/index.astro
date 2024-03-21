@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, getEntry } from 'astro:content';
+import Page from '@layouts/page.astro';
+
+import { Sci0Renderer } from '@components/react/sci0-renderer';
+
+export async function getStaticPaths() {
+  const sci0Games = await getCollection('sci0games');
+  return sci0Games.map((it) => {
+    return {
+      params: { game: it.id },
+      props: { id: it.id },
+    };
+  });
+}
+
+const { id } = Astro.props;
+const entry = await getEntry('sci0games', id);
+const { data: titleData } = entry;
+const { engine, aspectRatio, name, year } = titleData;
+const pics = (
+  await getCollection('sci0pics', ({ data }) => data.game.id === id)
+).sort((a, b) => a.data.pic - b.data.pic);
+---
+
+<Page title={name}>
+  <h1>
+    {name} ({titleData.year})
+  </h1>
+
+  <h2>Pics</h2>
+  <ul class="pics">
+    {
+      pics.map((pic) => (
+        <li>
+          <a href={`/sci0/${id}/pic/${pic.data.pic}`}>
+            <Image
+              src={pic.data.thumbnail}
+              alt={pic.data.thumbnailAlt}
+              width="256"
+            />
+            <code>pic.{pic.data.pic.toString(10).padStart(3, '0')}</code>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Page>
+
+<style>
+  .pics {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1ch;
+  }
+
+  .pics a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1ch;
+  }
+
+  .pics img {
+    width: 100%;
+    border-radius: 1ch;
+    box-shadow: 0 0.5ch 1ch rgba(0, 0, 0, 0.2);
+  }
+</style>

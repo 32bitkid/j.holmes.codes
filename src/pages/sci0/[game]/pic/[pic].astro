@@ -9,7 +9,10 @@ export async function getStaticPaths() {
   const sci0Pics = await getCollection('sci0pics');
   return sci0Pics.map((it) => {
     return {
-      params: { slug: `${it.data.title.id}/pic/${it.data.pic}` },
+      params: {
+        game: it.data.game.id,
+        pic: it.data.pic,
+      },
       props: { id: it.id },
     };
   });
@@ -23,11 +26,11 @@ const {
   pic,
   thumbnailAlt,
   compression,
-  title: { id: titleId },
+  game: { id: gameId },
 } = picData;
 
-const { data: titleData } = await getEntry('sci0games', titleId);
-const { engine, aspectRatio } = titleData;
+const { data: gameData } = await getEntry('sci0games', gameId);
+const { engine, aspectRatio } = gameData;
 
 const thumbnail = await getImage({
   src: picData.thumbnail,
@@ -36,21 +39,21 @@ const thumbnail = await getImage({
   format: 'png',
 });
 
-const text = `${titleData.name} - pic.${pic.toString(10).padStart(3, '0')}`;
+const text = `${gameData.name} - pic.${pic.toString(10).padStart(3, '0')}`;
 const altText =
   thumbnailAlt ??
-  `Rendering of ${titleData.name} asset pic.${pic.toString(10).padStart(3, '0')}`;
+  `Rendering of ${gameData.name} asset pic.${pic.toString(10).padStart(3, '0')}`;
 ---
 
 <Page
-  title={`SCI-0 Explorer: ${text}`}
+  title={`Sci0 Explorer: ${text}`}
   image={{
     src: new URL(thumbnail.src, Astro.url),
     alt: altText,
   }}
 >
   <h1>
-    {titleData.name} ({titleData.year}) - <code
+    {gameData.name} ({gameData.year}) - <code
       >pic.{pic.toString(10).padStart(3, '0')}</code
     >
   </h1>
