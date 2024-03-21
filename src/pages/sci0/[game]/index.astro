@@ -28,7 +28,7 @@ const thumbnail = await getImage({
 ---
 
 <Page
-  title={name}
+  title={`SCI0 Explorer: ${name} $({year})`}
   image={{ src: new URL(thumbnail.src, Astro.url), alt: `${name}` }}
 >
   <h1>
