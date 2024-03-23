@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { toByteArray } from 'base64-js';
 import { decompress, Pic } from '@4bitlabs/sci0';
-import { createDitherizer } from '@4bitlabs/image';
+import { createDitherFilter, type RenderPipeline } from '@4bitlabs/image';
 import {
   IBM5153Dimmer,
   generateSciDitherPairs,
@@ -62,18 +62,17 @@ export function Sci0Renderer(props: Sci0RenderProps) {
     DEFAULT_WEBGL2_OPTIONS,
   ]);
 
-  const pipeline = useMemo(() => {
+  const pipeline = useMemo<RenderPipeline>(() => {
     const basePalette = [
       contrast < 1 && ((pal: Uint32Array) => IBM5153Dimmer(pal, contrast)),
       grayscale && toGrayscale,
     ].reduce((pal, fn) => (fn ? fn(pal) : pal), PALETTES[palette]);
     const pairs = generateSciDitherPairs(basePalette, MIXERS[mixer]);
-    return [
-      SCALERS[scaler],
-      createDitherizer(pairs, DITHERS[dither]),
-      SCALERS[postScaler],
-      BLURS[blur](blurAmount),
-    ];
+    return {
+      pre: [SCALERS[scaler]],
+      dither: createDitherFilter(pairs, DITHERS[dither]),
+      post: [SCALERS[postScaler], BLURS[blur](blurAmount)],
+    };
   }, [
     palette,
     grayscale,

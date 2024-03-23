@@ -1,34 +1,13 @@
-import { Scalers, BlurFilters, type ImageDataLike } from '@4bitlabs/image';
-import {
-  DGA_PALETTE,
-  Mixers,
-  RAW_CGA,
-  TRUE_CGA,
-  type DitherPair,
-} from '@4bitlabs/color';
+import { type ImageDataLike, type IndexedPixelData } from '@4bitlabs/image';
+import * as BlurFilters from '@4bitlabs/blur-filters';
+import * as ResizeFilters from '@4bitlabs/resize-filters';
+import { Palettes, Mixers, type DitherPair } from '@4bitlabs/color';
 
 export const PALETTES = {
-  CGA: RAW_CGA,
-  TrueCGA: TRUE_CGA,
-  DGA: DGA_PALETTE,
-  Colly: Uint32Array.of(
-    0xff000000,
-    0xff770022,
-    0xff227700,
-    0xff887722,
-    0xff330066,
-    0xff880077,
-    0xff006699,
-    0xff997777,
-    0xff554444,
-    0xffff2233,
-    0xff33ff00,
-    0xffffee22,
-    0xff3300ff,
-    0xffdd33ff,
-    0xff33eeff,
-    0xffffffff,
-  ),
+  CGA: Palettes.CGA_PALETTE,
+  TrueCGA: Palettes.TRUE_CGA_PALETTE,
+  DGA: Palettes.DGA_PALETTE,
+  Colly: Palettes.COLLY_SOFT_PALETTE,
 };
 
 export const MIXERS = {
@@ -54,15 +33,15 @@ export const DITHERS: Record<string, [number, number]> = {
 };
 
 export const SCALERS = {
-  '(none)': (it: ImageDataLike) => it,
-  '2x2': Scalers.nearestNeighbor([2, 2]),
-  '3x3': Scalers.nearestNeighbor([3, 3]),
-  '5x5': Scalers.nearestNeighbor([5, 5]),
-  '5x6': Scalers.nearestNeighbor([5, 6]),
-  'Scale2x / EPX': Scalers.scale2x,
-  Scale3x: Scalers.scale3x,
-  Scale5x6: Scalers.scale5x6,
-} as const;
+  '(none)': <T extends ImageDataLike | IndexedPixelData>(it: T): T => it,
+  '2x2': ResizeFilters.nearestNeighbor([2, 2]),
+  '3x3': ResizeFilters.nearestNeighbor([3, 3]),
+  '5x5': ResizeFilters.nearestNeighbor([5, 5]),
+  '5x6': ResizeFilters.nearestNeighbor([5, 6]),
+  'Scale2x / EPX': ResizeFilters.scale2x,
+  Scale3x: ResizeFilters.scale3x,
+  Scale5x6: ResizeFilters.scale5x6,
+};
 
 export const PIXEL_ASPECT_RATIOS = {
   '1:1': '32 / 19',
@@ -92,4 +71,4 @@ export const BLURS = {
     (sigma: number) =>
     (it: ImageDataLike): ImageDataLike =>
       BlurFilters.hBlur(sigma)(it),
-};
+} as const;

@@ -7,12 +7,12 @@ import React, {
   type SetStateAction,
   type MouseEvent,
 } from 'react';
+import { renderPic, type DrawCommand } from '@4bitlabs/sci0';
 import {
-  renderPic,
-  type DrawCommand,
-  type FilterPipeline,
-} from '@4bitlabs/sci0';
-import { type ImageDataLike } from '@4bitlabs/image';
+  type ImageDataLike,
+  type RenderPipeline,
+  renderPixelData,
+} from '@4bitlabs/image';
 import debounce from 'lodash.debounce';
 
 import { PIXEL_ASPECT_RATIOS } from '@components/react/sci0-renderer/options.ts';
@@ -26,7 +26,7 @@ export interface RenderCanvasProps {
   limit?: number;
   label: string;
   pixelAspectRatio: keyof typeof PIXEL_ASPECT_RATIOS;
-  renderPipeline: FilterPipeline;
+  renderPipeline: RenderPipeline;
   maximize: boolean;
   onChangeMaximize: Dispatch<SetStateAction<boolean>>;
   mode: RenderMode;
@@ -92,8 +92,9 @@ export function Canvas(props: RenderCanvasProps) {
     if (!updateFn) return;
 
     const actual = picData.slice(0, limit);
-    const { visible } = renderPic(actual, { pipeline: renderPipeline });
-    updateFn(visible, modeOptions);
+    const { visible } = renderPic(actual);
+    const imgData = renderPixelData(visible, renderPipeline);
+    updateFn(imgData, modeOptions);
   }, [picData, limit, renderPipeline, updateFnRef, mode, modeOptions, resized]);
 
   const handleChangeMaximize = useCallback(
