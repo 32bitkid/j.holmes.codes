@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { toByteArray } from 'base64-js';
-import { decompress, Pic } from '@4bitlabs/sci0';
+import { decompress, parsePic } from '@4bitlabs/sci0';
 import { createDitherFilter, type RenderPipeline } from '@4bitlabs/image';
 import {
-  IBM5153Dimmer,
+  IBM5153Contrast,
   generateSciDitherPairs,
   toGrayscale,
 } from '@4bitlabs/color';
@@ -39,7 +39,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
   const picData = useMemo(() => {
     const rawBytes = toByteArray(data);
     const bytes = decompress(engine, compression, rawBytes);
-    return Pic.parseFrom(bytes);
+    return parsePic(bytes);
   }, [data, engine, compression]);
 
   const [maximize, setMaximize] = useState(false);
@@ -64,7 +64,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
 
   const pipeline = useMemo<RenderPipeline>(() => {
     const basePalette = [
-      contrast < 1 && ((pal: Uint32Array) => IBM5153Dimmer(pal, contrast)),
+      contrast < 1 && ((pal: Uint32Array) => IBM5153Contrast(pal, contrast)),
       grayscale && toGrayscale,
     ].reduce((pal, fn) => (fn ? fn(pal) : pal), PALETTES[palette]);
     const pairs = generateSciDitherPairs(basePalette, MIXERS[mixer]);
