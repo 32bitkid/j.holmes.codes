@@ -1,8 +1,8 @@
-import { type RenderGlOptions } from './webgl-render.ts';
+import { type CrtUpdateOptions } from '@4bitlabs/crt-lite';
 
 export type RenderMode =
   | ['2d', Record<string, never>]
-  | ['webgl2', RenderGlOptions];
+  | ['webgl2', CrtUpdateOptions];
 
 export const DEFAULT_WEBGL2_OPTIONS = {
   Fx: -0.025,

@@ -16,6 +16,7 @@
   "dependencies": {
     "@4bitlabs/blur-filters": "^1.0.3",
     "@4bitlabs/color": "^1.2.1",
+    "@4bitlabs/crt-lite": "^1.0.0",
     "@4bitlabs/image": "^3.1.0",
     "@4bitlabs/resize-filters": "^1.0.3",
     "@4bitlabs/sci0": "^2.1.0",

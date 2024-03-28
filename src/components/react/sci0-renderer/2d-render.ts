@@ -1,12 +1,13 @@
 import { type ImageDataLike } from '@4bitlabs/image';
 
-export function createRender2d(
-  canvasEl: HTMLCanvasElement,
-): (imageData: ImageDataLike) => void {
+export function createRender2d(canvasEl: HTMLCanvasElement): {
+  update: (imageData: ImageDataLike) => void;
+} {
   const ctx = canvasEl.getContext('bitmaprenderer', { alpha: false })!;
 
   let imgData: ImageData;
-  return function render2d(
+
+  const update = function render2d(
     { data, width, height }: ImageDataLike,
     _: Record<string, never> = {},
   ) {
@@ -21,4 +22,6 @@ export function createRender2d(
     imgData.data.set(data);
     createImageBitmap(imgData).then((it) => ctx.transferFromImageBitmap(it));
   };
+
+  return { update };
 }

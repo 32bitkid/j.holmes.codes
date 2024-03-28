@@ -4,18 +4,18 @@ import React, {
   type SetStateAction,
   type ChangeEvent,
 } from 'react';
+import { type CrtUpdateOptions } from '@4bitlabs/crt-lite';
 
 import styles from './sci0-renderer.module.css';
 import { type RenderMode } from './types.ts';
-import type { RenderGlOptions } from '@components/react/sci0-renderer/webgl-render.ts';
 
 export interface RenderOptionsProps {
   mode: RenderMode;
   onChangeMode: Dispatch<SetStateAction<RenderMode>>;
 }
 
-const changeRenderGlOption =
-  (changes: Partial<RenderGlOptions>) =>
+const setRenderModeState =
+  (changes: Partial<CrtUpdateOptions>) =>
   ([prevMode, prevOptions]: RenderMode): RenderMode => {
     if (prevMode !== 'webgl2') {
       return [prevMode, prevOptions];
@@ -23,15 +23,15 @@ const changeRenderGlOption =
     return ['webgl2', { ...prevOptions, ...changes }];
   };
 
-const useChangeFor = <TKey extends keyof RenderGlOptions>(
+const useChangeFor = <TKey extends keyof CrtUpdateOptions>(
   key: TKey,
-  fn: (el: HTMLInputElement) => RenderGlOptions[TKey],
+  fn: (el: HTMLInputElement) => CrtUpdateOptions[TKey],
   updateFn: Dispatch<SetStateAction<RenderMode>>,
 ) =>
   useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const val = fn(e.target);
-      updateFn(changeRenderGlOption({ [key]: val }));
+      updateFn(setRenderModeState({ [key]: val }));
     },
     [key, fn],
   );

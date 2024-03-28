@@ -3,21 +3,19 @@ import React, {
   useEffect,
   useCallback,
   useState,
-  type Dispatch,
-  type SetStateAction,
   type MouseEvent,
 } from 'react';
+import debounce from 'lodash.debounce';
 import { renderPic, type DrawCommand } from '@4bitlabs/sci0';
 import {
   type ImageDataLike,
   type RenderPipeline,
   renderPixelData,
 } from '@4bitlabs/image';
-import debounce from 'lodash.debounce';
+import { createCrtRenderer } from '@4bitlabs/crt-lite';
 
 import { PIXEL_ASPECT_RATIOS } from '@components/react/sci0-renderer/options.ts';
 import styles from './sci0-renderer.module.css';
-import { createRenderGL } from './webgl-render.ts';
 import { createRender2d } from './2d-render.ts';
 import { type RenderMode } from './types.ts';
 
@@ -77,10 +75,13 @@ export function Canvas(props: RenderCanvasProps) {
         resizeObserver.unobserve(canvasEl);
         resizeObserver.disconnect();
       };
-      updateFnRef.current = {
+
+      const { update } = {
         '2d': createRender2d,
-        webgl2: createRenderGL,
+        webgl2: createCrtRenderer,
       }[mode](canvasEl);
+
+      updateFnRef.current = update;
     },
     [mode],
   );
