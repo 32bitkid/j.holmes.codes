@@ -7,11 +7,42 @@ import React, {
 
 import styles from './sci0-renderer.module.css';
 import { type RenderMode } from './types.ts';
+import type { RenderGlOptions } from '@components/react/sci0-renderer/webgl-render.ts';
 
 export interface RenderOptionsProps {
   mode: RenderMode;
   onChangeMode: Dispatch<SetStateAction<RenderMode>>;
 }
+
+const changeRenderGlOption =
+  (changes: Partial<RenderGlOptions>) =>
+  ([prevMode, prevOptions]: RenderMode): RenderMode => {
+    if (prevMode !== 'webgl2') {
+      return [prevMode, prevOptions];
+    }
+    return ['webgl2', { ...prevOptions, ...changes }];
+  };
+
+const useChangeFor = <TKey extends keyof RenderGlOptions>(
+  key: TKey,
+  fn: (el: HTMLInputElement) => RenderGlOptions[TKey],
+  updateFn: Dispatch<SetStateAction<RenderMode>>,
+) =>
+  useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const val = fn(e.target);
+      updateFn(changeRenderGlOption({ [key]: val }));
+    },
+    [key, fn],
+  );
+
+const valueToMilli = ({ value }: HTMLInputElement) =>
+  parseInt(value, 10) / 1000;
+
+const valueToNegMilli = (el: HTMLInputElement) => -valueToMilli(el);
+
+const valueToInt = ({ value }: HTMLInputElement) => parseInt(value, 10);
+const checkedToBool = ({ checked }: HTMLInputElement) => checked;
 
 export function RenderOptions(props: RenderOptionsProps) {
   const {
@@ -23,87 +54,52 @@ export function RenderOptions(props: RenderOptionsProps) {
     return <em className={styles.noOptions}>n/a…</em>;
   }
 
-  const handleChangeFx = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const val = parseInt(e.target.value, 10) / -1000;
-      onChangeMode(([prevMode, prevOptions]) => {
-        if (prevMode !== 'webgl2') {
-          return [prevMode, prevOptions];
-        }
-        return ['webgl2', { ...prevOptions, Fx: val }];
-      });
-    },
-    [onChangeMode],
+  const handleChangeHBlur = useChangeFor('hBlur', valueToInt, onChangeMode);
+  const handleChangeFx = useChangeFor('Fx', valueToNegMilli, onChangeMode);
+  const handleChangeFy = useChangeFor('Fy', valueToNegMilli, onChangeMode);
+  const handleChangeScale = useChangeFor('S', valueToMilli, onChangeMode);
+  const handleChangeGrain = useChangeFor('grain', valueToMilli, onChangeMode);
+  const handleChangeVignette = useChangeFor(
+    'vignette',
+    valueToMilli,
+    onChangeMode,
   );
-
-  const handleChangeFy = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const val = parseInt(e.target.value, 10) / -1000;
-      onChangeMode(([prevMode, prevOptions]) => {
-        if (prevMode !== 'webgl2') {
-          return [prevMode, prevOptions];
-        }
-        return ['webgl2', { ...prevOptions, Fy: val }];
-      });
-    },
-    [onChangeMode],
-  );
-
-  const handleChangeScale = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const val = parseInt(e.target.value, 10) / 1000;
-      onChangeMode(([prevMode, prevOptions]) => {
-        if (prevMode !== 'webgl2') {
-          return [prevMode, prevOptions];
-        }
-        return ['webgl2', { ...prevOptions, S: val }];
-      });
-    },
-    [onChangeMode],
-  );
-
-  const handleChangeGrain = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const val = parseInt(e.target.value, 10) / 1000;
-      onChangeMode(([prevMode, prevOptions]) => {
-        if (prevMode !== 'webgl2') {
-          return [prevMode, prevOptions];
-        }
-        return ['webgl2', { ...prevOptions, grain: val }];
-      });
-    },
-    [onChangeMode],
-  );
-
-  const handleChangeVignette = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const val = parseInt(e.target.value, 10) / 1000;
-      onChangeMode(([prevMode, prevOptions]) => {
-        if (prevMode !== 'webgl2') {
-          return [prevMode, prevOptions];
-        }
-        return ['webgl2', { ...prevOptions, vignette: val }];
-      });
-    },
-    [onChangeMode],
-  );
-
-  const handleChangeHBlur = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const val = parseInt(e.target.value, 10);
-      onChangeMode(([prevMode, prevOptions]) => {
-        if (prevMode !== 'webgl2') {
-          return [prevMode, prevOptions];
-        }
-        return ['webgl2', { ...prevOptions, hBlur: val }];
-      });
-    },
-    [onChangeMode],
+  const handleChangeScanLines = useChangeFor(
+    'scanLines',
+    checkedToBool,
+    onChangeMode,
   );
 
   return (
     <>
-      <label htmlFor="Fx">Fx:</label>
+      <label htmlFor="Scanlines">Scanlines:</label>
+      <div>
+        <input
+          id="Scanlines"
+          type="checkbox"
+          min="0"
+          max="10"
+          checked={options.scanLines}
+          onChange={handleChangeScanLines}
+        />
+      </div>
+      <label htmlFor="H Blur (GPU)">
+        H-Blur<small>(hw)</small>:
+      </label>
+      <div>
+        <input
+          id="H Blur (GPU)"
+          type="range"
+          min="0"
+          max="10"
+          value={Math.floor(options.hBlur ?? 0)}
+          onChange={handleChangeHBlur}
+        />
+      </div>
+      <hr />
+      <label htmlFor="Fx">
+        Curve <small>(Fx)</small>:
+      </label>
       <div>
         <input
           id="Fx"
@@ -114,7 +110,9 @@ export function RenderOptions(props: RenderOptionsProps) {
           onChange={handleChangeFx}
         />
       </div>
-      <label htmlFor="Fy">Fy:</label>
+      <label htmlFor="Fy">
+        Curve <small>(Fy)</small>:
+      </label>
       <div>
         <input
           id="Fy"
@@ -136,6 +134,7 @@ export function RenderOptions(props: RenderOptionsProps) {
           onChange={handleChangeScale}
         />
       </div>
+      <hr />
       <label htmlFor="Grain">Grain:</label>
       <div>
         <input
@@ -156,19 +155,6 @@ export function RenderOptions(props: RenderOptionsProps) {
           max="200"
           value={Math.floor((options.vignette ?? 0) * 1000)}
           onChange={handleChangeVignette}
-        />
-      </div>
-      <label htmlFor="H Blur (GPU)">
-        H-Blur<small>(hw)</small>:
-      </label>
-      <div>
-        <input
-          id="H Blur (GPU)"
-          type="range"
-          min="0"
-          max="20"
-          value={Math.floor(options.hBlur ?? 0)}
-          onChange={handleChangeHBlur}
         />
       </div>
     </>

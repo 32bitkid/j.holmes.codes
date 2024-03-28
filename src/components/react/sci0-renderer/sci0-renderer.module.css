@@ -47,6 +47,16 @@
   font-size: var(--f-small);
 }
 
+.fieldset hr {
+  grid-column: 1 / -1;
+  margin-block: unset;
+  width: 100%;
+}
+
+.fieldset hr::after {
+  content: none;
+}
+
 .canvas {
   display: block;
   user-select: none;

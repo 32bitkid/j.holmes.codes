@@ -28,7 +28,6 @@ export interface RenderCanvasProps {
   pixelAspectRatio: keyof typeof PIXEL_ASPECT_RATIOS;
   renderPipeline: RenderPipeline;
   maximize: boolean;
-  onChangeMaximize: Dispatch<SetStateAction<boolean>>;
   mode: RenderMode;
 }
 
@@ -47,7 +46,6 @@ export function Canvas(props: RenderCanvasProps) {
     limit = Number.POSITIVE_INFINITY,
     pixelAspectRatio,
     maximize,
-    onChangeMaximize,
     mode: [mode, modeOptions],
     label,
   } = props;
@@ -104,7 +102,7 @@ export function Canvas(props: RenderCanvasProps) {
         canvasRef.current.requestFullscreen({});
       }
     },
-    [onChangeMaximize],
+    [canvasRef],
   );
 
   return (
@@ -115,9 +113,7 @@ export function Canvas(props: RenderCanvasProps) {
         aria-label={label}
         className={clsn(styles.canvas, maximize && styles.maximize)}
         ref={init}
-        style={{
-          aspectRatio: PIXEL_ASPECT_RATIOS[pixelAspectRatio],
-        }}
+        style={{ aspectRatio: PIXEL_ASPECT_RATIOS[pixelAspectRatio] }}
         onDoubleClick={handleChangeMaximize}
       >
         Canvas not supported…

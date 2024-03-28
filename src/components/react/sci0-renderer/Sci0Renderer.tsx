@@ -1,7 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import { toByteArray } from 'base64-js';
 import { decompress, parsePic } from '@4bitlabs/sci0';
-import { createDitherFilter, type RenderPipeline } from '@4bitlabs/image';
+import {
+  createDitherFilter,
+  type RenderPipeline,
+  padFilter,
+} from '@4bitlabs/image';
 import {
   IBM5153Contrast,
   generateSciDitherPairs,
@@ -69,7 +73,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
     ].reduce((pal, fn) => (fn ? fn(pal) : pal), PALETTES[palette]);
     const pairs = generateSciDitherPairs(basePalette, MIXERS[mixer]);
     return {
-      pre: [SCALERS[scaler]],
+      pre: [padFilter([10, 0, 0, 0]), SCALERS[scaler]],
       dither: createDitherFilter(pairs, DITHERS[dither]),
       post: [SCALERS[postScaler], BLURS[blur](blurAmount)],
     };
@@ -93,7 +97,6 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         pixelAspectRatio={pixelAspectRatio}
         renderPipeline={pipeline}
         maximize={maximize}
-        onChangeMaximize={setMaximize}
         mode={mode}
         label={label}
       />

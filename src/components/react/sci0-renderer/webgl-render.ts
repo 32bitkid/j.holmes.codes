@@ -31,8 +31,14 @@ const vertexShaderSource = `
   }
 `;
 
-const fragShaderSource = `
-  #define MAX_H_BLUR_SIZE 20.0
+interface FragShaderSourceOptions {
+  maxHBlur?: number;
+}
+
+const fragShaderSource = ({ maxHBlur = 10 }: FragShaderSourceOptions = {}) => `
+  #define MAX_H_BLUR_SIZE ${maxHBlur.toFixed(1)}
+  #define PI 3.141592653589793115997963468544185161590576171875
+  #define TAU 6.28318530717958623199592693708837032318115234375
 
   precision highp float;
 
@@ -40,9 +46,11 @@ const fragShaderSource = `
   uniform sampler2D uSampler;
   uniform vec2 u_resolution;
   uniform vec2 u_textureSize;
+  uniform vec2 u_monitorRes;
   uniform float u_hBlurSize;
   uniform float u_grainAmount;
-  uniform float u_vignetteAmount; 
+  uniform float u_vignetteAmount;
+  uniform bool u_scanLines;
   varying vec3 vPosition;
   varying mediump vec2 vTextureCoord;
   
@@ -69,9 +77,9 @@ const fragShaderSource = `
       vec2 pos = gl_FragCoord.xy / max(u_resolution.x, u_resolution.y);
       vec2 center = vec2(u_resolution) / dim * 0.5;
       
-      float diff = radius - distance(pos, center);
+      float diff = radius - distance(pos , center)  / u_Lens.z;
       float l = luma(texture);
-      float d = clamp(smoothstep(-smoothness, smoothness, diff), 1.0 - (intensity * l), 1.0);
+      float d = clamp(smoothstep(-smoothness, smoothness, diff), 0.0, 1.0);
       return mix(color, texture, d);
   } 
   
@@ -85,7 +93,7 @@ const fragShaderSource = `
     {
       vMapping += ((vPosition.yx * vPosition.yx) / u_Lens.z) * (vPosition.xy / u_Lens.z) * (u_Lens.xy * -1.0);
       vMapping = getMapping(vMapping / u_Lens.z);
-      texture.rgb = texture2D(uSampler, vMapping).rgb;
+      texture = texture2D(uSampler, vMapping);
     }
     
     // H-Box Blur 
@@ -104,7 +112,21 @@ const fragShaderSource = `
     
     // Scanlines
     {
-
+      if (u_scanLines) {
+        float vScan = smoothstep(1080.0 / 4.0 / u_Lens.z, 1440.0 / u_Lens.z, u_resolution.y) * 0.20;
+        texture.rgb *= 1.0 - clamp(
+          pow((1.0 - cos(vMapping.y * TAU * u_monitorRes.y + PI)) / 2.0, 5.0) * vScan,
+          0.0, 1.0
+        );
+        
+        float rgbMaskInt = 0.10;
+        float hScan = smoothstep(1080.0 / 4.0 / u_Lens.z, 1440.0 / u_Lens.z, u_resolution.y) * 0.05;
+        float odd = mod(floor(vMapping.y * u_monitorRes.y), 2.0) * PI;
+        texture.rgb *= 1.0 - clamp(
+          ((cos(vMapping.x * TAU * u_monitorRes.x + odd) - 1.0) / 2.0) * hScan, 
+          -1.0, 0.0
+        );
+      }
     }
 
     // Vignette    
@@ -204,6 +226,7 @@ export interface RenderGlOptions {
   hBlur?: number;
   grain?: number;
   vignette?: number;
+  scanLines?: boolean;
 }
 
 const model = {
@@ -235,10 +258,12 @@ export function createRenderGL(
 ): (imageData: ImageDataLike) => void {
   const gl = canvasEl.getContext('webgl2', {
     desynchronized: true,
+    alpha: true,
+    powerPreference: 'low-power',
   })!;
 
   const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-  const fragShader = compileShader(gl, gl.FRAGMENT_SHADER, fragShaderSource);
+  const fragShader = compileShader(gl, gl.FRAGMENT_SHADER, fragShaderSource());
 
   const program = gl.createProgram();
   assertNotNull(program);
@@ -255,9 +280,11 @@ export function createRenderGL(
     u_Lens: gl.getUniformLocation(program, 'u_Lens'),
     u_resolution: gl.getUniformLocation(program, 'u_resolution'),
     u_textureSize: gl.getUniformLocation(program, 'u_textureSize'),
+    u_monitorRes: gl.getUniformLocation(program, 'u_monitorRes'),
     u_hBlurSize: gl.getUniformLocation(program, 'u_hBlurSize'),
     u_grainAmount: gl.getUniformLocation(program, 'u_grainAmount'),
     u_vignetteAmount: gl.getUniformLocation(program, 'u_vignetteAmount'),
+    u_scanLines: gl.getUniformLocation(program, 'u_scanLines'),
   };
 
   const buffers = {
@@ -308,6 +335,7 @@ export function createRenderGL(
     gl.uniform1i(attrs.uSampler, 0);
     gl.uniform2fv(attrs.u_resolution, [width, height]);
     gl.uniform2fv(attrs.u_textureSize, [imageData.width, imageData.height]);
+    gl.uniform2fv(attrs.u_monitorRes, [320, 200]);
 
     {
       const {
@@ -317,12 +345,14 @@ export function createRenderGL(
         hBlur = 0.0,
         grain = 0.0,
         vignette = 0.0,
+        scanLines = true,
       } = options;
 
       gl.uniform3fv(attrs.u_Lens, [Fx, Fy, S]);
       gl.uniform1f(attrs.u_hBlurSize, hBlur);
       gl.uniform1f(attrs.u_grainAmount, grain);
       gl.uniform1f(attrs.u_vignetteAmount, vignette);
+      gl.uniform1i(attrs.u_scanLines, scanLines ? 1.0 : 0.0);
     }
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.index);
