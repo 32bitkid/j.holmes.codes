@@ -11,7 +11,7 @@ export const PALETTES = {
 };
 
 export const MIXERS = {
-  none: (it: DitherPair) => it,
+  none: (it: Readonly<DitherPair>): DitherPair => [...it],
   'mix-10': Mixers.mixBy(0.1),
   'mix-25': Mixers.mixBy(0.25),
   'mix-50': Mixers.mixBy(0.5),
