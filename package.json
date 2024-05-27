@@ -14,12 +14,12 @@
     "deploy": "rsync -avh --delete  dist/ j.holmes.codes:~/j.holmes.codes/"
   },
   "dependencies": {
-    "@4bitlabs/blur-filters": "^1.0.12",
-    "@4bitlabs/color": "^2.1.1",
-    "@4bitlabs/crt-lite": "^1.0.4",
-    "@4bitlabs/image": "^3.3.6",
-    "@4bitlabs/resize-filters": "^1.0.12",
-    "@4bitlabs/sci0": "^2.4.6",
+    "@4bitlabs/blur-filters": "^1.0.14",
+    "@4bitlabs/color": "^2.1.3",
+    "@4bitlabs/crt-lite": "^1.0.5",
+    "@4bitlabs/image": "^3.3.8",
+    "@4bitlabs/resize-filters": "^1.0.14",
+    "@4bitlabs/sci0": "^2.5.1",
     "base64-js": "^1.5.1",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
