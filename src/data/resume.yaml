@@ -2,11 +2,11 @@ name: James Holmes
 jobTitle: "Developer \u222A Designer"
 location: Denver, CO.
 summary: |
-  I&rsquo;m a *full‑stack* developer, with a focus on high-performance front-end
-  engineering and exceptional user-experience design.
+  I&rsquo;m a *full‑stack* developer, with a emphasis on exceptional user-experience design and high-performance 
+  front-end engineering.
 
-  I craft compelling, elegant interactions between people and machines.
-  I bring a diverse experience of technologies and a passion for outstanding engineering.
+  I help teams craft compelling, elegant interactions between people and machines.
+  I bring a diverse experience of technologies, a passion for outstanding engineering, and an insatiable appetite for learning.
   I build the tools and apps that empower people everywhere to work, play, and&mdash;most 
   importantly&mdash;*create*.
 
@@ -240,11 +240,36 @@ technicalExperience:
     name: WebGL
     experience: 3
     url: https://webgl.org
+  - &VueJS
+    name: Vue.js
+    experience: 3
+    url: http://vuejs.org
+    featured: true
+  - &Datadog
+    name: Datadog
+    experience: 3
+    url: http://vuejs.org
+  - &SentryIO
+    name: Sentry
+    experience: 3
+    url: http://vuejs.org
+  - &AWS-S3
+    name: AWS S3
+    experience: 3
+    url: http://vuejs.org
+  - &AWS-EC2
+    name: AWS EC2
+    experience: 3
+    url: http://vuejs.org
+  - &AWS-Lambda
+    name: AWS Lambda
+    experience: 3
+    url: http://vuejs.org
 
 workExperience:
   - company:
     url: http://j.holmes.codes
-    title: Independent Consultant
+    title: Independent Front-end Performance Consultant
     from: 2024-01
     tech:
       - *React
@@ -253,10 +278,11 @@ workExperience:
       - *Redux
       - *mobx
       - *webgl
+      - *VueJS
     description: |
-      Bringing years of experience in web-development, worked with companies and organizations to provide insight 
-      and optimizations for their React applications.  Includes browser rendering performance optimizations, 
-      data&#8209;modeling, and reactive&#8209;state optimizations.
+      Bringing over a decade of experience in web-development, work with companies and organizations to provide insight,
+      improvements and optimizations for their React and VueJS applications.  Includes browser rendering performance optimizations, 
+      data&#8209;modeling, and reactive&#8209;state optimizations, and security review and oversight.
   - company: Formant
     url: https://www.formant.io/
     title: Senior Frontend & Design Engineer
@@ -275,14 +301,19 @@ workExperience:
       - *Golang
       - *jest
       - *Git
+      - *AWS-S3
+      - *Datadog
+      - *SentryIO
+      - *Postgres
     description: |
       As Senior Frontend & Design Engineer at <small>Formant</small>, I was responsible for the health and 
-      maintainability of the front-end stack of Formant's robotic-observation and remote-operation application. During 
-      my time there, I helped coordinate across multiple teams to resolve performance bottlenecks and resolve 
-      reactive-data rendering problems. I worked closely with the design-team to implement and replace legacy components 
+      maintainability of the front-end stack of Formant's robotics observation and remote-operation application. I helped 
+      coordinate across multiple teams to resolve performance bottlenecks and resolve reactive-data rendering problems. 
+      I worked closely with the design-team to implement and replace legacy components 
       with accessible and usable alternatives that aligned with the design-team's UI/UX objectives. I took 
-      responsibility for resolving critical dependency-updates and took broad efforts towards refactoring and improving
-      problematic areas of the code-base for future support, maintainability and security. Working hand-in-hand with 
+      responsibility for resolving critical dependency-updates and to broad efforts towards refactoring and improving
+      problematic areas of the code-base for future support, maintainability and security. Optimized the JavaScript bundle
+      to improve SPA cold-start/FCP time and increase S3 storage/usage efficiency. Working *glove-in-hand* with 
       design, we established the internal UI component documentation/playground for other frontend engineers. This 
       served as foundation for collapsing and consolidating a swathe of legacy, analogous styles and components strewn 
       through the codebase.
@@ -304,6 +335,11 @@ workExperience:
       - *jest
       - *socketio
       - *Git
+      - *Datadog
+      - *AWS-S3
+      - *AWS-Lambda
+      - *AWS-EC2
+      - *MySQL
     description: |
       At <small>Workboard</small>, I led a cross-functional, product-delivery team. We 
       developed a collaborative, real-time communication tool for OKR brain-storming 
@@ -312,9 +348,8 @@ workExperience:
       high-performance, infinite-canvas React rendering engine. Using a microservices 
       architecture, we attacked challenges from API specification/design to managing 
       real-time websocket communication. Envisioned as a core architectural building-block 
-      for next-gen tools, this product was a first-of-its-kind at Workboard.
-
-      I worked to establish team best-practices and maintainable microservice
+      for next-gen tools, this product was a first-of-its-kind at Workboard. Working with the 
+      team, I helped to establish team best-practices and maintainable, scalable microservice
       architectures for the future. In just under six-months, we released the product to
       customer acclaim.
 
@@ -331,16 +366,15 @@ workExperience:
       - *jest
       - *Git
       - *styled-components
+      - *Datadog
     description: |
       As a senior front-end software engineer at <small>Pinnacol Assurance</small>, my role
       was function across teams to ensure engineering standards, quality, and shared knowledge
-      of the shared code-base. My primary responsibility was to develop and maintain the internal
-      React component library. I worked in close-collaboration with the product teams to create
+      of the shared code-base. I worked in close-collaboration with the product teams to create
       and refine shared components. I mentored the other front-end engineers on design and 
       implementation considerations. As such, I provided technical oversight and code-reviews 
       for React development, Salesforce API design best-practices, database schema feedback
       for several teams, and worked closely with DevSec-team to investigate and resolve issues.
-
       My role also included build-pipeline design and maintenance for product teams.
       An effort which culminated in a new unified front-end tooling and deployment 
       processes used by all front-end teams. This resulted in increased organizational 
@@ -591,14 +625,23 @@ software:
     featured: true
 
 projects:
-  - name: github.com/32bitkid/sci.js
+  - name: SCIBud
+    link: https://www.npmjs.com/package/@4bitlabs/scibud
+    role: author
+    tech:
+      - *TypeScript
+    description: |
+      **Author** of cli-utility for decompiling and rendering `SCI0`-engine assets from
+      classic *Sierra On&#x2011;Line* adventure games. 
+
+  - name: "@4bitlabs/sci0"
     link: https://github.com/32bitkid/sci.js
     role: author
     tech:
       - *TypeScript
     description: |
-      JavaScript library and data‑structures for parsing and manipulating `SCI0` resources from 
-      classic *Sierra On&#x2011;Line* adventure games.
+      **Author** of low-level JavaScript library and data‑structures for parsing and manipulating `SCI0` resources from 
+      classic *Sierra On&#x2011;Line* adventure games.      
 
   - name: github.com/32bitkid/mpeg
     link: https://github.com/32bitkid/mpeg
@@ -616,15 +659,6 @@ projects:
     description: |
       **Author** and npm **maintainer** of TypeScript/JS client for Pubkeeper, a communications 
       protocol broker for IoT systems.
-
-  - name: github.com/32bitkid/sci
-    link: https://github.com/32bitkid/sci
-    role: author
-    tech:
-      - *Golang
-    description: |
-      Go library and data‑structures for parsing and manipulating `SCI0` resources from classic 
-      *Sierra On&#x2011;Line* adventure games.
 
   - name: gonum
     link: https://github.com/gonum/gonum

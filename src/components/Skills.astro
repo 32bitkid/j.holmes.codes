@@ -19,15 +19,12 @@ const sortedTech = (tech as Exp[]).slice().sort((a, b) => {
 
 <ul>
   {
+    // prettier-ignore
     sortedTech.map((exp) => (
-      <li
-        class:list={{
+      <li class:list={{
           [`exp${Math.floor(exp.experience)}`]: true,
           featured: exp.featured,
-        }}
-      >
-        {exp.name}
-      </li>
+        }}>{exp.name.trim()}</li>
     ))
   }
 </ul>
@@ -50,7 +47,8 @@ const sortedTech = (tech as Exp[]).slice().sort((a, b) => {
   li.featured::before {
     font-weight: normal;
     vertical-align: 7.5%;
-    content: '\2605\200a';
+    content: '\2605';
+    margin-right: 0.125ch;
   }
 
   li:not(:last-of-type)::after {

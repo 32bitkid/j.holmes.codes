@@ -144,7 +144,9 @@ const md = (frag: string) => (frag ? marked.parse(frag) : '');
         </ol>
         {
           (resume.workExperience as IJob[]).some((it) => it.filtered) && (
-            <>Full work-history is available on request…</>
+            <em class="full-work">
+              Full work-history is available on request…
+            </em>
           )
         }
       </section>
@@ -253,9 +255,7 @@ const md = (frag: string) => (frag ? marked.parse(frag) : '');
     box-sizing: border-box;
     display: grid;
     grid-template-columns: auto 10rem;
-    margin-block: var(--line-height);
-    border-bottom: 1px dotted #ddd;
-    padding-bottom: var(--line-height);
+    margin-block: calc(var(--line-height) * 1.5);
   }
 
   hgroup h1 {
@@ -360,8 +360,12 @@ const md = (frag: string) => (frag ? marked.parse(frag) : '');
     display: block;
   }
 
+  em.full-work {
+    font-size: var(--f-small);
+  }
+
   @page {
-    margin: 0.4in 0.4in;
+    margin: 0.43in 0.55in;
     size: Letter portrait;
   }
 
