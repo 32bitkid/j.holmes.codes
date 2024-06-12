@@ -361,7 +361,7 @@ workExperience:
       - *styled-components
       - *Datadog
     description: |
-      In my role as a senior front-end software engineer at Pinnacol Assurance, I played a crucial part in ensuring high 
+      In my role as a senior front-end software engineer at <small>Pinnacol Assurance</small>, I played a crucial part in ensuring high 
       engineering standards, quality, and shared knowledge of our code base across teams. Through close collaboration 
       with product teams, I helped develop and refine shared components and provided mentorship to other front-end 
       engineers on design and implementation best practices. I offered technical oversight and conducted code reviews 
