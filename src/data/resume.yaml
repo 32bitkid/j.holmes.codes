@@ -2,13 +2,10 @@ name: James Holmes
 jobTitle: "Developer \u222A Designer"
 location: Denver, CO.
 summary: |
-  I&rsquo;m a *full‑stack* developer, with a emphasis on exceptional user-experience design and high-performance 
-  front-end engineering.
-
-  I help teams craft compelling, elegant interactions between people and machines.
-  I bring a diverse experience of technologies, a passion for outstanding engineering, and an insatiable appetite for learning.
-  I build the tools and apps that empower people everywhere to work, play, and&mdash;most 
-  importantly&mdash;*create*.
+  As a full-stack developer, I specialize in crafting exceptional user experiences and high-performance front-end 
+  engineering. I am dedicated to helping teams create compelling and elegant interactions between people and machines. 
+  With my diverse technological expertise, passion for top-notch engineering, and hunger for continuous learning, I 
+  develop tools and applications that empower people to work, play, and&mdash;most importantly&mdash;*create*.
 
 links:
   email: mailto:j@holmes.codes
@@ -280,9 +277,11 @@ workExperience:
       - *webgl
       - *VueJS
     description: |
-      Bringing over a decade of experience in web-development, work with companies and organizations to provide insight,
-      improvements and optimizations for their React and VueJS applications.  Includes browser rendering performance optimizations, 
-      data&#8209;modeling, and reactive&#8209;state optimizations, and security review and oversight.
+      With over a decade of experience in web development, I specialize in working with companies and organizations to 
+      deliver valuable insights and enhancements for their React and Vue.js applications. My expertise includes 
+      optimizing browser rendering performance, refining data modeling, enhancing reactive state management, and 
+      providing diligent security review and oversight.
+
   - company: Formant
     url: https://www.formant.io/
     title: Senior Frontend & Design Engineer
@@ -306,17 +305,15 @@ workExperience:
       - *SentryIO
       - *Postgres
     description: |
-      As Senior Frontend & Design Engineer at <small>Formant</small>, I was responsible for the health and 
-      maintainability of the front-end stack of Formant's robotics observation and remote-operation application. I helped 
-      coordinate across multiple teams to resolve performance bottlenecks and resolve reactive-data rendering problems. 
-      I worked closely with the design-team to implement and replace legacy components 
-      with accessible and usable alternatives that aligned with the design-team's UI/UX objectives. I took 
-      responsibility for resolving critical dependency-updates and to broad efforts towards refactoring and improving
-      problematic areas of the code-base for future support, maintainability and security. Optimized the JavaScript bundle
-      to improve SPA cold-start/FCP time and increase S3 storage/usage efficiency. Working *glove-in-hand* with 
-      design, we established the internal UI component documentation/playground for other frontend engineers. This 
-      served as foundation for collapsing and consolidating a swathe of legacy, analogous styles and components strewn 
-      through the codebase.
+      In my role as the <small>Senior Frontend & Design Engineer</small> at Formant, I took charge of maintaining the front-end stack 
+      of Formant's robotics observation and remote-operation application. I led efforts to address performance 
+      bottlenecks and reactive-data rendering issues across multiple teams. Collaborating closely with the design team, 
+      I implemented accessible and reusable components aligned with our UI/UX objectives. I owned the resolution of 
+      critical dependency updates and drove efforts to refactor and improve areas of the codebase for future support, 
+      maintainability, and security. I optimized the JavaScript bundle to significantly enhance SPA cold-start/FCP time 
+      and increase S3 storage efficiency. Working closely with the design team, I established internal UI component 
+      documentation and a playground for other frontend engineers, playing a key role in collapsing and consolidating 
+      legacy styles and components throughout the codebase.
 
   - company: WorkBoard
     url: https://www.workboard.com/
@@ -341,17 +338,13 @@ workExperience:
       - *AWS-EC2
       - *MySQL
     description: |
-      At <small>Workboard</small>, I led a cross-functional, product-delivery team. We 
-      developed a collaborative, real-time communication tool for OKR brain-storming 
-      sessions: think Figma for OKRs. From product-inception to production-deployment, 
-      my responsibilities ranged from UI/UX to data-modeling. We developed a reusable 
-      high-performance, infinite-canvas React rendering engine. Using a microservices 
-      architecture, we attacked challenges from API specification/design to managing 
-      real-time websocket communication. Envisioned as a core architectural building-block 
-      for next-gen tools, this product was a first-of-its-kind at Workboard. Working with the 
-      team, I helped to establish team best-practices and maintainable, scalable microservice
-      architectures for the future. In just under six-months, we released the product to
-      customer acclaim.
+      During my time at <small>Workboard</small>, I led a cross-functional team and oversaw the development of a real-time 
+      communication tool for OKR brainstorming sessions. Think of it as Figma for OKRs. I was responsible for everything 
+      from UI/UX to data modeling, and we built a high-performance, infinite-canvas React rendering engine that could be
+      reused. Our approach involved using a microservices architecture to tackle challenges such as API design and 
+      real-time websocket communication. This product was the first of its kind at Workboard and was designed to be a 
+      foundational element for future tools. I worked with the team to establish best practices and scalable 
+      microservice architectures. We successfully launched the product to great customer feedback in under six months.
 
   - company: Pinnacol Assurance
     url: https://www.pinnacol.com/
@@ -368,18 +361,15 @@ workExperience:
       - *styled-components
       - *Datadog
     description: |
-      As a senior front-end software engineer at <small>Pinnacol Assurance</small>, my role
-      was function across teams to ensure engineering standards, quality, and shared knowledge
-      of the shared code-base. I worked in close-collaboration with the product teams to create
-      and refine shared components. I mentored the other front-end engineers on design and 
-      implementation considerations. As such, I provided technical oversight and code-reviews 
-      for React development, Salesforce API design best-practices, database schema feedback
-      for several teams, and worked closely with DevSec-team to investigate and resolve issues.
-      My role also included build-pipeline design and maintenance for product teams.
-      An effort which culminated in a new unified front-end tooling and deployment 
-      processes used by all front-end teams. This resulted in increased organizational 
-      knowledge and understanding of front-end deployments and updates across the entire 
-      engineering corps.
+      In my role as a senior front-end software engineer at Pinnacol Assurance, I played a crucial part in ensuring high 
+      engineering standards, quality, and shared knowledge of our code base across teams. Through close collaboration 
+      with product teams, I helped develop and refine shared components and provided mentorship to other front-end 
+      engineers on design and implementation best practices. I offered technical oversight and conducted code reviews 
+      for React development, Salesforce API design, and database schema feedback for multiple teams, working closely 
+      with the DevSec team to address and resolve issues. Moreover, I spearheaded the design and maintenance of build 
+      pipelines for product teams, ultimately resulting in the successful implementation of a new unified front-end 
+      tooling and deployment process adopted by all front-end teams. This initiative significantly enhanced 
+      organizational knowledge and comprehension of front-end deployments and updates across our entire engineering team.
 
   - company: niolabs
     url: https://github.com/niolabs
@@ -398,19 +388,16 @@ workExperience:
       - *webrtc
       - *Git
     description: |
-      At <small>niolabs</small>, I led the Innovation Team; we built the prototypes
-      for the *next-gen* of niolabs&#x2019; IoT dev-platform. Driving
-      innovation was a *full‑time* job; I split my time between
-      brain-storming new ideas, prototyping experimental features & tools,
-      designing educational & marketing material, and coordinating with
-      production teams on integration and optimizations
-      across the entire tech stack.
+      While at <small>niolabs</small>, I led the Innovation Team. We were responsible for building prototypes for the 
+      next generation of niolabs’ IoT development platform. Driving innovation was a full-time job for me. I split my 
+      time between brainstorming new ideas, prototyping experimental features and tools, designing educational and 
+      marketing material, and coordinating with production teams for integrating and optimizing across the entire tech 
+      stack.
 
-      From designing and engineering front-ends for industrial automation
-      at scale & viticulture management platforms to leading the charge to
-      push the niolabs IoT‑platform beyond the *cloud* with deeper
-      integrations with *next-gen* edge devices, I helped drive and guide
-      the platform forward into uncharted, new territory.
+      I have experience in designing and engineering front-ends for industrial automation at scale and viticulture 
+      management platforms. Additionally, I led the effort to expand the niolabs IoT platform beyond the cloud by 
+      integrating it with next-generation edge devices. This involved guiding the platform into new and uncharted
+      territory.
 
   - company: Leads To Conversations
     url: https://www.linkedin.com/company/leads-to-conversations/
@@ -430,14 +417,11 @@ workExperience:
       - *Mocha
       - *Git
     description: |
-      <small>Leads To Conversations</small> was a sales acceleration app start‑up, founded by a
-      pair previous co‑workers. I joined the team as the second
-      developer&mdash;third employee&mdash;bringing my skills as a UI specialist
-      to the team. My skill‑set complemented the technical founder and
-      together we defined, architected and built the pilot system. My
-      responsibilities ranged from full‑stack pair development to database
-      design to devops to graphic/web design to marketing to motion graphics;
-      members of small teams wear many hats.
+      <small>Leads To Conversations</small> was a sales acceleration app start‑up, founded by a pair of previous 
+      co‑workers. I joined the team as the second developer—third employee—bringing my skills as a UI specialist to the 
+      team. My skill set complemented the technical founder and together we defined, architected, and built the pilot 
+      system. My responsibilities ranged from full‑stack pair development to database design to DevOps to graphic/web 
+      design to marketing to motion graphics; members of small teams wear many hats.
 
   - company: Skyward.io
     title: Lead Front‑End Developer
@@ -625,23 +609,31 @@ software:
     featured: true
 
 projects:
-  - name: SCIBud
+  - name: '@watercolorizer/watercolorizer'
+    link: https://www.npmjs.com/package/@watercolorizer/watercolorizer
+    role: author
+    tech:
+      - *TypeScript
+    description: |
+      **Author** of a Tyler Hobbs' inspired watercolor distortion library for generative and algorithmic art on npm.
+
+  - name: '@4bitlabs/scibud'
     link: https://www.npmjs.com/package/@4bitlabs/scibud
     role: author
     tech:
       - *TypeScript
     description: |
-      **Author** of cli-utility for decompiling and rendering `SCI0`-engine assets from
-      classic *Sierra On&#x2011;Line* adventure games. 
+      **Author** of npm published cli-utility for decompiling and rendering `SCI0`-engine assets from
+      classic *Sierra On&#x2011;Line* adventure games.
 
-  - name: "@4bitlabs/sci0"
+  - name: '@4bitlabs/sci0'
     link: https://github.com/32bitkid/sci.js
     role: author
     tech:
       - *TypeScript
     description: |
       **Author** of low-level JavaScript library and data‑structures for parsing and manipulating `SCI0` resources from 
-      classic *Sierra On&#x2011;Line* adventure games.      
+      classic *Sierra On&#x2011;Line* adventure games.
 
   - name: github.com/32bitkid/mpeg
     link: https://github.com/32bitkid/mpeg
@@ -650,15 +642,6 @@ projects:
       - *Golang
     description: |
       **Author** of an experimental/educational pure&#x2011;Go MPEG&#x2011;2 decoder.
-
-  - name: '@pubkeeper/client'
-    link: https://www.npmjs.com/package/@pubkeeper/client
-    role: maintainer
-    tech:
-      - *TypeScript
-    description: |
-      **Author** and npm **maintainer** of TypeScript/JS client for Pubkeeper, a communications 
-      protocol broker for IoT systems.
 
   - name: gonum
     link: https://github.com/gonum/gonum
