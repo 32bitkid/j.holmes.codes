@@ -1,8 +1,19 @@
 ---
+import { getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Page from '@layouts/page.astro';
 import BlogItem from '../components/BlogItem.astro';
 import { blogSorting } from '../utils/blogSorting';
+
+import npmIcon from '../assets/icons/icon-npmjs.svg';
+import codepenIcon from '../assets/icons/icon-codepen.svg';
+import githubIcon from '../assets/icons/icon-github.svg';
+
+const cssIcons = {
+  '--icon-npm': `url(${(await getImage({ src: npmIcon, format: 'svg' })).src})`,
+  '--icon-codepen': `url(${(await getImage({ src: codepenIcon, format: 'svg' })).src})`,
+  '--icon-github': `url(${(await getImage({ src: githubIcon, format: 'svg' })).src})`,
+};
 
 const max = 5;
 const allBlogPosts = (
@@ -17,10 +28,10 @@ const showMore = allBlogPosts.length > max;
   <h1>About me…</h1>
   <section>
     <p>
-      I am a <em>developer</em> & <em>designer</em> with a focus in front-end architecture
+      I am a <em>developer</em> & <em>designer</em> with a focus on front-end architecture
       and interaction design. My interests range from UI-design to 80's vintage computers
       (IBM PC<em>jr</em>, Apple //e, C64) to embedded computing, video codecs,
-      CRTs and pixel-art.
+      CRTs, and pixel-art.
     </p>
     <p>
       Until <time datetime="2023-11-15">late-2023</time>, I was the <em
@@ -28,7 +39,7 @@ const showMore = allBlogPosts.length > max;
       > at <a href="https://formant.io">Formant</a> where I developed prototypes,
       tools, and designs for the future of robotic fleet{' '}
       monitoring and tele-operation. I love getting my hands dirty, learning new
-      things and exploring new domains. To me, there isn't a line between engineering
+      things, and exploring new domains. To me, there isn't a line between engineering
       and design; I'm equally comfortable in <a href="https://www.sketch.com/"
         >Sketch</a
       > as I'm in <a href="https://www.sublimetext.com/">Sublime Text</a>.
@@ -39,8 +50,8 @@ const showMore = allBlogPosts.length > max;
       >, helping other engineers on <a
         href="https://stackoverflow.com/users/373378">StackOverflow</a
       >, pushing code to <a href="https://github.com/32bitkid">GitHub</a>, or
-      posting on <a href="https://twitter.com/32bitkid">Twitter</a> about stuff I
-      think is cool.
+      posting on <a href="https://mstdn.social/@32bitkid">Mastodon</a> about stuff
+      I think is cool.
     </p>
     <p class="get-in-touch">
       &hellip;to get in touch, e-mail me at <a href="mailto:j@holmes.codes"
@@ -71,18 +82,21 @@ const showMore = allBlogPosts.length > max;
 
   <h2>Code &amp; Links…</h2>
   <section>
-    <ul class="projects">
+    <ul class="projects" style={cssIcons}>
       <li class="project">
         <dl>
           <dt class="project__link">
-            <a href="https://github.com/32bitkid/sci.js"
-              >github.com/32bitkid/sci.js</a
+            <a
+              href="https://www.npmjs.com/package/@watercolorizer/watercolorizer"
+              >watercolorizer</a
             >
           </dt>
           <dd class="project__desc">
-            JavaScript library and data‑structures for parsing and manipulating <code
-              >SCI0</code
-            > resources from classic <em>Sierra On&#x2011;Line</em> adventure games.
+            <strong>Watercolorizer</strong> is a <em>tiny</em> graphics library for
+            creating generative watercolor-like shapes from simple polygonal base-shapes.
+            This <em>core</em> library is un-opinionated about the rendering process
+            and instead focuses on the generative algorithm for constructing the
+            paths to be rendered.
           </dd>
         </dl>
       </li>
@@ -111,6 +125,21 @@ const showMore = allBlogPosts.length > max;
           </dd>
         </dl>
       </li>
+      <li class="project">
+        <dl>
+          <dt class="project__link">
+            <a href="https://www.npmjs.com/package/@4bitlabs/sci0"
+              >@4bitlabs/sci0</a
+            >
+          </dt>
+          <dd class="project__desc">
+            JavaScript library and data‑structures for parsing and manipulating <code
+              >SCI0</code
+            > resources from classic <em>Sierra On&#x2011;Line</em> adventure games.
+          </dd>
+        </dl>
+      </li>
+
       <li class="project">
         <dl>
           <dt class="project__link">
@@ -205,6 +234,27 @@ const showMore = allBlogPosts.length > max;
 <style>
   h1 {
     margin-bottom: var(--line-height);
+  }
+
+  .projects a[href^="https://www.npmjs.com"]::before
+  {
+    content: var(--icon-npm);
+    margin-inline-end: 0.5ch;
+    display: inline-block;
+  }
+
+  .projects a[href^="https://codepen.io"]::before
+  {
+    content: var(--icon-codepen);
+    margin-inline-end: 0.5ch;
+    display: inline-block;
+  }
+
+  .projects a[href^="https://github.com"]::before
+  {
+    content: var(--icon-github);
+    margin-inline-end: 0.5ch;
+    display: inline-block;
   }
 
   p.more {
