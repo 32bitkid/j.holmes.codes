@@ -52,6 +52,8 @@ export function WatercolorExplorer(props: WatercolorExplorerProps) {
         height={300}
         style={{
           display: 'block',
+          width: '100%',
+          maxWidth: '600px',
           marginLeft: 'auto',
           marginRight: 'auto',
           marginBottom: '1lh',
