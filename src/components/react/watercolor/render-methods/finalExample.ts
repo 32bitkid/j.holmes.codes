@@ -24,18 +24,15 @@ export const finalExample = (
   ctx: CanvasRenderingContext2D,
 ): ExampleRenderer => {
   const el = ctx.canvas;
+  const { width, height } = ctx.canvas;
+  const hex = M.applyToPoints(M.compose(M.scale(height * 0.4)), nGon(6));
 
   const update = () => {
-    const { width, height } = ctx.canvas;
-
-    ctx.reset();
+    ctx.save();
     ctx.clearRect(0, 0, width, height);
     text(ctx, [0, height - 10], 'Click to randomize');
 
-    const hex = M.applyToPoints(M.compose(M.scale(height * 0.4)), nGon(6));
-
     const viewMatrix = M.translate(width / 2, height / 2);
-
     ctx.setTransform(viewMatrix);
 
     const currentColor = colors[Math.floor(Math.random() * colors.length)];
@@ -54,6 +51,8 @@ export const finalExample = (
     poly(ctx, hex);
     ctx.strokeStyle = 'rgba(255 255 255 / 33%)';
     ctx.stroke();
+
+    ctx.restore();
   };
 
   el.addEventListener('click', update);

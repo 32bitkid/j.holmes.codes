@@ -4,8 +4,8 @@ import { text } from './helpers.ts';
 export const uniformDotsExample = (
   ctx: CanvasRenderingContext2D,
 ): ExampleRenderer => {
+  const { width, height } = ctx.canvas;
   const render = () => {
-    const { width, height } = ctx.canvas;
     ctx.resetTransform();
     ctx.clearRect(0, 0, width, height);
 

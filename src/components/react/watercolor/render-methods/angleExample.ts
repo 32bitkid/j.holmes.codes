@@ -10,18 +10,17 @@ export const angleExample = (
   ctx: CanvasRenderingContext2D,
 ): ExampleRenderer => {
   const el = ctx.canvas;
-  const pos = signal(el.width / 2);
+  const { width, height } = ctx.canvas;
+  const hex = M.applyToPoints(M.compose(M.scale(height * 0.4)), nGon(6));
 
+  const pos = signal(el.width / 2);
   let lastTick = 0;
 
   const update = (value: number) => {
     lastTick = 0;
-    const { width, height } = ctx.canvas;
 
-    ctx.resetTransform();
+    ctx.save();
     ctx.clearRect(0, 0, width, height);
-
-    const hex = M.applyToPoints(M.compose(M.scale(height * 0.4)), nGon(6));
 
     const viewMatrix = M.translate(width / 2, height / 2);
     ctx.setTransform(viewMatrix);
@@ -64,9 +63,10 @@ export const angleExample = (
     text(ctx, a, `A`, [5, 0]);
     text(ctx, b, `B`, [0, -5]);
     ctx.textAlign = 'right';
-    text(ctx, mp, `\u{1D461} = ${t.toLocaleString()}`, [-8, 8]);
+    text(ctx, mp, `\u{1D461} = ${t.toFixed(3)}`, [-8, 8]);
     ctx.textAlign = 'left';
-    text(ctx, c, `\u{03B8} = ${theta.toLocaleString()}`, [0, 3]);
+    text(ctx, c, `\u{03B8} = ${theta.toFixed(3)}`, [0, 3]);
+    ctx.restore();
   };
 
   const handleMove = (e: PointerEvent) => (pos.value = e.offsetX);

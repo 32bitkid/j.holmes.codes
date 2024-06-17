@@ -5,9 +5,9 @@ import { text } from './helpers.ts';
 export const gaussDotsExample = (
   ctx: CanvasRenderingContext2D,
 ): ExampleRenderer => {
+  const { width, height } = ctx.canvas;
   const render = () => {
-    const { width, height } = ctx.canvas;
-    ctx.resetTransform();
+    ctx.save();
     ctx.clearRect(0, 0, width, height);
 
     text(ctx, [0, height - 10], 'Click to randomize');
@@ -21,6 +21,7 @@ export const gaussDotsExample = (
       ctx.arc(x, y, 2, 0, Math.PI * 2);
       ctx.fill();
     }
+    ctx.restore();
   };
 
   ctx.canvas.addEventListener('click', render);

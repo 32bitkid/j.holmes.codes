@@ -8,20 +8,22 @@ import {
 
 export const basePolyExample = (
   ctx: CanvasRenderingContext2D,
-): ExampleRenderer => ({
-  render: () => {
-    const { width, height } = ctx.canvas;
+): ExampleRenderer => {
+  const { width, height } = ctx.canvas;
+  const hex = M.applyToPoints(M.compose(M.scale(height * 0.4)), nGon(6));
 
-    ctx.resetTransform();
-    ctx.clearRect(0, 0, width, height);
+  return {
+    render: () => {
+      ctx.save();
+      ctx.clearRect(0, 0, width, height);
 
-    const hex = M.applyToPoints(M.compose(M.scale(height * 0.4)), nGon(6));
-
-    const viewMatrix = M.translate(width / 2, height / 2);
-    ctx.setTransform(viewMatrix);
-    ctx.beginPath();
-    poly(ctx, hex);
-    ctx.fillStyle = 'rgba(0 0 0 / 25%)';
-    ctx.fill();
-  },
-});
+      const viewMatrix = M.translate(width / 2, height / 2);
+      ctx.setTransform(viewMatrix);
+      ctx.beginPath();
+      poly(ctx, hex);
+      ctx.fillStyle = 'rgba(0 0 0 / 25%)';
+      ctx.fill();
+      ctx.restore();
+    },
+  };
+};
