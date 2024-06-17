@@ -193,7 +193,7 @@ This will return a value between $[0.001, 0.999]$, with values that are *near* $
 const thetaFn = () => gaussRng(0, Math.PI / 12);
 ```
 
-This uses a standard-deviation of $\frac{\pi}{12}$, or 15&deg;. This means that around 70% of the angles we generate will be within a 30&deg cone from the true tangent. Finally, for our magnitude, we are going to do something a little different. We are going to use the *length of the edge* that we are splitting, to derive the standard-deviation;
+This uses a standard-deviation of $\frac{\pi}{12}$, or 15&deg;. This means that around 70% of the angles we generate will be within a 30&deg; cone from the true tangent. Finally, for our magnitude, we are going to do something a little different. We are going to use the *length of the edge* that we are splitting, to derive the standard-deviation;
 
 ```ts
 const magnitudeFn = (len) => Math.abs(gaussRng(0, len / 4));
