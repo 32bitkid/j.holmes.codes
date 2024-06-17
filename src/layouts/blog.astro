@@ -1,5 +1,6 @@
 ---
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
+import { getImage } from 'astro:assets';
 import Tags from '@components/Tags.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
@@ -22,6 +23,8 @@ const date = authorDate ?? pubDate ?? new Date().toISOString();
 const isPublished = typeof pubDate !== 'undefined';
 
 const pageTitle = `${title} \u2236 j.holmes.codes`;
+
+const optImage = image && (await getImage({ src: image.src }));
 ---
 
 <html class:list={{ draft: !isPublished }}>
@@ -38,7 +41,8 @@ const pageTitle = `${title} \u2236 j.holmes.codes`;
     <meta property="og:type" content="website" />
     <meta property="og:title" content={ogSafe(title)} />
     <meta property="og:description" content={ogSafe(summary)} />
-    {image && image.url && <meta property="og:image" content={image.url} />}
+    {optImage && <meta property="og:image" content={optImage.src} />}
+    {image && <meta property="og:image:alt" content={image.alt} />}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@32bitkid" />
@@ -46,11 +50,8 @@ const pageTitle = `${title} \u2236 j.holmes.codes`;
     <meta property="twitter:url" content={Astro.url.href} />
     <meta name="twitter:title" content={ogSafe(title)} />
     <meta name="twitter:description" content={ogSafe(summary)} />
-    {
-      image && image.url && (
-        <meta property="twitter:image" content={image.url} />
-      )
-    }
+    {optImage && <meta property="twitter:image" content={optImage.src} />}
+    {image && <meta property="twitter:image:alt" content={image.alt} />}
 
     <link
       rel="stylesheet"
@@ -63,13 +64,7 @@ const pageTitle = `${title} \u2236 j.holmes.codes`;
     <article>
       <h1>{title}</h1>
       <div class="byline">
-        {
-          date && (
-            <time datetime={date}>
-              {format(parseISO(date), 'MMMM d, yyyy')}
-            </time>
-          )
-        }
+        {date && <time datetime={date}>{format(date, 'MMMM d, yyyy')}</time>}
         {
           !isPublished && (
             <strong>

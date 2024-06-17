@@ -1,15 +1,20 @@
 import { z, defineCollection, reference } from 'astro:content';
 
 const blogCollection = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    summary: z.string().optional(),
-    pubDate: z.date().optional(),
-    authorDate: z.date().optional(),
-    tags: z.array(z.string()).default([]),
-    image: z.string().optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      summary: z.string().optional(),
+      pubDate: z.date().optional(),
+      authorDate: z.date().optional(),
+      tags: z.array(z.string()).default([]),
+      image: z
+        .object({
+          src: image(),
+          alt: z.string(),
+        })
+        .optional(),
+    }),
 });
 
 const sci0GamesCollection = defineCollection({
