@@ -44,7 +44,7 @@ console.log(lerp(1e8, 1e-8, 1.0));
 // ❌ 0
 ```
 
-Ouchies! Because the delta between $a$ and $b$ is greater that what a 64-bit floating point number can represent, it gets rounded *out* when doing $(b-a)$. As such, we end up getting a value *outside* the range of $[a,b]$. We get a result of $0$, which is *beyond* our expected limit of $10^{-8}$. As such, it's sometimes recommended to use this implementation instead:
+Ouchies! Because the difference between $b$ and $a$ is *smaller* that what a 64-bit floating point number can represent, it gets rounded *out* when doing $(b-a)$. We end up getting a value of $0$, which is *outside* the range of $[a,b]$. To correct for this, it is sometimes recommended to use this implementation, instead:
 
 ```ts
 const lerp = (a: number, b: number, t: number) =>
