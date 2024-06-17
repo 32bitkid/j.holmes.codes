@@ -1,0 +1,77 @@
+---
+title: "Understanding lerp()"
+authorDate: 2024-05-16
+pubDate: 2024-06-16
+slug: 20240516-lerp-linear-interpolation
+tags: ["generative-art", "algorithmic-art", "maths"]
+summary: >-
+  A lerp()—or linear-interpolation—is a function that returns a new value between two known samples.
+---
+
+A `lerp(a, b, t)`—or *[linear-interpolation](https://en.wikipedia.org/wiki/Linear_interpolation)*—is a function that returns *a new value* between two *known samples*, such that when $t$ is $0.0$, then value of $a$ is returned, when $t$ is $1.0$ then the value of $b$ is returned, and when $t$ is $0.5$ then the *value equidistant* between $a$ and $b$ is returned.
+
+Consider the following:
+
+```ts
+const lerp = (a: number, b: number, t: number) =>
+  a + t * (b - a);
+```
+
+We can use this function to generate *new values* between two existing, known values:
+
+```ts
+const [start, end] = [10, 50];
+
+console.log(lerp(start, end, 0.1));   /* at 10% */
+// ❮ 14
+
+console.log(lerp(start, end, 0.5));   /* at 50% */
+// ❮ 30
+
+console.log(lerp(start, end, 0.986)); /* at 98.6% */
+// ❮ 49.44
+```
+
+## But wait!
+
+There are potential *risks* involved with the previous implementation due to floating-point arithmetic errors. In this case, due to rounding errors, this method does not *guarantee* that `lerp(a, b, 1.0) === b`. For example, let's try to lerp between one *huge* value and one very small value, using the previous implementation:
+
+```ts
+console.log(lerp(1e8, 1e-8, 0.0));
+// ✅ 100,000,000
+
+console.log(lerp(1e8, 1e-8, 1.0));
+// ❌ 0
+```
+
+Ouchies! Because the delta between $a$ and $b$ is greater that what a 64-bit floating point number can represent, it gets rounded *out* when doing $(b-a)$. As such, we end up getting a value *outside* the range of $[a,b]$. We get a result of $0$, which is *beyond* our expected limit of $10^{-8}$. As such, it's sometimes recommended to use this implementation instead:
+
+```ts
+const lerp = (a: number, b: number, t: number) =>
+  (1 - t) * a + t * b;
+```
+
+Given that $t$ is in the range of $[0,1]$, *this* method will precisely start and end with $a$ and $b$ respectively.
+
+```ts
+console.log(lerp(1e8, 1e-8, 0.0));
+// ✅ 100,000,000
+
+console.log(lerp(1e8, 1e-8, 1));
+// ✅ 0.00000001
+```
+
+However, this is not without its *own* caveat: outside the range of $[0,1]$ then this function may not be [*monotonic*](https://en.wikipedia.org/wiki/Monotonic_function). Again, this is due to the limitations of floating-point approximations.
+
+## Higher-order LERPs
+
+It is also sometimes useful to lerp between vectors or tuples, this can easily be achieved by lerping over each component of the vector/tuple:
+
+```ts
+type Vec2 = [number, number];
+
+const vecLerp = (a: Vec2, b: Vec2, t: number): Vec2 =>
+  [lerp(a[0], b[0], t), lerp(a[1], b[1], t)];
+```
+
+This can obviously be extended to vectors and tuples of any length.
