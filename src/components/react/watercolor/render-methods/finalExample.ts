@@ -36,6 +36,9 @@ export const finalExample = (
     ctx.setTransform(viewMatrix);
 
     const currentColor = colors[Math.floor(Math.random() * colors.length)];
+    ctx.fillStyle = currentColor;
+    ctx.strokeStyle = currentColor;
+    ctx.lineWidth = 2;
     for (const layer of watercolorize(hex, {
       blurWeightsOnDistort: true,
       simplifyAfterPreEvolution: 1,
@@ -43,12 +46,16 @@ export const finalExample = (
     })) {
       ctx.beginPath();
       poly(ctx, layer);
-      ctx.fillStyle = currentColor;
       ctx.fill();
+      if (Math.random() < 0.25) {
+        ctx.lineWidth = Math.random() + 1;
+        ctx.stroke();
+      }
     }
 
     ctx.beginPath();
     poly(ctx, hex);
+    ctx.lineWidth = 1;
     ctx.strokeStyle = 'rgba(255 255 255 / 33%)';
     ctx.stroke();
 
