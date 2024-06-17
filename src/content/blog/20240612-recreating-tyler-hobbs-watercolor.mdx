@@ -199,7 +199,7 @@ This uses a standard-deviation of $\frac{\pi}{12}$, or 15&deg;. This means that 
 const magnitudeFn = (len) => Math.abs(gaussRng(0, len / 4));
 ```
 
-Here we are using a value of $\frac{length}{4}$. This means that long edges have a greater chance of distorting _further_, while shorter edges will result in more subtle distortions. These are just a *starting point* for the types of functions you could use to derive these parameters, the possiblities are endless and can have a major impacts on the output of the algorithm.
+Here we are using a standard-deviation value of $\frac{length}{4}$; this means that long edges have a greater chance of distorting _further_, while shorter edges will result in more subtle distortions. These are just a *starting point* for the types of functions you could use to derive these parameters, the possiblities are endless and can have a major impacts on the output of the algorithm. Let's take a look at how this looks *now*:
 
 <WatercolorExplorer client:visible renderFn="rngExample" />
 
