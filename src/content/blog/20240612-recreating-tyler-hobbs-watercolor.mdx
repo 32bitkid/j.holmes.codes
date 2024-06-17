@@ -72,15 +72,73 @@ for(const [a, b] of segments(hexagon)) {
 }
 ```
 
-With a value of `0.5`, that will give us a new point directly *half-way* between the two endpoints of our segment. By adjusting this value, we can split the existing line-segment where-ever we desire.
+With a value of `0.5`, that will give us a new point directly *half-way* between the two endpoints of our segment. By adjusting this value, we can split the existing line-segment where-ever we desire. Let's call this function `midPointFn()`.
 
 <WatercolorExplorer client:visible renderFn="midPointExample" />
 
-Now that we have a new mid-point, we need to determine which direction we will want to move. We can do this by using the [winding-order](https://en.wikipedia.org/wiki/Winding_number) of the given polygon, and selecting the *outward tangent* to the edge in question. Using that angle as the *base-angle*, it can be adjusted in radians.
+Now that we have a new mid-point, we need to determine which direction we will want to move. We can do this by using the [winding-order](https://en.wikipedia.org/wiki/Winding_number) of the given polygon, and selecting the *outward tangent* to the edge in question.
+
+Using that angle as the *base-angle*, it can be adjusted in radians. Let's call that function `thetaFn()`, which returns the number of radians to *adjust* the tangent angle.
+
+```ts
+const PI1_2 = Math.PI / 2;
+const midPoints: Vec2[] = [];
+
+/* Determine which direction to rotate by looking at the
+ * winding order of the given polygon
+*/
+const outerTangent = windingOrder === 'cw' ? PI1_2 : -PI1_2;
+
+for(const [a, b] of segments(hexagon)) {
+  const midPoint = vecLerp(a, b, midPointFn());
+
+  /* subtract vector A from B, and normalize. */
+  const unitAB = vecNorm(vecSub(b, a));
+  /* rotate our vector by the outer tangent */
+  const unitTangent = vecRotate(unitAB, outerTangent + thetaFn());
+
+  midPoints.push(midPoint);
+}
+```
 
 <WatercolorExplorer client:visible renderFn="angleExample" />
 
-Finally, once we have our starting point and our direction, we will need to determine *how far* we should move in that direction.
+Finally, once we have our starting point and our direction, we will need to determine *how far* we should move in that direction. Let's call that function `magntitudeFn()`
+
+
+```ts
+const PI1_2 = Math.PI / 2;
+const midPoints: Vec2[] = [];
+
+/* Determine which direction to rotate by looking at the
+ * winding order of the given polygon
+*/
+const outerTangent = windingOrder === 'cw' ? PI1_2 : -PI1_2;
+
+for(const [a, b] of segments(hexagon)) {
+  const midPoint = vecLerp(a, b, midPointFn());
+
+  /* subtract vector A from B, and normalize. */
+  const angleAB = vecNorm(vecSub(b, a));
+  /* rotate our vector by the outer tangent */
+  const unitTangent = vecRotate(
+    angleAB,
+    outerTangent + thetaFn(),
+  );
+
+  /* Scale the tangent vector to the magnitude
+   * and add it to the mid-point
+   */
+  const newPoint = vecAdd(
+    midPoint,
+    vecScale(unitTangent, magnitudeFn()),
+  );
+
+  midPoints.push(newPoint);
+}
+```
+
+This gives us a brand new point that we can use to *extend* our original polygon. That gives us something like this:
 
 <WatercolorExplorer client:visible renderFn="distanceExample" />
 
@@ -90,6 +148,8 @@ We can then repeat that same process for *each segment* in the original polygon 
 
 
 ## Adding randomness
+
+So far, this doesn't look very good. Using the same values for *every* edge doesn't make it look *distorted*; instead, we've what one might call a **star generator**, which is&hellip; not exactly what we were going for. However, what if instead of using static values for each new point we generate, what if we use some amount of randomization. We could add a little bit of randomness to each time we generate our three variables: **position**, **angle** and **magnitude**.
 
 `Math.random()` will generate a random value that is uniformly distributed between $[0,1)$. This type of randomization can be quite valuable, _e.g._ it is easy to use to model something like a "coin-flip". You are just as likely to get a value $< 0.5$ as you are to get a value $\geq 0.5$; _i.e._ a *fair coin*.
 
@@ -135,7 +195,7 @@ const distortOptions = {
 
 ## Iterating the effect
 
-Doing this *once*, doesn't really look like watercolor&hellip; It just looks like a more *"blobby"* version of original polygon. Using *recursion*&mdash;or in this case iterative progressions of distortion, applied *one-on-top-of-each-other*&mdash; we can algorithmically build up extremely complex shapes. Consider the following pseudocode:
+However, we *still* aren't quite at the effect we are trying to get. Doing this *once*, doesn't really look like watercolor&hellip; It just looks like a more *"blobby"* version of original polygon. Using *recursion*&mdash;or in this case iterative progressions of distortion, applied *one-on-top-of-each-other*&mdash; we can algorithmically build up extremely complex shapes. Consider the following pseudocode:
 
 ```ts
 const final = Array.from({ length: 5 }).reduce((prev) => {
@@ -147,7 +207,7 @@ We start with our original hexagon, and then apply *five* iterations of distorti
 
 <WatercolorExplorer client:visible renderFn="iterativeExample" />
 
-As you can see, using this seemingly "basic" algorithm&mdash;with careful adjustment of the function parameters&mdash;we can achieve very organic looking shapes!
+As you can see, using this seemingly "basic" algorithm&mdash;with careful adjustment of the function parameters&mdash;we can achieve some very organic looking shapes! Also, like giving a shake to a [kaleidoscope](https://en.wikipedia.org/wiki/Kaleidoscope) every generation of this effect can produce drastically different results, where even small changes in early iterations result in vastly different, organic-looking shapes. These shapes will serve as the *basis* for our final effect.
 
 ## The final effect
 
