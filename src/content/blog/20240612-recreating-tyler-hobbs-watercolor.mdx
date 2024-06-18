@@ -138,18 +138,45 @@ for(const [a, b] of segments(hexagon)) {
 }
 ```
 
-This gives us a brand new point that we can use to *extend* our original polygon. That gives us something like this:
+This gives us a brand-new point that we can use to *extend* our original polygon. That gives us something like this:
 
 <WatercolorExplorer client:visible renderFn="distanceExample" />
 
-We can then repeat that same process for *each segment* in the original polygon and weave these new midpoints in with the original vertices and get a new polygon.
+We can then repeat that same process for *each segment* in the original polygon and weave these new midpoints in with the original vertices and get a new polygon. Using another simple generator function:
+
+```ts
+function* zipper<T>(...sources: T[][]) {
+  const longest = sources.reduce(
+    (prev, { length }) => Math.max(prev, length),
+    0,
+  );
+
+  for (let i = 0; i < longest; i++)
+    for (let s = 0; s < sources.length; s++) {
+      if (i < sources[s].length) yield sources[s][i];
+    }
+}
+```
+
+We can use this function to "zipper" together our original points with our freshly generated *new* mid-points:
+
+```ts
+for(const [a, b] of segments(hexagon)) {
+  /* snip */
+  midPoints.push(newPoint);
+}
+
+const distoredPolygon = Array.from(zipper(hexagon, newPoints));
+```
+
+&hellip;and we get:
 
 <WatercolorExplorer client:visible renderFn="allSidesExample" />
 
 
 ## Adding randomness
 
-So far, this doesn't look very good. Using the same values for *every* edge doesn't make it look *distorted*; instead, we've what one might call a **star generator**, which is&hellip; not exactly what we were going for. However, what if instead of using the same static values for each new point we generate, if we use some amount of randomization. We could add a little bit of randomness to each time we generate our three variables: **position**, **angle** and **magnitude**.
+So far, this doesn't look very good. Using the same values for *every* edge doesn't make it look *distorted*; instead, we have what one might describe as a **star generator**, which is&hellip; not exactly what we were going for. However, what if instead of using the same static values for each new point we generate, if we use some amount of randomization. We could add a little bit of randomness to each time we generate our three variables: **position**, **angle** and **magnitude**.
 
 `Math.random()` will generate a random value that is uniformly distributed between $[0,1)$. This type of randomization can be quite valuable, _e.g._ it is easy to use to model something like a "coin-flip". You are just as likely to get a value $< 0.5$ as you are to get a value $\geq 0.5$; _i.e._ a *fair coin*.
 
