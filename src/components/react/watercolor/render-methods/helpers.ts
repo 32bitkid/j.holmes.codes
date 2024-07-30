@@ -1,4 +1,4 @@
-import type { Vec2 } from '@4bitlabs/vec2';
+import type { MutableVec2 as Vec2 } from '@4bitlabs/vec2';
 
 export const nGon = (length: number): Vec2[] =>
   Array.from(

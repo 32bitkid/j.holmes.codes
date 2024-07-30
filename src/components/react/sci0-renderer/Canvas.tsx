@@ -6,7 +6,8 @@ import React, {
   type MouseEvent,
 } from 'react';
 import debounce from 'lodash.debounce';
-import { renderPic, type DrawCommand } from '@4bitlabs/sci0';
+import { type DrawCommand } from '@4bitlabs/sci0';
+import { renderPic } from '@4bitlabs/sci0-renderer';
 import {
   type ImageDataLike,
   type RenderPipeline,

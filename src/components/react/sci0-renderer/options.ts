@@ -1,7 +1,9 @@
 import { type ImageDataLike, type IndexedPixelData } from '@4bitlabs/image';
 import * as BlurFilters from '@4bitlabs/blur-filters';
 import * as ResizeFilters from '@4bitlabs/resize-filters';
-import { Palettes, Mixers, type DitherPair } from '@4bitlabs/color';
+import type { DitherPair } from '@4bitlabs/color/dithers';
+import * as Palettes from '@4bitlabs/color/palettes';
+import * as Mixers from '@4bitlabs/color/mixers';
 
 export const PALETTES = {
   CGA: Palettes.CGA_PALETTE,

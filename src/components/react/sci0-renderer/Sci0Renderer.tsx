@@ -6,11 +6,8 @@ import {
   type RenderPipeline,
   padFilter,
 } from '@4bitlabs/image';
-import {
-  IBM5153Contrast,
-  generateSciDitherPairs,
-  toGrayscale,
-} from '@4bitlabs/color';
+import { IBM5153Contrast, toGrayscale } from '@4bitlabs/color';
+import { generatePairs } from '@4bitlabs/color/dithers';
 
 import {
   PIXEL_ASPECT_RATIOS,
@@ -71,10 +68,10 @@ export function Sci0Renderer(props: Sci0RenderProps) {
       contrast < 1 && ((pal: Uint32Array) => IBM5153Contrast(pal, contrast)),
       grayscale && toGrayscale,
     ].reduce((pal, fn) => (fn ? fn(pal) : pal), PALETTES[palette]);
-    const pairs = generateSciDitherPairs(basePalette, MIXERS[mixer]);
+    const pairs = generatePairs(basePalette, MIXERS[mixer]);
     return {
       pre: [padFilter([10, 0, 0, 0]), SCALERS[scaler]],
-      dither: createDitherFilter(pairs, DITHERS[dither]),
+      render: createDitherFilter(pairs, DITHERS[dither]),
       post: [SCALERS[postScaler], BLURS[blur](blurAmount)],
     };
   }, [
