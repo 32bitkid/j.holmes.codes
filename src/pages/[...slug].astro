@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { blogSorting } from '../utils/blogSorting';
-import Blog from '@layouts/blog.astro';
+import BlogEntry from '../layouts/blog-entry.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog', ({ data }) =>
@@ -34,7 +34,7 @@ const { entry, prev, next } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<Blog {...entry.data}>
+<BlogEntry {...entry.data}>
   <Content />
   <nav>
     {
@@ -52,15 +52,15 @@ const { Content } = await entry.render();
       )
     }
   </nav>
-</Blog>
+</BlogEntry>
 
 <style>
   nav {
-    margin-top: calc(var(--line-height) * 2);
+    margin-top: calc(1rlh * 2);
     display: grid;
     grid-template-columns: 1fr;
     grid-template-areas: 'previous' 'next';
-    row-gap: calc(var(--line-height) * 0.5);
+    row-gap: calc(1rlh * 0.5);
   }
 
   .previous {

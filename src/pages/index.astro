@@ -2,7 +2,7 @@
 import { getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Page from '@layouts/page.astro';
-import BlogItem from '../components/BlogItem.astro';
+import BlogSummary from '../components/BlogSummary.astro';
 import { blogSorting } from '../utils/blogSorting';
 
 import npmIcon from '../assets/icons/icon-npmjs.svg';
@@ -66,9 +66,7 @@ const showMore = allBlogPosts.length > max;
       {
         allBlogPosts
           .slice(0, max)
-          .map((blog, i) => (
-            <BlogItem blog={blog} showSummary={i < 3} highlight={i < 1} />
-          ))
+          .map((blog, i) => <BlogSummary highlight={i === 0} blog={blog} />)
       }
     </ul>
     {
@@ -211,10 +209,6 @@ const showMore = allBlogPosts.length > max;
 </Page>
 
 <style>
-  h1 {
-    margin-bottom: var(--line-height);
-  }
-
   .projects a[href^="https://www.npmjs.com"]::before
   {
     content: var(--icon-npm);
@@ -247,19 +241,20 @@ const showMore = allBlogPosts.length > max;
 
   .posts {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1rem 2rem;
-    margin-block-end: calc(var(--line-height) * 1);
+    grid-gap: 1rlh 2ch;
+    grid-template-columns: max-content 1fr;
+    margin-block-end: 1rlh;
+    margin-inline: 1ch;
   }
 
   .project {
-    margin-bottom: calc(var(--line-height) * 2);
+    margin-bottom: calc(1rlh * 2);
   }
 
   .project__link {
     font-size: var(--f-large);
-    line-height: var(--line-height);
-    margin-bottom: calc(var(--line-height) * 0.5);
+    line-height: 1rlh;
+    margin-bottom: calc(1rlh * 0.5);
   }
 
   .project__meta,

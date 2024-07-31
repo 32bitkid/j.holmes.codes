@@ -1,5 +1,16 @@
 import { z, defineCollection, reference } from 'astro:content';
 
+const thoughtsCollection = defineCollection({
+  schema: () =>
+    z.object({
+      summary: z.string(),
+      date: z.date(),
+      status: z
+        .enum(['thinking', 'active', 'paused', 'finished', 'abandoned'])
+        .default('thinking'),
+    }),
+});
+
 const blogCollection = defineCollection({
   schema: ({ image }) =>
     z.object({
@@ -47,4 +58,5 @@ export const collections = {
   blog: blogCollection,
   sci0pics: sci0PicsCollection,
   sci0games: sci0GamesCollection,
+  thoughts: thoughtsCollection,
 };

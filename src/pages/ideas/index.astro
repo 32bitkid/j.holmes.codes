@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '../../layouts/page.astro';
+import Date from '../../components/Date.astro';
+
+const ideas = await getCollection('thoughts');
+const ICONS = {
+  thinking: '\u{1F4A1}',
+  active: '\u{1F7E2}',
+  finished: '\u{2705}',
+  paused: '\u{1F6A7}',
+  abandoned: '\u{1FAA6}',
+};
+---
+
+<Page title="Ideas" description="ideas">
+  <h1><code>/ideas</code></h1>
+  <p>
+    This is a public list of my random, unrealized ideas or future projects.
+    Additional features and improvements for my existing projects and websites
+    are also listed here. This list is in <em>no particular order</em>.
+  </p>
+  <p>
+    You are always welcome to <a href="/contact">contact me</a> with feedback, thoughts
+    or questions. If you feel like we could <em>work together</em> and make any of
+    these happen, <a href="/contact">get in touch</a>.
+  </p>
+
+  <ul class="ideas">
+    {
+      ideas.map((idea) => (
+        <li>
+          <div class="icon">{ICONS[idea.data.status]}</div>
+          <a href={`/ideas/${idea.slug}`} set:html={idea.data.summary} />
+        </li>
+      ))
+    }
+  </ul>
+</Page>
+
+<style>
+  .icon {
+    display: inline-block;
+    width: 3ch;
+    text-align: center;
+  }
+
+  .ideas {
+    padding-inline-start: 1ch;
+  }
+
+  li {
+    margin-block: 0.5rem;
+  }
+</style>

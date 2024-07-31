@@ -1,8 +1,20 @@
 ---
 import { format } from 'date-fns';
 import { parseDate, toDay } from './parseDate';
-const { date: inputDate, day = true, month = true } = Astro.props;
-const formatStr = !month ? 'yyyy' : !day ? 'MMM yyyy' : 'MMM d, yyyy';
+const {
+  class: className,
+  date: inputDate,
+  day = true,
+  month = true,
+  human = false,
+} = Astro.props;
+const formatStr = !month
+  ? 'yyyy'
+  : !day
+    ? 'MMM yyyy'
+    : human
+      ? 'MMMM do, yyyy'
+      : 'yyyy-MM-dd';
 
 const date = toDay(parseDate(inputDate));
 ---
@@ -12,4 +24,6 @@ const date = toDay(parseDate(inputDate));
     font-variant-numeric: tabular-nums oldstyle-nums;
   }
 </style>
-<time datetime={date.toISOString()}>{format(date, formatStr)}</time>
+<time class:list={[className]} datetime={date.toISOString()}
+  >{format(date, formatStr)}</time
+>

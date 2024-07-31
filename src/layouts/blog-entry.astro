@@ -99,7 +99,7 @@ const optImage = image && (await getImage({ src: image.src }));
 <style>
   body {
     display: grid;
-    min-height: calc(100vh - var(--line-height) * 1.5);
+    min-height: calc(100vh - 1rlh * 1.5);
     grid-template-rows: 1fr min-content;
     justify-items: stretch;
     align-items: stretch;
@@ -121,10 +121,10 @@ const optImage = image && (await getImage({ src: image.src }));
 
   .byline {
     font-variant-numeric: tabular-nums;
-    line-height: calc(var(--line-height) * 1);
+    line-height: calc(1rlh * 1);
     font-size: 0.7492rem;
     margin-left: 3ch;
-    margin-bottom: calc(var(--line-height) * 1);
+    margin-bottom: calc(1rlh * 1);
   }
 
   .content {
@@ -137,12 +137,12 @@ const optImage = image && (await getImage({ src: image.src }));
   }
 
   .content :global(figure) {
-    margin-bottom: var(--line-height);
+    margin-bottom: 1rlh;
   }
 
   .content :global(ul, ol) {
     margin-left: 4ch;
-    margin-bottom: var(--line-height);
+    margin-bottom: 1rlh;
   }
 
   .content :global(ul) {
@@ -156,7 +156,7 @@ const optImage = image && (await getImage({ src: image.src }));
   .content :global(table) {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: var(--line-height);
+    margin-bottom: 1rlh;
     font-variant-numeric: tabular-nums oldstyle-nums;
   }
 
@@ -165,10 +165,10 @@ const optImage = image && (await getImage({ src: image.src }));
     letter-spacing: -0.04em;
     font-family: 'Equity Caps B', serif;
     font-feature-settings: 'c2sc', 'smcp', 'onum';
-    line-height: calc(var(--line-height) * 1);
+    line-height: calc(1rlh * 1);
     font-size: 0.7492rem;
     margin-left: 3ch;
-    margin-bottom: calc(var(--line-height) * 1);
+    margin-bottom: calc(1rlh * 1);
     padding-inline: 2ch;
   }
 
@@ -194,18 +194,18 @@ const optImage = image && (await getImage({ src: image.src }));
 
   .content :global(.footnotes ol) {
     font-variant-numeric: oldstyle-nums;
-    line-height: calc(var(--line-height) * 1);
+    line-height: calc(1rlh * 1);
     font-size: 0.7492rem;
-    margin-bottom: calc(var(--line-height) * 1);
+    margin-bottom: calc(1rlh * 1);
     padding-inline-start: 4ch;
   }
 
   .content :global(.footnotes li p) {
-    margin-bottom: calc(var(--line-height) * 0.25);
+    margin-bottom: calc(1rlh * 0.25);
   }
 
   .content :global(pre:not(figure pre)) {
-    margin-bottom: var(--line-height);
+    margin-bottom: 1rlh;
   }
 
   h1 {

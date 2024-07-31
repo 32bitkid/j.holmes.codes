@@ -10,14 +10,22 @@ import remarkCapitalizeHeading from 'remark-capitalize-headings';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://j.holmes.codes',
-  integrations: [mdx(), react({
-    include:'components/react/**/*'
-  })],
+  scopedStyleStrategy: "class",
+  integrations: [
+    mdx(),
+    react({
+      include: 'components/react/**/*',
+    }),
+  ],
   vite: {
     plugins: [ViteYaml()],
   },
   markdown: {
-    remarkPlugins: [remarkMath, remarkHint, remarkCapitalizeHeading],
+    remarkPlugins: [
+      remarkMath,
+      remarkHint,
+      [remarkCapitalizeHeading, { excludeHeadingLevel: { h1: true } }],
+    ],
     rehypePlugins: [[rehypeKatex, {}]],
     shikiConfig: {
       theme: 'monokai',

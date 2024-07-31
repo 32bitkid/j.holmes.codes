@@ -260,19 +260,19 @@ const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
   hr {
     max-width: var(--max-content);
     margin-inline: auto;
-    margin-block: calc(var(--line-height) * 1.5);
+    margin-block: calc(1rlh * 1.5);
   }
 
   header {
     box-sizing: border-box;
     display: grid;
     grid-template-columns: auto 10rem;
-    margin-block: calc(var(--line-height) * 1.5);
+    margin-block: calc(1rlh * 1.5);
   }
 
   hgroup h1 {
     font-size: var(--f-epic);
-    line-height: calc(var(--line-height) * 3);
+    line-height: calc(1rlh * 3);
     font-weight: 700;
     letter-spacing: -0.02em;
   }
@@ -283,13 +283,13 @@ const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
     margin-bottom: 0;
     text-indent: 3ch;
     font-size: var(--f-large);
-    line-height: calc(var(--line-height) * 1);
+    line-height: calc(1rlh * 1);
     font-feature-settings: 'c2sc', 'smcp';
   }
 
   aside h2 {
     font-size: var(--f-large);
-    line-height: var(--line-height);
+    line-height: 1rlh;
     margin-block-end: 0;
   }
 
@@ -316,18 +316,18 @@ const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
   }
 
   #work-experience li {
-    margin-block-end: calc(var(--line-height) * 1);
+    margin-block-end: calc(1rlh * 1);
   }
 
   #work-experience :global(p) {
-    margin-block-end: calc(var(--line-height) * 0.333);
+    margin-block-end: calc(1rlh * 0.333);
   }
 
   #work-experience .span {
     font-size: var(--f-small);
     margin-top: -0.5em;
     text-indent: 3ch;
-    margin-bottom: calc(var(--line-height) * 0.333);
+    margin-bottom: calc(1rlh * 0.333);
   }
 
   #projects ul {
@@ -350,7 +350,7 @@ const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
   }
 
   #projects details {
-    margin-block-end: calc(var(--line-height) * 0.333);
+    margin-block-end: calc(1rlh * 0.333);
   }
 
   #projects .description {

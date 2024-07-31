@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 import { type APIContext } from 'astro';
 import { getCollection } from 'astro:content';
-import { blogSorting } from '../utils/blogSorting';
+import { blogSorting } from '../../utils/blogSorting';
 
 export async function GET(context: APIContext) {
   const blog = await getCollection(

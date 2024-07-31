@@ -1,0 +1,77 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '../../layouts/page.astro';
+import Date from '../../components/Date.astro';
+
+export async function getStaticPaths() {
+  const ideaEntries = await getCollection('thoughts');
+
+  return ideaEntries.map((entry) => ({
+    params: {
+      slug: entry.slug,
+    },
+    props: {
+      idea: entry,
+    },
+  }));
+}
+
+const { idea } = Astro.props;
+const { date, status } = idea.data;
+const { Content } = await idea.render();
+
+const progress =
+  {
+    thinking: 'I <em>started thinking</em> about this',
+    active: 'I <em>started working</em> on this',
+    paused: 'I took a break from this',
+    finished: 'I completed this',
+    abandoned: 'I gave up on this idea',
+  }[status] ?? "Not sure what I'm doing with this";
+---
+
+<Page>
+  <article class="markdown"><Content /></article>
+  <hr />
+  <aside>
+    <p>
+      <Fragment set:html={progress} />
+      on <Date date={date} human />. You are always welcome to <a
+        href="/contact">contact me</a
+      > with feedback, thoughts or questions. If you feel like we could <em
+        >work together</em
+      > and make any of these happen,
+      <a href="/contact">get in touch</a>.
+    </p>
+  </aside>
+  <nav><a href="/ideas">Back to ideas&hellip;</a></nav>
+</Page>
+
+<style>
+  .byline {
+    margin-block-end: 1rlh;
+  }
+
+  .markdown :global(ol, ul) {
+    margin-block-end: 1rlh;
+  }
+
+  .markdown :global(ol) {
+    margin-inline-start: 3ch;
+    list-style-type: decimal;
+  }
+
+  .markdown :global(ul.contains-task-list ul.contains-task-list) {
+    margin-block: 0.5rlh;
+    margin-inline-start: 3ch;
+  }
+
+  .markdown :global(ul:not(.contains-task-list)) {
+    margin-inline-start: 3ch;
+    list-style-type: disc;
+  }
+
+  .markdown :global(li) {
+    margin-block-end: 0.5rlh;
+  }
+</style>

@@ -1,0 +1,11 @@
+---
+summary: Ennetrees/Nonatrees?
+date: 2000-07-13
+status: finished
+---
+
+# What is an Ennetree?
+
+What if you took a [quadtree](https://en.wikipedia.org/wiki/Quadtree), but instead of dividing space with a binary-split on each axis, instead used a _trinary_-split. This would result in the space getting subdivided _nine_ times instead of _four_. But interesting, the "center" subdivided area would be "stable", unlike the quadtree subdivision approach. Are there situations/use-cases where this would be useful? I don't know!!
+
+I've made a [repository](https://github.com/32bitkid/4bitlabs.spatial) with both a **quadtree** and what i'm calling the 3&times;3 variant an **ennetree** (or **nonatree**). Some basic benchmarks do _in fact_ show that there _are_ some use-cases where an **ennetree** out-performs a **quadtree**.

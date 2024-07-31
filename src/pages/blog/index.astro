@@ -1,0 +1,33 @@
+---
+import { blogSorting } from '../../utils/blogSorting';
+import { getCollection } from 'astro:content';
+import Page from '../../layouts/page.astro';
+import BlogSummary from '../../components/BlogSummary.astro';
+
+const allBlogPosts = (
+  await getCollection('blog', ({ data }) =>
+    import.meta.env.PROD ? data.pubDate !== undefined : true,
+  )
+).sort(blogSorting);
+
+const MAX = 8;
+---
+
+<Page
+  title="Blog"
+  description="A collection of thoughts and blog posts by J. Holmes"
+>
+  <h1>Thoughts on thoughts…</h1>
+  <ul class="posts">
+    {allBlogPosts.map((blog, i) => <BlogSummary blog={blog} />)}
+  </ul>
+</Page>
+
+<style>
+  .posts {
+    display: grid;
+    grid-gap: 1rlh 2ch;
+    grid-template-columns: max-content 1fr;
+    margin-inline: 4ch;
+  }
+</style>

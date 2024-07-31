@@ -1,7 +1,7 @@
 .progress input {
   display: block;
   width: 100%;
-  height: var(--line-height);
+  height: 1rlh;
 }
 
 .progress label {
@@ -11,7 +11,7 @@
 }
 
 .progress {
-  margin-bottom: calc(var(--line-height) * 0.5);
+  margin-bottom: calc(1rlh * 0.5);
 }
 
 .container {
