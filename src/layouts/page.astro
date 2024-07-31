@@ -20,6 +20,13 @@ const pageTitle = title ? `${title} \u2236 j.holmes.codes` : 'j.holmes.codes';
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="J. Holmes Codes"
+      href={new URL('rss.xml', Astro.site)}
+    />
+
     <meta property="title" content={pageTitle} />
     <meta name="author" content="J Holmes" />
 

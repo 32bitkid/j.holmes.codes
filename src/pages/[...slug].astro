@@ -8,7 +8,7 @@ export async function getStaticPaths() {
     import.meta.env.PROD ? data.pubDate !== undefined : true,
   );
 
-  return blogEntries.sort(blogSorting).map((entry, i, list) => ({
+  return blogEntries.toSorted(blogSorting).map((entry, i, list) => ({
     params: {
       slug: entry.slug,
     },
