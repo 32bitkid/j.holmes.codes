@@ -607,24 +607,23 @@ software:
     featured: true
 
 projects:
-  - name: '@watercolorizer/watercolorizer'
+  - name: 'watercolorizer'
     link: https://www.npmjs.com/package/@watercolorizer/watercolorizer
     role: author
     tech:
       - *TypeScript
     description: |
-      **Author** of a Tyler Hobbs' inspired watercolor distortion library for generative and algorithmic art on npm.
+      **Author** of a Tyler Hobbs'-inspired watercolor distortion library for generative and algorithmic art on npm.
 
-  - name: '@4bitlabs/scibud'
-    link: https://www.npmjs.com/package/@4bitlabs/scibud
+  - name: '@4bitlabs/&ZeroWidthSpace;bits'
+    link: https://github.com/32bitkid/4bitlabs.bits
     role: author
     tech:
       - *TypeScript
     description: |
-      **Author** of npm published cli-utility for decompiling and rendering `SCI0`-engine assets from
-      classic *Sierra On&#x2011;Line* adventure games.
+      **Author** A collection of low-level packages and utilities for working with bits and bytes.
 
-  - name: '@4bitlabs/sci0'
+  - name: '@4bitlabs/&ZeroWidthSpace;sci0'
     link: https://github.com/32bitkid/sci.js
     role: author
     tech:
@@ -633,13 +632,13 @@ projects:
       **Author** of low-level JavaScript library and data‑structures for parsing and manipulating `SCI0` resources from 
       classic *Sierra On&#x2011;Line* adventure games.
 
-  - name: github.com/32bitkid/mpeg
+  - name: github.com/&ZeroWidthSpace;32bitkid/&ZeroWidthSpace;mpeg
     link: https://github.com/32bitkid/mpeg
     role: author
     tech:
       - *Golang
     description: |
-      **Author** of an experimental/educational pure&#x2011;Go MPEG&#x2011;2 decoder.
+      **Author** of an experimental/&ZeroWidthSpace;educational pure&#x2011;Go MPEG&#x2011;2 decoder.
 
   - name: gonum
     link: https://github.com/gonum/gonum

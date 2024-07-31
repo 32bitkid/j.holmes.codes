@@ -9,7 +9,7 @@ import '@styles/reset.css';
 import '@styles/font.css';
 import '@styles/core.css';
 
-interface IJob {
+interface Experience {
   readonly company: string;
   readonly description: string;
   readonly filtered: boolean;
@@ -20,7 +20,7 @@ interface IJob {
   readonly url: string;
 }
 
-interface IProject {
+interface PersonalProject {
   readonly description: string;
   readonly hidden: boolean;
   readonly link: string;
@@ -29,6 +29,7 @@ interface IProject {
 }
 
 const md = (frag: string) => (frag ? marked.parse(frag) : '');
+const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
 ---
 
 <html lang="en">
@@ -108,7 +109,7 @@ const md = (frag: string) => (frag ? marked.parse(frag) : '');
         <h2>Experience</h2>
         <ol>
           {
-            (resume.workExperience as IJob[])
+            (resume.workExperience as Experience[])
               .filter((job) => !job.filtered)
               .sort((a, b) => (a.from < b.from ? 1 : a == b ? 0 : -1))
               .map((job) => (
@@ -143,9 +144,9 @@ const md = (frag: string) => (frag ? marked.parse(frag) : '');
           }
         </ol>
         {
-          (resume.workExperience as IJob[]).some((it) => it.filtered) && (
+          (resume.workExperience as Experience[]).some((it) => it.filtered) && (
             <em class="full-work">
-              Full work-history is available on request…
+              Full work-history and education is available on request…
             </em>
           )
         }
@@ -156,14 +157,19 @@ const md = (frag: string) => (frag ? marked.parse(frag) : '');
       <h2>Projects</h2>
       <ul>
         {
-          (resume.projects as IProject[])
+          (resume.projects as PersonalProject[])
             .filter((project) => !project.hidden)
             .map((project) => (
               <li class:list={[project.role]}>
-                <a href={project.link} class:list={['title']}>
-                  {project.name}
-                </a>
-                <Fragment set:html={md(project.description)} />
+                <a
+                  href={project.link}
+                  class:list={['title']}
+                  set:html={project.name}
+                />
+                <div
+                  class="description"
+                  set:html={mdFrag(project.description)}
+                />
               </li>
             ))
         }
@@ -231,6 +237,12 @@ const md = (frag: string) => (frag ? marked.parse(frag) : '');
 </html>
 
 <style>
+  @media screen {
+    :root {
+      margin-bottom: 2rlh;
+    }
+  }
+
   :global(p) {
     text-align: justify;
   }
@@ -320,27 +332,38 @@ const md = (frag: string) => (frag ? marked.parse(frag) : '');
 
   #projects ul {
     display: grid;
-    grid-gap: 0 4ch;
-    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0.5rlh 4ch;
     grid-template-rows: auto;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (min-width: 32rem) {
+    #projects ul {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 45rem) {
+    #projects ul {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   #projects details {
     margin-block-end: calc(var(--line-height) * 0.333);
   }
 
-  #projects li :global(p) {
+  #projects .description {
+    font-size: var(--f-small);
     line-height: 1.5;
     text-align: left;
     padding-inline-start: 2ch;
   }
 
-  #projects details :global(p:last-child) {
-    margin-bottom: 0;
-  }
-
-  #projects :global(p) {
-    font-size: var(--f-small);
+  #projects .title {
+    display: block;
+    margin-left: 1ch;
+    text-indent: -1ch;
   }
 
   #projects .author .title::before {
@@ -358,6 +381,11 @@ const md = (frag: string) => (frag ? marked.parse(frag) : '');
   #projects .title {
     letter-spacing: -0.02em;
     display: block;
+  }
+
+  #projects .link {
+    display: block;
+    font-size: 0.5em;
   }
 
   em.full-work {
