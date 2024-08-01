@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import Page from '../../layouts/page.astro';
+import Page from '../../layouts/md.astro';
 import Date from '../../components/Date.astro';
 
 export async function getStaticPaths() {
@@ -50,28 +50,5 @@ const progress =
 <style>
   .byline {
     margin-block-end: 1rlh;
-  }
-
-  .markdown :global(ol, ul) {
-    margin-block-end: 1rlh;
-  }
-
-  .markdown :global(ol) {
-    margin-inline-start: 3ch;
-    list-style-type: decimal;
-  }
-
-  .markdown :global(ul.contains-task-list ul.contains-task-list) {
-    margin-block: 0.5rlh;
-    margin-inline-start: 3ch;
-  }
-
-  .markdown :global(ul:not(.contains-task-list)) {
-    margin-inline-start: 3ch;
-    list-style-type: disc;
-  }
-
-  .markdown :global(li) {
-    margin-block-end: 0.5rlh;
   }
 </style>
