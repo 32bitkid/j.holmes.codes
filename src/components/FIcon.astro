@@ -1,0 +1,13 @@
+---
+import { icons } from 'feather-icons';
+const { icon, size = '1lh', class: className, ...rest } = Astro.props;
+---
+
+<Fragment
+  set:html={icons[icon].toSvg({
+    ...rest,
+    class: className,
+    style: 'vertical-align: -5%',
+    ...(size ? { width: size, height: size } : {}),
+  })}
+/>
