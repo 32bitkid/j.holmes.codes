@@ -51,14 +51,17 @@ h2:not(hgroup > h2) {
   line-height: 1rlh;
   margin-block: calc(1rlh * 2) 1rlh;
   font-feature-settings: 'smcp', 'onum';
+  font-weight: 600;
+  letter-spacing: -0.06em;
 }
 
 h1:not(hgroup > h1) {
   font-size: var(--f-huge);
-  margin-block: calc(1rlh * 2.5) 0.5rlh;
+  margin-block: calc(1rlh * 3) 1rlh;
   line-height: calc(1rlh * 2);
   font-feature-settings: 'smcp', 'onum';
   font-weight: 600;
+  letter-spacing: -0.06em;
 }
 
 time {
@@ -66,7 +69,11 @@ time {
 }
 
 p {
-  margin-bottom: 1rlh;
+  margin-block-end: 1rlh;
+}
+
+p:last-of-type {
+  margin-block-end: 0;
 }
 
 :link,

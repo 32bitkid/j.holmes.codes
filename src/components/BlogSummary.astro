@@ -1,13 +1,13 @@
 ---
 import Date from './Date.astro';
-const { blog, highlight = false, showSummary = true } = Astro.props;
+const { blog, showSummary = true } = Astro.props;
 const { summary } = blog.data;
 
 const date = blog.data.authorDate ?? blog.data.pubDate;
 const isDraft = blog.data.pubDate === undefined;
 ---
 
-<li class:list={{ draft: isDraft, highlight, showSummary }}>
+<li class:list={{ draft: isDraft, showSummary }}>
   {
     date ? (
       <Date class="byline" date={date} />
@@ -61,9 +61,5 @@ const isDraft = blog.data.pubDate === undefined;
     padding: 1px 4px;
     color: var(--colors-primary);
     vertical-align: 0.125rem;
-  }
-
-  li.highlight a {
-    font-size: var(--f-large);
   }
 </style>

@@ -35,40 +35,43 @@ import '@styles/core.css';
   }
 
   main :global(ol, ul) {
-    margin-block-end: 1rlh;
+    margin-block: 1rlh;
+    padding-inline-start: 1.25rlh;
   }
 
   main :global(ol) {
-    margin-inline-start: 3ch;
     list-style-type: decimal;
   }
 
   main :global(ul.contains-task-list ul.contains-task-list) {
     margin-block: 0.5rlh;
-    margin-inline-start: 3ch;
   }
 
   main :global(ul:not(.contains-task-list)) {
-    margin-inline-start: 3ch;
-    list-style-type: disc;
+    list-style-type: square;
   }
 
   main :global(li) {
-    margin-block-end: 0.5rlh;
+    margin-block: 0.25rlh;
   }
 
   main :global(dl) {
     display: grid;
     grid-template-columns: max-content 1fr;
     gap: 1ch;
+    margin-inline: 1ch;
+    margin-block: 1rlh;
   }
 
   main :global(dl > dt) {
     grid-column: 1 / span 1;
-    justify-self: end;
+    font-family: 'Equity Caps B', serif;
+    letter-spacing: -0.04em;
+    font-feature-settings: 'smcp', 'onum';
     font-size: var(--f-small);
     line-height: 1;
-    align-self: center;
+    justify-self: end;
+    align-self: first baseline;
   }
 
   main :global(dl > dt::after) {
@@ -77,6 +80,7 @@ import '@styles/core.css';
 
   main :global(dl > dd) {
     grid-column: 2 / span 1;
+    align-self: first baseline;
   }
 
   main :global(blockquote, q) {

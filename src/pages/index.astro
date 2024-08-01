@@ -60,11 +60,7 @@ const showMore = allBlogPosts.length > max;
   <h2>Recent Thoughts…</h2>
   <section>
     <ul class="posts">
-      {
-        allBlogPosts
-          .slice(0, max)
-          .map((blog, i) => <BlogSummary highlight={i === 0} blog={blog} />)
-      }
+      {allBlogPosts.slice(0, max).map((blog, i) => <BlogSummary blog={blog} />)}
     </ul>
     {
       showMore && (
@@ -238,7 +234,7 @@ const showMore = allBlogPosts.length > max;
 
   .posts {
     display: grid;
-    grid-gap: 1rlh 2ch;
+    grid-gap: 0.75rlh 1.5ch;
     grid-template-columns: max-content 1fr;
     margin-block-end: 1rlh;
     margin-inline: 1ch;

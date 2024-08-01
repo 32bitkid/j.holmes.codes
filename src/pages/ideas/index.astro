@@ -1,14 +1,37 @@
 ---
+import { icons } from 'feather-icons';
 import { getCollection } from 'astro:content';
 import Page from '../../layouts/page.astro';
 
 const ideas = await getCollection('thoughts');
+
+const shared = { width: '3ch', height: '2ex' };
 const ICONS = {
-  thinking: '\u{1F4A1}',
-  active: '\u{1F7E2}',
-  finished: '\u{2705}',
-  paused: '\u{1F6A7}',
-  abandoned: '\u{1FAA6}',
+  thinking: icons['circle'].toSvg({
+    ...shared,
+    color: '#b8b0a8',
+    'aria-label': 'Thinking about',
+  }),
+  active: icons['play-circle'].toSvg({
+    ...shared,
+    color: '#0b63c4',
+    'aria-label': 'Working on',
+  }),
+  finished: icons['check-circle'].toSvg({
+    ...shared,
+    color: '#9bce00',
+    'aria-label': 'Completed',
+  }),
+  paused: icons['pause-circle'].toSvg({
+    ...shared,
+    color: '#4a4842',
+    'aria-label': 'Taking a break',
+  }),
+  abandoned: icons['trash-2'].toSvg({
+    ...shared,
+    color: '#720c0a',
+    'aria-label': 'Gave up',
+  }),
 };
 ---
 
@@ -19,32 +42,49 @@ const ICONS = {
     Additional features and improvements for my existing projects and websites
     are also listed here. This list is in <em>no particular order</em>.
   </p>
+
+  <ul class="ideas">
+    {
+      ideas
+        .filter((it) => !['finished', 'abandoned'].includes(it.data.status))
+        .map((idea) => (
+          <li>
+            <Fragment set:html={ICONS[idea.data.status]} />
+            <a href={`/ideas/${idea.slug}`} set:html={idea.data.summary} />
+          </li>
+        ))
+    }
+  </ul>
+
+  <p>
+    &hellip;and a list of the ideas that I've either already <em>completed</em> work
+    on or
+    <em>abandoned</em> for whatever reason.
+  </p>
+
+  <ul class="ideas">
+    {
+      ideas
+        .filter((it) => ['finished', 'abandoned'].includes(it.data.status))
+        .map((idea) => (
+          <li>
+            <Fragment set:html={ICONS[idea.data.status]} />
+            <a href={`/ideas/${idea.slug}`} set:html={idea.data.summary} />
+          </li>
+        ))
+    }
+  </ul>
+
   <p>
     You are always welcome to <a href="/contact">contact me</a> with feedback, thoughts
     or questions. If you feel like we could <em>work together</em> and make any of
     these happen, <a href="/contact">get in touch</a>.
   </p>
-
-  <ul class="ideas">
-    {
-      ideas.map((idea) => (
-        <li>
-          <div class="icon">{ICONS[idea.data.status]}</div>
-          <a href={`/ideas/${idea.slug}`} set:html={idea.data.summary} />
-        </li>
-      ))
-    }
-  </ul>
 </Page>
 
 <style>
-  .icon {
-    display: inline-block;
-    width: 3ch;
-    text-align: center;
-  }
-
   .ideas {
+    margin-block: 1rlh;
     padding-inline-start: 1ch;
   }
 
