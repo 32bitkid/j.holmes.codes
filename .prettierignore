@@ -1,2 +1,3 @@
 public/css/katex.min.css
 src/content/blog/*.mdx
+!src/content/blog/.blog.template.mdx
