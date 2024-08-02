@@ -11,7 +11,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "predeploy": "astro build",
-    "deploy": "rsync -avh --delete  dist/ j.holmes.codes:~/j.holmes.codes/"
+    "deploy": "rsync -avh --delete --exclude '.DS_Store' dist/ j.holmes.codes:~/j.holmes.codes/"
   },
   "dependencies": {
     "@4bitlabs/blur-filters": "^1.0.18",
