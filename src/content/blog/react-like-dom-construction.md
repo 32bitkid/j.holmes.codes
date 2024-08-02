@@ -1,7 +1,7 @@
 ---
 title: React-like DOM construction in 8 lines.
 authorDate: 2014-06-08
-pubDate: 2023-11-13
+published: true
 summary: >-
   Declarative, terse DOM construction; if you are a madman.
 ---

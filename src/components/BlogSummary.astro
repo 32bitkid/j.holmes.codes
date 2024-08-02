@@ -1,16 +1,16 @@
 ---
-import Date from './Date.astro';
+import DayFmt from './dates/DayFmt.astro';
 const { blog, showSummary = true } = Astro.props;
 const { summary } = blog.data;
 
-const date = blog.data.authorDate ?? blog.data.pubDate;
-const isDraft = blog.data.pubDate === undefined;
+const date = blog.data.authorDate ?? new Date();
+const isDraft = !blog.data.published;
 ---
 
 <li class:list={{ draft: isDraft, showSummary }}>
   {
     date ? (
-      <Date class="byline" date={date} tabular />
+      <DayFmt class="byline" date={date} tabular />
     ) : (
       <div class="byline">
         {isDraft && <div class="draft-marker">Draft</div>}

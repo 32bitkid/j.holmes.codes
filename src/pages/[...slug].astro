@@ -5,7 +5,7 @@ import BlogEntry from '../layouts/blog-entry.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog', ({ data }) =>
-    import.meta.env.PROD ? data.pubDate !== undefined : true,
+    import.meta.env.PROD ? data.published === true : true,
   );
 
   return blogEntries.toSorted(blogSorting).map((entry, i, list) => ({

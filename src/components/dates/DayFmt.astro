@@ -1,0 +1,31 @@
+---
+export interface Props {
+  date: string | Date;
+  class?: string;
+  human?: boolean;
+  tabular?: boolean;
+}
+
+import { format } from 'date-fns';
+import { parseDate, toDay } from '../parseDate';
+const {
+  class: className,
+  date: inputDate,
+  human = false,
+  tabular = false,
+} = Astro.props;
+
+const parsed = typeof inputDate === 'string' ? parseDate(inputDate) : inputDate;
+const date = toDay(parsed);
+const formatStr = human ? 'MMMM do, yyyy' : 'yyyy-MM-dd';
+---
+
+<time
+  class:list={[className, tabular && 'tabular']}
+  datetime={date.toISOString()}>{format(date, formatStr)}<slot /></time
+>
+<style>
+  .tabular {
+    font-variant-numeric: tabular-nums oldstyle-nums;
+  }
+</style>

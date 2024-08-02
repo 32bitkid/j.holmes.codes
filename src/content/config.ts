@@ -35,21 +35,40 @@ const thoughtsCollection = defineCollection({
     }),
 });
 
+const blogMeta = z.object({
+  title: z.string(),
+  summary: z.string().optional(),
+  tags: z.array(z.string()).default([]),
+});
+
 const blogCollection = defineCollection({
   schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      summary: z.string().optional(),
-      pubDate: z.date().optional(),
-      authorDate: z.date().optional(),
-      tags: z.array(z.string()).default([]),
-      image: z
+    z.discriminatedUnion('published', [
+      z
         .object({
-          src: image(),
-          alt: z.string(),
+          authorDate: z.date(),
+          published: z.literal(true),
+          image: z
+            .object({
+              src: image(),
+              alt: z.string(),
+            })
+            .optional(),
         })
-        .optional(),
-    }),
+        .merge(blogMeta),
+      z
+        .object({
+          authorDate: z.date().optional(),
+          published: z.literal(false).optional(),
+          image: z
+            .object({
+              src: image(),
+              alt: z.string(),
+            })
+            .optional(),
+        })
+        .merge(blogMeta),
+    ]),
 });
 
 const sci0GamesCollection = defineCollection({

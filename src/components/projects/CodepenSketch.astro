@@ -21,37 +21,48 @@ const iframeSrc = `https://codepen.io/32bitkid/embed/preview/${pen}/?height=300&
       <a href={link} set:html={title} />
     </dt>
     <dd class="description">
-      <iframe
-        class="iframe"
-        height="425"
-        title={title}
-        src={iframeSrc}
-        allowtransparency={false}
-        allowfullscreen={true}></iframe>
+      <a href={link}><slot /></a>
     </dd>
   </dl>
+
+  <style>
+    .link {
+      display: flex;
+      font-size: var(--f-large);
+      line-height: 1rlh;
+      margin-bottom: calc(1rlh * 0.5);
+      align-items: center;
+      gap: 0.5ch;
+    }
+
+    .link a {
+      flex-grow: 1;
+    }
+
+    .description {
+      padding-inline: 2ch;
+    }
+
+    .description :global(img) {
+      max-width: 100%;
+      height: auto;
+      aspect-ratio: 21 / 9;
+      object-fit: cover;
+      object-position: center center;
+      border-radius: 0.5ch;
+      display: block;
+      box-shadow: 0 0.5ch 1ch rgba(0 0 0 / 0.2);
+      border: 2px solid var(--pal-white);
+    }
+
+    .description :global(a::after) {
+      content: none;
+    }
+
+    .iframe {
+      border: 0;
+      overflow: hidden;
+      width: 100%;
+    }
+  </style>
 </li>
-
-<style>
-  .link {
-    display: flex;
-    font-size: var(--f-large);
-    line-height: 1rlh;
-    margin-bottom: calc(1rlh * 0.5);
-    align-items: center;
-    gap: 0.5ch;
-  }
-
-  .link a {
-    flex-grow: 1;
-  }
-
-  .description {
-  }
-
-  .iframe {
-    border: 0;
-    overflow: hidden;
-    width: 100%;
-  }
-</style>

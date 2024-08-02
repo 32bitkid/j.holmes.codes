@@ -1,6 +1,6 @@
 ---
 title: Let's Write a MPEG-2 Decoder in Go
-pubDate: 2023-11-13
+published: true
 authorDate: 2013-11-05
 tags: ['mpeg2', 'go']
 summary: >-

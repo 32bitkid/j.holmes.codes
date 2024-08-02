@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Page from '../../layouts/md.astro';
-import Date from '../../components/Date.astro';
+import DayFmt from '../../components/dates/DayFmt.astro';
 
 export async function getStaticPaths() {
   const ideaEntries = await getCollection('thoughts');
@@ -36,7 +36,7 @@ const progress =
   <aside>
     <p>
       <Fragment set:html={progress} />
-      on <Date date={date} human />. You are always welcome to <a
+      on <DayFmt date={date} human />. You are always welcome to <a
         href="/contact">contact me</a
       > with feedback, thoughts or questions. If you feel like we could <em
         >work together</em

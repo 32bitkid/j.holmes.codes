@@ -1,6 +1,6 @@
 ---
 import Header from '../components/Header.astro';
-import Date from '../components/Date.astro';
+import MonthFmt from '../components/dates/MonthFmt.astro';
 import Skills from '../components/Skills.astro';
 import { marked } from 'marked';
 import resume from '../data/resume.yaml';
@@ -129,13 +129,9 @@ const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
                     )}
                   </div>
                   <div class="span">
-                    <Date date={job.from} day={false} />
+                    <MonthFmt date={job.from} />
                     &ndash;
-                    {job.to ? (
-                      <Date date={job.to} day={false} />
-                    ) : (
-                      <em>present</em>
-                    )}
+                    {job.to ? <MonthFmt date={job.to} /> : <em>present</em>}
                   </div>
                   <div class="description" set:html={md(job.description)} />
                   <Skills tech={job.tech} />
@@ -187,7 +183,7 @@ const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
                       <div><span class="title">{edu.name}</span></div>
                       <div><span class="program">{edu.program}</span></div>
                       <div class="span">
-                          <Date date={edu.from} day={false} month={false} />&ndash;{edu.to ? <Date date={edu.to} day={false} month={false} /> : <em>present</em>}
+                          <MonthFmt date={edu.from} />&ndash;{edu.to ? <MonthFmt date={edu.to} /> : <em>present</em>}
                       </div>
                   </li>
               )}

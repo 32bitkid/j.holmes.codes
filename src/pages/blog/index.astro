@@ -6,7 +6,7 @@ import BlogSummary from '../../components/BlogSummary.astro';
 
 const allBlogPosts = (
   await getCollection('blog', ({ data }) =>
-    import.meta.env.PROD ? data.pubDate !== undefined : true,
+    import.meta.env.PROD ? data.published : true,
   )
 ).sort(blogSorting);
 

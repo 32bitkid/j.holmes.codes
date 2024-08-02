@@ -1,35 +1,39 @@
 ---
-const { tags } = Astro.props;
+interface Props {
+  tags: string[];
+  class?: string;
+}
+
+const { tags, class: className } = Astro.props;
 ---
 
 <style>
   ul {
-    display: inline;
     margin: unset;
     padding: unset;
+  }
+
+  ul:empty::after {
+    content: 'none';
+    font-style: italic;
   }
 
   li {
     margin: unset;
-    padding: unset;
     display: inline;
-    font-weight: 400;
-    letter-spacing: -0.04em;
-    font-family: 'Equity Caps B', serif;
-    text-transform: capitalize;
-    font-feature-settings: 'smcp';
-  }
 
-  li:not(:last-of-type)::after {
-    content: ', ';
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    padding: 0.2em 0.5ch;
+    border-radius: 0.3em;
+    white-space: normal;
+    font-size: 0.85em;
   }
 </style>
-<ul>
+<ul class:list={[className]}>
   {
-    [...tags].sort().flatMap((tag, idx, arr) => (
-      <Fragment key={tag}>
-        <li>{tag}</li>
-      </Fragment>
+    // prettier-ignore
+    tags.toSorted().flatMap((tag, idx, arr) => (
+      <Fragment key={tag}><li>#{tag}</li>{arr.length - 1 !== idx ? ', ' : ''}</Fragment>
     ))
   }
 </ul>

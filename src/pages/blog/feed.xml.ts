@@ -4,10 +4,7 @@ import { getCollection } from 'astro:content';
 import { blogSorting } from '../../utils/blogSorting';
 
 export async function GET(context: APIContext) {
-  const blog = await getCollection(
-    'blog',
-    ({ data }) => data.pubDate !== undefined,
-  );
+  const blog = await getCollection('blog', ({ data }) => data.published);
   return rss({
     // `<title>` field in output xml
     title: 'J. Holmes Codes',
@@ -20,7 +17,7 @@ export async function GET(context: APIContext) {
     // See "Generating items" section for examples using content collections and glob imports
     items: blog.toSorted(blogSorting).map((post) => ({
       title: post.data.title,
-      pubDate: post.data.pubDate,
+      pubDate: post.data.authorDate,
       link: post.slug,
     })),
     // (optional) inject custom xml

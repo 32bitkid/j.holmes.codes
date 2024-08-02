@@ -1,9 +1,10 @@
 ---
 import { format } from 'date-fns';
-import { getImage } from 'astro:assets';
+import { getImage, Picture } from 'astro:assets';
 import Tags from '@components/Tags.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
+import DayFmt from '../components/dates/DayFmt.astro';
 import { ogSafe } from '../utils/ogSafe';
 
 import '@styles/reset.css';
@@ -13,17 +14,14 @@ import '@styles/core.css';
 const {
   title,
   authorDate,
-  pubDate,
   tags,
   image,
+  published: isPublished,
   summary = 'Thoughts on thoughts…',
 } = Astro.props.frontmatter ?? Astro.props;
 
-const date = authorDate ?? pubDate ?? new Date().toISOString();
-const isPublished = typeof pubDate !== 'undefined';
-
+const dateActual = authorDate ?? new Date().toISOString();
 const pageTitle = `${title} \u2236 j.holmes.codes`;
-
 const optImage = image && (await getImage({ src: image.src }));
 ---
 
@@ -69,25 +67,20 @@ const optImage = image && (await getImage({ src: image.src }));
   <body>
     <Header />
     <article>
-      <h1>{title}</h1>
-      <div class="byline">
-        {date && <time datetime={date}>{format(date, 'MMMM d, yyyy')}</time>}
-        {
-          !isPublished && (
-            <strong>
-              <small> [unpublished]</small>
-            </strong>
-          )
-        }
-        {
-          tags && (
-            <>
-              {' in '}
-              <Tags tags={tags} />
-            </>
-          )
-        }
-      </div>
+      {image && <Picture class="splash" src={image.src} alt={image.alt} />}
+      <h1 class="heading">{title}</h1>
+      {
+        dateActual && (
+          <DayFmt class="meta" date={dateActual} human>
+            {!isPublished && (
+              <strong>
+                <small>[unpublished]</small>
+              </strong>
+            )}
+          </DayFmt>
+        )
+      }
+      {tags && tags.length > 0 && <Tags class="meta" tags={tags} />}
       <section class="content">
         <slot />
       </section>
@@ -105,6 +98,25 @@ const optImage = image && (await getImage({ src: image.src }));
     align-items: stretch;
   }
 
+  .splash {
+    margin-block: max(5rem, 10vh) 1rlh;
+    object-fit: scale-down;
+    width: 100%;
+    display: block;
+    margin-inline: auto;
+    height: auto;
+    border-radius: 0.5ch;
+    background-color: var(--pal-white);
+  }
+
+  .heading {
+    margin-block: max(10rem, 25vh) 0;
+  }
+
+  .heading:not(:first-child) {
+    margin-block: 0;
+  }
+
   article {
     width: 100%;
     max-width: var(--max-content);
@@ -119,19 +131,20 @@ const optImage = image && (await getImage({ src: image.src }));
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><g transform="rotate(25)"><text x="15" y="15" font-size="30" fill="rgba(200,200,200,0.1)">Draft</text></g></svg>');
   }
 
-  .byline {
-    font-variant-numeric: tabular-nums;
-    line-height: calc(1rlh * 1);
+  .meta {
+    display: block;
+    line-height: inherit;
     font-size: 0.7492rem;
     margin-left: 3ch;
-    margin-bottom: calc(1rlh * 1);
   }
 
   .content {
+    margin-block-start: 1rlh;
   }
 
   .content :global(.astro-code) {
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 0.85em;
     padding: 1rem;
     border-radius: 0.5rem;
   }
@@ -206,10 +219,5 @@ const optImage = image && (await getImage({ src: image.src }));
 
   .content :global(pre:not(figure pre)) {
     margin-bottom: 1rlh;
-  }
-
-  h1 {
-    margin-block-start: max(10rem, 25vh);
-    margin-block-end: 0;
   }
 </style>
