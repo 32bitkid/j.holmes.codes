@@ -2,7 +2,7 @@
 import { icons } from 'feather-icons';
 import type { HTMLAttributes } from 'astro/types';
 
-export interface Props extends HTMLAttributes<'svg'> {
+export interface Props {
   icon: keyof typeof icons;
   size: string;
   class: string;
@@ -16,6 +16,6 @@ const { icon, size = '1lh', class: className, ...rest } = Astro.props;
     ...rest,
     class: className,
     style: 'vertical-align: -5%',
-    ...(size ? { width: size, height: size } : {}),
+    ...(size ? { width: size, height: size } : null),
   })}
 />
