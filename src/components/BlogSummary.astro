@@ -10,7 +10,7 @@ const isDraft = blog.data.pubDate === undefined;
 <li class:list={{ draft: isDraft, showSummary }}>
   {
     date ? (
-      <Date class="byline" date={date} />
+      <Date class="byline" date={date} tabular />
     ) : (
       <div class="byline">
         {isDraft && <div class="draft-marker">Draft</div>}

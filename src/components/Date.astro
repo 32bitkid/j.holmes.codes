@@ -7,6 +7,7 @@ const {
   day = true,
   month = true,
   human = false,
+  tabular = false,
 } = Astro.props;
 
 const formatStr =
@@ -22,10 +23,11 @@ const date = toDay(parseDate(inputDate));
 ---
 
 <style>
-  time {
+  .tabular {
     font-variant-numeric: tabular-nums oldstyle-nums;
   }
 </style>
-<time class:list={[className]} datetime={date.toISOString()}
-  >{format(date, formatStr)}</time
+<time
+  class:list={[className, tabular && 'tabular']}
+  datetime={date.toISOString()}>{format(date, formatStr)}</time
 >
