@@ -50,18 +50,31 @@ const showMore = allBlogPosts.length > max;
     <ul class="projects">
       {
         projects.map(async (project) => {
-          const { type, ...rest } = project.data;
+          const { data } = project;
+          const { type, ...rest } = data;
           const { Content } = await project.render();
-          const Project = {
-            npm: NpmProject,
-            github: GithubProject,
-            codepen: CodepenSketch,
-          }[type];
-          return (
-            <Project {...rest} class="project">
-              <Content />
-            </Project>
-          );
+          if (type === 'npm') {
+            const { title, link } = data;
+            return (
+              <NpmProject title={title} link={link}>
+                {' '}
+                <Content />
+              </NpmProject>
+            );
+          } else if (type === 'github') {
+            const { title, link } = data;
+            return (
+              <GithubProject title={title} link={link}>
+                {' '}
+                <Content />
+              </GithubProject>
+            );
+          } else if (type === 'codepen') {
+            const { title, pen } = data;
+            return <CodepenSketch title={title} pen={pen} />;
+          } else {
+            return <Fragment />;
+          }
         })
       }
     </ul>
@@ -86,7 +99,9 @@ const showMore = allBlogPosts.length > max;
     margin-inline: 1ch;
   }
 
-  .project {
-    margin-bottom: calc(1rlh * 2);
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rlh 0;
   }
 </style>

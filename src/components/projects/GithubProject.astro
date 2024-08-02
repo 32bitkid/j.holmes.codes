@@ -4,7 +4,8 @@ import githubIcon from '@assets/icons/icon-github.svg';
 
 export interface Props {
   title: string;
-  class: string;
+  link: string;
+  class?: string;
 }
 
 const { title, link, class: className } = Astro.props;

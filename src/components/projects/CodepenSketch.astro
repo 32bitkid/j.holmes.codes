@@ -4,13 +4,14 @@ import codepenIcon from '@assets/icons/icon-codepen.svg';
 
 export interface Props {
   title: string;
-  class: string;
+  pen: string;
+  class?: string;
 }
 
-const { title, penID, class: className } = Astro.props;
+const { title, pen, class: className } = Astro.props;
 
-const link = `https://codepen.io/32bitkid/pen/${penID}/`;
-const iframeSrc = `https://codepen.io/32bitkid/embed/preview/${penID}/?height=300&theme-id=light&default-tab=result`;
+const link = `https://codepen.io/32bitkid/pen/${pen}/`;
+const iframeSrc = `https://codepen.io/32bitkid/embed/preview/${pen}/?height=300&theme-id=light&default-tab=result`;
 ---
 
 <li class:list={['npm', className]}>

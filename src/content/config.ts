@@ -18,7 +18,7 @@ const projectsCollection = defineCollection({
       z.object({
         type: z.literal('codepen'),
         title: z.string(),
-        penID: z.string(),
+        pen: z.string(),
         order: z.number(),
       }),
     ]),

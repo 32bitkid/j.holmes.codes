@@ -4,7 +4,8 @@ import npmIcon from '@assets/icons/icon-npmjs.svg';
 
 export interface Props {
   title: string;
-  class: string;
+  link: string;
+  class?: string;
 }
 
 const { title, link, class: className } = Astro.props;
