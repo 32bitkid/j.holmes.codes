@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import githubIcon from '@assets/icons/icon-github.svg';
+
+export interface Props {
+  title: string;
+  class: string;
+}
+
+const { title, link, class: className } = Astro.props;
+---
+
+<li class:list={['npm', className]}>
+  <dl>
+    <dt class="link">
+      <Image src={githubIcon} alt="github" width="16" />
+      <a href={link} set:html={title} />
+    </dt>
+    <dd class="description">
+      <slot />
+    </dd>
+  </dl>
+</li>
+
+<style>
+  .link {
+    display: flex;
+    font-size: var(--f-large);
+    line-height: 1rlh;
+    margin-bottom: calc(1rlh * 0.5);
+    align-items: center;
+    gap: 0.5ch;
+  }
+
+  .link a {
+    flex-grow: 1;
+  }
+
+  .description {
+    padding-left: 1rem;
+  }
+</style>

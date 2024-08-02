@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import codepenIcon from '@assets/icons/icon-codepen.svg';
+
+export interface Props {
+  title: string;
+  class: string;
+}
+
+const { title, penID, class: className } = Astro.props;
+
+const link = `https://codepen.io/32bitkid/pen/${penID}/`;
+const iframeSrc = `https://codepen.io/32bitkid/embed/preview/${penID}/?height=300&theme-id=light&default-tab=result`;
+---
+
+<li class:list={['npm', className]}>
+  <dl>
+    <dt class="link">
+      <Image src={codepenIcon} alt="Codepen" width="16" />
+      <a href={link} set:html={title} />
+    </dt>
+    <dd class="description">
+      <iframe
+        class="iframe"
+        height="425"
+        title={title}
+        src={iframeSrc}
+        allowtransparency={false}
+        allowfullscreen={true}></iframe>
+    </dd>
+  </dl>
+</li>
+
+<style>
+  .link {
+    display: flex;
+    font-size: var(--f-large);
+    line-height: 1rlh;
+    margin-bottom: calc(1rlh * 0.5);
+    align-items: center;
+    gap: 0.5ch;
+  }
+
+  .link a {
+    flex-grow: 1;
+  }
+
+  .description {
+  }
+
+  .iframe {
+    border: 0;
+    overflow: hidden;
+    width: 100%;
+  }
+</style>

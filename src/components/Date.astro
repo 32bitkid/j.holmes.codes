@@ -8,13 +8,15 @@ const {
   month = true,
   human = false,
 } = Astro.props;
-const formatStr = !month
-  ? 'yyyy'
-  : !day
-    ? 'MMM yyyy'
-    : human
-      ? 'MMMM do, yyyy'
-      : 'yyyy-MM-dd';
+
+const formatStr =
+  inputDate.length === 4 || !month
+    ? 'yyyy'
+    : inputDate.length === 7 || !day
+      ? 'MMM yyyy'
+      : human
+        ? 'MMMM do, yyyy'
+        : 'yyyy-MM-dd';
 
 const date = toDay(parseDate(inputDate));
 ---

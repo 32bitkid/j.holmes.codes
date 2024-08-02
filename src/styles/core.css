@@ -5,7 +5,6 @@
   font-size: 12pt;
   font-weight: 400;
 
-  --colors-primary: #628da3;
   --max-content: 45rem;
 
   --f-root: 1.3348398541700344rem; /* calc(pow(2, 5 / 12)); */
@@ -18,10 +17,29 @@
   --f-headline: 3.174802103936399rem; /* calc(pow(var(--f-root), 4)); */
   --f-epic: 4.237852377437181rem; /* calc(pow(var(--f-root), 5)); */
 
-  color: #333;
-  background-color: white;
+  --pal-black: #010101;
+  --pal-midnight: #031b75;
+  --pal-forest: #108c00;
+  --pal-cyan: #17bbd3;
+  --pal-red: #720c0a;
+  --pal-purple: #6c1c9e;
+  --pal-brown: #b25116;
+  --pal-light: #b8b0a8;
+  --pal-dark: #4a4842;
+  --pal-blue: #0b63c4;
+  --pal-green: #9bce00;
+  --pal-sea: #73f5d5;
+  --pal-orange: #e89e00;
+  --pal-magneta: #ff7bdb;
+  --pal-yellow: #fef255;
+  --pal-white: #fffffe;
+
+  --colors-primary: #628da3;
+
+  color: var(--pal-dark);
+  background-color: var(--pal-white);
   scrollbar-width: thin;
-  scrollbar-color: #ddd transparent;
+  scrollbar-color: var(--pal-light) transparent;
 }
 
 body {
@@ -122,7 +140,7 @@ hr {
   clear: both;
   overflow: visible;
   text-align: center;
-  color: #ddd;
+  color: var(--pal-light);
   border-bottom: 1px dotted currentColor;
   page-break-after: avoid;
 

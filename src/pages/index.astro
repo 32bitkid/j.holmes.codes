@@ -2,233 +2,79 @@
 import { getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Page from '@layouts/page.astro';
-import BlogSummary from '../components/BlogSummary.astro';
+import AboutMe from '../components/AboutMe.mdx';
+import BlogSummary from '@components/BlogSummary.astro';
+import NpmProject from '@components/projects/NpmProject.astro';
+import GithubProject from '@components/projects/GithubProject.astro';
+import CodepenSketch from '@components/projects/CodepenSketch.astro';
 import { blogSorting } from '../utils/blogSorting';
-
-import npmIcon from '../assets/icons/icon-npmjs.svg';
-import codepenIcon from '../assets/icons/icon-codepen.svg';
-import githubIcon from '../assets/icons/icon-github.svg';
-
-const cssIcons = {
-  '--icon-npm': `url(${(await getImage({ src: npmIcon, format: 'svg' })).src})`,
-  '--icon-codepen': `url(${(await getImage({ src: codepenIcon, format: 'svg' })).src})`,
-  '--icon-github': `url(${(await getImage({ src: githubIcon, format: 'svg' })).src})`,
-};
 
 const max = 5;
 const allBlogPosts = (
   await getCollection('blog', ({ data }) =>
     import.meta.env.PROD ? data.pubDate !== undefined : true,
   )
-).sort(blogSorting);
+).toSorted(blogSorting);
+
+const projects = (await getCollection('projects')).toSorted((a, b) => {
+  const order = a.data.order - b.data.order;
+  if (order !== 0) return order;
+  return a.data.title.localeCompare(b.data.title);
+});
+
 const showMore = allBlogPosts.length > max;
 ---
 
 <Page description="Thoughts, sketches and code by J. Holmes">
-  <h1>About me…</h1>
   <section>
-    <p>
-      I am a <em>developer</em> & <em>designer</em> with a focus on front-end architecture
-      and interaction design. My interests range from UI-design to 80's vintage computers
-      (IBM PC<em>jr</em>, Apple //e, C64) to embedded computing, video codecs,
-      CRTs, and pixel-art.
-    </p>
-    <p>
-      Until <time datetime="2023-11-15">late-2023</time>, I was the <em
-        >Frontend Engineering Lead</em
-      > at <a href="https://formant.io">Formant</a> where I developed prototypes,
-      tools, and designs for the future of robotic fleet{' '}
-      monitoring and tele-operation. I love getting my hands dirty, learning new
-      things, and exploring new domains. To me, there isn't a line between engineering
-      and design; I'm equally comfortable in <a href="https://www.sketch.com/"
-        >Sketch</a
-      > as I'm in <a href="https://www.sublimetext.com/">Sublime Text</a>.
-    </p>
-    <p>
-      You can find me doodling on <a href="https://codepen.io/32bitkid"
-        >CodePen</a
-      >, helping other engineers on <a
-        href="https://stackoverflow.com/users/373378">StackOverflow</a
-      >, pushing code to <a href="https://github.com/32bitkid">GitHub</a>, or
-      posting on <a href="https://mstdn.social/@32bitkid">Mastodon</a> about stuff
-      I think is cool. To get in touch, e-mail me at <a
-        href="mailto:j@holmes.codes">j@holmes.codes</a
-      >
-    </p>
+    <h1>About me…</h1>
+    <AboutMe />
   </section>
 
-  <h2>Recent Thoughts…</h2>
   <section>
+    <h2>Recent Thoughts…</h2>
     <ul class="posts">
-      {allBlogPosts.slice(0, max).map((blog, i) => <BlogSummary blog={blog} />)}
+      {allBlogPosts.slice(0, max).map((blog) => <BlogSummary blog={blog} />)}
     </ul>
     {
       showMore && (
-        <p class="more">
+        <nav class="more">
           <a href="/blog">more posts</a>
-        </p>
+        </nav>
       )
     }
   </section>
 
-  <h2>Code &amp; Links…</h2>
   <section>
-    <ul class="projects" style={cssIcons}>
-      <li class="project">
-        <dl>
-          <dt class="project__link">
-            <a
-              href="https://www.npmjs.com/package/@watercolorizer/watercolorizer"
-              >watercolorizer</a
-            >
-          </dt>
-          <dd class="project__desc">
-            <strong>Watercolorizer</strong> is a <em>tiny</em> graphics library for
-            creating generative watercolor-like shapes from simple polygonal base-shapes.
-            This <em>core</em> library is un-opinionated about the rendering process
-            and instead focuses on the generative algorithm for constructing the
-            paths to be rendered.
-          </dd>
-        </dl>
-      </li>
-      <li class="project">
-        <dl>
-          <dt class="project__link">
-            <a href="https://codepen.io/32bitkid/pen/BgwwgG/"
-              >CSS 3&half;&Prime; Floppy Diskettes Sketch</a
-            >
-          </dt>
-          <dd>
-            <iframe
-              height="400"
-              style={{ width: '100%' }}
-              title="Quest For Glory II Disks"
-              src="//codepen.io/32bitkid/embed/preview/BgwwgG/?height=300&theme-id=light&default-tab=result"
-              allowtransparency="true"
-              allowfullscreen={true}></iframe>
-          </dd>
-        </dl>
-      </li>
-      <li class="project">
-        <dl>
-          <dt class="project__link">
-            <a href="https://www.npmjs.com/package/@4bitlabs/sci0"
-              >@4bitlabs/sci0</a
-            >
-          </dt>
-          <dd class="project__desc">
-            JavaScript library and data‑structures for parsing and manipulating <code
-              >SCI0</code
-            > resources from classic <em>Sierra On&#x2011;Line</em> adventure games.
-          </dd>
-        </dl>
-      </li>
-      <li class="project">
-        <dl>
-          <dt class="project__link">
-            <a href="https://github.com/32bitkid/mpeg"
-              >github.com/32bitkid/mpeg</a
-            >
-          </dt>
-          <dd class="project__desc">
-            An experimental/educational pure&#x2011;Go MPEG&#x2011;2 decoder.
-          </dd>
-        </dl>
-      </li>
-      <li class="project">
-        <dl>
-          <dt class="project__link">
-            <a href="https://github.com/32bitkid/bitreader"
-              >github.com/32bitkid/bitreader</a
-            >
-          </dt>
-          <dd class="project__desc">
-            Provides basic interfaces to read and traverse an io.Reader as a
-            stream of bits, rather than a stream of bytes.
-          </dd>
-        </dl>
-      </li>
-      <li class="project">
-        <dl>
-          <dt class="project__link">
-            <a href="https://codepen.io/32bitkid/pen/LKZzMR/"
-              >60% Keyboard Sketch</a
-            >
-          </dt>
-          <dd>
-            <iframe
-              height="400"
-              style={{ width: '100%' }}
-              title="Interactive 60% Keyboard"
-              src="//codepen.io/32bitkid/embed/preview/LKZzMR/?height=300&theme-id=light&default-tab=result"
-              allowtransparency="true"
-              allowfullscreen={true}></iframe>
-          </dd>
-        </dl>
-      </li>
-      <li class="project">
-        <dl>
-          <dt class="project__link">
-            <a href="https://github.com/32bitkid/sci">github.com/32bitkid/sci</a
-            >
-          </dt>
-          <dd class="project__desc">
-            Go library and data‑structures for parsing and manipulating <code
-              >SCI0</code
-            > resources from classic <em>Sierra On&#x2011;Line</em> adventure games.
-          </dd>
-        </dl>
-      </li>
-      <li class="project">
-        <dl>
-          <dt class="project__link">
-            <a href="https://codepen.io/32bitkid/pen/agmYew/"
-              >Tribute to a <code>BASIC</code> classic</a
-            >
-          </dt>
-          <dd>
-            <iframe
-              height="400"
-              style={{ width: '100%' }}
-              title="10 PRINT CHR$(205.5+RND(1)); : GOTO 10"
-              src="//codepen.io/32bitkid/embed/preview/agmYew/?height=300&theme-id=light&default-tab=result"
-              allowtransparency="true"
-              allowfullscreen={true}></iframe>
-          </dd>
-        </dl>
-      </li>
+    <h2>Code &amp; Links…</h2>
+    <ul class="projects">
+      {
+        projects.map(async (project) => {
+          const { type, ...rest } = project.data;
+          const { Content } = await project.render();
+          const Project = {
+            npm: NpmProject,
+            github: GithubProject,
+            codepen: CodepenSketch,
+          }[type];
+          return (
+            <Project {...rest} class="project">
+              <Content />
+            </Project>
+          );
+        })
+      }
     </ul>
   </section>
 </Page>
 
 <style>
-  .projects a[href^="https://www.npmjs.com"]::before
-  {
-    content: var(--icon-npm);
-    margin-inline-end: 0.5ch;
-    display: inline-block;
-  }
-
-  .projects a[href^="https://codepen.io"]::before
-  {
-    content: var(--icon-codepen);
-    margin-inline-end: 0.5ch;
-    display: inline-block;
-  }
-
-  .projects a[href^="https://github.com"]::before
-  {
-    content: var(--icon-github);
-    margin-inline-end: 0.5ch;
-    display: inline-block;
-  }
-
-  p.more {
+  .more {
     text-align: center;
     padding-inline-start: 2ch;
   }
 
-  p.more a::after {
+  .more a::after {
     content: ' \2192';
   }
 
@@ -242,21 +88,5 @@ const showMore = allBlogPosts.length > max;
 
   .project {
     margin-bottom: calc(1rlh * 2);
-  }
-
-  .project__link {
-    font-size: var(--f-large);
-    line-height: 1rlh;
-    margin-bottom: calc(1rlh * 0.5);
-  }
-
-  .project__meta,
-  .project__desc {
-    padding-left: 1rem;
-  }
-
-  .projects iframe {
-    border: 0;
-    overflow: hidden;
   }
 </style>

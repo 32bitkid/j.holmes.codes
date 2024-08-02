@@ -184,7 +184,7 @@ const optImage = image && (await getImage({ src: image.src }));
 
   .content :global(tbody > tr:nth-child(3n + 1):not(:empty) td),
   .content :global(tbody > tr:nth-child(3n + 1):not(:empty) th) {
-    border-top: 0.25px dashed #ddd;
+    border-top: 1px dashed var(--pal-light);
   }
 
   .content :global(sup) {

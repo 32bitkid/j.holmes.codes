@@ -9,27 +9,27 @@ const shared = { width: '3ch', height: '2ex' };
 const ICONS = {
   thinking: icons['circle'].toSvg({
     ...shared,
-    color: '#b8b0a8',
+    stroke: 'var(--pal-light)',
     'aria-label': 'Thinking about',
   }),
   active: icons['play-circle'].toSvg({
     ...shared,
-    color: '#0b63c4',
+    stroke: 'var(--pal-blue)',
     'aria-label': 'Working on',
   }),
   finished: icons['check-circle'].toSvg({
     ...shared,
-    color: '#9bce00',
+    stroke: 'var(--pal-green)',
     'aria-label': 'Completed',
   }),
   paused: icons['pause-circle'].toSvg({
     ...shared,
-    color: '#4a4842',
+    stroke: 'var(--pal-dark)',
     'aria-label': 'Taking a break',
   }),
   abandoned: icons['trash-2'].toSvg({
     ...shared,
-    color: '#720c0a',
+    stroke: 'var(--pal-red)',
     'aria-label': 'Gave up',
   }),
 };

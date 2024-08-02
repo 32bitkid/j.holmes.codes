@@ -1,5 +1,29 @@
 import { z, defineCollection, reference } from 'astro:content';
 
+const projectsCollection = defineCollection({
+  schema: () =>
+    z.discriminatedUnion('type', [
+      z.object({
+        type: z.literal('npm'),
+        title: z.string(),
+        link: z.string().url(),
+        order: z.number(),
+      }),
+      z.object({
+        type: z.literal('github'),
+        title: z.string(),
+        link: z.string().url(),
+        order: z.number(),
+      }),
+      z.object({
+        type: z.literal('codepen'),
+        title: z.string(),
+        penID: z.string(),
+        order: z.number(),
+      }),
+    ]),
+});
+
 const thoughtsCollection = defineCollection({
   schema: () =>
     z.object({
@@ -59,4 +83,5 @@ export const collections = {
   sci0pics: sci0PicsCollection,
   sci0games: sci0GamesCollection,
   thoughts: thoughtsCollection,
+  projects: projectsCollection,
 };
