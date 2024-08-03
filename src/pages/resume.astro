@@ -115,17 +115,21 @@ const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
               .map((job) => (
                 <li>
                   <div>
-                    <span class="title">{job.title}</span> &middot;{' '}
-                    {job.url ? (
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={job.url}
-                      >
-                        {job.company}
-                      </a>
-                    ) : (
-                      job.company
+                    <span class="title">{job.title}</span>
+                    {job.company && (
+                      <Fragment>
+                        &middot;
+                        {job.url ? (
+                          <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={job.url}
+                            set:text={job.company}
+                          />
+                        ) : (
+                          job.company
+                        )}
+                      </Fragment>
                     )}
                   </div>
                   <div class="span">
