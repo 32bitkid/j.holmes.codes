@@ -112,23 +112,25 @@ p {
 
 :link[href^='http:']::after,
 :link[href^='https:']::after {
-  content: '\2005\2197';
+  content: '\2060\2197';
   font-size: 0.5em;
-  vertical-align: super;
+  vertical-align: 2.5ex;
   margin-right: -0.5ch;
   line-height: 0;
 }
 
 :link[href^='mailto:']::after {
-  content: '\2709';
+  content: '\2060\2709';
   vertical-align: super;
   line-height: 0;
+  font-size: 0.75em;
 }
 
 :link[href^='tel:']::after {
-  content: '\2706';
+  content: '\2060\2706';
   vertical-align: super;
   line-height: 0;
+  font-size: 0.75em;
 }
 
 mark {
