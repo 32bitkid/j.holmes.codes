@@ -1,3 +1,0 @@
----
-title: Efron's Dice
----
