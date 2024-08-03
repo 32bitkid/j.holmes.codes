@@ -9,8 +9,6 @@ const allBlogPosts = (
     import.meta.env.PROD ? data.published : true,
   )
 ).sort(blogSorting);
-
-const MAX = 8;
 ---
 
 <Page
@@ -19,7 +17,7 @@ const MAX = 8;
 >
   <h1>Thoughts on thoughts…</h1>
   <ul class="posts">
-    {allBlogPosts.map((blog, i) => <BlogSummary blog={blog} />)}
+    {allBlogPosts.map((blog) => <BlogSummary blog={blog} />)}
   </ul>
 </Page>
 
