@@ -86,6 +86,7 @@ h1:not(hgroup > h1) {
   font-feature-settings: 'smcp', 'onum';
   font-weight: 600;
   letter-spacing: -0.06em;
+  text-wrap: balance;
 }
 
 time {
@@ -94,6 +95,8 @@ time {
 
 p {
   margin-block-end: 1rlh;
+  text-wrap: pretty;
+  text-rendering: optimizeLegibility;
 }
 
 p:last-of-type {
