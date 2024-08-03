@@ -2,7 +2,7 @@
   font-family: 'Equity Text B', serif, system-ui;
   font-feature-settings: 'ss01', 'calt', 'liga';
   line-height: 1.414rem;
-  font-size: 12pt;
+  font-size: min(15pt, max(12pt, 1.75vw));
   font-weight: 400;
 
   --max-content: 45rem;
@@ -40,6 +40,12 @@
   background-color: var(--pal-white);
   scrollbar-width: thin;
   scrollbar-color: var(--pal-light) transparent;
+}
+
+@media screen and (min-width: 1200px) {
+  :root {
+    --max-content: 65rem;
+  }
 }
 
 body {

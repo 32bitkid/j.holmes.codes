@@ -18,6 +18,8 @@ const {
   image,
   published: isPublished,
   summary = 'Thoughts on thoughts…',
+  next,
+  prev,
 } = Astro.props.frontmatter ?? Astro.props;
 
 const dateActual = authorDate ?? new Date().toISOString();
@@ -85,6 +87,22 @@ const optImage = image && (await getImage({ src: image.src }));
         <slot />
       </section>
     </article>
+    <nav class="stack">
+      {
+        prev && (
+          <a href={`/${prev.slug}`} class="previous">
+            {prev.title}
+          </a>
+        )
+      }
+      {
+        next && (
+          <a href={`/${next.slug}`} class="next">
+            {next.title}
+          </a>
+        )
+      }
+    </nav>
     <Footer />
   </body>
 </html>
@@ -145,8 +163,11 @@ const optImage = image && (await getImage({ src: image.src }));
   .content :global(.astro-code) {
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     font-size: 0.85em;
-    padding: 1rem;
+    padding: 2ex 2ch;
     border-radius: 0.5rem;
+    box-sizing: border-box;
+    max-width: 55rem;
+    margin-inline: auto;
   }
 
   .content :global(figure) {
@@ -169,7 +190,7 @@ const optImage = image && (await getImage({ src: image.src }));
   .content :global(table) {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1rlh;
+    margin-bottom: 0.5rlh;
     font-variant-numeric: tabular-nums oldstyle-nums;
   }
 
@@ -219,5 +240,50 @@ const optImage = image && (await getImage({ src: image.src }));
 
   .content :global(pre:not(figure pre)) {
     margin-bottom: 1rlh;
+  }
+
+  .stack {
+    box-sizing: border-box;
+    padding-inline: 1.5ch;
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--max-content);
+    margin-top: 2rlh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: 'previous' 'next';
+    row-gap: calc(1rlh * 0.5);
+  }
+
+  .previous {
+    text-align: left;
+  }
+  .next {
+    text-align: right;
+  }
+
+  @media screen and (min-width: 45rem) {
+    .stack {
+      grid-template-columns: max-content max-content;
+      grid-template-areas: 'previous next';
+      justify-content: space-between;
+      align-items: baseline;
+      column-gap: 4ch;
+      margin-top: 5rlh;
+    }
+  }
+
+  .previous {
+    grid-area: previous;
+  }
+  .next {
+    grid-area: next;
+  }
+
+  .previous::before {
+    content: '\2190\00A0';
+  }
+  .next::after {
+    content: '\00A0\2192';
   }
 </style>
