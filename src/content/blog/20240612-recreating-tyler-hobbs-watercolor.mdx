@@ -3,18 +3,19 @@ title: "Reconstructing Tyler Hobbs\u2019 Watercolor Effect"
 authorDate: 2024-05-31
 published: true
 slug: 20230612-watercolorizer-js
-tags: ["generative-art", "algorithmic-art", "watercolor"]
+tags: ['generative-art', 'algorithmic-art', 'watercolor']
 image:
-  src: "./20240612-watercolorizer-js.png"
-  alt: "A diagram of a hexagon being distorted using the watercolorization algorithm."
+  src: './20240612-watercolorizer-js.png'
+  alt: 'A diagram of a hexagon being distorted using the watercolorization algorithm.'
 summary: >-
-  Using TypeScript to recreate Tyler Hobbs' polygon watercolor effect.
+  Using "TypeScript to recreate Tyler Hobbs' polygon watercolor effect."
 ---
+
 import WatercolorExplorer from '../../components/react/watercolor';
 
-Here, we will talk about implementing a *recreation* of Tyler Hobbs' algorithm for achieving a watercolor-like effect&mdash;as described in [How to Hack a Painting](https://www.tylerxhobbs.com/words/how-to-hack-a-painting)&mdash;from first principles in JavaScript/TypeScript.
+Here, we will talk about implementing a _recreation_ of Tyler Hobbs' algorithm for achieving a watercolor-like effect&mdash;as described in [How to Hack a Painting](https://www.tylerxhobbs.com/words/how-to-hack-a-painting)&mdash;from first principles in JavaScript/TypeScript.
 
-As in Hobbs' original talk, we will need to start with a base-polygon. This polygon will serve as a basis, which we will apply our *algorithmic process* that will result in a new set of polygons that when *rendered* achieve an *effect* that is similar to having been painted with watercolor on paper. I won't go through all the artistic steps/inspirations&mdash;see [Hobbs' original talk](https://www.thestrangeloop.com/2017/how-to-hack-a-painting.html) at Strange L&infin;p for more artistic details. Instead, here we will focus on implementing these _in-code_&hellip;
+As in Hobbs' original talk, we will need to start with a base-polygon. This polygon will serve as a basis, which we will apply our _algorithmic process_ that will result in a new set of polygons that when _rendered_ achieve an _effect_ that is similar to having been painted with watercolor on paper. I won't go through all the artistic steps/inspirations&mdash;see [Hobbs' original talk](https://www.thestrangeloop.com/2017/how-to-hack-a-painting.html) at Strange L&infin;p for more artistic details. Instead, here we will focus on implementing these _in-code_&hellip;
 
 ## Distorting a single edge
 
@@ -45,11 +46,11 @@ And render it:
 
 <WatercolorExplorer client:visible renderFn="basePolyExample" />
 
-Great! This will serve as the *base-polygonal-shape* for our algorithm to consume.
+Great! This will serve as the _base-polygonal-shape_ for our algorithm to consume.
 
-Now, we want to *distort* this polygon into a *new* polygon. This can be achieved by splitting *each edge* into two parts and then adjusting the new mid-points by some *value*. There are *three variables* that we can exploit when breaking the edges of the existing polygon: **position**, **angle** and **magnitude**.
+Now, we want to _distort_ this polygon into a _new_ polygon. This can be achieved by splitting _each edge_ into two parts and then adjusting the new mid-points by some _value_. There are _three variables_ that we can exploit when breaking the edges of the existing polygon: **position**, **angle** and **magnitude**.
 
-In order to achieve this, we will iterate through each segment&mdash;or each *pair of vertices*&mdash;and split that segment into two parts. With the help of a [generator-function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*), this can easily be achieved with something like this:
+In order to achieve this, we will iterate through each segment&mdash;or each _pair of vertices_&mdash;and split that segment into two parts. With the help of a [generator-function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*), this can easily be achieved with something like this:
 
 ```ts
 function* segments<T>(points: T[]): Generator<[T, T]> {
@@ -66,19 +67,19 @@ Now, we can use this generator to iterate over each edge. Firstly, let us look a
 ```ts
 const midPoints: Vec2[] = [];
 
-for(const [a, b] of segments(hexagon)) {
+for (const [a, b] of segments(hexagon)) {
   const midPoint = vecLerp(a, b, 0.5);
   midPoints.push(midPoint);
 }
 ```
 
-With a value of `0.5`, that will give us a new point directly *half-way* between the two endpoints of our segment. By adjusting this value, we can split the existing line-segment where-ever we desire. Let's call this function `midPointFn()`.
+With a value of `0.5`, that will give us a new point directly _half-way_ between the two endpoints of our segment. By adjusting this value, we can split the existing line-segment where-ever we desire. Let's call this function `midPointFn()`.
 
 <WatercolorExplorer client:visible renderFn="midPointExample" />
 
-Now that we have a new mid-point, we need to determine which direction we will want to move. We can do this by using the [winding-order](https://en.wikipedia.org/wiki/Winding_number) of the given polygon, and selecting the *outward tangent* to the edge in question.
+Now that we have a new mid-point, we need to determine which direction we will want to move. We can do this by using the [winding-order](https://en.wikipedia.org/wiki/Winding_number) of the given polygon, and selecting the _outward tangent_ to the edge in question.
 
-Using that angle as the *base-angle*, it can be adjusted in radians. Let's call that function `thetaFn()`, which returns the number of radians to *adjust* the tangent angle.
+Using that angle as the _base-angle_, it can be adjusted in radians. Let's call that function `thetaFn()`, which returns the number of radians to _adjust_ the tangent angle.
 
 ```ts
 const PI1_2 = Math.PI / 2;
@@ -86,10 +87,10 @@ const midPoints: Vec2[] = [];
 
 /* Determine which direction to rotate by looking at the
  * winding order of the given polygon
-*/
+ */
 const outerTangent = windingOrder === 'cw' ? PI1_2 : -PI1_2;
 
-for(const [a, b] of segments(hexagon)) {
+for (const [a, b] of segments(hexagon)) {
   const midPoint = vecLerp(a, b, midPointFn());
 
   /* subtract vector A from B, and normalize. */
@@ -103,8 +104,7 @@ for(const [a, b] of segments(hexagon)) {
 
 <WatercolorExplorer client:visible renderFn="angleExample" />
 
-Finally, once we have our starting point and our direction, we will need to determine *how far* we should move in that direction. Let's call that function `magntitudeFn()`
-
+Finally, once we have our starting point and our direction, we will need to determine _how far_ we should move in that direction. Let's call that function `magntitudeFn()`
 
 ```ts
 const PI1_2 = Math.PI / 2;
@@ -112,37 +112,31 @@ const midPoints: Vec2[] = [];
 
 /* Determine which direction to rotate by looking at the
  * winding order of the given polygon
-*/
+ */
 const outerTangent = windingOrder === 'cw' ? PI1_2 : -PI1_2;
 
-for(const [a, b] of segments(hexagon)) {
+for (const [a, b] of segments(hexagon)) {
   const midPoint = vecLerp(a, b, midPointFn());
 
   /* subtract vector A from B, and normalize. */
   const angleAB = vecNorm(vecSub(b, a));
   /* rotate our vector by the outer tangent */
-  const unitTangent = vecRotate(
-    angleAB,
-    outerTangent + thetaFn(),
-  );
+  const unitTangent = vecRotate(angleAB, outerTangent + thetaFn());
 
   /* Scale the tangent vector to the magnitude
    * and add it to the mid-point
    */
-  const newPoint = vecAdd(
-    midPoint,
-    vecScale(unitTangent, magnitudeFn()),
-  );
+  const newPoint = vecAdd(midPoint, vecScale(unitTangent, magnitudeFn()));
 
   midPoints.push(newPoint);
 }
 ```
 
-This gives us a brand-new point that we can use to *extend* our original polygon. That gives us something like this:
+This gives us a brand-new point that we can use to _extend_ our original polygon. That gives us something like this:
 
 <WatercolorExplorer client:visible renderFn="distanceExample" />
 
-We can then repeat that same process for *each segment* in the original polygon and weave these new midpoints in with the original vertices and get a new polygon. Using another simple generator function:
+We can then repeat that same process for _each segment_ in the original polygon and weave these new midpoints in with the original vertices and get a new polygon. Using another simple generator function:
 
 ```ts
 function* zipper<T>(...sources: T[][]) {
@@ -158,10 +152,10 @@ function* zipper<T>(...sources: T[][]) {
 }
 ```
 
-We can use this function to "zipper" together our original points with our freshly generated *new* mid-points:
+We can use this function to "zipper" together our original points with our freshly generated _new_ mid-points:
 
 ```ts
-for(const [a, b] of segments(hexagon)) {
+for (const [a, b] of segments(hexagon)) {
   /* snip */
   midPoints.push(newPoint);
 }
@@ -173,26 +167,22 @@ const distoredPolygon = Array.from(zipper(hexagon, newPoints));
 
 <WatercolorExplorer client:visible renderFn="allSidesExample" />
 
-
 ## Adding randomness
 
-So far, this doesn't look very good. Using the same values for *every* edge doesn't make it look *distorted*; instead, we have what one might describe as a **star generator**, which is&hellip; not exactly what we were going for. However, what if instead of using the same static values for each new point we generate, if we use some amount of randomization. We could add a little bit of randomness to each time we generate our three variables: **position**, **angle** and **magnitude**.
+So far, this doesn't look very good. Using the same values for _every_ edge doesn't make it look _distorted_; instead, we have what one might describe as a **star generator**, which is&hellip; not exactly what we were going for. However, what if instead of using the same static values for each new point we generate, if we use some amount of randomization. We could add a little bit of randomness to each time we generate our three variables: **position**, **angle** and **magnitude**.
 
-`Math.random()` will generate a random value that is uniformly distributed between $[0,1)$. This type of randomization can be quite valuable, _e.g._ it is easy to use to model something like a "coin-flip". You are just as likely to get a value $< 0.5$ as you are to get a value $\geq 0.5$; _i.e._ a *fair coin*.
+`Math.random()` will generate a random value that is uniformly distributed between $[0,1)$. This type of randomization can be quite valuable, _e.g._ it is easy to use to model something like a "coin-flip". You are just as likely to get a value $< 0.5$ as you are to get a value $\geq 0.5$; _i.e._ a _fair coin_.
 
 Let's plot 1,000 points, whose coordinates are selected a uniform distribution of random numbers:
 
 <WatercolorExplorer client:visible renderFn="uniformDotsExample" />
 
-However, in the "natural-world", uniform distribution of randomness are not *as-common*. Often, you are more likely to observe randomness in nature that is better approximated with a [Gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution), or the **normal distribution**. Going into the history and details of the **gaussian distribution** is beyond the scope of this post, however, essentially, what we can use this function to model a random-number-generator that will return values *around* a particular value&mdash;the *median*&mdash;and where the *distance* away from that average value is random&mdash;the *deviation*.
+However, in the "natural-world", uniform distribution of randomness are not _as-common_. Often, you are more likely to observe randomness in nature that is better approximated with a [Gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution), or the **normal distribution**. Going into the history and details of the **gaussian distribution** is beyond the scope of this post, however, essentially, what we can use this function to model a random-number-generator that will return values _around_ a particular value&mdash;the _median_&mdash;and where the _distance_ away from that average value is random&mdash;the _deviation_.
 
 Luckily, we can use the [Box-Muller transformation](https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform) to transform our uniformly generated random values from `Math.random()` into random values that fit the **gaussian distribution**.
 
 ```ts
-export function gaussRng(
-  μ: number = 0,
-  σ: number = 1,
-) {
+export function gaussRng(μ: number = 0, σ: number = 1) {
   const u = 1 - Math.random();
   const v = Math.random();
   const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
@@ -200,58 +190,58 @@ export function gaussRng(
 }
 ```
 
-Where $\mu$ is the *mean* around which the values are centered, and $\sigma$ is the width of the [*standard deviation*](https://en.wikipedia.org/wiki/Standard_deviation).
+Where $\mu$ is the _mean_ around which the values are centered, and $\sigma$ is the width of the [_standard deviation_](https://en.wikipedia.org/wiki/Standard_deviation).
 
 Now, lets plot those same 1,000 points, but this time use a guassian distrubtion. The center of the distrubtion will be the center of the canvas, and the standard-deviation will be $\frac{1}{6}$ of the canvas height:
 
 <WatercolorExplorer client:visible renderFn="gaussDotsExample" />
 
-While the dots are still randomly placed around the canvas, you can see there is a noticeable *cluster* of points. There is a higher *likelyhood* that the point is *near* the center, but there are still some points possibly farther away. In fact, there a *few* that are very *far* away from the "median value", however they are quite rare. There is &#x2248;68% chance random value will be within *one standard deviation* from the median, plus or minus. There is only a &#x2248;27.2% chance that more than one but less than two. More than *two*, on either side, is a &#x2248;4%. Going even further, the odds approach *zero*.
+While the dots are still randomly placed around the canvas, you can see there is a noticeable _cluster_ of points. There is a higher _likelyhood_ that the point is _near_ the center, but there are still some points possibly farther away. In fact, there a _few_ that are very _far_ away from the "median value", however they are quite rare. There is &#x2248;68% chance random value will be within _one standard deviation_ from the median, plus or minus. There is only a &#x2248;27.2% chance that more than one but less than two. More than _two_, on either side, is a &#x2248;4%. Going even further, the odds approach _zero_.
 
-We can use these properties to drive our three _parameters_&mdash;**position**, **angle**, **magnitude**&mdash;from before. Let's use the following functions to dynamically generate the parameters to distort. For *position*, consider:
+We can use these properties to drive our three _parameters_&mdash;**position**, **angle**, **magnitude**&mdash;from before. Let's use the following functions to dynamically generate the parameters to distort. For _position_, consider:
 
 ```ts
 const midPointFn = () => clamp(0.001, 0.999, gaussRng(0.5, 2 / 15));
 ```
 
-This will return a value between $[0.001, 0.999]$, with values that are *near* $0.5$ with a *standard-deviation* of $\frac{2}{15}$ or $7.6$. For our angle, consider:
+This will return a value between $[0.001, 0.999]$, with values that are _near_ $0.5$ with a _standard-deviation_ of $\frac{2}{15}$ or $7.6$. For our angle, consider:
 
 ```ts
 const thetaFn = () => gaussRng(0, Math.PI / 12);
 ```
 
-This uses a standard-deviation of $\frac{\pi}{12}$, or 15&deg;. This means that around 70% of the angles we generate will be within a 30&deg; cone from the true tangent. Finally, for our magnitude, we are going to do something a little different. We are going to use the *length of the edge* that we are splitting, to derive the standard-deviation;
+This uses a standard-deviation of $\frac{\pi}{12}$, or 15&deg;. This means that around 70% of the angles we generate will be within a 30&deg; cone from the true tangent. Finally, for our magnitude, we are going to do something a little different. We are going to use the _length of the edge_ that we are splitting, to derive the standard-deviation;
 
 ```ts
 const magnitudeFn = (len) => Math.abs(gaussRng(0, len / 4));
 ```
 
-Here we are using a standard-deviation value of $\frac{length}{4}$; this means that long edges have a greater chance of distorting _further_, while shorter edges will result in more subtle distortions. These are just a *starting point* for the types of functions you could use to derive these parameters, the possiblities are endless and can have a major impacts on the output of the algorithm. Let's take a look at how this looks *now*:
+Here we are using a standard-deviation value of $\frac{length}{4}$; this means that long edges have a greater chance of distorting _further_, while shorter edges will result in more subtle distortions. These are just a _starting point_ for the types of functions you could use to derive these parameters, the possiblities are endless and can have a major impacts on the output of the algorithm. Let's take a look at how this looks _now_:
 
 <WatercolorExplorer client:visible renderFn="rngExample" />
 
 ## Iterating the effect
 
-However, we *still* aren't quite at the effect we are trying to get. Doing this *once*, doesn't really look like watercolor&hellip; It just looks like a more *"blobby"* version of original polygon. Using *recursion*&mdash;or in this case iterative progressions of distortion, applied *one-on-top-of-each-other*&mdash; we can algorithmically build up extremely complex shapes. Consider the following pseudocode:
+However, we _still_ aren't quite at the effect we are trying to get. Doing this _once_, doesn't really look like watercolor&hellip; It just looks like a more _"blobby"_ version of original polygon. Using _recursion_&mdash;or in this case iterative progressions of distortion, applied _one-on-top-of-each-other_&mdash; we can algorithmically build up extremely complex shapes. Consider the following pseudocode:
 
 ```ts
 const final = Array.from({ length: 5 }).reduce((prev) => {
   return render(prev, distortOptions);
-}, hexagon)
+}, hexagon);
 ```
 
-We start with our original hexagon, and then apply *five* iterations of distortion to it. Rendering the resulting polygon we get:
+We start with our original hexagon, and then apply _five_ iterations of distortion to it. Rendering the resulting polygon we get:
 
 <WatercolorExplorer client:visible renderFn="iterativeExample" />
 
-As you can see, using this seemingly "basic" algorithm&mdash;with careful adjustment of the function parameters&mdash;we can achieve some very organic looking shapes! Also, like giving a shake to a [kaleidoscope](https://en.wikipedia.org/wiki/Kaleidoscope) every generation of this effect can produce drastically different results, where even small changes in early iterations result in vastly different, organic-looking shapes. These shapes will serve as the *basis* for our final effect.
+As you can see, using this seemingly "basic" algorithm&mdash;with careful adjustment of the function parameters&mdash;we can achieve some very organic looking shapes! Also, like giving a shake to a [kaleidoscope](https://en.wikipedia.org/wiki/Kaleidoscope) every generation of this effect can produce drastically different results, where even small changes in early iterations result in vastly different, organic-looking shapes. These shapes will serve as the _basis_ for our final effect.
 
 ## The final effect
 
-By combining *multiple-evolutions*, that combine randomness and recursive-distortion, it is relatively easy to generate organic looking layers. We can use a transparent fill for each layer to achieve a visual effect that can come very close to watercolor on paper. Using the package [`@watercolorizer/watercolorizer`](https://www.npmjs.com/package/@watercolorizer/watercolorizer) handles all the low-level math/distortions described above, and just exposes a *generator* that can be used to render the layers:
+By combining _multiple-evolutions_, that combine randomness and recursive-distortion, it is relatively easy to generate organic looking layers. We can use a transparent fill for each layer to achieve a visual effect that can come very close to watercolor on paper. Using the package [`@watercolorizer/watercolorizer`](https://www.npmjs.com/package/@watercolorizer/watercolorizer) handles all the low-level math/distortions described above, and just exposes a _generator_ that can be used to render the layers:
 
 ```ts
-import { watercolorize } from "@watercolorizer/watercolorizer"
+import { watercolorize } from '@watercolorizer/watercolorizer';
 
 for (const layer of watercolorize(hexagon)) {
   drawPolygon(layer, `rgba(0 100 255 / 10%)`);

@@ -62,11 +62,7 @@ const figure = table !== true && code !== true;
 <figure class:list={{ figure, table, code }}>
   <main>
     <slot name="aside" />
-    <div class:list={{ centered }}>
-      <slot />
-    </div>
+    <div class:list={{ centered }}><slot /></div>
   </main>
-  <figcaption>
-    <slot name="caption">{caption}</slot>
-  </figcaption>
+  <figcaption><slot name="caption">{caption}</slot></figcaption>
 </figure>
