@@ -1,9 +1,12 @@
 ---
 import { icons } from 'feather-icons';
 import { getCollection } from 'astro:content';
-import Page from '../../layouts/page.astro';
+import Page from '@layouts/page.astro';
+import { cyrb53, cyrb64hex } from '@utils/cybr53';
 
-const ideas = await getCollection('thoughts');
+const ideas = (await getCollection('thoughts')).toSorted(
+  (a, b) => cyrb53(a.slug) - cyrb53(b.slug),
+);
 
 const shared = { width: '3ch', height: '2ex' };
 const ICONS = {

@@ -1,5 +1,5 @@
+import { gaussRng } from '@utils/maths.ts';
 import type { ExampleRenderer } from './example-renderer.ts';
-import { gaussRng } from '../../../../utils/maths.ts';
 import { text } from './helpers.ts';
 
 export const gaussDotsExample = (

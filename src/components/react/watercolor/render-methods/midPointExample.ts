@@ -2,9 +2,9 @@ import { effect, signal } from '@preact/signals-core';
 import * as M from 'transformation-matrix';
 import { distortPolygon } from '@watercolorizer/watercolorizer/distort-polygon';
 
+import { clamp } from '@utils/maths.ts';
 import type { ExampleRenderer } from './example-renderer.ts';
 import { nGon, poly, text } from './helpers.ts';
-import { clamp } from '../../../../utils/maths.ts';
 
 export const midPointExample = (
   ctx: CanvasRenderingContext2D,
