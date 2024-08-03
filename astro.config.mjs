@@ -15,16 +15,10 @@ import {
 export default defineConfig({
   site: 'https://j.holmes.codes',
   scopedStyleStrategy: 'class',
-  integrations: [
-    mdx(),
-    react({
-      include: 'components/react/**/*',
-    }),
-  ],
-  vite: {
-    plugins: [ViteYaml()],
-  },
+  integrations: [mdx(), react({ include: 'components/react/**/*' })],
+  vite: { plugins: [ViteYaml()] },
   markdown: {
+    smartypants: false,
     remarkPlugins: [
       remarkMath,
       remarkHint,
