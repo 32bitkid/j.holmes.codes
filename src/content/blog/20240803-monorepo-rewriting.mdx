@@ -1,0 +1,139 @@
+---
+title: 'Adventures in Monorepo Rewriting'
+authorDate: 2024-08-03
+published: true
+slug: 20240803-adventures-in-monorepo-rewriting
+tags: ['git', 'software-development']
+summary: >-
+  What happens when you get to the "break-things" part of move-fast-and-break-things when dealing with monorepos.
+image:
+  src: '@assets/20240803--adventures-in-monorepo-rewriting.png'
+  alt: Git repository history visualized in tig
+---
+
+## TL;DR
+
+I used [`git-filter-repo`](https://github.com/newren/git-filter-repo) to reorganize _three_ packages, in _two_ different monorepos, into a _new_ monorepo while maintaining the commit history in the new repository.
+
+## The Setup
+
+Way back when I first started working on [github.com/32bitkid/sci.js](https://github.com/32bitkid/sci.js), I realized pretty early that I needed a [`BitReader`](https://www.npmjs.com/package/@4bitlabs/readers) even to get _started_ working on the asset decompression and parsing. I didn't really see an existing one that I liked, so I wrote one. I knew relatively early on that a [_monorepo_](https://monorepo.tools/) was probably going to be a good idea; both for some general _separation-of-concerns_ while maintaining some ability to _rapidly_ prototype ideas. I didn't really have a _better_ home for my `BitReader`, so I just threw it in with the rest of the `SCI0` stuff&hellip;
+
+## Time goes on&hellip;
+
+Later, while working on [sci.js](https://github.com/32bitkid/sci.js), I wanted a fast ring-buffer `TypedArray`-backed `deque`. Again, I looked around, and didn't see anything that really _fit_ for what I wanted from the interface. So, again, I just built one and threw it in with the rest of the `SCI0` stuff. But it definitely was a _head-tilting moment_. This was the second-time I had shoved a more _general-purpose_ data-structure in a _domain-specific_ monorepo. I decided it was _okay_ for now&mdash;refocusing back on the scope of the overall project.
+
+But&hellip; there was _something_ brewing.
+
+## Third time's the charm!
+
+Fast-forward a few months, and I was working on something totally unrelated: a [`quadtree` and `ennetree`](https://github.com/32bitkid/4bitlabs.spatial). For a _hot-minute_, I thought that maybe a dense `float64` resizable-_vector_ might outperform the native _array_. I thought about using the [`Vector`](https://yomguithereal.github.io/mnemonist/vector) class from [mnemonist](https://yomguithereal.github.io/mnemonist/), but I wanted to be able to snag quadruples of floats from the backing `TypedArray` with `subarray()`, something mnemonist doesn't support[^subarray].
+
+Long story short, I wrote it and implemented it. Running the benchmarks, it didn't perform any better. It didn't perform _terribly worse_, but it was _way_ more complex with _a lot_ more moving parts. So, I took it out of `quadtree`/`ennetree`. However, it was still _useful_; like it wasn't _flawed_, it just didn't provide the performance benefits that I was hoping for. But now I had a bit a problem&hellip;
+
+## The Problem
+
+I had this `BitReader`-class and `Deque`-class in _one_ monorepo, and a `Vector`-class in _another_ monorepo. Neither of which really &ldquo;belonged&rdquo; in their parents repositories. They _actually_ had more in common with _each other_, than they had in the repos they stored in.
+
+_But_ I also didn't want to _lose_ all the commit history and context that I'd built up in those repos. I really wanted to _snatch_ those three packages from their respective repos, and plop them in a new repo, where I could develop and document them in _tandem_. But _how_ to do this&hellip;
+
+## The Process
+
+We probably _could_ go through and try to manually rewrite history with `git rebase -i`, but given that these were all from monorepos there was a _lot_ of cross development across packages. I wasn't, _perhaps_, as _disciplined_ as I should have been crafting my commits. So, I pretty knew that wasn't going to be an option. Luckily, there is a tool just for stuff like this: [`git-filter-repo`](https://github.com/newren/git-filter-repo).
+
+Checking out the [documentation](https://htmlpreview.github.io/?https://github.com/newren/git-filter-repo/blob/docs/html/git-filter-repo.html), the `--path` option sounds like exactly what I'm looking for!
+
+Let's say that we have two monorepos: `repo1` and `repo2`, I want to make _new_ `repo3`, that contains both `libs/package-a` from `repo1` and `libs/package-b` from `repo2`.
+
+### Step 1: Rewrite repo1
+
+Clone the `repo1` repository[^safe-clone].
+
+```sh
+cd ~/src
+git clone repo1 repo1-package-a
+```
+
+```sh
+cd ~/src/repo1-package-a
+git checkout -b only-package-a
+git filter-repo --path libs/package-a
+```
+
+Your branch should now _only_ contain commits that are related to `libs/package-a`.
+
+### Step 2: Rewrite repo2
+
+Repeat for the `repo2` repository[^safe-clone].
+
+```sh
+cd ~/src
+git clone repo2 repo2-package-b
+```
+
+```sh
+cd ~/src/repo2-package-b
+git checkout -b only-package-b
+git filter-repo --path libs/package-b
+```
+
+### Step 3
+
+We should now have two repositories with only the commits that we care about for `package-a` and `package-b`. Now we need to create a _new_ repo and merge these disparate histories together. So lets make a new folder and initialize a git repository.
+
+```sh
+mkdir ~/src/new-repo
+cd ~/src/repo-3
+git init
+```
+
+Let's just create an initial commit for this new repo by initializing a `README.md`
+
+```sh
+echo "Monorepo for package-a and package-b" > README.md
+git add README.md
+git commit -m 'Initial commit'
+```
+
+Now, we can add those two other repos with the history that we want as _remotes_.
+
+```sh
+git remote add repo1-package-a ../repo1-package-a
+git remote add repo2-package-b ../repo2-package-b
+git remote update
+```
+
+Next we need to merge in those two branches from the repositories we created earlier. Because our current branch and the other branches we want to merge come from _entirely separate_ commit histories, we need to use the `--allow-unrelated-histories` option to merge.
+
+```sh
+git merge --allow-unrelated-histories repo1-package-a/only-package-a
+git merge --allow-unrelated-histories repo2-package-b/only-package-b
+```
+
+And blammo! We should have our two packages now in the same repo, with their respective histories intact[^tag-cleanup].
+
+### Step 4: The Cleanup
+
+Now, we can remove those temp remotes:
+
+```sh
+git remote remove repo1-package-a
+git remote remove repo2-package-b
+```
+
+And then clean up the temp repos `repo1-package-a` and `repo2-package-b`. Finally, you'll probably want to remove the package folders from `repo1` and `repo2`, respectively.
+
+## Conclusion
+
+You probably won't _ever_ need to do this, especially if you spend a little more time on _planning_ than I did. But if you _do_, just remember `git` is a really powerful tool! You can more-or-less coerce it into doing almost anything you want, given enough _effort_. Even in times like this, where `git rebase -i` is insufficient, a myriad of alternatives and other approaches exist. Sometimes, you just have to figure out how to _express_ what you want.
+
+You can find my result of this process at [github.com/32bitkid/4bitlabs.bits](https://github.com/32bitkid/4bitlabs.bits).
+
+[git-filter-repo]: https://github.com/newren/git-filter-repo
+[gfr-docs]: https://htmlpreview.github.io/?https://github.com/newren/git-filter-repo/blob/docs/html/git-filter-repo.html
+
+[^subarray]: Total aside: it's kinda _obvious_ why mnemonist _doesn't_ support doing this. Getting array pointers into a _resizable_ backing array which may no longer be _valid_ as the vector is mutated is _demonstrably_ a BadIdea&trade;. I ended up _trashing_ this idea from my own implementation before publishing it.
+
+[^safe-clone]: You don't _need_ to clone the repo for this to work, you _can_ do it in the main repo on another branch, but I whenever I do this kind of _relatively_ hardcore history-rewriting I find that its often easier and safer to do it on a clone of the repo.
+
+[^tag-cleanup]: Depending on how your repos are set up, and what your process is, you might need to clean up _tags_ for unrelated histories. But if you don't use tags then you can ignore this.

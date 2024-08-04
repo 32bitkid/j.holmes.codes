@@ -160,7 +160,7 @@ const optImage = image && (await getImage({ src: image.src }));
     margin-block-start: 1rlh;
   }
 
-  .content :global(p:last-of-type) {
+  .content :global(p:last-child) {
     margin-block-end: 0;
   }
 
@@ -172,6 +172,14 @@ const optImage = image && (await getImage({ src: image.src }));
     box-sizing: border-box;
     max-width: 55rem;
     margin-inline: auto;
+  }
+
+  .content
+    :global(
+      .astro-code[data-language='sh'] > code > .line:not(:empty)::before
+    ) {
+    content: '❯ ';
+    color: #666;
   }
 
   .content :global(figure) {
@@ -233,9 +241,8 @@ const optImage = image && (await getImage({ src: image.src }));
   .content :global(.footnotes ol) {
     font-variant-numeric: oldstyle-nums;
     line-height: calc(1rlh * 1);
-    font-size: 0.7492rem;
+    font-size: calc((var(--f-normal) + var(--f-small)) / 2);
     margin-bottom: calc(1rlh * 1);
-    padding-inline-start: 4ch;
   }
 
   .content :global(.footnotes li p) {

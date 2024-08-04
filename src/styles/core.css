@@ -59,18 +59,18 @@ h4:not(hgroup > h4),
 h5:not(hgroup > h5),
 h6:not(hgroup > h6) {
   font-weight: 400;
-  letter-spacing: -0.04em;
-  font-family: 'Equity Caps B', serif;
   page-break-after: avoid;
 }
 
 h3:not(hgroup > h3) {
   font-size: var(--f-large);
   line-height: 1rlh;
-  font-feature-settings: 'c2sc', 'smcp', 'onum';
+  font-weight: 700;
+  margin-block: 1.25rlh 0.25rlh;
 }
 
 h2:not(hgroup > h2) {
+  font-family: 'Equity Caps B', serif;
   font-size: var(--f-x-large);
   line-height: 1rlh;
   margin-block: calc(1rlh * 2) 1rlh;
@@ -80,6 +80,7 @@ h2:not(hgroup > h2) {
 }
 
 h1:not(hgroup > h1) {
+  font-family: 'Equity Caps B', serif;
   font-size: var(--f-huge);
   margin-block: calc(1rlh * 3) 1rlh;
   line-height: calc(1rlh * 2);
@@ -247,4 +248,8 @@ small {
   border-radius: 0.3em;
   white-space: normal;
   font-size: 0.85em;
+}
+
+code {
+  text-rendering: optimizeSpeed;
 }
