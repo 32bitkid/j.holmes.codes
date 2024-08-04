@@ -8,7 +8,7 @@ summary: >-
   The JS arguments object is weird; weirder than I thought!
 ---
 
-So, I've known for a long time that the `arguments` object that is available in a function is a bit "odd", but until recently I didn't realize how odd.
+So, I've known for a long time that the `arguments` object that is available in a function is a bit <q>odd</q>, but until recently I didn't realize how odd.
 
 ---
 
@@ -52,7 +52,7 @@ var fn = clean(1);
 fn();
 ```
 
-I expected the return of `fn()` to be `1`. However, much to my surprise, I got a reference back to `fn` itself... _"Huh?"_ my former self though. I opened up the developer console, and added a breakpoint inside `clean`. Shockingly &ndash; at least to me at the time &ndash; was that `capturedArugments[0]` did not point at the value I originally had passed in... Instead, it pointed at the function that I had assigned to `expected`.
+I expected the return of `fn()` to be `1`. However, much to my surprise, I got a reference back to `fn` itself... _<q>Huh?</q>_ my former self though. I opened up the developer console, and added a breakpoint inside `clean`. Shockingly &ndash; at least to me at the time &ndash; was that `capturedArugments[0]` did not point at the value I originally had passed in... Instead, it pointed at the function that I had assigned to `expected`.
 
 _\*mindblown\*_
 
@@ -80,7 +80,7 @@ var strangeAdd = function (x, y) {
 
 And lo-and-behold, the same result. It appeared like the `arguments` object and the variables of the function are _linked_. Change one and it effects the other.
 
-By this time, I was off the plane and was able to reconnect the internets &ndash; my source of information, and was able to find that this is a fairly well documented "feature" of the `arguments` object. I just had never heard of it.
+By this time, I was off the plane and was able to reconnect the internets &ndash; my source of information, and was able to find that this is a fairly well documented <q>feature</q> of the `arguments` object. I just had never heard of it.
 
 _\*mindblown, again\*_
 

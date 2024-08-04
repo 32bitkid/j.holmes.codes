@@ -29,11 +29,11 @@ But&hellip; there was _something_ brewing.
 
 Fast-forward a few months, and I was working on something totally unrelated: a [`quadtree` and `ennetree`](https://github.com/32bitkid/4bitlabs.spatial). For a _hot-minute_, I thought that maybe a dense `float64` resizable-_vector_ might outperform the native _array_. I thought about using the [`Vector`](https://yomguithereal.github.io/mnemonist/vector) class from [mnemonist](https://yomguithereal.github.io/mnemonist/), but I wanted to be able to snag quadruples of floats from the backing `TypedArray` with `subarray()`, something mnemonist doesn't support[^subarray].
 
-Long story short, I wrote it and implemented it. Running the benchmarks, it didn't perform any better. It didn't perform _terribly worse_, but it was _way_ more complex with _a lot_ more moving parts. So, I took it out of `quadtree`/`ennetree`. However, it was still _useful_; like it wasn't _flawed_, it just didn't provide the performance benefits that I was hoping for. But now I had a bit a problem&hellip;
+Long story short, I wrote it and implemented it. Running the benchmarks, it didn't perform any better. It didn't perform _terribly worse_, but it was _way_ more complex with _a lot_ more moving parts. So, I took it out of `quadtree`/`ennetree`. However, it was still _useful_&mdash;like, it wasn't _flawed_&mdash;it just didn't provide the performance _benefits_ that I was hoping it would. But, now I had a bit a problem&hellip;
 
 ## The Problem
 
-I had this `BitReader`-class and `Deque`-class in _one_ monorepo, and a `Vector`-class in _another_ monorepo. Neither of which really &ldquo;belonged&rdquo; in their parents repositories. They _actually_ had more in common with _each other_, than they had in the repos they stored in.
+I had this `BitReader`-class and `Deque`-class in _one_ monorepo, and a `Vector`-class in _another_ monorepo. Neither of which really <q>belonged</q> in their parent repositories. They _actually_ had more in common with _each other_, than they had in the repos they stored in.
 
 _But_ I also didn't want to _lose_ all the commit history and context that I'd built up in those repos. I really wanted to _snatch_ those three packages from their respective repos, and plop them in a new repo, where I could develop and document them in _tandem_. But _how_ to do this&hellip;
 
