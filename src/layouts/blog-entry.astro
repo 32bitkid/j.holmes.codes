@@ -1,5 +1,4 @@
 ---
-import { format } from 'date-fns';
 import { getImage, Picture } from 'astro:assets';
 import Tags from '@components/Tags.astro';
 import Header from '@components/Header.astro';
@@ -176,7 +175,7 @@ const optImage = image && (await getImage({ src: image.src }));
 
   .content
     :global(
-      .astro-code[data-language='sh'] > code > .line:not(:empty)::before
+      .astro-code[data-language='console'] > code > .line:not(:empty)::before
     ) {
     content: '❯ ';
     color: #666;

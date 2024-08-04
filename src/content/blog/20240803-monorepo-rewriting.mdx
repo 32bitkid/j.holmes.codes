@@ -49,12 +49,12 @@ Let's say that we have two monorepos: `repo1` and `repo2`, I want to make _new_ 
 
 Clone the `repo1` repository[^safe-clone].
 
-```sh
+```console
 cd ~/src
 git clone repo1 repo1-package-a
 ```
 
-```sh
+```console
 cd ~/src/repo1-package-a
 git checkout -b only-package-a
 git filter-repo --path libs/package-a
@@ -66,12 +66,12 @@ Your branch should now _only_ contain commits that are related to `libs/package-
 
 Repeat for the `repo2` repository[^safe-clone].
 
-```sh
+```console
 cd ~/src
 git clone repo2 repo2-package-b
 ```
 
-```sh
+```console
 cd ~/src/repo2-package-b
 git checkout -b only-package-b
 git filter-repo --path libs/package-b
@@ -81,7 +81,7 @@ git filter-repo --path libs/package-b
 
 We should now have two repositories with only the commits that we care about for `package-a` and `package-b`. Now we need to create a _new_ repo and merge these disparate histories together. So lets make a new folder and initialize a git repository.
 
-```sh
+```console
 mkdir ~/src/new-repo
 cd ~/src/repo-3
 git init
@@ -89,7 +89,7 @@ git init
 
 Let's just create an initial commit for this new repo by initializing a `README.md`
 
-```sh
+```console
 echo "Monorepo for package-a and package-b" > README.md
 git add README.md
 git commit -m 'Initial commit'
@@ -97,7 +97,7 @@ git commit -m 'Initial commit'
 
 Now, we can add those two other repos with the history that we want as _remotes_.
 
-```sh
+```console
 git remote add repo1-package-a ../repo1-package-a
 git remote add repo2-package-b ../repo2-package-b
 git remote update
@@ -105,7 +105,7 @@ git remote update
 
 Next we need to merge in those two branches from the repositories we created earlier. Because our current branch and the other branches we want to merge come from _entirely separate_ commit histories, we need to use the `--allow-unrelated-histories` option to merge.
 
-```sh
+```console
 git merge --allow-unrelated-histories repo1-package-a/only-package-a
 git merge --allow-unrelated-histories repo2-package-b/only-package-b
 ```
@@ -116,7 +116,7 @@ And blammo! We should have our two packages now in the same repo, with their res
 
 Now, we can remove those temp remotes:
 
-```sh
+```console
 git remote remove repo1-package-a
 git remote remove repo2-package-b
 ```
