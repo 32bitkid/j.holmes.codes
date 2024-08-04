@@ -1,3 +1,0 @@
----
-title: Drawing with JavaScript
----
