@@ -33,9 +33,9 @@ Long story short, I wrote it and implemented it. Running the benchmarks, it didn
 
 ## The Problem
 
-I had this `BitReader`-class and `Deque`-class in _one_ monorepo, and a `Vector`-class in _another_ monorepo. Neither of which really <q>belonged</q> in their parent repositories. They _actually_ had more in common with _each other_, than they had in the repos they stored in.
+I had this `BitReader`-class and `Deque`-class in _one_ monorepo, and a `Vector`-class in _another_ monorepo. Neither of which really <q>belonged</q> in their parent repositories. They _actually_ had more in common with _each other_, than they had in the repos they were stored in.
 
-_But_ I also didn't want to _lose_ all the commit history and context that I'd built up in those repos. I really wanted to _snatch_ those three packages from their respective repos, and plop them in a new repo, where I could develop and document them in _tandem_. But _how_ to do this&hellip;
+_But_ I also didn't want to _lose_ all the commit history and context that I'd built up in those repos. I really wanted to _snatch_ those three packages from their respective repos, and plop them in a new repo, where I could develop and document them in _tandem_. But _how_ to do this?
 
 ## The Process
 
@@ -77,7 +77,7 @@ git checkout -b only-package-b
 git filter-repo --path libs/package-b
 ```
 
-### Step 3
+### Step 3: The Merge
 
 We should now have two repositories with only the commits that we care about for `package-a` and `package-b`. Now we need to create a _new_ repo and merge these disparate histories together. So lets make a new folder and initialize a git repository.
 
