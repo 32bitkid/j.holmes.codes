@@ -1,8 +1,9 @@
 ---
-import { FeatherAttributes, icons } from 'feather-icons';
+import { type FeatherAttributes } from 'feather-icons';
+import { icons } from 'feather-icons';
 import { getCollection } from 'astro:content';
 import Page from '@layouts/page.astro';
-import { cyrb53, cyrb64hex } from '@utils/cybr53';
+import { cyrb53 } from '@utils/cybr53';
 
 const ideas = (await getCollection('thoughts')).toSorted(
   (a, b) => cyrb53(a.slug) - cyrb53(b.slug),
