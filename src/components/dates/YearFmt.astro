@@ -16,8 +16,7 @@ const date = toDay(parsed);
 <time
   class:list={[className, tabular && 'tabular']}
   datetime={date.toISOString()}>{format(date, 'yyyy')}<slot /></time
->
-<style>
+><style>
   .tabular {
     font-variant-numeric: tabular-nums oldstyle-nums;
   }

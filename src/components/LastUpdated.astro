@@ -1,0 +1,18 @@
+---
+import DayFmt from '@components/dates/DayFmt.astro';
+export interface Props {
+  when: string;
+}
+
+const { when } = Astro.props;
+---
+
+<footer>Last Updated: <DayFmt date={when} /></footer>
+
+<style>
+  footer {
+    text-align: center;
+    font-size: var(--f-small);
+    color: var(--pal-light);
+  }
+</style>
