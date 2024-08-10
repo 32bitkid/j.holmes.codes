@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '@layouts/page.astro';
+import LastUpdated from '../../components/LastUpdated.astro';
+
+const tils = (await getCollection('til')).toSorted((a, b) =>
+  a.summary.localeCompare(b.summary.localeCompare),
+);
+---
+
+<Page title="Today I Learned" description="Today I Learned">
+  <h1><code>/til</code></h1>
+  <p>
+    A collection of concise write-ups on small things I learn day-to-day across
+    a variety of <em>languages</em>, <em>technologies</em>, and <em>domains</em
+    >. These are things that don't really warrant a full blog post. Inspired by <a
+      href="https://github.com/jbranchaud/til?tab=readme-ov-file#readme"
+      >github.com<wbr />/jbranchaud<wbr />/til</a
+    >.
+  </p>
+  <p>
+    {tils.length.toLocaleString()}
+    <abbr title="Today I Learned">TIL</abbr>s and counting&hellip;
+  </p>
+  <hr />
+  <LastUpdated when="2024-08-10" />
+</Page>

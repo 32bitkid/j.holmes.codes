@@ -1,6 +1,15 @@
 import { z, defineCollection, reference } from 'astro:content';
 
+const tilCollection = defineCollection({
+  type: 'content',
+  schema: () =>
+    z.object({
+      summary: z.string(),
+    }),
+});
+
 const projectsCollection = defineCollection({
+  type: 'content',
   schema: () =>
     z.discriminatedUnion('type', [
       z.object({
@@ -25,6 +34,7 @@ const projectsCollection = defineCollection({
 });
 
 const thoughtsCollection = defineCollection({
+  type: 'content',
   schema: () =>
     z.object({
       summary: z.string(),
@@ -42,6 +52,7 @@ const blogMeta = z.object({
 });
 
 const blogCollection = defineCollection({
+  type: 'content',
   schema: ({ image }) =>
     z.discriminatedUnion('published', [
       z
@@ -99,8 +110,9 @@ const sci0PicsCollection = defineCollection({
 
 export const collections = {
   blog: blogCollection,
-  sci0pics: sci0PicsCollection,
-  sci0games: sci0GamesCollection,
-  thoughts: thoughtsCollection,
   projects: projectsCollection,
+  sci0games: sci0GamesCollection,
+  sci0pics: sci0PicsCollection,
+  thoughts: thoughtsCollection,
+  til: tilCollection,
 };

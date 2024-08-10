@@ -91,6 +91,12 @@ h1:not(hgroup > h1) {
   text-wrap: balance;
 }
 
+abbr {
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--pal-light);
+}
+
 time {
   font-variant-numeric: oldstyle-nums;
 }

@@ -1,5 +1,5 @@
 ---
-import { icons } from 'feather-icons';
+import { FeatherAttributes, icons } from 'feather-icons';
 import { getCollection } from 'astro:content';
 import Page from '@layouts/page.astro';
 import { cyrb53, cyrb64hex } from '@utils/cybr53';
@@ -14,27 +14,27 @@ const ICONS = {
     ...shared,
     stroke: 'var(--pal-light)',
     'aria-label': 'Thinking about',
-  }),
+  } as Partial<FeatherAttributes>),
   active: icons['play-circle'].toSvg({
     ...shared,
     stroke: 'var(--pal-blue)',
     'aria-label': 'Working on',
-  }),
+  } as Partial<FeatherAttributes>),
   finished: icons['check-circle'].toSvg({
     ...shared,
     stroke: 'var(--pal-green)',
     'aria-label': 'Completed',
-  }),
+  } as Partial<FeatherAttributes>),
   paused: icons['pause-circle'].toSvg({
     ...shared,
     stroke: 'var(--pal-dark)',
     'aria-label': 'Taking a break',
-  }),
+  } as Partial<FeatherAttributes>),
   abandoned: icons['trash-2'].toSvg({
     ...shared,
     stroke: 'var(--pal-red)',
     'aria-label': 'Gave up',
-  }),
+  } as Partial<FeatherAttributes>),
 };
 ---
 
