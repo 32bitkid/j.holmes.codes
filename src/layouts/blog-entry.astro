@@ -164,13 +164,20 @@ const optImage = image && (await getImage({ src: image.src }));
   }
 
   .content :global(.astro-code) {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    font-size: 0.85em;
+    font-family: var(--f-monospace), monospace;
+    font-feature-settings: 'ss08' 1;
+    font-size: 0.8em;
     padding: 2ex 2ch;
     border-radius: 0.5rem;
     box-sizing: border-box;
     max-width: 55rem;
     margin-inline: auto;
+  }
+
+  @supports (font-variation-settings: normal) {
+    .content :global(.astro-code) {
+      font-family: 'Fira Code VF', var(--f-monospace), monospace;
+    }
   }
 
   .content

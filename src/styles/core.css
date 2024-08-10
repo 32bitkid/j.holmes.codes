@@ -16,6 +16,7 @@
   --f-huge: 2.378414230005442rem; /* calc(pow(var(--f-root), 3)); */
   --f-headline: 3.174802103936399rem; /* calc(pow(var(--f-root), 4)); */
   --f-epic: 4.237852377437181rem; /* calc(pow(var(--f-root), 5)); */
+  --f-monospace: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono';
 
   --pal-black: #010101;
   --pal-midnight: #031b75;
@@ -242,12 +243,22 @@ small {
 }
 
 :not(pre) > code {
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-family: var(--f-monospace), monospace;
+  font-feature-settings:
+    'ss08' 1,
+    'onum' 0;
   background: #f5f2f0;
   padding: 0.2em 0.5ch;
   border-radius: 0.3em;
   white-space: normal;
   font-size: 0.85em;
+}
+
+@supports (font-variation-settings: normal) {
+  :not(pre) > code {
+    font-family: 'Fira Code VF', var(--f-monospace), monospace;
+    font-weight: 450;
+  }
 }
 
 code {
