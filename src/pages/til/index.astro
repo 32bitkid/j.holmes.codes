@@ -4,7 +4,7 @@ import Page from '@layouts/page.astro';
 import LastUpdated from '../../components/LastUpdated.astro';
 
 const tils = (await getCollection('til')).toSorted((a, b) =>
-  a.summary.localeCompare(b.summary.localeCompare),
+  a.data.summary.localeCompare(b.data.summary),
 );
 ---
 
