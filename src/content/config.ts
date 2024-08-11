@@ -1,10 +1,12 @@
 import { z, defineCollection, reference } from 'astro:content';
 
-const tilCollection = defineCollection({
+const tilsCollection = defineCollection({
   type: 'content',
   schema: () =>
     z.object({
+      category: z.string().default('general'),
       summary: z.string(),
+      when: z.date(),
     }),
 });
 
@@ -114,5 +116,5 @@ export const collections = {
   sci0games: sci0GamesCollection,
   sci0pics: sci0PicsCollection,
   thoughts: thoughtsCollection,
-  til: tilCollection,
+  TILs: tilsCollection,
 };

@@ -1,0 +1,13 @@
+---
+when: 2024-08-10
+summary: "Node.js adds \u2011\u2011experimental\u2011strip\u2011types flag"
+category: node.js
+---
+
+[Node.js](https://nodejs.org/en) [added a flag](https://github.com/nodejs/node/pull/53725) to execute TypeScript directly with `--experimental-strip-types`. This will transpile `.ts` source files into JavaScript for execution, although no type-checking will be performed.
+
+```console
+$ node --experimental-strip-types script.ts
+```
+
+Not sure when this will get _promoted_ out of **experimental**, but its presently available in `node@23`. Other JavaScript engines, like [Deno](https://deno.com/) and [Bun](https://bun.sh/) have had support for this for some time, but it'll be interesting to see what Node.js getting it does to the ecosystem.

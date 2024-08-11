@@ -3,8 +3,12 @@ import { getCollection } from 'astro:content';
 import Page from '@layouts/page.astro';
 import LastUpdated from '../../components/LastUpdated.astro';
 
-const tils = (await getCollection('til')).toSorted((a, b) =>
-  a.data.summary.localeCompare(b.data.summary),
+const TILs = (await getCollection('TILs')).toSorted(
+  ({ data: a }, { data: b }) => {
+    const dSum = a.summary.localeCompare(b.summary);
+    if (dSum !== 0) return dSum;
+    return a.when.getTime() - b.when.getTime();
+  },
 );
 ---
 
@@ -19,9 +23,26 @@ const tils = (await getCollection('til')).toSorted((a, b) =>
     >.
   </p>
   <p>
-    {tils.length.toLocaleString()}
+    {TILs.length.toLocaleString()}
     <abbr title="Today I Learned">TIL</abbr>s and counting&hellip;
   </p>
+
+  <ol class="TILs">
+    {
+      TILs.map((it) => (
+        <li>
+          <a href={`/til/${it.slug}`} set:html={it.data.summary} />
+        </li>
+      ))
+    }
+  </ol>
+
   <hr />
   <LastUpdated when="2024-08-10" />
 </Page>
+<style>
+  .TILs {
+    list-style: disc;
+    padding-inline-start: 2.5ch;
+  }
+</style>

@@ -1,3 +1,20 @@
 ---
+import { getCollection } from 'astro:content';
+import Page from '../../layouts/md.astro';
 
+export async function getStaticPaths() {
+  return (await getCollection('TILs')).map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
 ---
+
+<Page>
+  <h1>{entry.data.summary}</h1>
+  <Content />
+  <nav><a href="/til">Back to <code>/til</code></a></nav>
+</Page>
