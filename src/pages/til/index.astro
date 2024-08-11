@@ -10,6 +10,13 @@ const TILs = (await getCollection('TILs')).toSorted(
     return a.when.getTime() - b.when.getTime();
   },
 );
+
+const mostRecent =
+  TILs.reduce((prev, entry) => {
+    const { when } = entry.data;
+    if (!prev) return when;
+    return when.getTime() > prev.getTime() ? when : prev;
+  }, null) ?? new Date();
 ---
 
 <Page title="Today I Learned" description="Today I Learned">
@@ -38,7 +45,7 @@ const TILs = (await getCollection('TILs')).toSorted(
   </ol>
 
   <hr />
-  <LastUpdated when="2024-08-10" />
+  <LastUpdated when={mostRecent} />
 </Page>
 <style>
   .TILs {

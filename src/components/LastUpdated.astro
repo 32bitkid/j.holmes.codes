@@ -1,7 +1,7 @@
 ---
 import DayFmt from '@components/dates/DayFmt.astro';
 export interface Props {
-  when: string;
+  when: string | Date;
 }
 
 const { when } = Astro.props;
