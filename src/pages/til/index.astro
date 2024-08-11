@@ -11,8 +11,8 @@ const TILs = (await getCollection('TILs')).toSorted(
   },
 );
 
-const mostRecent =
-  TILs.reduce((prev, entry) => {
+const mostRecent: Date =
+  TILs.reduce<Date | null>((prev, entry) => {
     const { when } = entry.data;
     if (!prev) return when;
     return when.getTime() > prev.getTime() ? when : prev;
