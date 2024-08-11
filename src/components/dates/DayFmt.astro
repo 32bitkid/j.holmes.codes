@@ -23,8 +23,7 @@ const formatStr = human ? 'MMMM do, yyyy' : 'yyyy-MM-dd';
 <time
   class:list={[className, tabular && 'tabular']}
   datetime={date.toISOString()}>{format(date, formatStr)}<slot /></time
->
-<style>
+><style>
   .tabular {
     font-variant-numeric: tabular-nums oldstyle-nums;
   }
