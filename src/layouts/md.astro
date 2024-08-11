@@ -98,6 +98,7 @@ import '@styles/core.css';
     max-width: 70%;
     min-width: 15rem;
     margin-inline: auto;
+    text-align: justify;
   }
 
   .md :global(blockquote p:first-of-type::before) {
@@ -107,7 +108,42 @@ import '@styles/core.css';
     content: close-quote;
   }
 
+  .md {
+    counter-reset: figure;
+  }
+
+  .md :global(figure:has(figcaption)) {
+    counter-increment: figure;
+    margin-block-end: 1rlh;
+    padding-block: 1rlh 0.5rlh;
+    padding-inline: 2ch;
+  }
+
+  .md :global(figure > figcaption) {
+    font-size: var(--f-small);
+    margin-block-start: 0.5rlh;
+    text-wrap: balance;
+  }
+
+  .md :global(figure > figcaption::before) {
+    font-weight: 700;
+    content: 'Fig.\2009' counter(figure) '.\2003';
+  }
+
+  .md :global(figure > pre ~ figcaption),
+  .md :global(figure > img ~ figcaption) {
+    text-align: left;
+    margin-inline: auto;
+    max-width: 50%;
+  }
+
+  .md :global(figure > img) {
+    margin-inline: auto;
+    display: block;
+  }
+
   .md :global(figure blockquote ~ figcaption) {
+    margin-block-start: 0;
     margin-inline: auto;
     max-width: 70%;
     min-width: 15rem;

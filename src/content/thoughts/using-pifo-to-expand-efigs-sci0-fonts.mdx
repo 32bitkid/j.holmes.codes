@@ -1,0 +1,40 @@
+---
+summary: Using <code>PIFO</code> to generate modern Sierra On-Line Fonts
+date: 2024-08-11
+status: thinking
+---
+
+import { Image } from 'astro:assets';
+import sierraFont000 from '@assets/sierra-font-000.png';
+
+# Using <code>PIFO</code> to generate modern Sierra On-Line Fonts
+
+[Chevy Ray Johnston](https://chevyray.dev/) posted a [_fantastic_ article](https://chevyray.dev/blog/creating-175-fonts/) on the Rust tooling they made to generate and publish their [awesome pixel fonts](https://chevyray.itch.io/). This isn&rsquo;t an advertisment or anything, I just love these fonts; if you are fan of indie gaming pretty much at _all_, then you&rsquo;ve definitely seen these fonts in _action_ in a bunch of indie games. They are absolutely _great_.
+
+However, this got me thinking about the old-school Sierra On-Line fonts that I grew up with. Now, [`scibud`](https://www.npmjs.com/package/@4bitlabs/scibud) already has the ability to extract and render `SCI0`/`SCI01` fonts from the original asset files:
+
+<figure>
+
+```console
+$ npx @4bitlabs/scibud font show 0 > font.png
+```
+    <figcaption>Command to extract font `0` from the current Sierra game directory and save the resulting image as a PNG file.</figcaption>
+</figure>
+
+Right now, the `font show` command is more of a _debugging-tool_ than anything really _useful_. It renders out a _very_ basic preview of the font as a PNG. The glyphs in resource files are variable width, so you can see the _ragged-edge_, given that there are equal number of glyphs rendered on each line&hellip;
+
+<figure>
+  <Image
+    src={sierraFont000}
+    style="background-color: #272822; padding: 1.5ch;"
+    inferSize
+    alt="Sierra font.000 extracted from Leisure Suit Larry 3"
+  />
+  <figcaption>The PNG file of the rendered font: `font.png`.</figcaption>
+</figure>
+
+However, as one might expect, the original `SCI0` engine doesn&rsquo;t support any kind of kerning, and that information is obviously _not-present_ in the font encoded in the `SCI0` resource files. But based on the post, that looks like that would be _relatively_ easy to add that _post-facto_.
+
+Legal shenanigans around _redistribution_ aside, _technically_ it should be more than feasible to generate the correct format and metadata files that `pifo` uses. I think it would be a lot of fun to extend some of these original `SCI0` fonts to <abbr title="English, French, Italian, German, and Spanish">EFIGS</abbr>, improve the kerning, and render some good TTF fonts for some web-games&hellip;
+
+If Chevy ever decides to open-source the tool, I'll definitely be interested in taking a closer look at getting this done.
