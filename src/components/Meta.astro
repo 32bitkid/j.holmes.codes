@@ -1,15 +1,18 @@
 ---
 import { ogSafe } from '@utils/ogSafe';
+import sanitizeHtml from 'sanitize-html';
+
+const textOnly = (str) => sanitizeHtml(str, { allowedTags: [] });
 
 const { props } = Astro;
 const { description = 'Thoughts on thoughts', image } = props;
-const title = props.title ?? props.frontmatter?.title;
+const title = textOnly(props.title ?? props.frontmatter?.title ?? '');
 const pageTitle = title ? `${title} \u2236 j.holmes.codes` : 'j.holmes.codes';
 ---
 
 <meta charset="utf-8" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<title>{pageTitle}</title>
+<title set:text={pageTitle} />
 
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
