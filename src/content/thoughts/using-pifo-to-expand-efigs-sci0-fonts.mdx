@@ -5,6 +5,7 @@ status: thinking
 ---
 
 import { Image } from 'astro:assets';
+import { Code } from 'astro:components';
 import sierraFont000 from '@assets/sierra-font-000.png';
 
 # Using <code>pifo</code> to Generate Modern Sierra On-Line Fonts
@@ -14,12 +15,11 @@ import sierraFont000 from '@assets/sierra-font-000.png';
 However, this article got me thinking about the old-school Sierra On-Line fonts that I grew up with. Now, [`scibud`](https://www.npmjs.com/package/@4bitlabs/scibud) already has the ability to extract and render `SCI0`/`SCI01` fonts from the original asset files:
 
 <figure>
-
-```console
-$ npx @4bitlabs/scibud font show 0 > font.png
-```
-
-    <figcaption>Command to extract font `0` from the current Sierra game directory and save the resulting image as a PNG file.</figcaption>
+  <Code code={`$ npx @4bitlabs/scibud font show 0 > font.png`} lang="console" />
+  <figcaption>
+    Command to extract font `0` from the current Sierra game directory and save
+    the resulting image as a PNG file.
+  </figcaption>
 </figure>
 
 Right now, the `font show` command is more of a _debugging-tool_ than anything really _useful_. It renders out a _very_ basic preview of the font as a PNG. The glyphs in resource files are variable width, so you can see the _ragged-edge_, given that there are equal number of glyphs rendered on each line&hellip;
@@ -31,7 +31,10 @@ Right now, the `font show` command is more of a _debugging-tool_ than anything r
     inferSize
     alt="Sierra font.000 extracted from Leisure Suit Larry 3"
   />
-  <figcaption>The PNG file of the rendered font&mdash;`font.png`&mdash;with 16 glyphs per line.</figcaption>
+  <figcaption>
+    The PNG file of the rendered font&mdash;`font.png`&mdash;with 16 glyphs per
+    line.
+  </figcaption>
 </figure>
 
 However, as one might expect, the original `SCI0` engine doesn&rsquo;t support any kind of kerning, and that information is obviously _not-present_ in the font encoded in the `SCI0` resource files. But based on the post, that looks like that would be _relatively_ easy to add that _post-facto_.

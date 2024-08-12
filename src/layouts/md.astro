@@ -130,6 +130,10 @@ import '@styles/core.css';
     padding-inline: 0.5ch;
   }
 
+  .md :global(figure > figcaption > p) {
+    display: contents;
+  }
+
   .md :global(figure > figcaption::before) {
     font-weight: 700;
     content: 'Fig.\2009' counter(figure) '.\2003';
@@ -162,7 +166,7 @@ import '@styles/core.css';
     content: '\2014';
   }
 
-  .md :global(p:last-child) {
+  .md :global(> p:last-child) {
     margin-block-end: 0;
   }
 
