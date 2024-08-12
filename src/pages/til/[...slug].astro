@@ -14,7 +14,7 @@ const { Content } = await entry.render();
 ---
 
 <Page>
-  <h1>{entry.data.summary}</h1>
+  <h1 set:html={entry.data.summary} />
   <Content />
   <nav><a href="/til">Back to <code>/til</code></a></nav>
 </Page>

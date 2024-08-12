@@ -1,0 +1,11 @@
+---
+when: 2024-08-11
+summary: CSS property <code>text-wrap</code>
+category: css
+---
+
+The [`text-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap) property is default value `wrap`. However, it can also also be `balance` and `pretty`.
+
+`balance` will attempt to split the number of words on each line so that they are close to equal. This can be quite useful for heading element, like `<h1>` elements. `balance` is faily well supported across _current_ browser.
+
+`pretty` is similar to `wrap` but will avoid single-word orphans on the final line. `pretty` is supported in Chrome/Edge and Opera, but not in Firefox/Safari. However, due to the _implementation_ of `prettier`, the default of `wrap` when unsupported is an acceptable _fallback_ implementation.
