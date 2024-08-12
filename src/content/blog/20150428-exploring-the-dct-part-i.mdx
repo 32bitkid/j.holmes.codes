@@ -9,7 +9,6 @@ slug: "20150428-exploring-the-dct-part-i"
 summary: >-
   Understanding the Discrete Cosine Transform and why it's so useful for image and audio compression.
 ---
-import Figure from "@components/Figure.astro";
 import "../../styles/20150428-exploring-the-dct-part-i.css"
 
 The <abbr title="Discrete Cosine Transform">DCT</abbr> is used extensively in lossy audio and image compression. It can
@@ -22,19 +21,17 @@ a sum of cosine functions oscillating at different frequencies.
 
 For JPEG and MPEG video, here is the formal definition of an 8&times;8 DCT:
 
-<Figure caption="A 8&times;8 DCT-II">
-    <div style="text-align: center">
-$ G_{u,v}= \frac{1}{4} \alpha(u) \alpha(v) \sum_{x=0}^{7} \sum_{y=0}^{7} g_{x,y} \cos \left [ \frac{(2x+1)u\pi}{16} \right ] \cos \left [ \frac{(2y+1)v\pi}{16} \right ] $
-    </div>
-</Figure>
+<figure>
+  <div style="text-align: center">$$ G_{u,v}= \frac{1}{4} \alpha(u) \alpha(v) \sum_{x=0}^{7} \sum_{y=0}^{7} g_{x,y} \cos \left [ \frac{(2x+1)u\pi}{16} \right ] \cos \left [ \frac{(2y+1)v\pi}{16} \right ] $$</div>
+  <figcaption>A 8&times;8 DCT-II</figcaption>
+</figure>
 
 
-Where:
-- $ \alpha(u) = \begin{cases} \frac{1}{\sqrt{2}}, & \text{ if } u=0\\ 1, & \text{ otherwise } \end{cases} $
+Where $ \alpha(u) = \begin{cases} \frac{1}{\sqrt{2}}, & \text{ if } u=0\\ 1, & \text{ otherwise } \end{cases} $
 
 Implemented in JavaScript as:
 
-<Figure caption="A na&iuml;ve DCT implementation in JavaScript" code>
+<figure>
 ```js
 const dct = function(input) {
   let output = [], v, u, x, y, sum, val, au, av;
@@ -57,23 +54,21 @@ const dct = function(input) {
   return output;
 }
 ```
-</Figure>
+  <figcaption>A na&iuml;ve DCT implementation in JavaScript</figcaption>
+</figure>
 
 And the corresponding *inverse* DCT:
 
-<Figure caption="The DCT-III, also known as the inverse DCT">
-    <div style="text-align: center;">
-    $$ f_{x,y} = \frac{1}{4} \sum_{u=0}^{7} \sum_{u=0}^{7} \alpha(u) \alpha(v) F_{u,v} \cos \left [ \frac{(2x+1)u\pi}{16} \right ] \cos \left [ \frac{(2y+1)v\pi}{16} \right ] $$
-    </div>
+<figure>
+  <div style="text-align: center;">$$ f_{x,y} = \frac{1}{4} \sum_{u=0}^{7} \sum_{u=0}^{7} \alpha(u) \alpha(v) F_{u,v} \cos \left [ \frac{(2x+1)u\pi}{16} \right ] \cos \left [ \frac{(2y+1)v\pi}{16} \right ] $$</div>
+  <figcaption>The DCT-III, also known as the inverse DCT</figcaption>
+</figure>
 
-    <div style="text-align: center;">
-    $$ \alpha(u) = \begin{cases} \frac{1}{\sqrt{2}}, & \text{ if } u=0\\ 1, & \text{ otherwise } \end{cases} $$
-    </div>
-</Figure>
+Where $$ \alpha(u) = \begin{cases} \frac{1}{\sqrt{2}}, & \text{ if } u=0\\ 1, & \text{ otherwise } \end{cases} $$
 
 Also implemented in JavaScript as:
 
-<Figure caption="A na&iuml;ve iDCT implementation in JavaScript" code>
+<figure>
 ```js
 const idct = function(input) {
   let output = [], v, u, x, y, sum, val, au, av;
@@ -98,7 +93,8 @@ const idct = function(input) {
   return output;
 }
 ```
-</Figure>
+  <figcaption>A na&iuml;ve iDCT implementation in JavaScript</figcaption>
+</figure>
 
 These JavaScript implementations are na&iuml;ve implementations, i.e. that are quite computationally expensive and unoptimized. They *are*, however, relatively easy to reason about.
 
@@ -114,10 +110,12 @@ I'm going to start by looking at a simpler one-dimensional example.
 
 We will begin with a signal, a linear ramp, like this:
 
-<Figure caption="The input signal">
-    <aside slot="aside"><table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>8.0</td></tr><tr><th>1</th><td>16.0</td></tr><tr><th>2</th><td>24.0</td></tr><tr><th>3</th><td>32.0</td></tr><tr><th>4</th><td>40.0</td></tr><tr><th>5</th><td>48.0</td></tr><tr><th>6</th><td>56.0</td></tr><tr><th>7</th><td>64.0</td></tr></tbody></table></aside>
-    <svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 276v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 250h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 250)">10</text></g><g class="tick" style="opacity:1"><path d="M50 210h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 210)">20</text></g><g class="tick" style="opacity:1"><path d="M50 170h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 170)">30</text></g><g class="tick" style="opacity:1"><path d="M50 130h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 130)">40</text></g><g class="tick" style="opacity:1"><path d="M50 90h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 90)">50</text></g><g class="tick" style="opacity:1"><path d="M50 50h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 50)">60</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#1f77b4" d="M33.125 228v12" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M77.758 256.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M99.375 196v44" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M144.008 224.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M165.625 164v76" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M210.258 192.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M231.875 132v108" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M276.508 160.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M298.125 100v140" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M342.758 128.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M364.375 68v172" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M409.008 96.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M430.625 36v204" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M475.258 64.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M496.875 4v236" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M541.508 32.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g></svg>
-</Figure>
+<figure>
+  <svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 276v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 250h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 250)">10</text></g><g class="tick" style="opacity:1"><path d="M50 210h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 210)">20</text></g><g class="tick" style="opacity:1"><path d="M50 170h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 170)">30</text></g><g class="tick" style="opacity:1"><path d="M50 130h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 130)">40</text></g><g class="tick" style="opacity:1"><path d="M50 90h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 90)">50</text></g><g class="tick" style="opacity:1"><path d="M50 50h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 50)">60</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#1f77b4" d="M33.125 228v12" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M77.758 256.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M99.375 196v44" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M144.008 224.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M165.625 164v76" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M210.258 192.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M231.875 132v108" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M276.508 160.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M298.125 100v140" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M342.758 128.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M364.375 68v172" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M409.008 96.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M430.625 36v204" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M475.258 64.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M496.875 4v236" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M541.508 32.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g></svg>
+  <figcaption>The input signal</figcaption>
+</figure>
+
+{/* <table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>8.0</td></tr><tr><th>1</th><td>16.0</td></tr><tr><th>2</th><td>24.0</td></tr><tr><th>3</th><td>32.0</td></tr><tr><th>4</th><td>40.0</td></tr><tr><th>5</th><td>48.0</td></tr><tr><th>6</th><td>56.0</td></tr><tr><th>7</th><td>64.0</td></tr></tbody></table> */}
 
 The input signal has been sampled 8 times, each sample is *independent* from it's neighboring samples; i.e. it represents the value of the signal at a specific point in space or time. A DCT transforms these discrete data points into a sum of cosine functions, each oscillating at a *different frequencies* and at *different magnitudes*.
 
@@ -127,28 +125,25 @@ Specifically, the DCT will transform this of *8 samples* into *8 coefficients*. 
 
 Let's look at the formal definition of the forward and inverse one-dimensional DCT that we will be using.
 
-<Figure caption="A 1-dimensional DCT">
-    <div style="text-align: center">
-    $ G_{k}= \alpha(k) \sqrt{\frac{2}{N}} \sum_{n=0}^{N-1} g_{n} \cos \left [ \frac{\pi}{N} \left (n + \frac{1}{2} \right ) k \right ] $
-    </div>
-</Figure>
+<figure>
+  <div style="text-align: center">$$ G_{k}= \alpha(k) \sqrt{\frac{2}{N}} \sum_{n=0}^{N-1} g_{n} \cos \left [ \frac{\pi}{N} \left (n + \frac{1}{2} \right ) k \right ] $$</div>
+  <figcaption>A 1-dimensional DCT</figcaption>
+</figure>
 
-<Figure caption="A 1-dimensional iDCT">
-    <div style="text-align: center">
-    $ g_{n} = \sqrt{\frac{2}{N}} \sum_{k=0}^{N-1} \alpha(k) G_{k} \cos \left [ \frac{\pi}{N} \left (n + \frac{1}{2} \right ) k \right ] $
-    </div>
-</Figure>
+<figure>
+  <div style="text-align: center">$$ g_{n} = \sqrt{\frac{2}{N}} \sum_{k=0}^{N-1} \alpha(k) G_{k} \cos \left [ \frac{\pi}{N} \left (n + \frac{1}{2} \right ) k \right ] $$</div>
+  <figcaption>A 1-dimensional iDCT</figcaption>
+</figure>
 
-Where:
+Where $ \alpha(x) = \begin{cases} \frac{1}{\sqrt {2} }, & \text{ if } x=0\\ 1, & \text{ otherwise } \end{cases} $
 
-- $ \alpha(x) = \begin{cases} \frac{1}{\sqrt {2} }, & \text{ if } x=0\\ 1, & \text{ otherwise } \end{cases} $
 - $ g $ is the input
 - $ G $ is the DCT output
 - $ N $ is the number of samples being transformed
 
 First, we can focus just on the forward DCT transformation. We can translate the forward equation into the following JavaScript:
 
-<Figure code>
+<figure>
 ```js
 const dct1d = function(signal) {
   let N = signal.length,
@@ -166,23 +161,25 @@ const dct1d = function(signal) {
   return output;
 };
 ```
-    <Fragment slot="caption">A na&iuml;ve implementation of a forward 1D DCT.</Fragment>
-</Figure>
+
+  <figcaption>A na&iuml;ve implementation of a forward 1D DCT.</figcaption>
+</figure>
 
 This function will take an array of samples and return an array of *equal length* DCT coefficients. Now, we can use this function to transform our input signal. Something like:
 
-<Figure code>
+<figure>
 ```js
 var coefficients = dct1d([8,16,24,32,40,48,56,64]);
 ```
-</Figure>
+</figure>
 
 The resulting array will be 8 elements long and will look like this:
 
-<Figure caption={"The computed DCT coefficients"}>
-<aside slot="aside"><table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>101.8</td></tr><tr><th>1</th><td>-51.5</td></tr><tr><th>2</th><td>-0.0</td></tr><tr><th>3</th><td>-5.4</td></tr><tr><th>4</th><td>0.0</td></tr><tr><th>5</th><td>-1.6</td></tr><tr><th>6</th><td>-0.0</td></tr><tr><th>7</th><td>-0.4</td></tr></tbody></table></aside>
-<svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 196v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 256.667h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 256.667)">-50</text></g><g class="tick" style="opacity:1"><path d="M50 190h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 190)">0</text></g><g class="tick" style="opacity:1"><path d="M50 123.333h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 123.333)">50</text></g><g class="tick" style="opacity:1"><path d="M50 56.667h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 56.667)">100</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#ff7f0e" d="M33.125 24.235V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m83.125 46.79 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M99.375 228.718V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m149.375 251.273 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M165.625 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m215.625 182.555 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M231.875 167.184V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m281.875 189.739 4.298 7.445-4.298 7.444-4.298-7.444Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M298.125 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m348.125 182.555 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M364.375 162.143V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m414.375 184.698 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M430.625 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m480.625 182.555 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M496.875 160.541V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m546.875 183.096 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g></svg>
-</Figure>
+<figure>
+  <svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 196v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 256.667h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 256.667)">-50</text></g><g class="tick" style="opacity:1"><path d="M50 190h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 190)">0</text></g><g class="tick" style="opacity:1"><path d="M50 123.333h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 123.333)">50</text></g><g class="tick" style="opacity:1"><path d="M50 56.667h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 56.667)">100</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#ff7f0e" d="M33.125 24.235V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m83.125 46.79 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M99.375 228.718V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m149.375 251.273 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M165.625 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m215.625 182.555 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M231.875 167.184V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m281.875 189.739 4.298 7.445-4.298 7.444-4.298-7.444Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M298.125 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m348.125 182.555 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M364.375 162.143V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m414.375 184.698 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M430.625 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m480.625 182.555 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M496.875 160.541V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m546.875 183.096 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g></svg>
+  <figcaption>The computed DCT coefficients</figcaption>
+</figure>
+{/* <table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>101.8</td></tr><tr><th>1</th><td>-51.5</td></tr><tr><th>2</th><td>-0.0</td></tr><tr><th>3</th><td>-5.4</td></tr><tr><th>4</th><td>0.0</td></tr><tr><th>5</th><td>-1.6</td></tr><tr><th>6</th><td>-0.0</td></tr><tr><th>7</th><td>-0.4</td></tr></tbody></table> */}
 
 ## Reconstructing the signal
 
@@ -190,7 +187,7 @@ Now that we have our set of coefficients, how do we transform it back into the o
 
 Again, we can express this in JavaScript as:
 
-<Figure code>
+<figure>
 ```js
 const idct1d = function(dct) {
   let N = dct.length,
@@ -208,23 +205,24 @@ const idct1d = function(dct) {
   return signal;
 };
 ```
-    <Fragment slot="caption">A na&iuml;ve implementation of a inverse 1D DCT.</Fragment>
-</Figure>
+  <figcaption>A na&iuml;ve implementation of a inverse 1D DCT.</figcaption>
+</figure>
 
 Let use it to reconstruct our signal:
 
-<Figure code>
+<figure>
 ```js
 const reconstructedSignal = idct1d(coefficients);
 ```
-</Figure>
+</figure>
 
 Again, this function returns the same number of samples as our coefficients. And aside from some small floating-point rounding errors, the reconstructed signal is identical to the original signal.
 
-<Figure caption={"The reconstructed signal"}>
-<aside slot="aside"><table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>8.0</td></tr><tr><th>1</th><td>16.0</td></tr><tr><th>2</th><td>24.0</td></tr><tr><th>3</th><td>32.0</td></tr><tr><th>4</th><td>40.0</td></tr><tr><th>5</th><td>48.0</td></tr><tr><th>6</th><td>56.0</td></tr><tr><th>7</th><td>64.0</td></tr></tbody></table></aside>
-<svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 276v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 250h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 250)">10</text></g><g class="tick" style="opacity:1"><path d="M50 210h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 210)">20</text></g><g class="tick" style="opacity:1"><path d="M50 170h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 170)">30</text></g><g class="tick" style="opacity:1"><path d="M50 130h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 130)">40</text></g><g class="tick" style="opacity:1"><path d="M50 90h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 90)">50</text></g><g class="tick" style="opacity:1"><path d="M50 50h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 50)">60</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#2ca02c" d="M33.125 228v12" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M79.125 254h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M99.375 196v44" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M145.375 222h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M165.625 164v76" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M211.625 190h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M231.875 132v108" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M277.875 158h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M298.125 100v140" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M344.125 126h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M364.375 68v172" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M410.375 94h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M430.625 36v204" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M476.625 62h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M496.875 4v236" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M542.875 30h8v8h-8Z"/></g></svg>
-</Figure>
+<figure>
+  <svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 276v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 250h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 250)">10</text></g><g class="tick" style="opacity:1"><path d="M50 210h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 210)">20</text></g><g class="tick" style="opacity:1"><path d="M50 170h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 170)">30</text></g><g class="tick" style="opacity:1"><path d="M50 130h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 130)">40</text></g><g class="tick" style="opacity:1"><path d="M50 90h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 90)">50</text></g><g class="tick" style="opacity:1"><path d="M50 50h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 50)">60</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#2ca02c" d="M33.125 228v12" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M79.125 254h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M99.375 196v44" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M145.375 222h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M165.625 164v76" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M211.625 190h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M231.875 132v108" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M277.875 158h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M298.125 100v140" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M344.125 126h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M364.375 68v172" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M410.375 94h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M430.625 36v204" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M476.625 62h8v8h-8Z"/></g><g class="signal"><path stroke="#2ca02c" d="M496.875 4v236" style="stroke-width:2" transform="translate(50 30)"/><path fill="#2ca02c" d="M542.875 30h8v8h-8Z"/></g></svg>
+  <figcaption>The reconstructed signal</figcaption>
+</figure>
+{/* <table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>8.0</td></tr><tr><th>1</th><td>16.0</td></tr><tr><th>2</th><td>24.0</td></tr><tr><th>3</th><td>32.0</td></tr><tr><th>4</th><td>40.0</td></tr><tr><th>5</th><td>48.0</td></tr><tr><th>6</th><td>56.0</td></tr><tr><th>7</th><td>64.0</td></tr></tbody></table> */}
 
 ## Okay, but *why?*
 
@@ -232,10 +230,11 @@ Up to now, you may have noticed that each transformation has been of equivalent 
 
 Look again at the coefficients of our compressed signal:
 
-<Figure caption={"The computed DCT coefficients"}>
-<aside slot="aside"><table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>101.8</td></tr><tr><th>1</th><td>-51.5</td></tr><tr><th>2</th><td>-0.0</td></tr><tr><th>3</th><td>-5.4</td></tr><tr><th>4</th><td>0.0</td></tr><tr><th>5</th><td>-1.6</td></tr><tr><th>6</th><td>-0.0</td></tr><tr><th>7</th><td>-0.4</td></tr></tbody></table></aside>
+<figure>
 <svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 196v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 256.667h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 256.667)">-50</text></g><g class="tick" style="opacity:1"><path d="M50 190h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 190)">0</text></g><g class="tick" style="opacity:1"><path d="M50 123.333h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 123.333)">50</text></g><g class="tick" style="opacity:1"><path d="M50 56.667h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 56.667)">100</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#ff7f0e" d="M33.125 24.235V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m83.125 46.79 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M99.375 228.718V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m149.375 251.273 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M165.625 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m215.625 182.555 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M231.875 167.184V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m281.875 189.739 4.298 7.445-4.298 7.444-4.298-7.444Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M298.125 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m348.125 182.555 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M364.375 162.143V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m414.375 184.698 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M430.625 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m480.625 182.555 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g><g class="signal"><path stroke="#ff7f0e" d="M496.875 160.541V160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#ff7f0e" d="m546.875 183.096 4.298 7.445-4.298 7.445-4.298-7.445Z"/></g></svg>
-</Figure>
+  <figcaption>The computed DCT coefficients</figcaption>
+</figure>
+{/* <table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>101.8</td></tr><tr><th>1</th><td>-51.5</td></tr><tr><th>2</th><td>-0.0</td></tr><tr><th>3</th><td>-5.4</td></tr><tr><th>4</th><td>0.0</td></tr><tr><th>5</th><td>-1.6</td></tr><tr><th>6</th><td>-0.0</td></tr><tr><th>7</th><td>-0.4</td></tr></tbody></table> */}
 
 Notice, that the *first two* coefficients have a relatively large magnitude, while the rest are fairly close to zero. This is because our source signal was a simple ramp: it's value increased by `8` units at each sample.
 
@@ -247,17 +246,18 @@ If our initial signal was comprised of white noise, i.e. static, there would be 
 
 We use can [quantization](http://en.wikipedia.org/wiki/Quantization_(image_processing)) to squash our coefficients, which are currently real numbers, into a smaller range of integers. As a simplistic implementation, we can divide each coefficient by `50`&mdash;the choice of `50` is a completely arbitrary selection on my part, it can be any number really for our purposes&mdash;and truncate the result.
 
-<Figure code>
+<figure>
 ```js
 const quantizer = (v) => v/50|0;
 const quantized = coefficients.map(quantizer);
 ```
-</Figure>
+</figure>
 
-<Figure caption={"The quantized coefficients."}>
-<aside slot="aside"><table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>2.0</td></tr><tr><th>1</th><td>-1.0</td></tr><tr><th>2</th><td>0.0</td></tr><tr><th>3</th><td>0.0</td></tr><tr><th>4</th><td>0.0</td></tr><tr><th>5</th><td>0.0</td></tr><tr><th>6</th><td>0.0</td></tr><tr><th>7</th><td>0.0</td></tr></tbody></table></aside>
-<svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 196v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 270h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 270)">-1.0</text></g><g class="tick" style="opacity:1"><path d="M50 230h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 230)">-0.5</text></g><g class="tick" style="opacity:1"><path d="M50 190h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 190)">0.0</text></g><g class="tick" style="opacity:1"><path d="M50 150h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 150)">0.5</text></g><g class="tick" style="opacity:1"><path d="M50 110h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 110)">1.0</text></g><g class="tick" style="opacity:1"><path d="M50 70h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 70)">1.5</text></g><g class="tick" style="opacity:1"><path d="M50 30h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 30)">2.0</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#d62728" d="M33.125 0v160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m83.125 35.264 6.079-10.528H77.046Z"/></g><g class="signal"><path stroke="#d62728" d="M99.375 240v-80" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m149.375 275.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M165.625 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m215.625 195.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M231.875 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m281.875 195.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M298.125 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m348.125 195.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M364.375 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m414.375 195.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M430.625 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m480.625 195.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M496.875 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m546.875 195.264 6.079-10.528h-12.158Z"/></g></svg>
-</Figure>
+<figure>
+  <svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 196v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 270h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 270)">-1.0</text></g><g class="tick" style="opacity:1"><path d="M50 230h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 230)">-0.5</text></g><g class="tick" style="opacity:1"><path d="M50 190h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 190)">0.0</text></g><g class="tick" style="opacity:1"><path d="M50 150h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 150)">0.5</text></g><g class="tick" style="opacity:1"><path d="M50 110h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 110)">1.0</text></g><g class="tick" style="opacity:1"><path d="M50 70h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 70)">1.5</text></g><g class="tick" style="opacity:1"><path d="M50 30h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 30)">2.0</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#d62728" d="M33.125 0v160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m83.125 35.264 6.079-10.528H77.046Z"/></g><g class="signal"><path stroke="#d62728" d="M99.375 240v-80" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m149.375 275.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M165.625 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m215.625 195.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M231.875 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m281.875 195.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M298.125 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m348.125 195.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M364.375 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m414.375 195.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M430.625 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m480.625 195.264 6.079-10.528h-12.158Z"/></g><g class="signal"><path stroke="#d62728" d="M496.875 160" style="stroke-width:2" transform="translate(50 30)"/><path fill="#d62728" d="m546.875 195.264 6.079-10.528h-12.158Z"/></g></svg>
+  <figcaption>The quantized coefficients.</figcaption>
+</figure>
+{/* <table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>2.0</td></tr><tr><th>1</th><td>-1.0</td></tr><tr><th>2</th><td>0.0</td></tr><tr><th>3</th><td>0.0</td></tr><tr><th>4</th><td>0.0</td></tr><tr><th>5</th><td>0.0</td></tr><tr><th>6</th><td>0.0</td></tr><tr><th>7</th><td>0.0</td></tr></tbody></table> */}
 
 After quantization, we now only have two coefficients that have values, and a long run of values of zero. This set can be [run-length encoded](http://en.wikipedia.org/wiki/Run-length_encoding) much smaller than the original set of samples.
 
@@ -271,54 +271,60 @@ While that made the data more compressible, what effect does that have on our re
 
 First, we need to de-quantize our coefficients:
 
-<Figure code>
+<figure>
 ```js
 const dequantizer = v => v*50;
 const dequantized = quantized.map(dequantizer);
 ```
-</Figure>
+</figure>
 
-<Figure caption={"The dequantized coefficients."}>
-<aside slot="aside"><table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>100.0</td></tr><tr><th>1</th><td>-50.0</td></tr><tr><th>2</th><td>0.0</td></tr><tr><th>3</th><td>0.0</td></tr><tr><th>4</th><td>0.0</td></tr><tr><th>5</th><td>0.0</td></tr><tr><th>6</th><td>0.0</td></tr><tr><th>7</th><td>0.0</td></tr></tbody></table></aside>
-<svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 186v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 255h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 255)">-50</text></g><g class="tick" style="opacity:1"><path d="M50 180h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 180)">0</text></g><g class="tick" style="opacity:1"><path d="M50 105h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 105)">50</text></g><g class="tick" style="opacity:1"><path d="M50 30h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 30)">100</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#9467bd" d="M33.125 0v150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m83.125 24.736 6.079 10.528H77.046Z"/></g><g class="signal"><path stroke="#9467bd" d="M99.375 225v-75" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m149.375 249.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M165.625 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m215.625 174.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M231.875 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m281.875 174.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M298.125 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m348.125 174.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M364.375 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m414.375 174.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M430.625 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m480.625 174.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M496.875 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m546.875 174.736 6.079 10.528h-12.158Z"/></g></svg>
-</Figure>
+<figure>
+  <svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 186v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 255h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 255)">-50</text></g><g class="tick" style="opacity:1"><path d="M50 180h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 180)">0</text></g><g class="tick" style="opacity:1"><path d="M50 105h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 105)">50</text></g><g class="tick" style="opacity:1"><path d="M50 30h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 30)">100</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#9467bd" d="M33.125 0v150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m83.125 24.736 6.079 10.528H77.046Z"/></g><g class="signal"><path stroke="#9467bd" d="M99.375 225v-75" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m149.375 249.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M165.625 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m215.625 174.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M231.875 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m281.875 174.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M298.125 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m348.125 174.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M364.375 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m414.375 174.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M430.625 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m480.625 174.736 6.079 10.528h-12.158Z"/></g><g class="signal"><path stroke="#9467bd" d="M496.875 150" style="stroke-width:2" transform="translate(50 30)"/><path fill="#9467bd" d="m546.875 174.736 6.079 10.528h-12.158Z"/></g></svg>
+  <figcaption>The dequantized coefficients.</figcaption>
+</figure>
+{/* <table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>100.0</td></tr><tr><th>1</th><td>-50.0</td></tr><tr><th>2</th><td>0.0</td></tr><tr><th>3</th><td>0.0</td></tr><tr><th>4</th><td>0.0</td></tr><tr><th>5</th><td>0.0</td></tr><tr><th>6</th><td>0.0</td></tr><tr><th>7</th><td>0.0</td></tr></tbody></table> */}
 
 Notice they are *not* the same as the coefficients we calculated before, due to the truncation. Now, let's run the inverse DCT and see what signal we get back:
 
-<Figure code>
+<figure>
 ```js
 const decompressedSignal = idct1d(dequantized);
 ```
-</Figure>
+</figure>
 
-<Figure caption={"The reconstructed decompressed signal."}>
-<aside slot="aside"><table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>10.8</td></tr><tr><th>1</th><td>14.6</td></tr><tr><th>2</th><td>21.5</td></tr><tr><th>3</th><td>30.5</td></tr><tr><th>4</th><td>40.2</td></tr><tr><th>5</th><td>49.2</td></tr><tr><th>6</th><td>56.1</td></tr><tr><th>7</th><td>59.9</td></tr></tbody></table></aside>
+<figure>
 <svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 276v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 270h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 270)">10</text></g><g class="tick" style="opacity:1"><path d="M50 222h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 222)">20</text></g><g class="tick" style="opacity:1"><path d="M50 174h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 174)">30</text></g><g class="tick" style="opacity:1"><path d="M50 126h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 126)">40</text></g><g class="tick" style="opacity:1"><path d="M50 78h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 78)">50</text></g><g class="tick" style="opacity:1"><path d="M50 30h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 30)">60</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal"><path stroke="#8c564b" d="M33.125 235.989V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M83.125 270.502a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal"><path stroke="#8c564b" d="M99.375 218.071V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M149.375 252.584a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal"><path stroke="#8c564b" d="M165.625 184.963V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M215.625 219.476a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal"><path stroke="#8c564b" d="M231.875 141.705V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M281.875 176.219a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal"><path stroke="#8c564b" d="M298.125 94.884V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M348.125 129.397a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal"><path stroke="#8c564b" d="M364.375 51.626V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M414.375 86.14a4.514 4.514 0 1 1 0-9.028 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal"><path stroke="#8c564b" d="M430.625 18.518V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M480.625 53.032a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal"><path stroke="#8c564b" d="M496.875.6V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M546.875 35.114a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g></svg>
-</Figure>
+  <figcaption>The reconstructed decompressed signal.</figcaption>
+</figure>
+{/* <table><thead><th>$i$</th><th>Value</th></thead><tbody><tr><th>0</th><td>10.8</td></tr><tr><th>1</th><td>14.6</td></tr><tr><th>2</th><td>21.5</td></tr><tr><th>3</th><td>30.5</td></tr><tr><th>4</th><td>40.2</td></tr><tr><th>5</th><td>49.2</td></tr><tr><th>6</th><td>56.1</td></tr><tr><th>7</th><td>59.9</td></tr></tbody></table> */}
 
 At first glance, the reconstructed signal appears *similar*. However, on closer inspection, you can see they are actually different. That is because we threw away some of the smaller, high-frequency coefficients that were subtly adjusting the reconstructed signal. Without those frequencies, the new signal drifts away from the original.
 
 However, compare them together on the same chart:
 
-<Figure caption="Both the original signal and reconstructed decompressed signal.">
-<aside slot="aside">
-<table>
-<thead><th>$i$</th><th colspan="2">Value</th><th>±</th></thead>
-<tbody>
-  <tr><th>0</th><td>8.0</td><td>10.8</td><th>&plus;2.8</th></tr>
-  <tr><th>1</th><td>16.0</td><td>14.6</td><th>&minus;1.4</th></tr>
-  <tr><th>2</th><td>24.0</td><td>21.5</td><th>&minus;2.5</th></tr>
-  <tr><th>3</th><td>32.0</td><td>30.5</td><th>&minus;1.5</th></tr>
-  <tr><th>4</th><td>40.0</td><td>40.2</td><th>&plus;0.2</th></tr>
-  <tr><th>5</th><td>48.0</td><td>49.2</td><th>&plus;1.2</th></tr>
-  <tr><th>6</th><td>56.0</td><td>56.1</td><th>&plus;0.1</th></tr>
-  <tr><th>7</th><td>64.0</td><td>59.9</td><th>&minus;4.1</th></tr>
-</tbody>
-</table>
-</aside>
+<figure>
 <svg viewBox="0 0 600 300"><g class="x axis"><path d="M50 276v-6h530v6" class="domain"/></g><g class="y axis"><g class="tick" style="opacity:1"><path d="M50 250h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 250)">10</text></g><g class="tick" style="opacity:1"><path d="M50 210h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 210)">20</text></g><g class="tick" style="opacity:1"><path d="M50 170h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 170)">30</text></g><g class="tick" style="opacity:1"><path d="M50 130h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 130)">40</text></g><g class="tick" style="opacity:1"><path d="M50 90h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 90)">50</text></g><g class="tick" style="opacity:1"><path d="M50 50h-6"/><text x="-9" dy=".32em" style="text-anchor:end" transform="translate(50 50)">60</text></g><path d="M44 30h6v240h-6" class="domain"/></g><g class="signal2"><path stroke="#8c564b" d="M33.125 216.657V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M83.125 251.17a4.514 4.514 0 1 1 0-9.026 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal2"><path stroke="#8c564b" d="M99.375 201.726V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M149.375 236.24a4.514 4.514 0 1 1 0-9.028 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal2"><path stroke="#8c564b" d="M165.625 174.136V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M215.625 208.65a4.514 4.514 0 1 1 0-9.028 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal2"><path stroke="#8c564b" d="M231.875 138.088V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M281.875 172.601a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal2"><path stroke="#8c564b" d="M298.125 99.07V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M348.125 133.583a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal2"><path stroke="#8c564b" d="M364.375 63.022V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M414.375 97.535a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal2"><path stroke="#8c564b" d="M430.625 35.432V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M480.625 69.945a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal2"><path stroke="#8c564b" d="M496.875 20.5V240" style="stroke-width:2" transform="translate(50 30)"/><path fill="#8c564b" d="M546.875 55.014a4.514 4.514 0 1 1 0-9.027 4.514 4.514 0 1 1 0 9.027Z"/></g><g class="signal"><path stroke="#1f77b4" d="M33.125 228v12" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M77.758 256.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M99.375 196v44" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M144.008 224.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M165.625 164v76" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M210.258 192.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M231.875 132v108" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M276.508 160.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M298.125 100v140" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M342.758 128.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M364.375 68v172" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M409.008 96.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M430.625 36v204" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M475.258 64.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g><g class="signal"><path stroke="#1f77b4" d="M496.875 4v236" style="stroke-width:2" transform="translate(50 30)"/><path fill="#1f77b4" d="M541.508 32.211h3.578v-3.578h3.578v3.578h3.578v3.578h-3.578v3.578h-3.578v-3.578h-3.578Z"/></g></svg>
-</Figure>
+  <figcaption>Both the original signal and reconstructed decompressed signal.</figcaption>
+</figure>
 
+Let&rsquo;s take a look at the difference between those values a little closer!
+
+<figure>
+  <table>
+    <thead><th>$i$</th><th colspan="2">Value</th><th>±</th></thead>
+    <tbody>
+    <tr><th>0</th><td>8.0</td><td>10.8</td><th>&plus;2.8</th></tr>
+    <tr><th>1</th><td>16.0</td><td>14.6</td><th>&minus;1.4</th></tr>
+    <tr><th>2</th><td>24.0</td><td>21.5</td><th>&minus;2.5</th></tr>
+    <tr><th>3</th><td>32.0</td><td>30.5</td><th>&minus;1.5</th></tr>
+    <tr><th>4</th><td>40.0</td><td>40.2</td><th>&plus;0.2</th></tr>
+    <tr><th>5</th><td>48.0</td><td>49.2</td><th>&plus;1.2</th></tr>
+    <tr><th>6</th><td>56.0</td><td>56.1</td><th>&plus;0.1</th></tr>
+    <tr><th>7</th><td>64.0</td><td>59.9</td><th>&minus;4.1</th></tr>
+    </tbody>
+  </table>
+  <figcaption>Table of original signal and reconstructed decompressed signal.</figcaption>
+</figure>
 
 Not quite the same, but close&mdash;and that's the idea. We can use the DCT, to transform our set into a more *compressible* set data that can be reconstructed into a *similar* signal, but not identical. We have, however, *lost* some of the original data in the process; that is what is meant by "lossy" compression.
 

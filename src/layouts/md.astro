@@ -34,6 +34,7 @@ import '@styles/core.css';
     padding-inline: 1.5ch;
   }
 
+  /* Ordered and Unordered List */
   .md :global(ol),
   .md :global(ul) {
     margin-block: 1rlh;
@@ -56,6 +57,7 @@ import '@styles/core.css';
     margin-block: 0.25rlh;
   }
 
+  /* Definition List */
   .md :global(dl) {
     display: grid;
     grid-template-columns: fit-content(12ch) 1fr;
@@ -89,6 +91,7 @@ import '@styles/core.css';
     align-self: first baseline;
   }
 
+  /* Blockquotes and Quotes */
   .md :global(blockquote),
   .md :global(q) {
     quotes: '“' '”' '‘' '’';
@@ -108,6 +111,7 @@ import '@styles/core.css';
     content: close-quote;
   }
 
+  /* Figure / FigCaption */
   .md {
     counter-reset: figure;
   }
@@ -116,13 +120,14 @@ import '@styles/core.css';
     counter-increment: figure;
     margin-block-end: 1rlh;
     padding-block: 1rlh 0.5rlh;
-    padding-inline: 2ch;
+    padding-inline: min(2vw, 6ch);
   }
 
   .md :global(figure > figcaption) {
     font-size: var(--f-small);
     margin-block-start: 0.5rlh;
-    text-wrap: balance;
+    text-wrap: pretty;
+    padding-inline: 0.5ch;
   }
 
   .md :global(figure > figcaption::before) {
@@ -130,11 +135,14 @@ import '@styles/core.css';
     content: 'Fig.\2009' counter(figure) '.\2003';
   }
 
+  .md :global(figure > table ~ figcaption),
   .md :global(figure > pre ~ figcaption),
-  .md :global(figure > img ~ figcaption) {
-    text-align: left;
+  .md :global(figure > img ~ figcaption),
+  .md :global(figure > picture ~ figcaption) {
+    max-width: 24rem;
     margin-inline: auto;
-    max-width: 50%;
+    text-align: justify;
+    text-align-last: start;
   }
 
   .md :global(figure > img) {
@@ -142,7 +150,7 @@ import '@styles/core.css';
     display: block;
   }
 
-  .md :global(figure blockquote ~ figcaption) {
+  .md :global(figure > blockquote ~ figcaption) {
     margin-block-start: 0;
     margin-inline: auto;
     max-width: 70%;
@@ -161,6 +169,8 @@ import '@styles/core.css';
   .md :global(pre:not(figure pre)) {
     margin-bottom: 1rlh;
   }
+
+  /* Codeblocks */
 
   .md :global(.astro-code) {
     font-family: var(--f-monospace), monospace;

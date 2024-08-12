@@ -9,7 +9,6 @@ slug: "20150808-better-color-gradients"
 summary: >-
   Let's take a closer look at an interesting challenge when generating color ramps and gradients.
 ---
-import Figure from "@components/Figure.astro";
 
 Color is tricky! It's often more complicated than I expect; when I underestimate it, I usually end up taking a dive down into some serious color theory and math. Let's take a closer look at an interesting challenge when generating color ramps and gradients.
 
@@ -17,15 +16,21 @@ Color is tricky! It's often more complicated than I expect; when I underestimate
 
 CSS3 introduced the [`linear-gradient()`](https://drafts.csswg.org/css-images-3/#linear-gradients) function that lets you create a smooth transition between multiple colors. It makes it easy to pop a gradient here and there in CSS. For example:
 
-<Figure caption="A simple gradient from yellow to red." code>
-```css
-.el { background-image: linear-gradient(90deg, yellow, red); }
-```
-</Figure>
+<figure>
 
-<Figure caption="The resulting gradient rendered by your browser.">
-<div style="height: 4rem; background-image: linear-gradient(90deg, yellow, red);"></div>
-</Figure>
+```css
+.el {
+  background-image: linear-gradient(90deg, yellow, red);
+}
+```
+
+  <figcaption>A simple gradient from yellow to red.</figcaption>
+</figure>
+
+<figure>
+  <div style="height: 4rem; background-image: linear-gradient(90deg, yellow, red);"></div>
+  <figcaption>The resulting gradient rendered by your browser.</figcaption>
+</figure>
 
 A simple gradient from yellow to red. Neat! And it's all <span class="sic">grape</span>!
 
@@ -33,17 +38,23 @@ A simple gradient from yellow to red. Neat! And it's all <span class="sic">grape
 
 The `linear-gradient()` function uses a simple [RGB](https://en.wikipedia.org/wiki/RGB_color_space) interpolation to blend between colors. It's super fast, but it can create less than ideal mix of colors. Especially when the two colors are on the *opposite side* of the color wheel from each other. Consider:
 
-<Figure caption="A simple gradient from yellow to red." code>
-```css
-.el { background-image: linear-gradient(90deg, yellow, blue); }
-```
-</Figure>
+<figure>
+
+  ```css
+  .el {
+    background-image: linear-gradient(90deg, yellow, blue);
+  }
+  ```
+
+  <figcaption>A simple gradient from yellow to red.</figcaption>
+</figure>
 
 Which looks a little like this:
 
-<Figure caption="Yikes, that's a gradient alright!">
-<div style="height: 4rem; background-image: linear-gradient(90deg, yellow, blue);"></div>
-</Figure>
+<figure>
+  <div style="height: 4rem; background-image: linear-gradient(90deg, yellow, blue);"></div>
+  <figcaption>Yikes, that's a gradient alright!</figcaption>
+</figure>
 
 This might *not* be what you expect. Depending on what you are doing, you might be asking yourself, <q>What's up with that weird color in the middle?!</q>
 
@@ -55,24 +66,31 @@ The color mixing algorithm breaks down the start and end color into its red, gre
 
 First let's break down the colors:
 
-<Figure caption="Color Breakdown" table>
-| CSS Color | Hex | Red | Green | Blue |
-|-:|:-:|:-:|:-:|:-:|
-| `yellow` | `#FFFF00` | 255 | 255 | 0 |
-| `blue` | `#0000FF` | 0 | 0 | 255 |
-</Figure>
+<figure>
+
+  | CSS Color |    Hex    | Red | Green | Blue |
+  | --------: | :-------: | :-: | :---: | :--: |
+  |  `yellow` | `#FFFF00` | 255 |  255  |  0   |
+  |    `blue` | `#0000FF` |  0  |   0   | 255  |
+
+  <figcaption>Color Breakdown</figcaption>
+</figure>
 
 Then, we can define a simple linear tween:
 
-<Figure caption="A simple linear tween generator" code>
+<figure>
+
 ```js
 const linearTween = (start, stop) => (i) => (stop-start) * i + start;
 ```
-</Figure>
+
+  <figcaption>A simple linear tween generator</figcaption>
+</figure>
 
 Now, look what happens when we get to the halfway point:
 
-<Figure caption="What happens at 50%?" code>
+<figure>
+
 ```js
 var red = linearTween(255, 0);
 var green = linearTween(255, 0);
@@ -82,7 +100,9 @@ red(0.5)   | 0;  // 127
 green(0.5) | 0;  // 127
 blue(0.5)  | 0;  // 127
 ```
-</Figure>
+
+  <figcaption>What happens at 50%?</figcaption>
+</figure>
 
 We get a nice middle gray. Yummy&hellip;
 
@@ -100,16 +120,20 @@ Let's try [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV). HSL is a cylindrical
 
 Hue is usually represented as degrees; Saturation and Lightness as percentages. Let's turn our target colors into HSL rather than RGB:
 
-<Figure caption="Converting our colors to HSL" table>
-| CSS Color | Hue | Saturation | Lightness |
-|-:|:-:|:-:|:-:|
-| `yellow` | 60&deg; | 100% | 50% |
-| `blue` | 240&deg; | 100% | 50% |
-</Figure>
+<figure>
+
+  | CSS Color |   Hue    | Saturation | Lightness |
+  | --------: | :------: | :--------: | :-------: |
+  |  `yellow` | 60&deg;  |    100%    |    50%    |
+  |    `blue` | 240&deg; |    100%    |    50%    |
+
+  <figcaption>Converting our colors to HSL</figcaption>
+</figure>
 
 Now, to interpolate between those two color, we need to make a new kind of tween. We need a *circular tween*:
 
-<Figure caption="A circular tween in degrees. Takes the shortest path between two angles." code>
+<figure>
+
 ```js
 var circularTween = (function() {
   var dtor = (d) => d * Math.PI / 180; // degrees => radians
@@ -123,56 +147,74 @@ var circularTween = (function() {
   };
 })();
 ```
-</Figure>
+
+  <figcaption>A circular tween in degrees. Takes the shortest path between two angles.</figcaption>
+</figure>
 
 Now, let's tween it up. I'm going to generate seven stops in my tween, and use [tinycolor.js](http://bgrins.github.io/TinyColor/) to convert from HSL back into hex colors:
 
-<Figure caption="Tween between yellow and blue, using HSL" code>
+<figure>
+
 ```js
 var h = circularTween(60, 240);
 var s = linearTween(1, 1);
 var l = linearTween(0.5, 0.5);
 
-for(var i = 0; i < 7 ; i++) {
-    console.log(tinycolor({
-        h: h(i/6),
-        s: s(i/6),
-        l: l(i/6)
-    }).toHexString());
+for (var i = 0; i < 7; i++) {
+  console.log(
+    tinycolor({
+      h: h(i / 6),
+      s: s(i / 6),
+      l: l(i / 6),
+    }).toHexString(),
+  );
 }
-```
-</Figure>
+  ```
+
+  <figcaption>Tween between yellow and blue, using HSL</figcaption>
+</figure>
 
 And here is what we get out:
 
-<Figure caption="The resulting generated colors.">
+<figure>
 ```
-> #ffff00
-> #ff7f00
-> #ff0000
-> #ff0080
-> #ff00ff
-> #7f00ff
-> #0000ff
+❯ #ffff00
+❯ #ff7f00
+❯ #ff0000
+❯ #ff0080
+❯ #ff00ff
+❯ #7f00ff
+❯ #0000ff
 ```
-</Figure>
+
+  <figcaption>The resulting generated colors.</figcaption>
+</figure>
 
 Now, let's plug those into a `linear-gradient()`; this will linearly interpolate between the stops, but will be closer to a *true* HSL interpolation.
 
-<Figure caption="An approximation of a HSL gradient using multiple color stops." code>
+<figure>
 ```css
 .el {
   background: linear-gradient(
     90deg,
-    #ffff00, #ff7f00, #ff0000, #ff0080, #ff00ff, #7f00ff, #0000ff
+    #ffff00,
+    #ff7f00,
+    #ff0000,
+    #ff0080,
+    #ff00ff,
+    #7f00ff,
+    #0000ff
   );
 }
 ```
-</Figure>
 
-<Figure caption="The approximation gradient…">
-<div style="height: 4rem; background: linear-gradient(90deg, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #007fff, #0000ff);"></div>
-</Figure>
+  <figcaption>An approximation of a HSL gradient using multiple color stops.</figcaption>
+</figure>
+
+<figure>
+  <div style="height: 4rem; background: linear-gradient(90deg, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #007fff, #0000ff);"></div>
+  <figcaption>The approximation gradient&hellip;</figcaption>
+</figure>
 
 Well, we don't get that weird gray anymore, but it's a little &hellip; colorful.
 
@@ -188,7 +230,7 @@ HSLuv is a self described as <q cite="http://www.hsluv.org/">&hellip;a human-fri
 
 It does a better job of maintaining perceptual brightness between relative hues&hellip; Let's rerun our tween, but instead of HSL we'll use HSLuv.
 
-<Figure caption="Tween between yellow and blue, using HSLuv. No cheating this time." code>
+<figure>
 ```js
 var start = hexToHsluv("#FFFF00");
 var end = hexToHsluv("#0000FF");
@@ -201,11 +243,12 @@ for(var i = 0; i < 7 ; i++) {
     console.log(hsluvToHex(h(i/6), s(i/6), l(i/6)));
 }
 ```
-</Figure>
+  <figcaption>Tween between yellow and blue, using HSLuv. No cheating this time.</figcaption>
+</figure>
 
 And here is what we get out:
 
-<Figure caption="The resulting generated colors.">
+<figure>
 ```
 > #ffff00
 > #8df100
@@ -215,24 +258,33 @@ And here is what we get out:
 > #006d97
 > #0000ff
 ```
-</Figure>
+  <figcaption>The resulting generated colors.</figcaption>
+</figure>
 
 Quick, let's make a gradient!
 
-<Figure caption="An approximation of a HSLuv gradient using multiple color stops." code>
+<figure>
 ```css
 .el {
   background: linear-gradient(
     90deg,
-    #ffff00, #8df100, #00d48a, #00b09f, #008f9b, #006d97, #0000ff
+    #ffff00,
+    #8df100,
+    #00d48a,
+    #00b09f,
+    #008f9b,
+    #006d97,
+    #0000ff
   );
 }
 ```
-</Figure>
+  <figcaption>An approximation of a HSLuv gradient using multiple color stops.</figcaption>
+</figure>
 
-<Figure caption="Uinsg HSLuv">
-<div style="height: 4rem; background: linear-gradient(90deg, #ffff00, #8df100, #00d48a, #00b09f, #008f9b, #006d97, #0000ff);"></div>
-</Figure>
+<figure>
+  <div style="height: 4rem; background: linear-gradient(90deg, #ffff00, #8df100, #00d48a, #00b09f, #008f9b, #006d97, #0000ff);"></div>
+  <figcaption>Using HSLuv</figcaption>
+</figure>
 
 A little smoother; and doesn't have a bright peak at cyan! I'm going to call that a win!
 
@@ -240,8 +292,9 @@ A little smoother; and doesn't have a bright peak at cyan! I'm going to call tha
 
 Remember, a simple linear color gradient might not be the best choice for what you are trying to make.
 
-<Figure caption="Let's compare: RGB, HSL, HSLuv.">
-<div style="padding: 0.5rem; color: rgba(0,0,0,0.5); height: 4rem; background-image: linear-gradient(90deg, yellow, blue);">RGB gradient</div>
-<div style="padding: 0.5rem; color: rgba(0,0,0,0.5); height: 4rem; background-image: linear-gradient(90deg, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #007fff, #0000ff);">HSL gradient</div>
-<div style="padding: 0.5rem; color: rgba(0,0,0,0.5); height: 4rem; background-image: linear-gradient(90deg, #ffff00, #8df100, #00d48a, #00b09f, #008f9b, #006d97, #0000ff);">HSLuv gradient</div>
-</Figure>
+<figure>
+  <div style="padding: 0.5rem; color: rgba(0,0,0,0.5); height: 4rem; background-image: linear-gradient(90deg, yellow, blue);">RGB gradient</div>
+  <div style="padding: 0.5rem; color: rgba(0,0,0,0.5); height: 4rem; background-image: linear-gradient(90deg, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #007fff, #0000ff);">HSL gradient</div>
+  <div style="padding: 0.5rem; color: rgba(0,0,0,0.5); height: 4rem; background-image: linear-gradient(90deg, #ffff00, #8df100, #00d48a, #00b09f, #008f9b, #006d97, #0000ff);">HSLuv gradient</div>
+  <figcaption>Let's compare: RGB, HSL, HSLuv.</figcaption>
+</figure>

@@ -157,6 +157,7 @@ const optImage = image && (await getImage({ src: image.src }));
 
   .content {
     margin-block-start: 1rlh;
+    counter-reset: figure;
   }
 
   .content :global(p:last-child) {
@@ -258,6 +259,30 @@ const optImage = image && (await getImage({ src: image.src }));
 
   .content :global(pre:not(figure pre)) {
     margin-bottom: 1rlh;
+  }
+
+  .content :global(figure:has(figcaption)) {
+    counter-increment: figure;
+    margin-block: 1rlh;
+    padding-inline: min(2vw, 6ch);
+  }
+
+  .content :global(figure > figcaption) {
+    font-size: var(--f-small);
+    margin-block-start: 0.25rlh;
+    text-wrap: pretty;
+    padding-inline: 0.5ch;
+
+    width: max-content;
+    max-width: 24rem;
+    margin-inline: auto;
+    text-align: justify;
+    text-align-last: start;
+  }
+
+  .content :global(figure > figcaption::before) {
+    font-weight: 700;
+    content: 'Fig.\2009' counter(figure) '.\2003';
   }
 
   .stack {
