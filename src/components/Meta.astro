@@ -2,7 +2,7 @@
 import { ogSafe } from '@utils/ogSafe';
 import sanitizeHtml from 'sanitize-html';
 
-const textOnly = (str) => sanitizeHtml(str, { allowedTags: [] });
+const textOnly = (str: string) => sanitizeHtml(str, { allowedTags: [] });
 
 const { props } = Astro;
 const { description = 'Thoughts on thoughts', image } = props;

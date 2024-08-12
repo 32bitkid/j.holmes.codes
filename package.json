@@ -43,6 +43,7 @@
     "@types/feather-icons": "^4.29.4",
     "@types/lodash.debounce": "^4.0.9",
     "@types/lodash.throttle": "^4.1.9",
+    "@types/sanitize-html": "^2.11.0",
     "astro": "^4.13.3",
     "date-fns": "^3.6.0",
     "marked": "^13.0.2",
