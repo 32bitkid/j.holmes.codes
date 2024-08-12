@@ -32,4 +32,7 @@ export default defineConfig({
       wrap: true,
     },
   },
+  redirects: {
+    '/thanks': '/support',
+  },
 });
