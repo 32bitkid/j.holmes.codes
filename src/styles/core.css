@@ -270,3 +270,27 @@ small {
 code {
   text-rendering: optimizeSpeed;
 }
+
+[id] {
+  scroll-margin-top: calc(33vh + 0.5rlh);
+}
+
+@keyframes flash {
+  from,
+  20% {
+    border-radius: 1ch;
+    box-shadow: 0 0 0.75rem 0.5rem #bde9ff;
+    background-color: #bde9ff;
+  }
+  to {
+    border-radius: 0;
+    box-shadow: 0 0 0 transparent;
+    background-color: transparent;
+  }
+}
+
+[id]:target {
+  box-shadow: none;
+  background-color: transparent;
+  animation: flash 1.5s linear;
+}
