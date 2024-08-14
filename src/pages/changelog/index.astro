@@ -1,0 +1,46 @@
+---
+import pluralize from 'pluralize';
+import { GitClient } from '@conventional-changelog/git-client';
+import Page from '@layouts/page.astro';
+import DayFmt from '../../components/dates/DayFmt.astro';
+
+// Basic git client
+const client = new GitClient('.');
+
+async function getCommits(client: GitClient): Promise<string[]> {
+  const results: string[] = [];
+  for await (const msg of client.getRawCommits({ since: '1.month.ago' })) {
+    results.push(msg.trim());
+  }
+  return results;
+}
+
+const commits = await getCommits(client);
+
+const summary = commits.reduce<Map<string, number>>((map, commit) => {
+  const match = commit.match(/^\w+:/);
+  if (match) {
+    const actual = match[0].slice(0, -1).toLowerCase();
+    const type = { changed: 'update' }[actual] ?? actual;
+    const prev = map.get(type) ?? 0;
+    map.set(type, prev + 1);
+  }
+  return map;
+}, new Map());
+---
+
+<Page>
+  <h1>Changes in the last month</h1>
+  <p>
+    As of <DayFmt date={new Date()} human />, in the last month there have been
+    {
+      Array.from(summary.entries()).map(([key, count], i, arr) => (
+        <Fragment
+          set:text={
+            pluralize(key, count, true) + (arr.length - 1 !== i ? ', ' : '')
+          }
+        />
+      ))
+    }.
+  </p>
+</Page>
