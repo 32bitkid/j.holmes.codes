@@ -1,11 +1,11 @@
 ---
 import DayFmt from './dates/DayFmt.astro';
 
-const { subject, date, gh, body } = Astro.props;
+const { subject, date, gh, body, hash } = Astro.props;
 ---
 
 <article>
-  <h2 class="subject" set:text={subject} />
+  <h2 class="subject" set:text={subject} id={hash} />
   <div class="meta">
     <DayFmt date={date} human />
     <Fragment set:text="⸺" />

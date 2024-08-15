@@ -45,13 +45,14 @@ const featured = (
   )
   .map(({ hash, body, subject, ...rest }) => ({
     ...rest,
+    hash,
     gh: `https://github.com/32bitkid/j.holmes.codes/commit/${hash}`,
     subject: subject.split(':', 2)[1] ?? subject,
     body: marked.parse(body),
   }));
 ---
 
-<Page>
+<Page title="Changelog" description="Recent changes to this site">
   <h1><code>/changelog</code></h1>
   <p>
     As of <DayFmt date={new Date()} human />, in the last {summaryText} there have
@@ -77,8 +78,11 @@ const featured = (
         <p>
           The following are <em>featured changesets</em> from the past year…
         </p>
-        {featured.map((commit) => (
-          <ChangelogCommit {...commit} />
+        {featured.map((commit, i, { length: total }) => (
+          <>
+            <ChangelogCommit {...commit} />
+            {i + 1 !== total ? <hr /> : ''}
+          </>
         ))}
       </>
     ) : (
