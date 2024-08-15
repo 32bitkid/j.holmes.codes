@@ -71,17 +71,23 @@ const optImage = image && (await getImage({ src: image.src }));
       {image && <Picture class="splash" src={image.src} alt={image.alt} />}
       <h1 class="heading">{title}</h1>
       {
-        dateActual && (
-          <DayFmt class="meta" date={dateActual} human>
-            {!isPublished && (
-              <strong>
-                <small>[unpublished]</small>
-              </strong>
+        (dateActual || tags?.length > 0) && (
+          <div class="meta">
+            {dateActual && (
+              <DayFmt date={dateActual} human>
+                {!isPublished && (
+                  <strong>
+                    <small>[unpublished]</small>
+                  </strong>
+                )}
+              </DayFmt>
             )}
-          </DayFmt>
+            {dateActual && tags?.length > 0 ? '\u2E3A' : ''}
+            {tags && tags.length > 0 && <Tags tags={tags} />}
+          </div>
         )
       }
-      {tags && tags.length > 0 && <Tags class="meta" tags={tags} />}
+
       <section class="content">
         <slot />
       </section>

@@ -1,0 +1,174 @@
+---
+import DayFmt from './dates/DayFmt.astro';
+
+const { subject, date, gh, body } = Astro.props;
+---
+
+<article>
+  <h2 class="subject" set:text={subject} />
+  <div class="meta">
+    <DayFmt date={date} human />
+    <Fragment set:text="⸺" />
+    See on <a href={gh} set:text="github" />
+  </div>
+  <main class="md" set:html={body} />
+</article>
+
+<style>
+  .subject {
+    margin-bottom: 0.25rlh;
+    text-transform: capitalize;
+  }
+
+  .meta {
+    display: block;
+    line-height: inherit;
+    font-size: 0.7492rem;
+    padding-inline-start: 1ch;
+  }
+
+  .md {
+    margin-block-start: 1rlh;
+  }
+
+  /* TODO need to find a better way to abstract this
+  /* Ordered and Unordered List */
+  .md :global(ol),
+  .md :global(ul) {
+    margin-block: 1rlh;
+    padding-inline-start: 1.25rlh;
+  }
+
+  .md :global(ol) {
+    list-style-type: decimal;
+  }
+
+  .md :global(ul.contains-task-list ul.contains-task-list) {
+    margin-block: 0.5rlh;
+  }
+
+  .md :global(ul:not(.contains-task-list)) {
+    list-style-type: square;
+  }
+
+  .md :global(li) {
+    margin-block: 0.25rlh;
+  }
+
+  /* Definition List */
+  .md :global(dl) {
+    display: grid;
+    grid-template-columns: fit-content(12ch) 1fr;
+    gap: 0.125rlh 1ch;
+    margin-inline: 1ch;
+    margin-block: 1rlh;
+  }
+
+  .md :global(dl > dt) {
+    grid-column: 1 / span 1;
+    font-family: 'Equity Caps B', serif;
+    letter-spacing: -0.04em;
+    font-feature-settings: 'smcp', 'onum';
+    font-size: var(--f-small);
+    line-height: 1;
+    text-align: end;
+    justify-self: end;
+    align-self: first baseline;
+  }
+
+  .md :global(dl > dd:has(+ dt)) {
+    margin-block-end: 0.5rlh;
+  }
+
+  .md :global(dl > dt::after) {
+    content: '';
+  }
+
+  .md :global(dl > dd) {
+    grid-column: 2 / span 1;
+    align-self: first baseline;
+  }
+
+  /* Blockquotes and Quotes */
+  .md :global(blockquote),
+  .md :global(q) {
+    quotes: '“' '”' '‘' '’';
+  }
+
+  .md :global(blockquote) {
+    max-width: 70%;
+    min-width: 15rem;
+    margin-inline: auto;
+    text-align: justify;
+  }
+
+  .md :global(blockquote p:first-of-type::before) {
+    content: open-quote;
+  }
+  .md :global(blockquote p:last-of-type::after) {
+    content: close-quote;
+  }
+
+  /* Figure / FigCaption */
+  .md {
+    counter-reset: figure;
+  }
+
+  .md :global(figure:has(figcaption)) {
+    counter-increment: figure;
+    margin-block-end: 1rlh;
+    padding-block: 1rlh 0.5rlh;
+    padding-inline: min(2vw, 6ch);
+  }
+
+  .md :global(figure > figcaption) {
+    font-size: var(--f-small);
+    margin-block-start: 0.5rlh;
+    text-wrap: pretty;
+    padding-inline: 0.5ch;
+  }
+
+  .md :global(figure > figcaption > p) {
+    display: contents;
+  }
+
+  .md :global(figure > figcaption::before) {
+    font-weight: 700;
+    content: 'Fig.\2009' counter(figure) '.\2003';
+  }
+
+  .md :global(figure > table ~ figcaption),
+  .md :global(figure > pre ~ figcaption),
+  .md :global(figure > img ~ figcaption),
+  .md :global(figure > picture ~ figcaption) {
+    max-width: 24rem;
+    margin-inline: auto;
+    text-align: justify;
+    text-align-last: start;
+  }
+
+  .md :global(figure > img) {
+    margin-inline: auto;
+    display: block;
+  }
+
+  .md :global(figure > blockquote ~ figcaption) {
+    margin-block-start: 0;
+    margin-inline: auto;
+    max-width: 70%;
+    min-width: 15rem;
+    text-align: right;
+  }
+
+  .md :global(figure blockquote ~ figcaption::before) {
+    content: '\2014';
+  }
+
+  .md :global(> p:last-child) {
+    margin-block-end: 0;
+  }
+
+  .md :global(pre:not(figure pre)) {
+    margin-bottom: 1rlh;
+  }
+</style>

@@ -1,46 +1,90 @@
 ---
 import pluralize from 'pluralize';
 import { GitClient } from '@conventional-changelog/git-client';
+import { marked } from 'marked';
 import Page from '@layouts/page.astro';
-import DayFmt from '../../components/dates/DayFmt.astro';
+import DayFmt from '@components/dates/DayFmt.astro';
+import { getCommitSummary, getCommitDetails } from '@utils/git';
+import ChangelogCommit from '../../components/ChangelogCommit.astro';
 
-// Basic git client
 const client = new GitClient('.');
 
-async function getCommits(client: GitClient): Promise<string[]> {
-  const results: string[] = [];
-  for await (const msg of client.getRawCommits({ since: '1.month.ago' })) {
-    results.push(msg.trim());
-  }
-  return results;
-}
-
-const commits = await getCommits(client);
-
-const summary = commits.reduce<Map<string, number>>((map, commit) => {
+const SUMMARY_MONTHS = 1;
+const summaryText = pluralize('month', SUMMARY_MONTHS, SUMMARY_MONTHS !== 1);
+const summary = (
+  await getCommitSummary(client, { since: `${SUMMARY_MONTHS}.month.ago` })
+).reduce<Map<string, number>>((map, commit) => {
   const match = commit.match(/^\w+:/);
   if (match) {
     const actual = match[0].slice(0, -1).toLowerCase();
-    const type = { changed: 'update' }[actual] ?? actual;
+    const type =
+      {
+        changed: 'update',
+        fixed: 'fix',
+        featured: 'feature',
+        new: 'feature',
+        upgrade: 'update',
+        breaking: 'breaker',
+      }[actual] ?? actual;
     const prev = map.get(type) ?? 0;
     map.set(type, prev + 1);
   }
   return map;
 }, new Map());
+
+const featured = (
+  await getCommitDetails(client, {
+    grep: '^featured:',
+    regexpIgnoreCase: true,
+    since: '1.year.ago',
+  })
+)
+  .filter(
+    ({ subject, body }) =>
+      subject.startsWith('featured:') || body.trim() !== '',
+  )
+  .map(({ hash, body, subject, ...rest }) => ({
+    ...rest,
+    gh: `https://github.com/32bitkid/j.holmes.codes/commit/${hash}`,
+    subject: subject.split(':', 2)[1] ?? subject,
+    body: marked.parse(body),
+  }));
 ---
 
 <Page>
   <h1><code>/changelog</code></h1>
   <p>
-    As of <DayFmt date={new Date()} human />, in the last month there have been
+    As of <DayFmt date={new Date()} human />, in the last {summaryText} there have
+    been:
     {
-      Array.from(summary.entries()).map(([key, count], i, arr) => (
-        <Fragment
-          set:text={
-            pluralize(key, count, true) + (arr.length - 1 !== i ? ', ' : '')
-          }
-        />
-      ))
+      Array.from(summary.entries()).map(([key, count], i, arr) => {
+        const isLast = arr.length !== 1 && arr.length - 1 === i;
+        return (
+          <Fragment
+            set:text={
+              (isLast ? ' and ' : '') +
+              pluralize(key, count, true) +
+              (!isLast ? ', ' : '')
+            }
+          />
+        );
+      })
     }.
   </p>
+  {
+    featured.length > 0 ? (
+      <>
+        <p>
+          The following are <em>featured changesets</em> from the past year…
+        </p>
+        {featured.map((commit) => (
+          <ChangelogCommit {...commit} />
+        ))}
+      </>
+    ) : (
+      <p>
+        There are no <em>featured changesets</em> right now&hellip;
+      </p>
+    )
+  }
 </Page>
