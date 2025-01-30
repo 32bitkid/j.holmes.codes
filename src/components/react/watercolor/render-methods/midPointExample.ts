@@ -47,8 +47,8 @@ export const midPointExample = (
       ctx.arc(...c, 4, 0, Math.PI * 2);
       ctx.stroke();
 
-      text(ctx, a, `A`, [5, 0]);
-      text(ctx, b, `B`, [0, -5]);
+      text(ctx, a, 'A', [5, 0]);
+      text(ctx, b, 'B', [0, -5]);
       text(ctx, c, `\u{1D461} = ${t.toFixed(3)}`, [8, -8]);
     }
   };

@@ -60,8 +60,8 @@ export const angleExample = (
     ctx.stroke();
     ctx.restore();
 
-    text(ctx, a, `A`, [5, 0]);
-    text(ctx, b, `B`, [0, -5]);
+    text(ctx, a, 'A', [5, 0]);
+    text(ctx, b, 'B', [0, -5]);
     ctx.textAlign = 'right';
     text(ctx, mp, `\u{1D461} = ${t.toFixed(3)}`, [-8, 8]);
     ctx.textAlign = 'left';

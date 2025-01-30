@@ -5,19 +5,19 @@ import type { ExampleRenderer } from './example-renderer.ts';
 import { nGon, poly, text } from './helpers.ts';
 
 const colors = [
-  `#0000000a`,
-  `#1D2B530a`,
-  `#7E25530a`,
-  `#0087510a`,
-  `#AB52360a`,
-  `#5F574F0a`,
-  `#FF004D0a`,
-  `#FFA3000a`,
-  `#FFEC270a`,
-  `#00E4360a`,
-  `#29ADFF0a`,
-  `#83769C0a`,
-  `#FF77A80a`,
+  '#0000000a',
+  '#1D2B530a',
+  '#7E25530a',
+  '#0087510a',
+  '#AB52360a',
+  '#5F574F0a',
+  '#FF004D0a',
+  '#FFA3000a',
+  '#FFEC270a',
+  '#00E4360a',
+  '#29ADFF0a',
+  '#83769C0a',
+  '#FF77A80a',
 ];
 
 export const finalExample = (

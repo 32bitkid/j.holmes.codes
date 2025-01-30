@@ -21,6 +21,6 @@ export async function GET(context: APIContext) {
       link: post.slug,
     })),
     // (optional) inject custom xml
-    customData: `<language>en-us</language>`,
+    customData: '<language>en-us</language>',
   });
 }

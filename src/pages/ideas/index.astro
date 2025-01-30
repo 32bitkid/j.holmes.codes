@@ -11,7 +11,7 @@ const ideas = (await getCollection('thoughts')).toSorted(
 
 const shared = { width: '3ch', height: '2ex' };
 const ICONS = {
-  thinking: icons['circle'].toSvg({
+  thinking: icons.circle.toSvg({
     ...shared,
     stroke: 'var(--pal-light)',
     'aria-label': 'Thinking about',
