@@ -53,7 +53,9 @@ export const midPointExample = (
     }
   };
 
-  const handleMove = (e: PointerEvent) => (pos.value = e.offsetX);
+  const handleMove = (e: PointerEvent) => {
+    pos.value = e.offsetX;
+  };
 
   el.addEventListener('pointermove', handleMove);
 

@@ -71,7 +71,9 @@ export const allSidesExample = (
     ctx.restore();
   };
 
-  const handleMove = (e: PointerEvent) => (pos.value = [e.offsetX, e.offsetY]);
+  const handleMove = (e: PointerEvent) => {
+    pos.value = [e.offsetX, e.offsetY];
+  };
   el.addEventListener('pointermove', handleMove);
 
   const teardown = effect(() => {

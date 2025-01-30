@@ -88,7 +88,9 @@ export const distanceExample = (
     ctx.restore();
   };
 
-  const handleMove = (e: PointerEvent) => (pos.value = e.offsetX);
+  const handleMove = (e: PointerEvent) => {
+    pos.value = e.offsetX;
+  };
   el.addEventListener('pointermove', handleMove);
 
   const teardown = effect(() => {

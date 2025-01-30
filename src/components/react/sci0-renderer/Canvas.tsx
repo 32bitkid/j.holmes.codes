@@ -32,7 +32,7 @@ export interface RenderCanvasProps {
 
 const useTicker = (): [unknown, () => void] => {
   const [tick, setTick] = useState({});
-  return [tick, useCallback(() => setTick({}), [setTick])];
+  return [tick, useCallback(() => setTick({}), [])];
 };
 
 const clsn = (...items: (string | undefined | false)[]) =>

@@ -3,7 +3,8 @@ import type { ImageDataLike } from '@4bitlabs/image';
 export function createRender2d(canvasEl: HTMLCanvasElement): {
   update: (imageData: ImageDataLike) => void;
 } {
-  const ctx = canvasEl.getContext('bitmaprenderer', { alpha: false })!;
+  const ctx = canvasEl.getContext('bitmaprenderer', { alpha: false });
+  if (!ctx) throw new Error('bitmaprenderer not found');
 
   let imgData: ImageData;
 
