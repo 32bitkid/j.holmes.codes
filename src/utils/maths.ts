@@ -1,4 +1,4 @@
-export function gaussRng(μ: number = 0, σ: number = 1) {
+export function gaussRng(μ = 0, σ = 1) {
   const u = 1 - Math.random();
   const v = Math.random();
   const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);

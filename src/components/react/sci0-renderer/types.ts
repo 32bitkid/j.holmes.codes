@@ -1,4 +1,4 @@
-import { type CrtUpdateOptions } from '@4bitlabs/crt-lite';
+import type { CrtUpdateOptions } from '@4bitlabs/crt-lite';
 
 export type RenderMode =
   | ['2d', Record<string, never>]

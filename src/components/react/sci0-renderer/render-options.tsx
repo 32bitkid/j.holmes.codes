@@ -1,13 +1,13 @@
+import type { CrtUpdateOptions } from '@4bitlabs/crt-lite';
 import React, {
   useCallback,
   type Dispatch,
   type SetStateAction,
   type ChangeEvent,
 } from 'react';
-import { type CrtUpdateOptions } from '@4bitlabs/crt-lite';
 
 import styles from './sci0-renderer.module.css';
-import { type RenderMode } from './types.ts';
+import type { RenderMode } from './types.ts';
 
 export interface RenderOptionsProps {
   mode: RenderMode;
@@ -37,11 +37,11 @@ const useChangeFor = <TKey extends keyof CrtUpdateOptions>(
   );
 
 const valueToMilli = ({ value }: HTMLInputElement) =>
-  parseInt(value, 10) / 1000;
+  Number.parseInt(value, 10) / 1000;
 
 const valueToNegMilli = (el: HTMLInputElement) => -valueToMilli(el);
 
-const valueToInt = ({ value }: HTMLInputElement) => parseInt(value, 10);
+const valueToInt = ({ value }: HTMLInputElement) => Number.parseInt(value, 10);
 const checkedToBool = ({ checked }: HTMLInputElement) => checked;
 
 export function RenderOptions(props: RenderOptionsProps) {

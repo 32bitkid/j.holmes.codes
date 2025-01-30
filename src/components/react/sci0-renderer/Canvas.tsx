@@ -1,3 +1,12 @@
+import { createCrtRenderer } from '@4bitlabs/crt-lite';
+import {
+  type ImageDataLike,
+  type RenderPipeline,
+  renderPixelData,
+} from '@4bitlabs/image';
+import type { DrawCommand } from '@4bitlabs/sci0';
+import { renderPic } from '@4bitlabs/sci0-renderer';
+import debounce from 'lodash.debounce';
 import React, {
   useRef,
   useEffect,
@@ -5,20 +14,11 @@ import React, {
   useState,
   type MouseEvent,
 } from 'react';
-import debounce from 'lodash.debounce';
-import { type DrawCommand } from '@4bitlabs/sci0';
-import { renderPic } from '@4bitlabs/sci0-renderer';
-import {
-  type ImageDataLike,
-  type RenderPipeline,
-  renderPixelData,
-} from '@4bitlabs/image';
-import { createCrtRenderer } from '@4bitlabs/crt-lite';
 
 import { PIXEL_ASPECT_RATIOS } from '@components/react/sci0-renderer/options.ts';
-import styles from './sci0-renderer.module.css';
 import { createRender2d } from './2d-render.ts';
-import { type RenderMode } from './types.ts';
+import styles from './sci0-renderer.module.css';
+import type { RenderMode } from './types.ts';
 
 export interface RenderCanvasProps {
   picData: DrawCommand[];
@@ -88,7 +88,7 @@ export function Canvas(props: RenderCanvasProps) {
   );
 
   useEffect(() => {
-    let updateFn = updateFnRef.current;
+    const updateFn = updateFnRef.current;
     if (!updateFn) return;
 
     const actual = picData.slice(0, limit);

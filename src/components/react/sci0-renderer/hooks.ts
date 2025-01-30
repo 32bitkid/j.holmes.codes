@@ -1,7 +1,7 @@
 import {
+  type ChangeEventHandler,
   type Dispatch,
   type SetStateAction,
-  type ChangeEventHandler,
   useCallback,
 } from 'react';
 
@@ -15,7 +15,7 @@ export const useNumericCallback = (
   mapFn: (n: number) => number = (n) => n,
 ): ChangeEventHandler<HTMLInputElement> =>
   useCallback(
-    (e) => setter(mapFn(parseInt(e.target.value, 10))),
+    (e) => setter(mapFn(Number.parseInt(e.target.value, 10))),
     [setter, mapFn],
   );
 

@@ -1,6 +1,6 @@
 import { effect, signal } from '@preact/signals-core';
-import * as M from 'transformation-matrix';
 import { distortPolygon } from '@watercolorizer/watercolorizer/distort-polygon';
+import * as M from 'transformation-matrix';
 
 import { clamp } from '@utils/maths.ts';
 import type { ExampleRenderer } from './example-renderer.ts';

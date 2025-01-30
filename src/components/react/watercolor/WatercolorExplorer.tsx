@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
 import RenderMethods from '@components/react/watercolor/render-methods';
+import React, { useEffect, useRef } from 'react';
 
 const NOOP = () => {};
 

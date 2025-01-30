@@ -1,5 +1,5 @@
-import * as M from 'transformation-matrix';
 import { watercolorize } from '@watercolorizer/watercolorizer';
+import * as M from 'transformation-matrix';
 
 import type { ExampleRenderer } from './example-renderer.ts';
 import { nGon, poly, text } from './helpers.ts';

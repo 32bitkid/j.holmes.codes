@@ -11,7 +11,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "predeploy": "astro build",
-    "deploy": "rsync -avh --delete --exclude '.DS_Store' dist/ j.holmes.codes:~/j.holmes.codes/"
+    "deploy": "rsync -avh --delete --exclude '.DS_Store' dist/ j.holmes.codes:~/j.holmes.codes/",
+    "lint": "biome lint .",
+    "lint:fix": "biome check --wrire ."
   },
   "dependencies": {
     "@4bitlabs/blur-filters": "^1.0.18",
@@ -41,6 +43,7 @@
     "@astrojs/mdx": "^4.0.8",
     "@astrojs/react": "^4.2.0",
     "@astrojs/ts-plugin": "^1.10.4",
+    "@biomejs/biome": "^1.9.4",
     "@conventional-changelog/git-client": "^1.0.1",
     "@modyfi/vite-plugin-yaml": "^1.0.4",
     "@types/feather-icons": "^4.29.4",
@@ -50,8 +53,6 @@
     "astro": "^5.2.1",
     "date-fns": "^3.6.0",
     "marked": "^13.0.2",
-    "prettier": "^3.3.3",
-    "prettier-plugin-astro": "^0.14.1",
     "rehype-katex": "^7.0.0",
     "remark-capitalize-headings": "^2.0.1",
     "remark-definition-list": "^2.0.0",

@@ -1,15 +1,15 @@
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
-import { defineConfig } from 'astro/config';
-import remarkMath from 'remark-math';
 import ViteYaml from '@modyfi/vite-plugin-yaml';
+import { defineConfig } from 'astro/config';
 import rehypeKatex from 'rehype-katex';
-import remarkHint from 'remark-hint';
 import remarkCapitalizeHeading from 'remark-capitalize-headings';
 import {
-  remarkDefinitionList,
   defListHastHandlers,
+  remarkDefinitionList,
 } from 'remark-definition-list';
+import remarkHint from 'remark-hint';
+import remarkMath from 'remark-math';
 
 // https://astro.build/config
 export default defineConfig({

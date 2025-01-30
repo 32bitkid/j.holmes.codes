@@ -7,20 +7,20 @@ import React, {
 
 import {
   useCheckboxCallback,
-  useNumericCallback,
   useEnumCallback,
+  useNumericCallback,
 } from './hooks.ts';
 import { RenderOptions } from './render-options.tsx';
 
 import {
-  PIXEL_ASPECT_RATIOS,
-  PALETTES,
-  DITHERS,
-  MIXERS,
-  SCALERS,
-  exoticDithers,
-  defaultDithers,
   BLURS,
+  type DITHERS,
+  type MIXERS,
+  type PALETTES,
+  PIXEL_ASPECT_RATIOS,
+  SCALERS,
+  defaultDithers,
+  exoticDithers,
 } from './options.ts';
 import styles from './sci0-renderer.module.css';
 import { DEFAULT_WEBGL2_OPTIONS, type RenderMode } from './types.ts';

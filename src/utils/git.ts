@@ -1,4 +1,4 @@
-import { GitClient } from '@conventional-changelog/git-client';
+import type { GitClient } from '@conventional-changelog/git-client';
 import type { GitLogParams, Params } from '@conventional-changelog/git-client';
 
 interface CommitFormatter<T> {

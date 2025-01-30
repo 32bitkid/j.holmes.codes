@@ -1,6 +1,6 @@
 :root {
-  font-family: 'Equity Text B', serif, system-ui;
-  font-feature-settings: 'ss01', 'calt', 'liga';
+  font-family: "Equity Text B", serif, system-ui;
+  font-feature-settings: "ss01", "calt", "liga";
   line-height: 1.414rem;
   font-size: min(16pt, max(12pt, 1.25vw));
   font-weight: 400;
@@ -16,7 +16,7 @@
   --f-huge: 2.378414230005442rem; /* calc(pow(var(--f-root), 3)); */
   --f-headline: 3.174802103936399rem; /* calc(pow(var(--f-root), 4)); */
   --f-epic: 4.237852377437181rem; /* calc(pow(var(--f-root), 5)); */
-  --f-monospace: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono';
+  --f-monospace: "Fira Code", Consolas, Monaco, "Andale Mono", "Ubuntu Mono";
 
   --pal-black: #010101;
   --pal-midnight: #031b75;
@@ -71,21 +71,21 @@ h3:not(hgroup > h3) {
 }
 
 h2:not(hgroup > h2) {
-  font-family: 'Equity Caps B', serif;
+  font-family: "Equity Caps B", serif;
   font-size: var(--f-x-large);
   line-height: 1rlh;
   margin-block: calc(1rlh * 2) 1rlh;
-  font-feature-settings: 'smcp', 'onum';
+  font-feature-settings: "smcp", "onum";
   font-weight: 600;
   letter-spacing: -0.06em;
 }
 
 h1:not(hgroup > h1) {
-  font-family: 'Equity Caps B', serif;
+  font-family: "Equity Caps B", serif;
   font-size: var(--f-huge);
   margin-block: calc(1rlh * 3) 1rlh;
   line-height: calc(1rlh * 2);
-  font-feature-settings: 'smcp', 'onum';
+  font-feature-settings: "smcp", "onum";
   font-weight: 600;
   letter-spacing: -0.06em;
   text-wrap: balance;
@@ -118,24 +118,24 @@ p {
   text-decoration: underline solid 1px;
 }
 
-:link[href^='http:']::after,
-:link[href^='https:']::after {
-  content: '\2060\2197';
+:link[href^="http:"]::after,
+:link[href^="https:"]::after {
+  content: "\2060\2197";
   font-size: 0.5em;
   vertical-align: 2.5ex;
   margin-right: -0.5ch;
   line-height: 0;
 }
 
-:link[href^='mailto:']::after {
-  content: '\2060\2709';
+:link[href^="mailto:"]::after {
+  content: "\2060\2709";
   vertical-align: super;
   line-height: 0;
   font-size: 0.75em;
 }
 
-:link[href^='tel:']::after {
-  content: '\2060\2706';
+:link[href^="tel:"]::after {
+  content: "\2060\2706";
   vertical-align: super;
   line-height: 0;
   font-size: 0.75em;
@@ -160,7 +160,7 @@ hr {
   page-break-after: avoid;
 
   &::after {
-    content: '\2042';
+    content: "\2042";
     position: relative;
     font-size: 1.3348rem;
     color: currentColor;
@@ -173,7 +173,7 @@ hr {
 }
 
 q {
-  quotes: '\201c' '\201d' '\2018' '\2019' '"' '"' "'" "'";
+  quotes: "\201c" "\201d" "\2018" "\2019" '"' '"' "'" "'";
 
   &::before {
     -webkit-user-select: text;
@@ -189,7 +189,7 @@ q {
 }
 
 q + cite::before {
-  content: ' \2014';
+  content: " \2014";
 }
 
 kbd {
@@ -202,9 +202,8 @@ kbd {
   border-radius: 3px;
   line-height: 1;
   padding: 0.33em 0.66em;
-  box-shadow:
-    0 -0.125em 0 -0.063em #c9c4c4,
-    0 0.125em 0 -0.063em rgba(0, 0, 0, 0.5);
+  box-shadow: 0 -0.125em 0 -0.063em #c9c4c4, 0 0.125em 0 -0.063em
+    rgba(0, 0, 0, 0.5);
   background-color: #e7e7e7;
   position: relative;
   color: rgba(0, 0, 0, 0.75);
@@ -214,7 +213,7 @@ kbd {
   font-weight: 400;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0px;
     left: 0px;
@@ -244,15 +243,13 @@ strong {
 }
 
 small {
-  font-family: 'Equity Caps B', serif;
+  font-family: "Equity Caps B", serif;
   letter-spacing: -0.04em;
 }
 
 :not(pre) > code {
   font-family: var(--f-monospace), monospace;
-  font-feature-settings:
-    'ss08' 1,
-    'onum' 0;
+  font-feature-settings: "ss08" 1, "onum" 0;
   background: #f5f2f0;
   padding: 0.2em 0.5ch;
   border-radius: 0.3em;
@@ -262,7 +259,7 @@ small {
 
 @supports (font-variation-settings: normal) {
   :not(pre) > code {
-    font-family: 'Fira Code VF', var(--f-monospace), monospace;
+    font-family: "Fira Code VF", var(--f-monospace), monospace;
     font-weight: 450;
   }
 }

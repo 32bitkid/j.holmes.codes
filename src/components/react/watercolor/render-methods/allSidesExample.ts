@@ -1,7 +1,7 @@
 import type { Vec2 } from '@4bitlabs/vec2';
-import * as M from 'transformation-matrix';
-import { distortPolygon } from '@watercolorizer/watercolorizer/distort-polygon';
 import { lerp as vecLerp } from '@4bitlabs/vec2';
+import { distortPolygon } from '@watercolorizer/watercolorizer/distort-polygon';
+import * as M from 'transformation-matrix';
 
 import { effect, signal } from '@preact/signals-core';
 import { clamp } from '@utils/maths.ts';

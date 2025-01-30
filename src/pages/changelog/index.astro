@@ -1,10 +1,10 @@
 ---
-import pluralize from 'pluralize';
-import { GitClient } from '@conventional-changelog/git-client';
-import { marked } from 'marked';
-import Page from '@layouts/page.astro';
 import DayFmt from '@components/dates/DayFmt.astro';
-import { getCommitSummary, getCommitDetails } from '@utils/git';
+import { GitClient } from '@conventional-changelog/git-client';
+import Page from '@layouts/page.astro';
+import { getCommitDetails, getCommitSummary } from '@utils/git';
+import { marked } from 'marked';
+import pluralize from 'pluralize';
 import ChangelogCommit from '../../components/ChangelogCommit.astro';
 
 const client = new GitClient('.');

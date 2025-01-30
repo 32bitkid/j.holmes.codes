@@ -1,12 +1,12 @@
 ---
 import { getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import BlogSummary from '@components/BlogSummary.astro';
+import CodepenSketch from '@components/projects/CodepenSketch.astro';
+import GithubProject from '@components/projects/GithubProject.astro';
+import NpmProject from '@components/projects/NpmProject.astro';
 import Page from '@layouts/page.astro';
 import AboutMe from '../components/AboutMe.mdx';
-import BlogSummary from '@components/BlogSummary.astro';
-import NpmProject from '@components/projects/NpmProject.astro';
-import GithubProject from '@components/projects/GithubProject.astro';
-import CodepenSketch from '@components/projects/CodepenSketch.astro';
 import { blogSorting } from '../utils/blogSorting';
 
 const max = 5;

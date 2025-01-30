@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import Page from '../../layouts/md.astro';
 import DayFmt from '../../components/dates/DayFmt.astro';
+import Page from '../../layouts/md.astro';
 
 export async function getStaticPaths() {
   const ideaEntries = await getCollection('thoughts');

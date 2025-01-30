@@ -23,7 +23,7 @@ const { id } = Astro.props;
 const picEntry = await getEntry('sci0pics', id);
 if (!picEntry) return new Response(null, { status: 404 });
 
-const { data: picData} = picEntry;
+const { data: picData } = picEntry;
 const {
   content,
   pic,

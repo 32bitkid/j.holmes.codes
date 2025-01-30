@@ -1,4 +1,4 @@
-import { type ImageDataLike } from '@4bitlabs/image';
+import type { ImageDataLike } from '@4bitlabs/image';
 
 export function createRender2d(canvasEl: HTMLCanvasElement): {
   update: (imageData: ImageDataLike) => void;

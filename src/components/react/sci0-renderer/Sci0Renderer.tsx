@@ -1,30 +1,30 @@
-import React, { useMemo, useState } from 'react';
-import { toByteArray } from 'base64-js';
-import { decompress, parsePic } from '@4bitlabs/sci0';
-import {
-  createDitherFilter,
-  type RenderPipeline,
-  padFilter,
-} from '@4bitlabs/image';
 import { IBM5153Contrast, toGrayscale } from '@4bitlabs/color';
 import { generatePairs } from '@4bitlabs/color/dithers';
-
 import {
-  PIXEL_ASPECT_RATIOS,
-  PALETTES,
-  DITHERS,
-  MIXERS,
-  SCALERS,
-  BLURS,
-} from './options.ts';
-import { Canvas } from './Canvas.tsx';
-import { Controls } from './Controls.tsx';
+  type RenderPipeline,
+  createDitherFilter,
+  padFilter,
+} from '@4bitlabs/image';
+import { decompress, parsePic } from '@4bitlabs/sci0';
+import { toByteArray } from 'base64-js';
+import React, { useMemo, useState } from 'react';
+
+import { useNumericCallback } from '@components/react/sci0-renderer/hooks.ts';
+import styles from '@components/react/sci0-renderer/sci0-renderer.module.css';
 import {
   DEFAULT_WEBGL2_OPTIONS,
   type RenderMode,
 } from '@components/react/sci0-renderer/types.ts';
-import styles from '@components/react/sci0-renderer/sci0-renderer.module.css';
-import { useNumericCallback } from '@components/react/sci0-renderer/hooks.ts';
+import { Canvas } from './Canvas.tsx';
+import { Controls } from './Controls.tsx';
+import {
+  BLURS,
+  DITHERS,
+  MIXERS,
+  PALETTES,
+  type PIXEL_ASPECT_RATIOS,
+  SCALERS,
+} from './options.ts';
 
 interface Sci0RenderProps {
   readonly data: string;

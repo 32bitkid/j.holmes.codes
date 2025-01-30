@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
-import Page from '../../layouts/page.astro';
 import { getCollection } from 'astro:content';
+import Page from '../../layouts/page.astro';
 
 const list = (await getCollection('sci0games')).sort((a, b) =>
   a.data.name.localeCompare(b.data.name),
