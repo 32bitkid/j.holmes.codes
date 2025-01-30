@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 
 const { id } = Astro.props;
 const entry = await getEntry('sci0games', id);
+if (!entry) return new Response(null, { status: 404 });
 const { data: titleData } = entry;
 const { name, year } = titleData;
 const pics = await getCollection('sci0pics', ({ data }) => data.game.id === id);

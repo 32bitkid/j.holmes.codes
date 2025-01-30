@@ -20,7 +20,10 @@ export async function getStaticPaths() {
 
 const { id } = Astro.props;
 
-const { data: picData } = await getEntry('sci0pics', id);
+const picEntry = await getEntry('sci0pics', id);
+if (!picEntry) return new Response(null, { status: 404 });
+
+const { data: picData} = picEntry;
 const {
   content,
   pic,
@@ -30,7 +33,10 @@ const {
   game: { id: gameId },
 } = picData;
 
-const { data: gameData } = await getEntry('sci0games', gameId);
+const gameEntry = await getEntry('sci0games', gameId);
+if (!gameEntry) return new Response(null, { status: 404 });
+
+const { data: gameData } = gameEntry;
 const { engine, aspectRatio } = gameData;
 
 const thumbnail = await getImage({
