@@ -12,7 +12,7 @@ export async function GET(context: APIContext) {
     description: `thirty-two's random thoughts on thoughts`,
     // Pull in your project "site" from the endpoint context
     // https://docs.astro.build/en/reference/api-reference/#contextsite
-    site: context.site!,
+    site: context.site ?? 'https://j.holmes.codes/',
     // Array of `<item>`s in output xml
     // See "Generating items" section for examples using content collections and glob imports
     items: blog.toSorted(blogSorting).map((post) => ({

@@ -33,7 +33,7 @@ const useChangeFor = <TKey extends keyof CrtUpdateOptions>(
       const val = fn(e.target);
       updateFn(setRenderModeState({ [key]: val }));
     },
-    [key, fn],
+    [key, fn, updateFn],
   );
 
 const valueToMilli = ({ value }: HTMLInputElement) =>

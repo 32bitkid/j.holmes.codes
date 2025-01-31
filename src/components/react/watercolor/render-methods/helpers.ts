@@ -14,7 +14,7 @@ export const poly = (
   [first, ...rest]: Vec2[],
 ): void => {
   ctx.moveTo(...first);
-  rest.forEach((it) => ctx.lineTo(...it));
+  for (const p of rest) ctx.lineTo(...p);
   ctx.closePath();
 };
 

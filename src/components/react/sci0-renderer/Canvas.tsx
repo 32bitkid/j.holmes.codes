@@ -53,7 +53,7 @@ export function Canvas(props: RenderCanvasProps) {
   const unobserveFnRef = useRef<(() => void) | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const updateFnRef = useRef<
-    ((pixels: ImageDataLike, options?: Record<string, any>) => void) | null
+    ((pixels: ImageDataLike, options?: RenderMode[1]) => void) | null
   >(null);
 
   const init = useCallback(
@@ -84,9 +84,11 @@ export function Canvas(props: RenderCanvasProps) {
 
       updateFnRef.current = update;
     },
-    [mode],
+    [mode, onResized],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies(mode): rerender on mode change
+  // biome-ignore lint/correctness/useExhaustiveDependencies(resized): rerender on resized
   useEffect(() => {
     const updateFn = updateFnRef.current;
     if (!updateFn) return;
@@ -95,16 +97,18 @@ export function Canvas(props: RenderCanvasProps) {
     const { visible } = renderPic(actual);
     const imgData = renderPixelData(visible, renderPipeline);
     updateFn(imgData, modeOptions);
-  }, [picData, limit, renderPipeline, updateFnRef, mode, modeOptions, resized]);
+  }, [picData, limit, renderPipeline, mode, modeOptions, resized]);
 
   const handleChangeMaximize = useCallback(
     (e: MouseEvent<HTMLCanvasElement>) => {
       e.preventDefault();
       if (canvasRef.current) {
-        canvasRef.current.requestFullscreen({});
+        canvasRef.current
+          .requestFullscreen({})
+          .catch(() => console.error('unable to switch to fullscreen canvas'));
       }
     },
-    [canvasRef],
+    [],
   );
 
   return (
