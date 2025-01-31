@@ -118,6 +118,14 @@ p {
   text-decoration: underline solid 1px;
 }
 
+:link:hover::after,
+:link:hover::after,
+:visited:hover::after,
+:visited:hover::after {
+  display: inline-block;
+  text-decoration: none;
+}
+
 :link[href^="http:"]::after,
 :link[href^="https:"]::after {
   content: "\2060\2197";
