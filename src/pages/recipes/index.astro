@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '../../layouts/page.astro';
+
+const allRecipes = await getCollection('recipes');
+---
+
+<Page title="Recipes" description="Some thoughts on food and recipes.">
+    <h1>Recipes</h1>
+    <ul class="recipes">
+        {allRecipes.map(recipe => <li><a href={`/recipes/${recipe.slug}`}>{recipe.data.name}</a></li>)}
+    </ul>
+    <em>Showing {allRecipes.length} recipes.</em>
+
+</Page>
+
+<style>
+    .recipes {
+        margin-bottom: 1lh;
+    }
+</style>

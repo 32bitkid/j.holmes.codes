@@ -110,6 +110,14 @@ const sci0PicsCollection = defineCollection({
     }),
 });
 
+const recipesCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    servings: z.string().optional(),
+  }),
+});
+
 export const collections = {
   blog: blogCollection,
   projects: projectsCollection,
@@ -117,4 +125,5 @@ export const collections = {
   sci0pics: sci0PicsCollection,
   thoughts: thoughtsCollection,
   TILs: tilsCollection,
+  recipes: recipesCollection,
 };

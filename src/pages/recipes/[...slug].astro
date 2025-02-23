@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '../../layouts/page.astro';
+export async function getStaticPaths() {
+  const recipeEntries = await getCollection('recipes');
+  return recipeEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { recipe: entry },
+  }));
+}
+
+const { recipe } = Astro.props;
+const { name, servings } = recipe.data;
+const { Content } = await recipe.render();
+---
+
+<Page>
+    <article class="markdown recipe">
+        <h1>{name}</h1>
+        {servings && <p class="servings">makes {servings}</p>}
+        <Content />
+    </article>
+</Page>
+
+<style>
+    .recipe {
+        font-feature-settings: 'onum';
+    }
+
+    .servings {
+        text-align: center;
+        font-style: italic;
+        quotes: '(' ')';
+        margin-top: -1rlh;
+        font-size: var(--f-small);
+        &:not(:empty) {
+            &::before { content: open-quote; }
+            &::after { content: close-quote; }
+        }
+    }
+
+    .recipe::before, .recipe::after {
+        display: block;
+        content: '\2042';
+        font-size: var(--f-x-large);
+        margin-block: 2rlh;
+        text-align: center;
+    }
+
+    .recipe h1 {
+        text-align: center;
+        margin-block-start: 0;
+    }
+
+    .recipe :global(ul) {
+        margin-inline: auto;
+        width: max-content;
+        columns: 2;
+        column-rule: 3px double currentColor;
+        column-gap: 4ch;
+        margin-block: 1rlh;
+    }
+
+    .recipe :global(ol) {
+        margin-block: 1rlh;
+    }
+
+    .recipe :global(ol li) {
+        display: inline;
+        &:not(:last-child)::after { content: ' \29F8 '; }
+        &:last-child::after { content: '.'; }
+    }
+</style>
