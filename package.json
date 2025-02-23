@@ -50,7 +50,7 @@
     "@types/lodash.debounce": "^4.0.9",
     "@types/lodash.throttle": "^4.1.9",
     "@types/sanitize-html": "^2.11.0",
-    "astro": "^5.2.1",
+    "astro": "^5.3.0",
     "date-fns": "^3.6.0",
     "marked": "^13.0.2",
     "rehype-katex": "^7.0.0",
@@ -58,6 +58,6 @@
     "remark-definition-list": "^2.0.0",
     "remark-hint": "^1.0.10",
     "remark-math": "^6.0.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.7.3"
   }
 }
