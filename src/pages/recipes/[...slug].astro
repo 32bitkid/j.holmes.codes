@@ -61,13 +61,21 @@ const { Content } = await recipe.render();
         margin-block: 1rlh;
     }
 
+    .recipe :global(ul:has(
+        > :last-child:nth-child(1),
+        > :last-child:nth-child(2),
+        > :last-child:nth-child(3)
+    )) {
+        columns: 1;
+    }
+
     .recipe :global(ol) {
         margin-block: 1rlh;
     }
 
     .recipe :global(ol li) {
         display: inline;
-        &:not(:last-child)::after { content: ' \29F8 '; }
+        &:not(:last-child)::after { content: '\00A0\29F8 '; }
         &:last-child::after { content: '.'; }
     }
 </style>
