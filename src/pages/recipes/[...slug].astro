@@ -53,12 +53,19 @@ const { Content } = await recipe.render();
     }
 
     .recipe :global(ul) {
+        margin-block: 1rlh;
         margin-inline: auto;
         width: max-content;
+        max-width: 85cqi;
         columns: 2;
         column-rule: 3px double currentColor;
         column-gap: 4ch;
-        margin-block: 1rlh;
+    }
+
+    .recipe :global(ul li) {
+        text-wrap: balance;
+        padding-left: 2ch;
+        text-indent: -2ch;
     }
 
     .recipe :global(ul:has(
