@@ -114,6 +114,7 @@ const recipesCollection = defineCollection({
   type: 'content',
   schema: z.object({
     name: z.string(),
+    description: z.string().optional(),
     servings: z.string().optional(),
   }),
 });

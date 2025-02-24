@@ -10,11 +10,11 @@ export async function getStaticPaths() {
 }
 
 const { recipe } = Astro.props;
-const { name, servings } = recipe.data;
+const { name, description, servings } = recipe.data;
 const { Content } = await recipe.render();
 ---
 
-<Page>
+<Page title={name} description={description}>
     <article class="markdown recipe">
         <h1>{name}</h1>
         {servings && <p class="servings">makes {servings}</p>}
