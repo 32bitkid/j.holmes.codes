@@ -1,6 +1,8 @@
 ---
+import { getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Page from '../../layouts/page.astro';
+
 export async function getStaticPaths() {
   const recipeEntries = await getCollection('recipes');
   return recipeEntries.map((entry) => ({
@@ -10,11 +12,23 @@ export async function getStaticPaths() {
 }
 
 const { recipe } = Astro.props;
-const { name, description, servings } = recipe.data;
+const { name, description, servings, thumbnail } = recipe.data;
 const { Content } = await recipe.render();
 ---
 
-<Page title={name} description={description}>
+<Page
+  title={name}
+  description={description}
+  image={thumbnail ? {
+    src: new URL((await getImage({
+        src: thumbnail.image,
+        width: 800,
+        height: 416,
+        format: 'png',
+    })).src, Astro.url),
+    alt: thumbnail.alt,
+  }: undefined}
+>
     <article class="markdown recipe">
         <h1>{name}</h1>
         {servings && <p class="servings">makes {servings}</p>}

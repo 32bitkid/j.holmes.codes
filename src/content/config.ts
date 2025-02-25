@@ -112,11 +112,18 @@ const sci0PicsCollection = defineCollection({
 
 const recipesCollection = defineCollection({
   type: 'content',
-  schema: z.object({
-    name: z.string(),
-    description: z.string().optional(),
-    servings: z.string().optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      description: z.string().optional(),
+      servings: z.string().optional(),
+      thumbnail: z
+        .object({
+          image: image(),
+          alt: z.string(),
+        })
+        .optional(),
+    }),
 });
 
 export const collections = {
