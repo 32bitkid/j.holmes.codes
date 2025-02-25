@@ -78,11 +78,14 @@ const { Content } = await recipe.render();
 
     .recipe :global(ol) {
         margin-block: 1rlh;
+        font-size: 0;
+        text-align: justify;
     }
 
     .recipe :global(ol li) {
         display: inline;
-        &:not(:last-child)::after { content: '\00A0\29F8 '; }
+        font-size: 1rem;
+        &:not(:last-child)::after { content: '\200D\FF0F'; }
         &:last-child::after { content: '.'; }
     }
 </style>
