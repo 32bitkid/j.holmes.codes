@@ -31,7 +31,7 @@ const pageTitle = title ? `${title} \u2236 j.holmes.codes` : 'j.holmes.codes';
 <meta property="og:url" content={Astro.url.href} />
 <meta property="og:type" content="website" />
 <meta property="og:title" content={ogSafe(title ?? 'j.holmes.codes')} />
-<meta property="og:description" content={ogSafe(description)} />
+<meta property="og:description" content={ogSafe(textOnly(description))} />
 {image && image.src && <meta property="og:image" content={image.src} />}
 {image && image.alt && <meta property="og:image:alt" content={image.alt} />}
 

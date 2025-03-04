@@ -13,7 +13,7 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<Page>
+<Page title={entry.data.summary} description={"Today I learned about… " + entry.data.summary}>
   <h1 set:html={entry.data.summary} />
   <Content />
   <nav><a href="/til">Back to <code>/til</code></a></nav>
