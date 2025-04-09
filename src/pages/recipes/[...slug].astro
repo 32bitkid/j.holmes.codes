@@ -76,6 +76,10 @@ const { Content } = await recipe.render();
         column-gap: 4ch;
     }
 
+    .recipe :global(ol:has(li:only-child)) {
+        text-align: center;
+    }
+
     .recipe :global(ul li) {
         text-wrap: balance;
         padding-left: 2ch;
