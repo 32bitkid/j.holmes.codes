@@ -7,7 +7,7 @@ import {
 } from '@4bitlabs/image';
 import { decompress, parsePic } from '@4bitlabs/sci0';
 import { toByteArray } from 'base64-js';
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useNumericCallback } from '@components/react/sci0-renderer/hooks.ts';
 import styles from '@components/react/sci0-renderer/sci0-renderer.module.css';

@@ -1,5 +1,4 @@
 import type { Vec2 } from '@4bitlabs/vec2';
-import { lerp as vecLerp } from '@4bitlabs/vec2';
 import { distortPolygon } from '@watercolorizer/watercolorizer/distort-polygon';
 import * as M from 'transformation-matrix';
 

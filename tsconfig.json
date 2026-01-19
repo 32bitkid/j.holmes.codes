@@ -7,7 +7,7 @@
       }
     ],
     "types": ["@modyfi/vite-plugin-yaml/modules"],
-    "jsx": "react",
+    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "@public/*": ["public/*"],

@@ -7,7 +7,7 @@ import {
 import type { DrawCommand } from '@4bitlabs/sci0';
 import { renderPic } from '@4bitlabs/sci0-renderer';
 import debounce from 'lodash.debounce';
-import React, {
+import {
   useRef,
   useEffect,
   useCallback,
@@ -112,18 +112,16 @@ export function Canvas(props: RenderCanvasProps) {
   );
 
   return (
-    <>
-      <canvas
-        key={mode}
-        role="img"
-        aria-label={label}
-        className={clsn(styles.canvas, maximize && styles.maximize)}
-        ref={init}
-        style={{ aspectRatio: PIXEL_ASPECT_RATIOS[pixelAspectRatio] }}
-        onDoubleClick={handleChangeMaximize}
-      >
-        Canvas not supported…
-      </canvas>
-    </>
+    <canvas
+      key={mode}
+      role="img"
+      aria-label={label}
+      className={clsn(styles.canvas, maximize && styles.maximize)}
+      ref={init}
+      style={{ aspectRatio: PIXEL_ASPECT_RATIOS[pixelAspectRatio] }}
+      onDoubleClick={handleChangeMaximize}
+    >
+      Canvas not supported…
+    </canvas>
   );
 }

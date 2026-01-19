@@ -1,5 +1,5 @@
 import RenderMethods from '@components/react/watercolor/render-methods';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 const NOOP = () => {};
 
@@ -45,22 +45,20 @@ export function WatercolorExplorer(props: WatercolorExplorerProps) {
   }, [renderFn]);
 
   return (
-    <>
-      <canvas
-        ref={canvasRef}
-        width={600}
-        height={300}
-        style={{
-          display: 'block',
-          width: '100%',
-          maxWidth: '600px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginBottom: '1lh',
-        }}
-      >
-        Canvas is not supported
-      </canvas>
-    </>
+    <canvas
+      ref={canvasRef}
+      width={600}
+      height={300}
+      style={{
+        display: 'block',
+        width: '100%',
+        maxWidth: '600px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: '1lh',
+      }}
+    >
+      Canvas is not supported
+    </canvas>
   );
 }

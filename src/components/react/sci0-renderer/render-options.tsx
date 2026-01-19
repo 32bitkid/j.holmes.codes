@@ -1,5 +1,5 @@
 import type { CrtUpdateOptions } from '@4bitlabs/crt-lite';
-import React, {
+import {
   useCallback,
   type Dispatch,
   type SetStateAction,
@@ -50,10 +50,6 @@ export function RenderOptions(props: RenderOptionsProps) {
     mode: [mode, options],
   } = props;
 
-  if (mode === '2d') {
-    return <em className={styles.noOptions}>n/a…</em>;
-  }
-
   const handleChangeHBlur = useChangeFor('hBlur', valueToInt, onChangeMode);
   const handleChangeFx = useChangeFor('Fx', valueToNegMilli, onChangeMode);
   const handleChangeFy = useChangeFor('Fy', valueToNegMilli, onChangeMode);
@@ -69,6 +65,10 @@ export function RenderOptions(props: RenderOptionsProps) {
     checkedToBool,
     onChangeMode,
   );
+
+  if (mode === '2d') {
+    return <em className={styles.noOptions}>n/a…</em>;
+  }
 
   return (
     <>
