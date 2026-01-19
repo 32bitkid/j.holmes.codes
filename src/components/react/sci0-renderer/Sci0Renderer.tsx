@@ -1,20 +1,19 @@
 import { IBM5153Contrast, toGrayscale } from '@4bitlabs/color';
 import { generatePairs } from '@4bitlabs/color/dithers';
 import {
-  type RenderPipeline,
   createDitherFilter,
   padFilter,
+  type RenderPipeline,
 } from '@4bitlabs/image';
 import { decompress, parsePic } from '@4bitlabs/sci0';
-import { toByteArray } from 'base64-js';
-import { useMemo, useState } from 'react';
-
 import { useNumericCallback } from '@components/react/sci0-renderer/hooks.ts';
 import styles from '@components/react/sci0-renderer/sci0-renderer.module.css';
 import {
   DEFAULT_WEBGL2_OPTIONS,
   type RenderMode,
 } from '@components/react/sci0-renderer/types.ts';
+import { toByteArray } from 'base64-js';
+import { useMemo, useState } from 'react';
 import { Canvas } from './Canvas.tsx';
 import { Controls } from './Controls.tsx';
 import {

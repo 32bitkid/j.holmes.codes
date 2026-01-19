@@ -1,7 +1,6 @@
+import { clamp, gaussRng } from '@utils/maths.ts';
 import { distortPolygon } from '@watercolorizer/watercolorizer/distort-polygon';
 import * as M from 'transformation-matrix';
-
-import { clamp, gaussRng } from '@utils/maths.ts';
 import type { ExampleRenderer } from './example-renderer.ts';
 import { nGon, poly, text } from './helpers.ts';
 

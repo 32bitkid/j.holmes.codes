@@ -1,10 +1,9 @@
-import * as M from 'transformation-matrix';
-
 import type { ExampleRenderer } from '@components/react/watercolor/render-methods/example-renderer.ts';
 import {
   nGon,
   poly,
 } from '@components/react/watercolor/render-methods/helpers.ts';
+import * as M from 'transformation-matrix';
 
 export const basePolyExample = (
   ctx: CanvasRenderingContext2D,

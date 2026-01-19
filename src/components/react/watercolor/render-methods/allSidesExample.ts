@@ -1,9 +1,8 @@
 import type { Vec2 } from '@4bitlabs/vec2';
-import { distortPolygon } from '@watercolorizer/watercolorizer/distort-polygon';
-import * as M from 'transformation-matrix';
-
 import { effect, signal } from '@preact/signals-core';
 import { clamp } from '@utils/maths.ts';
+import { distortPolygon } from '@watercolorizer/watercolorizer/distort-polygon';
+import * as M from 'transformation-matrix';
 import type { ExampleRenderer } from './example-renderer.ts';
 import { nGon, odds, poly, text } from './helpers.ts';
 

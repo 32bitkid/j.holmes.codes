@@ -6,16 +6,15 @@ import {
 } from '@4bitlabs/image';
 import type { DrawCommand } from '@4bitlabs/sci0';
 import { renderPic } from '@4bitlabs/sci0-renderer';
+import { PIXEL_ASPECT_RATIOS } from '@components/react/sci0-renderer/options.ts';
 import debounce from 'lodash.debounce';
 import {
-  useRef,
-  useEffect,
-  useCallback,
-  useState,
   type MouseEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
 } from 'react';
-
-import { PIXEL_ASPECT_RATIOS } from '@components/react/sci0-renderer/options.ts';
 import { createRender2d } from './2d-render.ts';
 import styles from './sci0-renderer.module.css';
 import type { RenderMode } from './types.ts';

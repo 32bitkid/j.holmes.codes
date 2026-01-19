@@ -1,8 +1,8 @@
 import {
-  useCallback,
+  type ChangeEvent,
   type Dispatch,
   type SetStateAction,
-  type ChangeEvent,
+  useCallback,
 } from 'react';
 
 import {
@@ -10,18 +10,17 @@ import {
   useEnumCallback,
   useNumericCallback,
 } from './hooks.ts';
-import { RenderOptions } from './render-options.tsx';
-
 import {
   BLURS,
   type DITHERS,
+  defaultDithers,
+  exoticDithers,
   type MIXERS,
   type PALETTES,
   PIXEL_ASPECT_RATIOS,
   SCALERS,
-  defaultDithers,
-  exoticDithers,
 } from './options.ts';
+import { RenderOptions } from './render-options.tsx';
 import styles from './sci0-renderer.module.css';
 import { DEFAULT_WEBGL2_OPTIONS, type RenderMode } from './types.ts';
 

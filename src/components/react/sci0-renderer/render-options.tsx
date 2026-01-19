@@ -1,9 +1,9 @@
 import type { CrtUpdateOptions } from '@4bitlabs/crt-lite';
 import {
-  useCallback,
+  type ChangeEvent,
   type Dispatch,
   type SetStateAction,
-  type ChangeEvent,
+  useCallback,
 } from 'react';
 
 import styles from './sci0-renderer.module.css';

@@ -198,8 +198,9 @@ kbd {
   border-radius: 3px;
   line-height: 1;
   padding: 0.33em 0.66em;
-  box-shadow: 0 -0.125em 0 -0.063em #c9c4c4, 0 0.125em 0 -0.063em
-    rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 -0.125em 0 -0.063em #c9c4c4,
+    0 0.125em 0 -0.063em rgba(0, 0, 0, 0.5);
   background-color: #e7e7e7;
   position: relative;
   color: rgba(0, 0, 0, 0.75);
@@ -245,7 +246,9 @@ small {
 
 :not(pre) > code {
   font-family: var(--f-monospace), monospace;
-  font-feature-settings: "ss08" 1, "onum" 0;
+  font-feature-settings:
+    "ss08" 1,
+    "onum" 0;
   background: #f5f2f0;
   padding: 0.2em 0.5ch;
   border-radius: 0.3em;
