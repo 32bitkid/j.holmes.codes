@@ -1,5 +1,5 @@
 import type { GitClient } from '@conventional-changelog/git-client';
-import type { GitLogParams, Params } from '@conventional-changelog/git-client';
+import type { GitLogParams } from '@conventional-changelog/git-client';
 
 interface CommitFormatter<T> {
   format: string;
@@ -9,7 +9,7 @@ interface CommitFormatter<T> {
 async function getCommits<T>(
   client: GitClient,
   { format, parseFn }: CommitFormatter<T>,
-  params?: GitLogParams & Params,
+  params?: GitLogParams,
 ): Promise<T[]> {
   const results: T[] = [];
   for await (const row of client.getRawCommits({ ...params, format }))
@@ -24,7 +24,7 @@ const SUMMARY: CommitFormatter<string> = {
 
 export async function getCommitSummary(
   client: GitClient,
-  params?: GitLogParams & Params,
+  params?: GitLogParams,
 ): Promise<string[]> {
   return getCommits<string>(client, SUMMARY, params);
 }
@@ -45,7 +45,7 @@ const DETAILS: CommitFormatter<Commit> = {
 
 export async function getCommitDetails(
   client: GitClient,
-  params?: GitLogParams & Params,
+  params?: GitLogParams & { grep?: string; regexpIgnoreCase?: boolean },
 ): Promise<Commit[]> {
   return getCommits(client, DETAILS, params);
 }

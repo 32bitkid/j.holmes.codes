@@ -21,7 +21,6 @@ export function WatercolorExplorer(props: WatercolorExplorerProps) {
   const { renderFn } = props;
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const updateFn = useRef<() => void>(NOOP);
   const teardownFn = useRef<() => void>(NOOP);
 
   useEffect(() => {
@@ -34,10 +33,8 @@ export function WatercolorExplorer(props: WatercolorExplorerProps) {
 
     render();
     teardownFn.current = teardown;
-    updateFn.current = render;
 
     return () => {
-      updateFn.current = NOOP;
       teardownFn.current();
       teardownFn.current = NOOP;
       clear(ctx);
