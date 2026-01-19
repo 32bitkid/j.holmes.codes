@@ -52,7 +52,7 @@
     "@types/sanitize-html": "^2.11.0",
     "astro": "^5.16.11",
     "date-fns": "^3.6.0",
-    "marked": "^13.0.2",
+    "marked": "^17.0.1",
     "rehype-katex": "^7.0.1",
     "remark-capitalize-headings": "^3.0.0",
     "remark-definition-list": "^2.0.0",
