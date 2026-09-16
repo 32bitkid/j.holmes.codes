@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import DayFmt from '../../components/dates/DayFmt.astro';
 import Page from '../../layouts/md.astro';
 
@@ -8,7 +8,7 @@ export async function getStaticPaths() {
 
   return ideaEntries.map((entry) => ({
     params: {
-      slug: entry.slug,
+      slug: entry.id,
     },
     props: {
       idea: entry,
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 
 const { idea } = Astro.props;
 const { date, status } = idea.data;
-const { Content } = await idea.render();
+const { Content } = await render(idea);
 
 const progress =
   {

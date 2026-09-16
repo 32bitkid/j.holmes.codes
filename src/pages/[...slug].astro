@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import BlogEntry from '../layouts/blog-entry.astro';
 import { blogSorting } from '../utils/blogSorting';
 
@@ -10,20 +10,20 @@ export async function getStaticPaths() {
 
   return blogEntries.toSorted(blogSorting).map((entry, i, list) => ({
     params: {
-      slug: entry.slug,
+      slug: entry.id,
     },
     props: {
       entry,
       prev: list[i - 1]
         ? {
             title: list[i - 1].data.title,
-            slug: list[i - 1].slug,
+            slug: list[i - 1].id,
           }
         : undefined,
       next: list[i + 1]
         ? {
             title: list[i + 1].data.title,
-            slug: list[i + 1].slug,
+            slug: list[i + 1].id,
           }
         : undefined,
     },
@@ -31,7 +31,7 @@ export async function getStaticPaths() {
 }
 
 const { entry, prev, next } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 ---
 
 <BlogEntry {...entry.data} next={next} prev={prev}>

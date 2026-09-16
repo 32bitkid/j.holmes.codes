@@ -19,7 +19,7 @@ const isDraft = !blog.data.published;
     )
   }
   <div class="title">
-    <a href={`/${blog.slug}`}>{blog.data.title}</a>
+    <a href={`/${blog.id}`}>{blog.data.title}</a>
     {showSummary && <p class="summary">{summary}</p>}
   </div>
 </li>

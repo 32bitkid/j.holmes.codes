@@ -5,7 +5,7 @@ import { cyrb53 } from '@utils/cybr53';
 import { type FeatherAttributes, icons } from 'feather-icons';
 
 const ideas = (await getCollection('thoughts')).toSorted(
-  (a, b) => cyrb53(a.slug) - cyrb53(b.slug),
+  (a, b) => cyrb53(a.id) - cyrb53(b.id),
 );
 
 const shared = { width: '3ch', height: '2ex' };
@@ -53,7 +53,7 @@ const ICONS = {
         .map((idea) => (
           <li>
             <Fragment set:html={ICONS[idea.data.status]} />
-            <a href={`/ideas/${idea.slug}`} set:html={idea.data.summary} />
+            <a href={`/ideas/${idea.id}`} set:html={idea.data.summary} />
           </li>
         ))
     }
@@ -72,7 +72,7 @@ const ICONS = {
         .map((idea) => (
           <li>
             <Fragment set:html={ICONS[idea.data.status]} />
-            <a href={`/ideas/${idea.slug}`} set:html={idea.data.summary} />
+            <a href={`/ideas/${idea.id}`} set:html={idea.data.summary} />
           </li>
         ))
     }

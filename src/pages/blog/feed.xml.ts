@@ -18,7 +18,7 @@ export async function GET(context: APIContext) {
     items: blog.toSorted(blogSorting).map((post) => ({
       title: post.data.title,
       pubDate: post.data.authorDate,
-      link: post.slug,
+      link: post.id,
     })),
     // (optional) inject custom xml
     customData: '<language>en-us</language>',

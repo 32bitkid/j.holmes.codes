@@ -10,7 +10,7 @@ export async function getStaticPaths() {
     return {
       params: {
         game: it.data.game.id,
-        pic: it.data.pic,
+        pic: String(it.data.pic),
       },
       props: { id: it.id },
     };

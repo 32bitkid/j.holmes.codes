@@ -8,7 +8,7 @@ const allRecipes = await getCollection('recipes');
 <Page title="Recipes" description="Some thoughts on food and recipes.">
     <h1>Recipes</h1>
     <ul class="recipes">
-        {allRecipes.map(recipe => <li><a href={`/recipes/${recipe.slug}`}>{recipe.data.name}</a></li>)}
+        {allRecipes.map(recipe => <li><a href={`/recipes/${recipe.id}`}>{recipe.data.name}</a></li>)}
     </ul>
     <em>Showing {allRecipes.length} recipes.</em>
 

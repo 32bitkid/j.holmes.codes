@@ -9,7 +9,7 @@ import ChangelogCommit from '../../components/ChangelogCommit.astro';
 
 const client = new GitClient('.');
 
-const SUMMARY_MONTHS = 1;
+const SUMMARY_MONTHS: number = 3;
 const summaryText = pluralize('month', SUMMARY_MONTHS, SUMMARY_MONTHS !== 1);
 const summary = (
   await getCommitSummary(client, { since: `${SUMMARY_MONTHS}.month.ago` })
@@ -54,6 +54,7 @@ const featured = (
 
 <Page title="Changelog" description="Recent changes to this site">
   <h1><code>/changelog</code></h1>
+  { summary.size > 0 ? (
   <p>
     As of <DayFmt date={new Date()} human />, in the last {summaryText} there have
     been:
@@ -72,6 +73,7 @@ const featured = (
       })
     }.
   </p>
+  ) : null}
   {
     featured.length > 0 ? (
       <>

@@ -1,7 +1,17 @@
-import { defineCollection, reference, z } from 'astro:content';
+import { defineCollection, reference } from 'astro:content';
+import { z } from 'astro/zod';
+import { glob } from 'astro/loaders';
+
+// sci0games/sci0pics filenames use literal dots as separators (e.g.
+// `betrayed-alliance.2013.yaml`) and are cross-referenced by that exact
+// string. The default id generation runs filenames through github-slugger,
+// which strips dots entirely, breaking those references — so these two
+// collections only strip the file extension and keep the rest as-is.
+const stripExtension = ({ entry }: { entry: string }) =>
+  entry.replace(/\.[^/.]+$/, '');
 
 const tilsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/TILs' }),
   schema: () =>
     z.object({
       category: z.string().default('general'),
@@ -11,19 +21,19 @@ const tilsCollection = defineCollection({
 });
 
 const projectsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: () =>
     z.discriminatedUnion('type', [
       z.object({
         type: z.literal('npm'),
         title: z.string(),
-        link: z.string().url(),
+        link: z.url(),
         order: z.number(),
       }),
       z.object({
         type: z.literal('github'),
         title: z.string(),
-        link: z.string().url(),
+        link: z.url(),
         order: z.number(),
       }),
       z.object({
@@ -36,7 +46,7 @@ const projectsCollection = defineCollection({
 });
 
 const thoughtsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/thoughts' }),
   schema: () =>
     z.object({
       summary: z.string(),
@@ -54,7 +64,7 @@ const blogMeta = z.object({
 });
 
 const blogCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: ({ image }) =>
     z.discriminatedUnion('published', [
       z
@@ -85,7 +95,11 @@ const blogCollection = defineCollection({
 });
 
 const sci0GamesCollection = defineCollection({
-  type: 'data',
+  loader: glob({
+    pattern: '**/*.yaml',
+    base: './src/content/sci0games',
+    generateId: stripExtension,
+  }),
   schema: ({ image }) =>
     z.object({
       name: z.string(),
@@ -97,7 +111,11 @@ const sci0GamesCollection = defineCollection({
 });
 
 const sci0PicsCollection = defineCollection({
-  type: 'data',
+  loader: glob({
+    pattern: '**/*.yaml',
+    base: './src/content/sci0pics',
+    generateId: stripExtension,
+  }),
   schema: ({ image }) =>
     z.object({
       game: reference('sci0games'),
@@ -111,7 +129,7 @@ const sci0PicsCollection = defineCollection({
 });
 
 const recipesCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/recipes' }),
   schema: ({ image }) =>
     z.object({
       name: z.string(),

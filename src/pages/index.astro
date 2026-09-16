@@ -1,6 +1,6 @@
 ---
 import { getImage } from 'astro:assets';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import BlogSummary from '@components/BlogSummary.astro';
 import CodepenSketch from '@components/projects/CodepenSketch.astro';
 import GithubProject from '@components/projects/GithubProject.astro';
@@ -52,7 +52,7 @@ const showMore = allBlogPosts.length > max;
         projects.map(async (project) => {
           const { data } = project;
           const { type, ...rest } = data;
-          const { Content } = await project.render();
+          const { Content } = await render(project);
           if (type === 'npm') {
             const { title, link } = data;
             return (

@@ -1,16 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Page from '../../layouts/md.astro';
 
 export async function getStaticPaths() {
   return (await getCollection('TILs')).map((entry) => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.id },
     props: { entry },
   }));
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 ---
 
 <Page title={entry.data.summary} description={"Today I learned about… " + entry.data.summary}>

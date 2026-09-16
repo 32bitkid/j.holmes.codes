@@ -1,3 +1,4 @@
+import { unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import ViteYaml from '@modyfi/vite-plugin-yaml';
@@ -15,18 +16,21 @@ import remarkMath from 'remark-math';
 export default defineConfig({
   site: 'https://j.holmes.codes',
   scopedStyleStrategy: 'class',
+  compressHTML: true,
   integrations: [mdx(), react({ include: 'components/react/**/*' })],
   vite: { plugins: [ViteYaml()] },
   markdown: {
-    smartypants: false,
-    remarkPlugins: [
-      remarkMath,
-      remarkHint,
-      [remarkCapitalizeHeading, { excludeHeadingLevel: { h1: true } }],
-      [remarkDefinitionList, {}],
-    ],
-    remarkRehype: { handlers: { ...defListHastHandlers } },
-    rehypePlugins: [[rehypeKatex, {}]],
+    processor: unified({
+      smartypants: false,
+      remarkPlugins: [
+        remarkMath,
+        remarkHint,
+        [remarkCapitalizeHeading, { excludeHeadingLevel: { h1: true } }],
+        [remarkDefinitionList, {}],
+      ],
+      remarkRehype: { handlers: { ...defListHastHandlers } },
+      rehypePlugins: [[rehypeKatex, {}]],
+    }),
     shikiConfig: {
       theme: 'monokai',
       wrap: true,

@@ -38,7 +38,7 @@ const mostRecent: Date =
     {
       TILs.map((it) => (
         <li>
-          <a href={`/til/${it.slug}`} set:html={it.data.summary} />
+          <a href={`/til/${it.id}`} set:html={it.data.summary} />
         </li>
       ))
     }
