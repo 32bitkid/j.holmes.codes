@@ -22,8 +22,10 @@ const summary = (
         changed: 'update',
         fixed: 'fix',
         featured: 'feature',
+        feat: 'feature',
         new: 'feature',
         upgrade: 'update',
+        chore: 'upgrade',
         breaking: 'breaker',
       }[actual] ?? actual;
     const prev = map.get(type) ?? 0;
@@ -34,7 +36,7 @@ const summary = (
 
 const featured = (
   await getCommitDetails(client, {
-    grep: '^featured:',
+    grep: '^(featured|feat):',
     regexpIgnoreCase: true,
     since: '1.year.ago',
   })
@@ -60,11 +62,12 @@ const featured = (
     been:
     {
       Array.from(summary.entries()).map(([key, count], i, arr) => {
-        const isLast = arr.length !== 1 && arr.length - 1 === i;
+        const hasMultiple = arr.length > 1;
+        const isLast = arr.length - 1 === i;
         return (
           <Fragment
             set:text={
-              (isLast ? ' and ' : '') +
+              (hasMultiple && isLast ? ' and ' : '') +
               pluralize(key, count, true) +
               (!isLast ? ', ' : '')
             }
