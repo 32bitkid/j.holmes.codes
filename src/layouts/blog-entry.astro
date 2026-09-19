@@ -175,7 +175,7 @@ const optImage = image && (await getImage({ src: image.src }));
     padding: 2ex 2ch;
     border-radius: 0.5rem;
     box-sizing: border-box;
-    max-width: 55rem;
+    max-width: 82ch;
     margin-inline: auto;
   }
 
@@ -188,6 +188,11 @@ const optImage = image && (await getImage({ src: image.src }));
 
   .content :global(figure) {
     margin-bottom: 1rlh;
+  }
+
+  .content :global(figure:has(.katex)) {
+    width: max-content;
+    margin-inline: auto;
   }
 
   .content :global(ul),
@@ -259,14 +264,13 @@ const optImage = image && (await getImage({ src: image.src }));
   }
 
   .content :global(figure) {
-    margin-inline: auto;
-    width: max-content;
+    margin-inline: min(2vw, 1ch);
+    width: 100%;
   }
 
   .content :global(figure:has(figcaption)) {
     counter-increment: figure;
     margin-block: 1rlh;
-    padding-inline: min(2vw, 6ch);
   }
 
   .content :global(figure > figcaption) {
