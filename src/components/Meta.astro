@@ -7,7 +7,7 @@ const textOnly = (str: string) => sanitizeHtml(str, { allowedTags: [] });
 export interface Props {
   title?: string;
   description?: string;
-  image?: { src: string; alt?: string };
+  image?: { src: URL; alt?: string };
   frontmatter?: Record<string, unknown> & {
     title?: string;
   };
