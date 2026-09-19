@@ -8,52 +8,31 @@ const date = blog.data.authorDate ?? new Date();
 const isDraft = !blog.data.published;
 ---
 
-<li class:list={{ draft: isDraft, showSummary }}>
-  {
-    date ? (
-      <DayFmt class="byline" date={date} tabular />
-    ) : (
-      <div class="byline">
-        {isDraft && <div class="draft-marker">Draft</div>}
-      </div>
-    )
-  }
-  <div class="title">
-    <a href={`/${blog.id}`}>{blog.data.title}</a>
-    {showSummary && <p class="summary">{summary}</p>}
+<li class:list={{ draft: isDraft, showSummary, entry: true }}>
+  <div class="header">
+  { date && (<DayFmt class="byline" date={date} human />) }
+  { isDraft && (<div class="draft-marker">Draft</div>)}
   </div>
+  <a class="title" href={`/${blog.id}`}>{blog.data.title}</a>
+  {showSummary && <p class="summary">{summary}</p>}
 </li>
 
 <style>
-  li {
-    display: contents;
-  }
-
   li.draft > * {
     opacity: 0.75;
   }
 
   .title {
     align-self: baseline;
-  }
-
-  .byline {
-    font-size: var(--f-small);
-    line-height: 1;
-    align-self: baseline;
-    justify-self: right;
-  }
-
-  .summary {
-    font-size: var(--f-small);
-    margin-block-end: 0;
+    font-size: var(--f-large);
+    font-weight: bold;
   }
 
   .draft-marker {
     display: inline-block;
-    font-family: 'Equity Caps B', serif;
+    font-family: var(--font-equity-caps);
     letter-spacing: -0.04em;
-    font-feature-settings: 'c2sc', 'smcp', 'onum';
+    font-feature-settings: 'c2sc';
     font-size: var(--f-x-small);
     line-height: 1;
     border: 1px solid currentColor;

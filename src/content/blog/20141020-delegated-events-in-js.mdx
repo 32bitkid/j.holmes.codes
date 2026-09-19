@@ -143,9 +143,10 @@ When the user clicks on an element, an event gets generated to notify the applic
 - Target
 - Bubbling
 
-[[aside]]
+:::aside
 Not _all_ events bubble/capture. Instead, a few are dispatched directly on the target, _e.g._
 `focus` and `blur` events don't bubble. However, _most_ other event types do.
+:::
 
 For most event types, the event starts outside the document and then descends though the DOM hierarchy to the `target` of the event. Once the event reaches it's target, it then turns around and heads back out the same way, until it exits the DOM.
 

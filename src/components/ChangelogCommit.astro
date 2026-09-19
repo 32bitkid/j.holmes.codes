@@ -66,9 +66,8 @@ const { subject, date, gh, body, hash } = Astro.props;
 
   .md :global(dl > dt) {
     grid-column: 1 / span 1;
-    font-family: 'Equity Caps B', serif;
+    font-family: var(--font-equity-caps);
     letter-spacing: -0.04em;
-    font-feature-settings: 'smcp', 'onum';
     font-size: var(--f-small);
     line-height: 1;
     text-align: end;

@@ -4,6 +4,15 @@ import sanitizeHtml from 'sanitize-html';
 
 const textOnly = (str: string) => sanitizeHtml(str, { allowedTags: [] });
 
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: { src: string; alt?: string };
+  frontmatter?: Record<string, unknown> & {
+    title?: string;
+  };
+}
+
 const { props } = Astro;
 const { description = 'Thoughts on thoughts', image } = props;
 const title = textOnly(props.title ?? props.frontmatter?.title ?? '');

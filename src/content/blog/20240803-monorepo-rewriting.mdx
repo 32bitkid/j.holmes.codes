@@ -45,7 +45,7 @@ Checking out the [documentation](https://htmlpreview.github.io/?https://github.c
 
 Let's say that we have two monorepos: `repo1` and `repo2`, I want to make _new_ `repo3`, that contains both `libs/package-a` from `repo1` and `libs/package-b` from `repo2`.
 
-### Step 1: Rewrite repo1
+### Step 1: Rewrite `repo1`
 
 Clone the `repo1` repository[^safe-clone].
 
@@ -62,7 +62,7 @@ git filter-repo --path libs/package-a
 
 Your branch should now _only_ contain commits that are related to `libs/package-a`.
 
-### Step 2: Rewrite repo2
+### Step 2: Rewrite `repo2`
 
 Repeat for the `repo2` repository[^safe-clone].
 

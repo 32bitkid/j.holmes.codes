@@ -38,8 +38,7 @@
 }
 
 .fieldset > legend {
-  font-family: "Equity Caps B", serif;
-  font-feature-settings: "c2sc", "smcp", "onum";
+  font-family: var(--font-equity-caps);
   margin-bottom: 0.5rem;
 }
 

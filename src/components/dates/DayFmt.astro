@@ -18,14 +18,20 @@ const {
 
 const parsed = typeof inputDate === 'string' ? parseDate(inputDate) : inputDate;
 const date = toDay(parsed);
-const formatStr = human ? 'MMMM do, yyyy' : 'yyyy-MM-dd';
+const formatStr = human ? 'd MMMM yyyy' : 'yyyy-MM-dd';
+const formatted = format(date, formatStr);
 ---
 
 <time
-  class:list={[className, tabular && 'tabular']}
-  datetime={date.toISOString()}>{format(date, formatStr)}<slot /></time
+  class:list={[className, 'common', tabular ? 'tabular' : 'old-style']}
+  datetime={date.toISOString()}>{formatted}<slot /></time
 ><style>
+  .old-style {
+    font-variant-numeric: normal;
+    font-style: italic;
+  }
+
   .tabular {
-    font-variant-numeric: tabular-nums oldstyle-nums;
+    font-variant-numeric: oldstyle-nums tabular-nums;
   }
 </style>

@@ -6,8 +6,8 @@ import Skills from '../components/Skills.astro';
 import resume from '../data/resume.yaml';
 
 import '@styles/reset.css';
-import '@styles/font.css';
 import '@styles/core.css';
+import { Font } from 'astro:assets';
 
 interface Experience {
   readonly company: string;
@@ -56,6 +56,9 @@ const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
     <meta property="twitter:url" content={Astro.url.href} />
     <meta name="twitter:title" content="Résumé by J Holmes" />
     <meta name="twitter:description" content="Résumé by J Holmes" />
+    <Font cssVariable="--font-equity-caps" preload />
+    <Font cssVariable="--font-equity-text" preload />
+    <Font cssVariable="--font-fira-code-vf" />
   </head>
   <body>
     <Header />
@@ -278,13 +281,13 @@ const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
   }
 
   hgroup h2 {
-    font-family: 'Equity Caps B', serif;
+    font-family: var(--font-equity-caps);
     margin-top: -0.2rem;
     margin-bottom: 0;
     text-indent: 3ch;
     font-size: var(--f-large);
     line-height: calc(1rlh * 1);
-    font-feature-settings: 'c2sc', 'smcp';
+    font-feature-settings: 'c2sc';
   }
 
   aside h2 {
@@ -310,7 +313,7 @@ const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
   }
 
   #work-experience .title {
-    font-family: 'Equity Caps B', serif;
+    font-family: var(--font-equity-caps);
     font-size: var(--f-large);
     letter-spacing: -0.06em;
   }

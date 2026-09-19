@@ -23,7 +23,8 @@ const { tags, class: className } = Astro.props;
     margin: unset;
     display: inline;
 
-    font-family: var(--f-monospace), monospace;
+    font-family: var(--font-fira-code-vf);
+    font-weight: 300;
     padding: 0.25em 0.25ch;
     border-radius: 0.3em;
     white-space: normal;
@@ -34,7 +35,7 @@ const { tags, class: className } = Astro.props;
   {
     // prettier-ignore
     tags.toSorted().flatMap((tag, idx, arr) => (
-      <Fragment key={tag}><li>&num;{tag}</li>{arr.length - 1 !== idx ? ', ' : ''}</Fragment>
+      <Fragment key={tag}><li>&num;{tag}</li>{arr.length - 1 !== idx ? ' => ' : ''}</Fragment>
     ))
   }
 </ul>

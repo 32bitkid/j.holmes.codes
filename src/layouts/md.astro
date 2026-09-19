@@ -1,15 +1,20 @@
 ---
+import { Font } from 'astro:assets';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
 import Meta from '../components/Meta.astro';
 
 import '@styles/reset.css';
-import '@styles/font.css';
 import '@styles/core.css';
 ---
 
 <html lang="en">
-  <head><Meta {...Astro.props} /></head>
+  <head>
+    <Meta {...Astro.props} />
+    <Font cssVariable="--font-equity-caps" preload />
+    <Font cssVariable="--font-equity-text" preload />
+    <Font cssVariable="--font-fira-code-vf" />
+  </head>
   <body>
     <Header />
     <article class="md"><slot /></article>
@@ -68,7 +73,7 @@ import '@styles/core.css';
 
   .md :global(dl > dt) {
     grid-column: 1 / span 1;
-    font-family: 'Equity Caps B', serif;
+    font-family: var(--font-equity-caps);
     letter-spacing: -0.04em;
     font-feature-settings: 'smcp', 'onum';
     font-size: var(--f-small);
@@ -177,19 +182,13 @@ import '@styles/core.css';
   /* Codeblocks */
 
   .md :global(.astro-code) {
-    font-family: var(--f-monospace), monospace;
-    font-feature-settings: 'ss08' 1;
+    font-family: var(--font-fira-code-vf);
+    font-weight: 450;
     font-size: 0.8em;
     padding: 2ex 2ch;
     border-radius: 0.5rem;
     box-sizing: border-box;
     max-width: 55rem;
     margin-inline: auto;
-  }
-
-  @supports (font-variation-settings: normal) {
-    .md :global(.astro-code) {
-      font-family: 'Fira Code VF', var(--f-monospace), monospace;
-    }
   }
 </style>

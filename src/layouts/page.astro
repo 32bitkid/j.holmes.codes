@@ -1,15 +1,23 @@
 ---
+import { Font } from 'astro:assets';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
-import Meta from '../components/Meta.astro';
+import Meta, { type Props as MetaProps } from '../components/Meta.astro';
 
 import '@styles/reset.css';
-import '@styles/font.css';
 import '@styles/core.css';
+
+interface Props extends MetaProps {}
 ---
 
 <html lang="en">
-  <head><Meta {...Astro.props} /></head>
+  <head>
+    <Meta {...Astro.props} />
+    <Font cssVariable="--font-equity-caps" preload />
+    <Font cssVariable="--font-equity-text" preload />
+    <Font cssVariable="--font-fira-code-vf" />
+    <slot name="head" />
+  </head>
   <body>
     <Header />
     <main><slot /></main>

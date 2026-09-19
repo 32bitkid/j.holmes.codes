@@ -1,5 +1,5 @@
 ---
-import { getImage, Picture } from 'astro:assets';
+import { getImage, Picture, Font } from 'astro:assets';
 import DayFmt from '@components/dates/DayFmt.astro';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
@@ -7,7 +7,6 @@ import Tags from '@components/Tags.astro';
 import { ogSafe } from '@utils/ogSafe';
 
 import '@styles/reset.css';
-import '@styles/font.css';
 import '@styles/core.css';
 import 'katex/dist/katex.min.css';
 
@@ -59,6 +58,9 @@ const optImage = image && (await getImage({ src: image.src }));
     <meta name="twitter:description" content={ogSafe(summary)} />
     {optImage && <meta property="twitter:image" content={optImage.src} />}
     {image && <meta property="twitter:image:alt" content={image.alt} />}
+    <Font cssVariable="--font-equity-caps" preload />
+    <Font cssVariable="--font-equity-text" preload />
+    <Font cssVariable="--font-fira-code-vf" />
   </head>
   <body>
     <Header />
@@ -77,7 +79,7 @@ const optImage = image && (await getImage({ src: image.src }));
                 )}
               </DayFmt>
             )}
-            {dateActual && tags?.length > 0 ? '\u2E3A' : ''}
+            {dateActual && tags?.length > 0 ? '\u2002\u2042\u2002' : ''}
             {tags && tags.length > 0 && <Tags tags={tags} />}
           </div>
         )
@@ -166,8 +168,9 @@ const optImage = image && (await getImage({ src: image.src }));
   }
 
   .content :global(.astro-code) {
-    font-family: var(--f-monospace), monospace;
-    font-feature-settings: 'ss08' 1;
+    font-family: var(--font-fira-code-vf);
+    font-feature-settings: "calt" 1;
+    font-weight: 450;
     font-size: 0.8em;
     padding: 2ex 2ch;
     border-radius: 0.5rem;
@@ -176,14 +179,7 @@ const optImage = image && (await getImage({ src: image.src }));
     margin-inline: auto;
   }
 
-  @supports (font-variation-settings: normal) {
-    .content :global(.astro-code) {
-      font-family: 'Fira Code VF', var(--f-monospace), monospace;
-    }
-  }
-
-  .content
-    :global(
+  .content :global(
       .astro-code[data-language='console'] > code > .line:not(:empty)::before
     ) {
     content: '❯ ';
@@ -218,7 +214,7 @@ const optImage = image && (await getImage({ src: image.src }));
   .content :global(table thead th) {
     font-weight: 400;
     letter-spacing: -0.04em;
-    font-family: 'Equity Caps B', serif;
+    font-family: var(--font-equity-caps);
     font-feature-settings: 'c2sc', 'smcp', 'onum';
     line-height: calc(1rlh * 1);
     font-size: 0.7492rem;
@@ -262,6 +258,11 @@ const optImage = image && (await getImage({ src: image.src }));
     margin-bottom: 1rlh;
   }
 
+  .content :global(figure) {
+    margin-inline: auto;
+    width: max-content;
+  }
+
   .content :global(figure:has(figcaption)) {
     counter-increment: figure;
     margin-block: 1rlh;
@@ -276,7 +277,7 @@ const optImage = image && (await getImage({ src: image.src }));
 
     width: max-content;
     max-width: 24rem;
-    margin-inline: auto;
+    margin-inline-start: auto;
     text-align: justify;
     text-align-last: start;
   }
@@ -325,9 +326,9 @@ const optImage = image && (await getImage({ src: image.src }));
   }
 
   .previous::before {
-    content: '\2190\00A0';
+    content: '\2190';
   }
   .next::after {
-    content: '\00A0\2192';
+    content: '\2192';
   }
 </style>
