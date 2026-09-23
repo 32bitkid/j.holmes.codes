@@ -1,3 +1,4 @@
+import titleize from 'title';
 import { defineCollection, reference } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
@@ -58,8 +59,8 @@ const thoughtsCollection = defineCollection({
 });
 
 const blogMeta = z.object({
-  title: z.string(),
-  summary: z.string().optional(),
+  title: z.string().transform((val) => titleize(val)),
+  summary: z.string().trim().optional(),
   tags: z.array(z.string()).default([]),
 });
 
@@ -78,7 +79,7 @@ const blogCollection = defineCollection({
             })
             .optional(),
         })
-        .merge(blogMeta),
+        .extend(blogMeta.shape),
       z
         .object({
           authorDate: z.date().optional(),
@@ -90,7 +91,7 @@ const blogCollection = defineCollection({
             })
             .optional(),
         })
-        .merge(blogMeta),
+        .extend(blogMeta.shape),
     ]),
 });
 
