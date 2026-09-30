@@ -2,35 +2,54 @@ import { defineMdastPlugin, type MdastNode } from 'satteri';
 import title from 'title';
 
 export interface SatteriCapitalizeTitlesOptions {
-  excludeHeadingLevel?: {
-    h1?: boolean;
-    h2?: boolean;
-    h3?: boolean;
-    h4?: boolean;
-    h5?: boolean;
-    h6?: boolean;
+  readonly headingLevels?: {
+    [level in 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6']?: boolean;
   };
-  special?: string[];
+  readonly replaceHeadingRegExp?: { [regExp: string]: string };
+  readonly special?: string[];
 }
 
 export function satteriCapitalizeTitles(
   options: SatteriCapitalizeTitlesOptions = {},
 ) {
-  const { excludeHeadingLevel: ehl, special } = options;
-  const excludes = [
+  const { headingLevels: ehl, special } = options;
+  const includes = [
     undefined,
-    ehl?.h1 ?? false,
-    ehl?.h2 ?? false,
-    ehl?.h3 ?? false,
-    ehl?.h4 ?? false,
-    ehl?.h5 ?? false,
-    ehl?.h6 ?? false,
+    ehl?.h1 ?? true,
+    ehl?.h2 ?? true,
+    ehl?.h3 ?? true,
+    ehl?.h4 ?? true,
+    ehl?.h5 ?? true,
+    ehl?.h6 ?? true,
   ];
+
+  const compiledReplacements = Object.entries(
+    options.replaceHeadingRegExp ?? {},
+  ).map<[RegExp, string]>(([regExpStr, value]) => [
+    new RegExp(regExpStr, 'gu'),
+    value,
+  ]);
+
+  const doReplacements = (initial: string) => {
+    const length = initial.length;
+    let result = initial;
+    for (const [regexp, value] of compiledReplacements.values()) {
+      const next = result.replace(regexp, value);
+      if (next.length !== length) {
+        console.warn(
+          `replaceHeadingRegExp options must not change the length of the header: "${initial}"`,
+        );
+      } else {
+        result = next;
+      }
+    }
+    return result;
+  };
 
   return defineMdastPlugin({
     name: 'satteri-capitalize-titles',
     heading: (root, ctx) => {
-      if (excludes[root.depth]) return;
+      if (!includes[root.depth]) return;
 
       let headingText = '';
       const textNodes = new Map<
@@ -39,9 +58,9 @@ export function satteriCapitalizeTitles(
       >();
 
       const nodes: MdastNode[] = [...root.children];
-      while (true) {
+      while (nodes.length > 0) {
         const node = nodes.shift();
-        if (!node) break;
+        if (!node) continue;
 
         if (node.type === 'text') {
           textNodes.set(node, [
@@ -56,7 +75,7 @@ export function satteriCapitalizeTitles(
         }
       }
 
-      const titleText = title(headingText, { special });
+      const titleText = doReplacements(title(headingText, { special }));
       for (const [node, [start, end]] of textNodes.entries()) {
         ctx.setProperty(node, 'value', titleText.substring(start, end));
       }

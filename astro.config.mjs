@@ -1,11 +1,11 @@
+import { satteri } from '@astrojs/markdown-satteri';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import ViteYaml from '@modyfi/vite-plugin-yaml';
 import { defineConfig, fontProviders } from 'astro/config';
-import { satteriKatex } from './plugins/satteri-katex.js';
 import { satteriCapitalizeTitles } from './plugins/satteri-capitalize-titles.ts';
+import { satteriKatex } from './plugins/satteri-katex.js';
 import { satteriSlugger } from './plugins/satteri-slugger.ts';
-import { satteri } from '@astrojs/markdown-satteri';
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,7 +24,7 @@ export default defineConfig({
       hastPlugins: [satteriSlugger()],
       mdastPlugins: [
         satteriCapitalizeTitles({
-          excludeHeadingLevel: { h1: true },
+          headingLevels: { h1: false },
           special: ['TL;DR'],
         }),
         satteriKatex(),
