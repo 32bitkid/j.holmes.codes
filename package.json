@@ -66,5 +66,10 @@
     "esbuild@0.25.12": true,
     "core-js@3.47.0": true,
     "fsevents@2.3.3": true
+  },
+  "overrides": {
+    "@modyfi/vite-plugin-yaml": {
+      "js-yaml": "4.3.2"
+    }
   }
 }
