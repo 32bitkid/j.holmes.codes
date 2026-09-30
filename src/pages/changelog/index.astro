@@ -3,8 +3,8 @@ import DayFmt from '@components/dates/DayFmt.astro';
 import { GitClient } from '@conventional-changelog/git-client';
 import Page from '@layouts/page.astro';
 import { getCommitDetails, getCommitSummary } from '@utils/git';
-import { marked } from 'marked';
 import pluralize from 'pluralize';
+import { markdownToHtml } from 'satteri';
 import ChangelogCommit from '../../components/ChangelogCommit.astro';
 
 const client = new GitClient('.');
@@ -50,7 +50,7 @@ const featured = (
     hash,
     gh: `https://github.com/32bitkid/j.holmes.codes/commit/${hash}`,
     subject: subject.split(':', 2)[1] ?? subject,
-    body: marked.parse(body),
+    body: markdownToHtml(body).html,
   }));
 ---
 

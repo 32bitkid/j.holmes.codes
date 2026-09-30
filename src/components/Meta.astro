@@ -1,8 +1,8 @@
 ---
 import { ogSafe } from '@utils/ogSafe';
-import sanitizeHtml from 'sanitize-html';
+import { stripHtml } from 'string-strip-html';
 
-const textOnly = (str: string) => sanitizeHtml(str, { allowedTags: [] });
+const textOnly = (str: string) => stripHtml(str).result;
 
 export interface Props {
   title?: string;

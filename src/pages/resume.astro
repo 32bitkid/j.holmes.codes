@@ -1,5 +1,7 @@
 ---
-import { marked } from 'marked';
+import { toHtml } from 'hast-util-to-html';
+import { markdownToHast, markdownToHtml } from 'satteri';
+
 import MonthFmt from '../components/dates/MonthFmt.astro';
 import Header from '../components/Header.astro';
 import Skills from '../components/Skills.astro';
@@ -8,6 +10,7 @@ import resume from '../data/resume.yaml';
 import '@styles/reset.css';
 import '@styles/core.css';
 import { Font } from 'astro:assets';
+import type { HastNode } from 'satteri';
 
 interface Experience {
   readonly company: string;
@@ -28,8 +31,33 @@ interface PersonalProject {
   readonly role: string;
 }
 
-const md = (frag: string) => (frag ? marked.parse(frag) : '');
-const mdFrag = (frag: string) => (frag ? marked.parseInline(frag) : '');
+const unwrap = (hast: HastNode) => {
+  if ('children' in hast) {
+    if (hast.children.length === 1) {
+      const [child] = hast.children;
+      if (
+        child.type === 'element' &&
+        child.tagName === 'p' &&
+        'children' in child
+      ) {
+        const hastFragment: HastNode = {
+          type: 'root',
+          children: [...child.children],
+        };
+        return hastFragment;
+      }
+    }
+  }
+  return hast;
+};
+
+const md = (frag: string | undefined | null) =>
+  frag ? markdownToHtml(frag).html : '';
+const mdFrag = (frag: string | undefined | null) => {
+  if (!frag) return '';
+  const hast = markdownToHast(frag);
+  return frag ? toHtml(unwrap(hast)) : '';
+};
 ---
 
 <html lang="en">
