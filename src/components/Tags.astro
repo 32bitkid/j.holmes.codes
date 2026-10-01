@@ -35,7 +35,7 @@ const { tags, class: className } = Astro.props;
   {
     // prettier-ignore
     tags.toSorted().flatMap((tag, idx, arr) => (
-      <Fragment key={tag}><li>&num;{tag}</li>{arr.length - 1 !== idx ? ' => ' : ''}</Fragment>
+      <Fragment key={tag}><li>&num;{tag}</li>{arr.length - 1 !== idx ? ' / ' : ''}</Fragment>
     ))
   }
 </ul>
