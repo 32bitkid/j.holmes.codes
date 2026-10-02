@@ -1,5 +1,5 @@
 ---
-import { getImage, Image } from 'astro:assets';
+import { Font, getImage, Image } from 'astro:assets';
 import { getCollection, getEntry } from 'astro:content';
 import Page from '@layouts/page.astro';
 
@@ -32,11 +32,12 @@ const thumbnail = await getImage({
   title={`SCI0 Explorer: ${name} (${year})`}
   image={{ src: new URL(thumbnail.src, Astro.url), alt: `${name}` }}
 >
+  <Fragment slot="head">
+    <Font cssVariable="--font-sci-999" preload />
+  </Fragment>
   <h1>
     {name} ({year})
   </h1>
-
-  <h2>Pics</h2>
   <ul>
     {
       pics.length ? (
@@ -46,9 +47,9 @@ const thumbnail = await getImage({
               <Image
                 src={pic.data.thumbnail}
                 alt={pic.data.thumbnailAlt}
-                width="256"
+                width="320"
               />
-              <code>pic.{pic.data.pic.toString(10).padStart(3, '0')}</code>
+              <pre class="picId">PIC.{pic.data.pic.toString(10).padStart(3, '0')}</pre>
             </a>
           </li>
         ))
@@ -79,5 +80,11 @@ const thumbnail = await getImage({
     height: fit-content;
     border-radius: 1ch;
     box-shadow: 0 0.5ch 1ch rgba(0, 0, 0, 0.2);
+  }
+
+  .picId {
+    font: normal 24px var(--font-sci-999);
+    color: black;
+    font-variant-numeric: proportional-nums;
   }
 </style>

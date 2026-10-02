@@ -1,7 +1,7 @@
-import titleize from 'title';
 import { defineCollection, reference } from 'astro:content';
-import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
+import titleize from 'title';
 
 // sci0games/sci0pics filenames use literal dots as separators (e.g.
 // `betrayed-alliance.2013.yaml`) and are cross-referenced by that exact
@@ -121,7 +121,7 @@ const sci0PicsCollection = defineCollection({
     z.object({
       game: reference('sci0games'),
       pic: z.number().int(),
-      compression: z.number(),
+      compression: z.union([z.literal(0), z.literal(1), z.literal(2)]),
       content: z.string(),
       thumbnail: image(),
       thumbnailAlt: z.string(),

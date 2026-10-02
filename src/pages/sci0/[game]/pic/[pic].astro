@@ -1,5 +1,5 @@
 ---
-import { getImage } from 'astro:assets';
+import { Font, getImage } from 'astro:assets';
 import { getCollection, getEntry } from 'astro:content';
 import { Sci0Renderer } from '@components/react/sci0-renderer';
 import Page from '@layouts/page.astro';
@@ -58,14 +58,17 @@ const altText =
     alt: altText,
   }}
 >
+  <Fragment slot="head">
+    <Font cssVariable="--font-sci-000" preload />
+  </Fragment>
   <h1><a href={`/sci0/${gameId}`}>{gameData.name}</a> ({gameData.year})</h1>
-  <h2><code>pic.{pic.toString(10).padStart(3, '0')}</code></h2>
+  <h2><pre>PIC.{pic.toString(10).padStart(3, '0')}</pre></h2>
   {description && <p>{description}</p>}
   <Sci0Renderer
     client:load
     data={content.replace(/\s/g, '')}
-    compression={compression as 0 | 1 | 2}
-    initialAspectRatio={aspectRatio as '1:1.2' | '1:1'}
+    compression={compression}
+    initialAspectRatio={aspectRatio}
     engine={engine}
     label={altText}
   />
@@ -73,6 +76,13 @@ const altText =
 
 <style>
   h2 {
-    margin-block-start: calc(1rlh * 0.5);
+    margin-block-start: 0.5rlh;
+    user-select: none;
+  }
+
+  h2 pre {
+    font: normal calc(16px * 3) var(--font-sci-000);
+    color: black;
+    letter-spacing: normal;
   }
 </style>
