@@ -1,5 +1,6 @@
 name: "Codename: ICEMAN Demo"
+demo: true
 year: 1989
 engine: sci0
 aspectRatio: '1:1.2'
-cover: ./codename-iceman-demo.png
+cover: ./codename-iceman.png

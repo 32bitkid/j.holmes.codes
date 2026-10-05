@@ -98,7 +98,7 @@ const blogCollection = defineCollection({
 const sci0GamesCollection = defineCollection({
   loader: glob({
     pattern: '**/*.yaml',
-    base: './src/content/sci0games',
+    base: './src/content/sci0/games',
     generateId: stripExtension,
   }),
   schema: ({ image }) =>
@@ -114,7 +114,7 @@ const sci0GamesCollection = defineCollection({
 const sci0PicsCollection = defineCollection({
   loader: glob({
     pattern: '**/*.yaml',
-    base: './src/content/sci0pics',
+    base: './src/content/sci0/pics',
     generateId: stripExtension,
   }),
   schema: ({ image }) =>

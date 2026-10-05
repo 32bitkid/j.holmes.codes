@@ -1,0 +1,6 @@
+name: "King's Quest I: Quest for the Crown"
+demo: true
+year: 1990
+engine: sci0
+aspectRatio: '1:1.2'
+cover: ./kings-quest-i-sci.jpg
