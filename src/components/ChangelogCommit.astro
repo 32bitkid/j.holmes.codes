@@ -1,11 +1,12 @@
 ---
+import title from 'title';
 import DayFmt from './dates/DayFmt.astro';
 
 const { subject, date, gh, body, hash } = Astro.props;
 ---
 
 <article>
-  <h2 class="subject" set:text={subject} id={hash} />
+  <h2 class="subject" set:text={title(subject)} id={hash} />
   <div class="meta">
     <DayFmt date={date} human />
     <Fragment set:text="⸺" />
@@ -17,7 +18,6 @@ const { subject, date, gh, body, hash } = Astro.props;
 <style>
   .subject {
     margin-bottom: 0.25rlh;
-    text-transform: capitalize;
   }
 
   .meta {
