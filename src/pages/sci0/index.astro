@@ -17,7 +17,7 @@ const list = (await getCollection('sci0games')).sort((a, b) =>
         <li>
           <a href={`/sci0/${id}`}>
             <Picture class="cover" src={it.cover} alt="Cover Art" width="256"/>
-            {it.name} ({it.year})
+            {it.name}{it.demo ? " Demo" : ""}
           </a>
         </li>
       ))
@@ -48,6 +48,10 @@ const list = (await getCollection('sci0games')).sort((a, b) =>
   ul li {
     display: flex;
     flex-direction: column;
+  }
+
+  ul li a {
+    text-wrap: balance;
   }
 
   .cover {

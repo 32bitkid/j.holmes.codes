@@ -1,4 +1,5 @@
 game: betrayed-alliance
+type: embedded
 pic: 99
 compression: 0
 thumbnail: ./betrayed-alliance.099.png
@@ -198,4 +199,3 @@ content: >-
   ihGbH3APBTwJmwkJDwCfAL9wDOW5DwI/cAzlqgKfAD9wDLWhog8AnwGvcAyloaKRAZsKOR
   8An3AMhZKQAJCRAZIBD3AMlZAPAa8Bn3AMdZGiqRAZogGRCgKSARmRGQ9wDHVwDwAPcAqq
   CcBPUAqJqOAPcAr5yZ9wCznAkA8AH3ALiYChL3AL2WCv8=
-  

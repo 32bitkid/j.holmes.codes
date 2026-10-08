@@ -1,4 +1,5 @@
 game: betrayed-alliance
+type: embedded
 pic: 64
 compression: 0
 thumbnail: ./betrayed-alliance.064.png

@@ -17,7 +17,7 @@ const { id } = Astro.props;
 const entry = await getEntry('sci0games', id);
 if (!entry) return new Response(null, { status: 404 });
 const { data: titleData } = entry;
-const { name, year } = titleData;
+const name = titleData.name + (titleData.demo ? ' Demo' : '');
 const pics = await getCollection('sci0pics', ({ data }) => data.game.id === id);
 
 const thumbnail = await getImage({
@@ -29,15 +29,13 @@ const thumbnail = await getImage({
 ---
 
 <Page
-  title={`SCI0 Explorer: ${name} (${year})`}
+  title={`SCI0 Explorer: ${name}`}
   image={{ src: new URL(thumbnail.src, Astro.url), alt: `${name}` }}
 >
   <Fragment slot="head">
     <Font cssVariable="--font-sci-999" preload />
   </Fragment>
-  <h1>
-    {name} ({year})
-  </h1>
+  <h1>{name}</h1>
   <ul>
     {
       pics.length ? (

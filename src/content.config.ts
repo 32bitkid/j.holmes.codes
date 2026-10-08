@@ -2,6 +2,7 @@ import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import titleize from 'title';
+import { sciPicAssetLoader } from './loaders/sci-pic-asset-loader.ts';
 
 // sci0games/sci0pics filenames use literal dots as separators (e.g.
 // `betrayed-alliance.2013.yaml`) and are cross-referenced by that exact
@@ -105,7 +106,8 @@ const sci0GamesCollection = defineCollection({
     z.object({
       name: z.string(),
       year: z.number(),
-      engine: z.enum(['sci0', 'sci01']),
+      demo: z.boolean().default(false),
+      engine: z.enum(['sci0', 'sci01']).default('sci0'),
       aspectRatio: z.enum(['1:1.2', '1:1']),
       cover: image(),
     }),
@@ -118,15 +120,31 @@ const sci0PicsCollection = defineCollection({
     generateId: stripExtension,
   }),
   schema: ({ image }) =>
-    z.object({
-      game: reference('sci0games'),
-      pic: z.number().int(),
-      compression: z.union([z.literal(0), z.literal(1), z.literal(2)]),
-      content: z.string(),
-      thumbnail: image(),
-      thumbnailAlt: z.string(),
-      description: z.string().optional(),
-    }),
+    z
+      .discriminatedUnion('type', [
+        z.object({
+          type: z.literal('embedded'),
+          compression: z.union([z.literal(0), z.literal(1), z.literal(2)]),
+          content: z.preprocess(
+            (it) =>
+              typeof it === 'string' ? it.replace(/\s/g, '') : undefined,
+            z.base64(),
+          ),
+        }),
+        z.object({
+          type: z.literal('source'),
+          source: reference('sci0data'),
+        }),
+      ])
+      .and(
+        z.object({
+          pic: z.number().int(),
+          game: reference('sci0games'),
+          thumbnail: image(),
+          thumbnailAlt: z.string(),
+          description: z.string().optional(),
+        }),
+      ),
 });
 
 const recipesCollection = defineCollection({
@@ -150,6 +168,28 @@ export const collections = {
   projects: projectsCollection,
   sci0games: sci0GamesCollection,
   sci0pics: sci0PicsCollection,
+  sci0data: defineCollection({
+    loader: sciPicAssetLoader({
+      sources: {
+        'qg1-demo': {
+          path: './src/assets/sci0',
+          resourceName: 'QG1-DEMO',
+        },
+        'kq1sci-demo': {
+          path: './src/assets/sci0',
+          resourceName: 'KQ1SCI-DEMO',
+        },
+        'iceman-demo': {
+          path: './src/assets/sci0',
+          resourceName: 'ICEMAN-DEMO',
+        },
+        'lbow1-demo': {
+          path: './src/assets/sci0',
+          resourceName: 'LBOW1-DEMO',
+        },
+      },
+    }),
+  }),
   thoughts: thoughtsCollection,
   TILs: tilsCollection,
   recipes: recipesCollection,

@@ -1,4 +1,5 @@
 game: betrayed-alliance.2013
+type: embedded
 pic: 64
 compression: 0
 thumbnail: ./betrayed-alliance-2013.064.png
@@ -60,4 +61,3 @@ content: >-
   n1AMQPAAn1AMoOAAT1AMsNAAP1AMwRAAb1ECgUABT1EDEUgQv1EDMWAAj1EBoUgQX1AP0dAAT1
   AEclAAX1AF0hAAT1AKcdAAT1AOoSAAP1EC4Tggr1EDYSAAb1EDcQAAT1EDcRAAT1EDMlAAb1ED
   YlgQTx+w/1AJm9it+C3Ib9ARMBDIYnhUKCJ4I/+ABwgvz/
-  

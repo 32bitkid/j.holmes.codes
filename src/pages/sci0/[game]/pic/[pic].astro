@@ -2,6 +2,7 @@
 import { Font, getImage } from 'astro:assets';
 import { getCollection, getEntry } from 'astro:content';
 import { Sci0Renderer } from '@components/react/sci0-renderer';
+
 import Page from '@layouts/page.astro';
 
 export async function getStaticPaths() {
@@ -23,20 +24,29 @@ const picEntry = await getEntry('sci0pics', id);
 if (!picEntry) return new Response(null, { status: 404 });
 
 const { data: picData } = picEntry;
-const {
-  content,
-  pic,
-  thumbnailAlt,
-  compression,
-  description,
-  game: { id: gameId },
-} = picData;
+const { pic, thumbnailAlt, description, game } = picData;
 
-const gameEntry = await getEntry('sci0games', gameId);
+const gameEntry = await getEntry(game.collection, game.id);
 if (!gameEntry) return new Response(null, { status: 404 });
 
 const { data: gameData } = gameEntry;
+const gameName = gameData.name + (gameData.demo ? ' Demo' : '');
 const { engine, aspectRatio } = gameData;
+
+let compression: 0 | 1 | 2 = 0;
+let data = '';
+if (picData.type === 'embedded') {
+  compression = picData.compression;
+  data = picData.content;
+} else if (picData.type === 'source') {
+  const dataEntry = await getEntry(
+    picData.source.collection,
+    picData.source.id,
+  );
+  if (!dataEntry) return new Response(null, { status: 404 });
+  compression = dataEntry.data.compression;
+  data = dataEntry.data.content;
+}
 
 const thumbnail = await getImage({
   src: picData.thumbnail,
@@ -45,31 +55,32 @@ const thumbnail = await getImage({
   format: 'png',
 });
 
-const text = `${gameData.name} - pic.${pic.toString(10).padStart(3, '0')}`;
 const altText =
   thumbnailAlt ??
-  `Rendering of ${gameData.name} asset pic.${pic.toString(10).padStart(3, '0')}`;
+  `Rendering of ${gameName} asset pic.${pic.toString(10).padStart(3, '0')}`;
+
+const pageImage = {
+  src: new URL(thumbnail.src, Astro.url),
+  alt: altText,
+};
 ---
 
 <Page
-  title={`SCI Explorer: ${text}`}
-  image={{
-    src: new URL(thumbnail.src, Astro.url),
-    alt: altText,
-  }}
+  title={`SCI Explorer: ${gameName} - pic.${pic.toString(10).padStart(3, '0')}`}
+  image={pageImage}
 >
   <Fragment slot="head">
     <Font cssVariable="--font-sci-000" preload />
   </Fragment>
-  <h1><a href={`/sci0/${gameId}`}>{gameData.name}</a> ({gameData.year})</h1>
+  <h1><a href={`/sci0/${game.id}`}>{gameName}</a></h1>
   <h2><pre>PIC.{pic.toString(10).padStart(3, '0')}</pre></h2>
   {description && <p>{description}</p>}
   <Sci0Renderer
-    client:load
-    data={content.replace(/\s/g, '')}
+    client:only="react"
+    engine={engine}
+    data={data}
     compression={compression}
     initialAspectRatio={aspectRatio}
-    engine={engine}
     label={altText}
   />
 </Page>
