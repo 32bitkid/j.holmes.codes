@@ -43,6 +43,7 @@ const thumbnail = await getImage({
           <li>
             <a href={`/sci0/${id}/pic/${pic.data.pic}`}>
               <Image
+                  class:list={[`ar_${titleData.aspectRatio}`]}
                 src={pic.data.thumbnail}
                 alt={pic.data.thumbnailAlt}
                 width="320"
@@ -84,5 +85,13 @@ const thumbnail = await getImage({
     font: normal 24px var(--font-sci-999);
     color: black;
     font-variant-numeric: proportional-nums;
+  }
+
+  .ar_1\:1 {
+    aspect-ratio: 32 / 19;
+  }
+
+  .ar_1\:1\.2 {
+    aspect-ratio: 80 / 57;
   }
 </style>
