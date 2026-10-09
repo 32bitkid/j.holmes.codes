@@ -1,8 +1,9 @@
 import { defineCollection, reference } from 'astro:content';
+import { Resource, type ResourceType, ResourceTypes } from '@4bitlabs/sci0';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import titleize from 'title';
-import { sciPicAssetLoader } from './loaders/sci-pic-asset-loader.ts';
+import { sciRawAssetLoader } from './loaders/sci-asset-loader.ts';
 
 // sci0games/sci0pics filenames use literal dots as separators (e.g.
 // `betrayed-alliance.2013.yaml`) and are cross-referenced by that exact
@@ -163,29 +164,38 @@ const recipesCollection = defineCollection({
     }),
 });
 
+const resourceOfType = (type: ResourceType, ...rest: ResourceType[]) => {
+  const types = [type, ...rest];
+  return (id: number) => types.includes(Resource.getType(id));
+};
+
 export const collections = {
   blog: blogCollection,
   projects: projectsCollection,
   sci0games: sci0GamesCollection,
   sci0pics: sci0PicsCollection,
   sci0data: defineCollection({
-    loader: sciPicAssetLoader({
+    loader: sciRawAssetLoader({
       sources: {
         'qg1-demo': {
           path: './src/assets/sci0',
           resourceName: 'QG1-DEMO',
+          filter: resourceOfType(ResourceTypes.PIC_TYPE),
         },
         'kq1sci-demo': {
           path: './src/assets/sci0',
           resourceName: 'KQ1SCI-DEMO',
+          filter: resourceOfType(ResourceTypes.PIC_TYPE),
         },
         'iceman-demo': {
           path: './src/assets/sci0',
           resourceName: 'ICEMAN-DEMO',
+          filter: resourceOfType(ResourceTypes.PIC_TYPE),
         },
         'lbow1-demo': {
           path: './src/assets/sci0',
           resourceName: 'LBOW1-DEMO',
+          filter: resourceOfType(ResourceTypes.PIC_TYPE),
         },
       },
     }),
