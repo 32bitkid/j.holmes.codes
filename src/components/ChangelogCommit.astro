@@ -6,7 +6,7 @@ const { subject, date, gh, body, hash } = Astro.props;
 ---
 
 <article>
-  <h2 class="subject" set:text={title(subject)} id={hash} />
+  <h2 class="subject" set:text={title(subject, { special: ['SCI0']})} id={hash} />
   <div class="meta">
     <DayFmt date={date} human />
     <Fragment set:text="⸺" />

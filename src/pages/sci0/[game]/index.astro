@@ -1,6 +1,7 @@
 ---
 import { Font, getImage, Image } from 'astro:assets';
 import { getCollection, getEntry } from 'astro:content';
+import { Resource } from '@4bitlabs/sci0';
 import Page from '@layouts/page.astro';
 
 export async function getStaticPaths() {
@@ -16,12 +17,18 @@ export async function getStaticPaths() {
 const { id } = Astro.props;
 const entry = await getEntry('sci0games', id);
 if (!entry) return new Response(null, { status: 404 });
-const { data: titleData } = entry;
-const name = titleData.name + (titleData.demo ? ' Demo' : '');
+
+const name = entry.data.name + (entry.data.demo ? ' Demo' : '');
 const pics = await getCollection('sci0pics', ({ data }) => data.game.id === id);
+const sourceIds = pics.flatMap((pic) => pic.data.source.id);
+const dataMap = Object.fromEntries(
+  (await getCollection('sci0data', (it) => sourceIds.includes(it.id))).map(
+    (it) => [it.id, it],
+  ),
+);
 
 const thumbnail = await getImage({
-  src: titleData.cover,
+  src: entry.data.cover,
   width: 380,
   height: 380,
   format: 'png',
@@ -39,19 +46,23 @@ const thumbnail = await getImage({
   <ul>
     {
       pics.length ? (
-        pics.map((pic) => (
-          <li>
-            <a href={`/sci0/${id}/pic/${pic.data.pic}`}>
-              <Image
-                  class:list={[`ar_${titleData.aspectRatio}`]}
-                src={pic.data.thumbnail}
-                alt={pic.data.thumbnailAlt}
-                width="320"
-              />
-              <pre class="picId">PIC.{pic.data.pic.toString(10).padStart(3, '0')}</pre>
-            </a>
-          </li>
-        ))
+        pics.map((pic) => {
+          const resId  = dataMap[pic.data.source.id]?.data.id;
+          const num = Resource.getNumber(resId);
+          return (
+              <li>
+                <a href={`/sci0/${id}/pic/${num}`}>
+                  <Image
+                      class:list={[`ar_${entry.data.aspectRatio}`]}
+                      src={pic.data.thumbnail}
+                      alt={pic.data.thumbnailAlt}
+                      width="320"
+                  />
+                  <pre class="picId">PIC.{num.toString(10).padStart(3, '0')}</pre>
+                </a>
+              </li>
+          );
+        })
       ) : (
         <em>Coming soon…</em>
       )
@@ -62,15 +73,15 @@ const thumbnail = await getImage({
 <style>
   ul {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
     gap: 1rlh 1ch;
+    grid-template-columns: repeat(auto-fit, minmax(27ch, 1fr));
   }
 
   ul a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1ch;
+    gap: 0.25ch;
   }
 
   ul img {
@@ -78,20 +89,23 @@ const thumbnail = await getImage({
     width: 100%;
     height: fit-content;
     border-radius: 1ch;
-    box-shadow: 0 0.5ch 1ch rgba(0, 0, 0, 0.2);
+
+    &.ar_1\:1 {
+      aspect-ratio: 32 / 19;
+    }
+
+    &.ar_1\:1\.2 {
+      aspect-ratio: 80 / 57;
+    }
   }
 
   .picId {
     font: normal 24px var(--font-sci-999);
     color: black;
     font-variant-numeric: proportional-nums;
+    align-self: end;
+    margin-inline-end: 0.5ch;
   }
 
-  .ar_1\:1 {
-    aspect-ratio: 32 / 19;
-  }
 
-  .ar_1\:1\.2 {
-    aspect-ratio: 80 / 57;
-  }
 </style>

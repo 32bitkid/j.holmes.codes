@@ -1,6 +1,5 @@
 game: qg1-demo
-pic: 22
 source: qg1-demo/pic.022
 thumbnail: ./qg1-demo.22.png
-thumbnailAlt: Baba Yaga's Hut
+thumbnailAlt: The Location of Baba Yaga's Hut
 type: source

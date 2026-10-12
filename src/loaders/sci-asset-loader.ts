@@ -11,7 +11,16 @@ import { cyrb53bin } from '@utils/cybr53.ts';
 import type { AstroIntegrationLogger } from 'astro';
 import type { Loader } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { fromByteArray } from 'base64-js';
+
+async function loadPatch(
+  path: string,
+  number: number,
+): Promise<{ id: number; data: Uint8Array }> {
+  const fileData = await readFile(path);
+  const resType = fileData[0] & 0b0111_1111;
+  const id = (resType << 11) | (number & 0b111_1111_1111);
+  return { id, data: fileData.subarray(2) };
+}
 
 interface CollectSourceOptions {
   path: string;
@@ -74,44 +83,66 @@ async function* collectSource(
 }
 
 interface SciRawAssetLoader {
-  sources: {
+  resources: {
     [prefix: string]: {
       path: string;
       resourceName?: string;
       filter?: (id: number) => boolean;
     };
   };
+  patches?: { number: number; path: string; prefix: string }[];
 }
 
 export function sciRawAssetLoader(options: SciRawAssetLoader) {
   return {
     name: 'sci-raw-asset-loader',
     schema: z.object({
+      id: z.number(),
       compression: z.union([z.literal(0), z.literal(1), z.literal(2)]),
       content: z.base64(),
     }),
-    load: async ({ store, logger }) => {
+    load: async ({ store, logger, parseData }) => {
       store.clear();
 
-      for (const [prefix, source] of Object.entries(options.sources)) {
-        for await (const [header, bytes] of collectSource(source, logger)) {
-          const resType = Resource.getTypeStr(header.id);
-          const resId = Resource.getNumber(header.id);
-          const id = `${prefix}/${resType.toLowerCase()}.${resId.toString(10).padStart(3, '0')}`;
+      const addData = async (
+        prefix: string,
+        resId: number,
+        compression: number,
+        bytes: Uint8Array,
+      ) => {
+        const resType = Resource.getTypeStr(resId);
+        const resNum = Resource.getNumber(resId);
+        const id = `${prefix}/${resType.toLowerCase()}.${resNum.toString(10).padStart(3, '0')}`;
+        logger.info(`adding ${id}`);
+        if (store.has(id)) {
+          logger.warn(`Duplicate resource: ${id}`);
+          return;
+        }
 
-          if (store.has(id)) {
-            logger.warn(`Duplicate resource: ${id}`);
-            continue;
-          }
+        const data = await parseData({
+          id,
+          data: {
+            id: resId,
+            compression: compression,
+            content: z.util.uint8ArrayToBase64(bytes),
+          },
+        });
 
-          store.set({
-            id,
-            data: {
-              compression: header.compression,
-              content: fromByteArray(bytes),
-            },
-            digest: cyrb53bin(bytes),
-          });
+        store.set({
+          id,
+          data,
+          digest: cyrb53bin(bytes),
+        });
+      };
+
+      for (const { path, prefix, number } of options.patches ?? []) {
+        const { id: resId, data } = await loadPatch(path, number);
+        await addData(prefix, resId, 0, data);
+      }
+
+      for (const [prefix, source] of Object.entries(options.resources)) {
+        for await (const [header, data] of collectSource(source, logger)) {
+          await addData(prefix, header.id, header.compression, data);
         }
       }
     },
@@ -119,7 +150,7 @@ export function sciRawAssetLoader(options: SciRawAssetLoader) {
 }
 
 interface SciAssetLoaderOptions {
-  sources: {
+  resources: {
     [prefix: string]: {
       path: string;
       resourceName?: string;
@@ -127,33 +158,57 @@ interface SciAssetLoaderOptions {
       engine?: 'sci0' | 'sci01';
     };
   };
+  patches?: { number: number; path: string; prefix: string }[];
 }
 
 export function sciAssetLoader(options: SciAssetLoaderOptions) {
   return {
     name: 'sci-asset-loader',
     schema: z.object({
+      id: z.number(),
       content: z.base64(),
     }),
     load: async (ctx) => {
-      const { store, logger } = ctx;
+      const { store, logger, parseData } = ctx;
       store.clear();
 
-      for (const [prefix, source] of Object.entries(options.sources)) {
+      const addData = async (
+        prefix: string,
+        resId: number,
+        bytes: Uint8Array,
+      ) => {
+        const resType = Resource.getTypeStr(resId);
+        const resNum = Resource.getNumber(resId);
+        const id = `${prefix}/${resType.toLowerCase()}.${resNum.toString(10).padStart(3, '0')}`;
+
+        const data = await parseData({
+          id,
+          data: {
+            id: resId,
+            content: z.util.uint8ArrayToBase64(bytes),
+          },
+        });
+
+        store.set({
+          id,
+          data,
+          digest: cyrb53bin(bytes),
+        });
+      };
+
+      for (const { path, prefix, number } of options.patches ?? []) {
+        const { id: resId, data } = await loadPatch(path, number);
+        await addData(prefix, resId, data);
+      }
+
+      for (const [prefix, source] of Object.entries(options.resources)) {
         const engine = source.engine ?? 'sci0';
-
         for await (const [header, bytes] of collectSource(source, logger)) {
-          const resType = Resource.getTypeStr(header.id);
-          const resId = Resource.getNumber(header.id);
-          const id = `${prefix}/${resType.toLowerCase()}.${resId.toString(10).padStart(3, '0')}`;
-
-          store.set({
-            id,
-            data: {
-              pic: decompress(engine, header.compression, bytes),
-            },
-            digest: cyrb53bin(bytes),
-          });
+          addData(
+            prefix,
+            header.id,
+            decompress(engine, header.compression, bytes),
+          );
         }
       }
     },

@@ -1,6 +1,5 @@
 game: codename-iceman-demo
-pic: 018
 source: iceman-demo/pic.018
 thumbnail: ./codename-iceman-demo.18.png
-thumbnailAlt: The Pentagon
+thumbnailAlt: The Pentagon in Arlington, Virginia
 type: source

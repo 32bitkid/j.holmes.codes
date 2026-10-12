@@ -1,6 +1,5 @@
 game: kings-quest-i-sci-demo
-pic: 73
 source: kq1sci-demo/pic.073
 thumbnail: ./kq1sci-demo.73.png
-thumbnailAlt: Climbing the beanstalk
+thumbnailAlt: Entrance to the Land of the Leprechauns
 type: source

@@ -121,31 +121,13 @@ const sci0PicsCollection = defineCollection({
     generateId: stripExtension,
   }),
   schema: ({ image }) =>
-    z
-      .discriminatedUnion('type', [
-        z.object({
-          type: z.literal('embedded'),
-          compression: z.union([z.literal(0), z.literal(1), z.literal(2)]),
-          content: z.preprocess(
-            (it) =>
-              typeof it === 'string' ? it.replace(/\s/g, '') : undefined,
-            z.base64(),
-          ),
-        }),
-        z.object({
-          type: z.literal('source'),
-          source: reference('sci0data'),
-        }),
-      ])
-      .and(
-        z.object({
-          pic: z.number().int(),
-          game: reference('sci0games'),
-          thumbnail: image(),
-          thumbnailAlt: z.string(),
-          description: z.string().optional(),
-        }),
-      ),
+    z.object({
+      game: reference('sci0games'),
+      thumbnail: image(),
+      thumbnailAlt: z.string(),
+      description: z.string().optional(),
+      source: reference('sci0data'),
+    }),
 });
 
 const recipesCollection = defineCollection({
@@ -176,7 +158,7 @@ export const collections = {
   sci0pics: sci0PicsCollection,
   sci0data: defineCollection({
     loader: sciRawAssetLoader({
-      sources: {
+      resources: {
         'qg1-demo': {
           path: './src/assets/sci0',
           resourceName: 'QG1-DEMO',
@@ -198,6 +180,20 @@ export const collections = {
           filter: resourceOfType(ResourceTypes.PIC_TYPE),
         },
       },
+      patches: [
+        { number: 64, path: './src/assets/sci0/BA1.064.PIC', prefix: 'ba1' },
+        { number: 99, path: './src/assets/sci0/BA1.099.PIC', prefix: 'ba1' },
+        {
+          number: 64,
+          path: './src/assets/sci0/BA1-PR.064.PIC',
+          prefix: 'ba1-pr',
+        },
+        {
+          number: 99,
+          path: './src/assets/sci0/BA1-PR.099.PIC',
+          prefix: 'ba1-pr',
+        },
+      ],
     }),
   }),
   thoughts: thoughtsCollection,
