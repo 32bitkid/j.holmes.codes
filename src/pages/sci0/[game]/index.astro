@@ -54,9 +54,10 @@ const thumbnail = await getImage({
                 <a href={`/sci0/${id}/pic/${num}`}>
                   <Image
                       class:list={[`ar_${entry.data.aspectRatio}`]}
-                      src={pic.data.thumbnail}
+                      src={`/sci0/${id}/pic/${num}.thumbnail.png`}
                       alt={pic.data.thumbnailAlt}
                       width="320"
+                      height="190"
                   />
                   <pre class="picId">PIC.{num.toString(10).padStart(3, '0')}</pre>
                 </a>

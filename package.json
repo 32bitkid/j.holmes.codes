@@ -54,8 +54,10 @@
     "@types/lodash.debounce": "^4.0.9",
     "@types/lodash.throttle": "^4.1.9",
     "@types/sanitize-html": "^2.16.0",
+    "@types/node": "^24.13.6",
     "astro": "^7.3.2",
     "date-fns": "^4.1.0",
+    "fast-png": "^8.0.0",
     "github-slugger": "^2.0.0",
     "hast-util-to-html": "^9.0.5",
     "katex": "^0.18.10",
@@ -65,8 +67,8 @@
   "allowScripts": {
     "esbuild@0.28.2": true,
     "esbuild@0.25.12": true,
-    "core-js@3.47.0": true,
-    "fsevents@2.3.3": true
+    "fsevents@2.3.3": true,
+    "core-js@3.50.0": true
   },
   "overrides": {
     "@modyfi/vite-plugin-yaml": {

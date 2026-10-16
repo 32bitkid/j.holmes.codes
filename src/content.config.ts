@@ -1,6 +1,6 @@
 import { defineCollection, reference } from 'astro:content';
 import { Resource, type ResourceType, ResourceTypes } from '@4bitlabs/sci0';
-import { glob } from 'astro/loaders';
+import { glob, type LoaderContext } from 'astro/loaders';
 import { z } from 'astro/zod';
 import titleize from 'title';
 import { sciRawAssetLoader } from './loaders/sci-asset-loader.ts';
@@ -120,13 +120,13 @@ const sci0PicsCollection = defineCollection({
     base: './src/content/sci0/pics',
     generateId: stripExtension,
   }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       game: reference('sci0games'),
-      thumbnail: image(),
       thumbnailAlt: z.string(),
       description: z.string().optional(),
       source: reference('sci0data'),
+      dither: z.union([z.number(), z.literal('soft')]).optional(),
     }),
 });
 
@@ -151,51 +151,53 @@ const resourceOfType = (type: ResourceType, ...rest: ResourceType[]) => {
   return (id: number) => types.includes(Resource.getType(id));
 };
 
+const sci0DataCollection = defineCollection({
+  loader: sciRawAssetLoader({
+    resources: {
+      'qg1-demo': {
+        path: './src/assets/sci0',
+        resourceName: 'QG1-DEMO',
+        filter: resourceOfType(ResourceTypes.PIC_TYPE),
+      },
+      'kq1sci-demo': {
+        path: './src/assets/sci0',
+        resourceName: 'KQ1SCI-DEMO',
+        filter: resourceOfType(ResourceTypes.PIC_TYPE),
+      },
+      'iceman-demo': {
+        path: './src/assets/sci0',
+        resourceName: 'ICEMAN-DEMO',
+        filter: resourceOfType(ResourceTypes.PIC_TYPE),
+      },
+      'lbow1-demo': {
+        path: './src/assets/sci0',
+        resourceName: 'LBOW1-DEMO',
+        filter: resourceOfType(ResourceTypes.PIC_TYPE),
+      },
+    },
+    patches: [
+      { number: 64, path: './src/assets/sci0/BA1.064.PIC', prefix: 'ba1' },
+      { number: 99, path: './src/assets/sci0/BA1.099.PIC', prefix: 'ba1' },
+      {
+        number: 64,
+        path: './src/assets/sci0/BA1-PR.064.PIC',
+        prefix: 'ba1-pr',
+      },
+      {
+        number: 99,
+        path: './src/assets/sci0/BA1-PR.099.PIC',
+        prefix: 'ba1-pr',
+      },
+    ],
+  }),
+});
+
 export const collections = {
   blog: blogCollection,
   projects: projectsCollection,
   sci0games: sci0GamesCollection,
   sci0pics: sci0PicsCollection,
-  sci0data: defineCollection({
-    loader: sciRawAssetLoader({
-      resources: {
-        'qg1-demo': {
-          path: './src/assets/sci0',
-          resourceName: 'QG1-DEMO',
-          filter: resourceOfType(ResourceTypes.PIC_TYPE),
-        },
-        'kq1sci-demo': {
-          path: './src/assets/sci0',
-          resourceName: 'KQ1SCI-DEMO',
-          filter: resourceOfType(ResourceTypes.PIC_TYPE),
-        },
-        'iceman-demo': {
-          path: './src/assets/sci0',
-          resourceName: 'ICEMAN-DEMO',
-          filter: resourceOfType(ResourceTypes.PIC_TYPE),
-        },
-        'lbow1-demo': {
-          path: './src/assets/sci0',
-          resourceName: 'LBOW1-DEMO',
-          filter: resourceOfType(ResourceTypes.PIC_TYPE),
-        },
-      },
-      patches: [
-        { number: 64, path: './src/assets/sci0/BA1.064.PIC', prefix: 'ba1' },
-        { number: 99, path: './src/assets/sci0/BA1.099.PIC', prefix: 'ba1' },
-        {
-          number: 64,
-          path: './src/assets/sci0/BA1-PR.064.PIC',
-          prefix: 'ba1-pr',
-        },
-        {
-          number: 99,
-          path: './src/assets/sci0/BA1-PR.099.PIC',
-          prefix: 'ba1-pr',
-        },
-      ],
-    }),
-  }),
+  sci0data: sci0DataCollection,
   thoughts: thoughtsCollection,
   TILs: tilsCollection,
   recipes: recipesCollection,

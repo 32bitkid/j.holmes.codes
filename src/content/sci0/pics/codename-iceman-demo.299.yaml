@@ -1,6 +1,4 @@
 compression: 2
 game: codename-iceman-demo
 source: iceman-demo/pic.299
-thumbnail: ./codename-iceman-demo.299.png
 thumbnailAlt: USS Blackhawk underwater
-type: source

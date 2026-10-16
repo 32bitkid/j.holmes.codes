@@ -1,6 +1,6 @@
 ---
 import { Font, getImage } from 'astro:assets';
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import { Resource, ResourceTypes } from '@4bitlabs/sci0';
 import { Sci0Renderer } from '@components/react/sci0-renderer';
 
@@ -48,7 +48,7 @@ const data = dataEntry.data.content;
 const pic = Resource.getNumber(dataEntry.data.id);
 
 const thumbnail = await getImage({
-  src: picEntry.data.thumbnail,
+  src: `/sci0/${game.id}/pic/${pic}.thumbnail.png`,
   width: 380,
   height: 380,
   format: 'png',
@@ -62,6 +62,8 @@ const pageImage = {
   src: new URL(thumbnail.src, Astro.url),
   alt: altText,
 };
+
+const flavorText = description || thumbnailAlt;
 ---
 
 <Page
@@ -73,7 +75,7 @@ const pageImage = {
   </Fragment>
   <h1><a href={`/sci0/${game.id}`}>{gameName}</a></h1>
   <h2><pre>PIC.{pic.toString(10).padStart(3, '0')}</pre></h2>
-  {description || thumbnailAlt && <p>&ldquo;{description || thumbnailAlt}&rdquo;</p>}
+  {flavorText && <p>&ldquo;{flavorText}&rdquo;</p>}
   <Sci0Renderer
     client:only="react"
     engine={gameEntry.data.engine}
