@@ -31,10 +31,18 @@ interface Sci0RenderProps {
   readonly compression: 0 | 1 | 2;
   readonly initialAspectRatio: '1:1' | '1:1.2';
   readonly label: string;
+  readonly initialMixer?: keyof typeof MIXERS;
 }
 
 export function Sci0Renderer(props: Sci0RenderProps) {
-  const { data, engine, compression, initialAspectRatio, label } = props;
+  const {
+    data,
+    engine,
+    compression,
+    initialAspectRatio,
+    label,
+    initialMixer = 'soft',
+  } = props;
 
   const picData = useMemo(() => {
     const rawBytes = toByteArray(data);
@@ -46,7 +54,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
   const [progress, setProgress] = useState(picData.length);
   const [palette, setPalette] = useState<keyof typeof PALETTES>('TrueCGA');
   const [grayscale, setGrayscale] = useState(false);
-  const [mixer, setMixer] = useState<keyof typeof MIXERS>('none');
+  const [mixer, setMixer] = useState<keyof typeof MIXERS>(initialMixer);
   const [contrast, setContrast] = useState<number>(0.7);
   const [scaler, setScaler] = useState<keyof typeof SCALERS>('(none)');
   const [dither, setDither] = useState<keyof typeof DITHERS>('1:1');

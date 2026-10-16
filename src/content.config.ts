@@ -126,7 +126,7 @@ const sci0PicsCollection = defineCollection({
       thumbnailAlt: z.string(),
       description: z.string().optional(),
       source: reference('sci0data'),
-      dither: z.union([z.number(), z.literal('soft')]).optional(),
+      dither: z.enum(['soft', 'mix-10', 'mix-25', 'mix-50', 'none']).optional(),
     }),
 });
 
@@ -172,6 +172,11 @@ const sci0DataCollection = defineCollection({
       'lbow1-demo': {
         path: './src/assets/sci0',
         resourceName: 'LBOW1-DEMO',
+        filter: resourceOfType(ResourceTypes.PIC_TYPE),
+      },
+      'sq3-demo': {
+        path: './src/assets/sci0',
+        resourceName: 'SQ3-DEMO',
         filter: resourceOfType(ResourceTypes.PIC_TYPE),
       },
     },

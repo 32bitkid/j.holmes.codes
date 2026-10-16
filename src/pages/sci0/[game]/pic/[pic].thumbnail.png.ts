@@ -4,6 +4,7 @@ import { generatePairs } from '@4bitlabs/color/dithers';
 import { createDitherFilter, renderPixelData } from '@4bitlabs/image';
 import { decompress, parsePic, Resource, ResourceTypes } from '@4bitlabs/sci0';
 import { renderPic } from '@4bitlabs/sci0-renderer';
+import { MIXERS } from '@components/react/sci0-renderer/options.ts';
 import type { APIRoute } from 'astro';
 import { toByteArray } from 'base64-js';
 import { encode } from 'fast-png';
@@ -59,15 +60,11 @@ export const GET: APIRoute = async (ctx) => {
 
   const rendered = renderPic(pic);
   const ditherMix = picEntry.data.dither ?? 'soft';
-  const mix =
-    ditherMix === 'soft'
-      ? [Mixers.softMixer()]
-      : ditherMix > 0
-        ? [Mixers.mixBy(ditherMix)]
-        : [];
+  const mix = MIXERS[ditherMix];
+
   const image = renderPixelData(rendered.visible, {
     render: createDitherFilter(
-      generatePairs(IBM5153Contrast(Palettes.TRUE_CGA_PALETTE, 0.72), ...mix),
+      generatePairs(IBM5153Contrast(Palettes.TRUE_CGA_PALETTE, 0.72), mix),
       [1, 1],
     ),
   });

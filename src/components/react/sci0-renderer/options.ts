@@ -25,6 +25,7 @@ export const DITHERS: Record<string, [number, number]> = {
   '2x2': [2, 2],
   '3x3': [3, 3],
   '4x4': [4, 4],
+  '2x1': [2, 1],
   '5x3': [5, 3],
   '5x4': [5, 4],
   '5x5': [5, 5],

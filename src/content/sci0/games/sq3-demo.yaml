@@ -1,0 +1,6 @@
+name: "Space Quest 3"
+demo: true
+year: 1989
+engine: sci0
+aspectRatio: '1:1.2'
+cover: ./space-quest-3.jpeg
