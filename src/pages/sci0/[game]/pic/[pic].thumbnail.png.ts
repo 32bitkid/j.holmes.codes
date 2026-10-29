@@ -1,5 +1,5 @@
 import { getCollection, getEntry } from 'astro:content';
-import { IBM5153Contrast, Mixers, Palettes } from '@4bitlabs/color';
+import { IBM5153Contrast, Palettes } from '@4bitlabs/color';
 import { generatePairs } from '@4bitlabs/color/dithers';
 import { createDitherFilter, renderPixelData } from '@4bitlabs/image';
 import { decompress, parsePic, Resource, ResourceTypes } from '@4bitlabs/sci0';

@@ -1,6 +1,6 @@
 import { defineCollection, reference } from 'astro:content';
 import { Resource, type ResourceType, ResourceTypes } from '@4bitlabs/sci0';
-import { glob, type LoaderContext } from 'astro/loaders';
+import { glob, } from 'astro/loaders';
 import { z } from 'astro/zod';
 import titleize from 'title';
 import { sciRawAssetLoader } from './loaders/sci-asset-loader.ts';
