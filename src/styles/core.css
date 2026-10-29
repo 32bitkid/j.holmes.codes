@@ -244,6 +244,9 @@ small {
   letter-spacing: -0.04em;
 }
 
+code {
+  text-rendering: optimizeSpeed;
+}
 :not(pre) > code {
   font-family: var(--font-fira-code-vf);
   background: #f5f2f0;
@@ -252,10 +255,6 @@ small {
   white-space: normal;
   font-size: 0.85em;
   font-weight: 450;
-}
-
-code {
-  text-rendering: optimizeSpeed;
 }
 
 [id] {
