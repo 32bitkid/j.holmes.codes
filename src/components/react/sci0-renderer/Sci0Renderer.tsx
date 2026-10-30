@@ -50,8 +50,18 @@ export function Sci0Renderer(props: Sci0RenderProps) {
     return parsePic(bytes);
   }, [data, engine, compression]);
 
+  const drawIndexes = useMemo(
+    () =>
+      picData.reduce<number[]>((prev, cmd, idx) => {
+        const [mode] = cmd;
+        if (['PLINE', 'BRUSH', 'FILL', 'CEL'].includes(mode)) prev.push(idx);
+        return prev;
+      }, []),
+    [picData],
+  );
+
   const [maximize, setMaximize] = useState(false);
-  const [progress, setProgress] = useState(picData.length);
+  const [progress, setProgress] = useState(drawIndexes.length);
   const [palette, setPalette] = useState<keyof typeof PALETTES>('TrueCGA');
   const [grayscale, setGrayscale] = useState(false);
   const [mixer, setMixer] = useState<keyof typeof MIXERS>(initialMixer);
@@ -60,7 +70,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
   const [dither, setDither] = useState<keyof typeof DITHERS>('1:1');
   const [pixelAspectRatio, setPixelAspectRatio] =
     useState<keyof typeof PIXEL_ASPECT_RATIOS>(initialAspectRatio);
-  const [postScaler, setPostSCaler] = useState<keyof typeof SCALERS>(
+  const [postScaler, setPostScaler] = useState<keyof typeof SCALERS>(
     initialAspectRatio === '1:1' ? '5x5' : '5x6',
   );
   const [blur, setBlur] = useState<keyof typeof BLURS>('(none)');
@@ -77,7 +87,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
     ].reduce((pal, fn) => (fn ? fn(pal) : pal), PALETTES[palette]);
     const pairs = generatePairs(basePalette, MIXERS[mixer]);
     return {
-      pre: [padFilter([10, 0, 0, 0]), SCALERS[scaler]],
+      pre: [padFilter([5, 0, 5, 0]), SCALERS[scaler]],
       render: createDitherFilter(pairs, DITHERS[dither]),
       post: [SCALERS[postScaler], BLURS[blur](blurAmount)],
     };
@@ -97,7 +107,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
     <>
       <Canvas
         picData={picData}
-        limit={progress}
+        limit={drawIndexes[progress]}
         pixelAspectRatio={pixelAspectRatio}
         renderPipeline={pipeline}
         maximize={maximize}
@@ -110,12 +120,12 @@ export function Sci0Renderer(props: Sci0RenderProps) {
           type="range"
           value={progress}
           min={0}
-          max={picData.length}
+          max={drawIndexes.length}
           onChange={useNumericCallback(setProgress)}
           style={{}}
         />
         <label htmlFor="progress">
-          {progress.toLocaleString()} of {picData.length.toLocaleString()}
+          {progress.toLocaleString()} of {drawIndexes.length.toLocaleString()}
         </label>
       </div>
       <Controls
@@ -139,7 +149,7 @@ export function Sci0Renderer(props: Sci0RenderProps) {
         onChangeDither={setDither}
         onChangeScaler={setScaler}
         onChangePixelAspectRatio={setPixelAspectRatio}
-        onChangePostScaler={setPostSCaler}
+        onChangePostScaler={setPostScaler}
         onChangeBlur={setBlur}
         onChangeBlurAmount={setBlurAmount}
         onChangeMaximize={setMaximize}

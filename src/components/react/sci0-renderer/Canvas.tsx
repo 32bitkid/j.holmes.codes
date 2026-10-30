@@ -4,7 +4,7 @@ import {
   type RenderPipeline,
   renderPixelData,
 } from '@4bitlabs/image';
-import type { DrawCommand } from '@4bitlabs/sci0';
+import type { PicCommand } from '@4bitlabs/sci0';
 import { renderPic } from '@4bitlabs/sci0-renderer';
 import { PIXEL_ASPECT_RATIOS } from '@components/react/sci0-renderer/options.ts';
 import debounce from 'lodash.debounce';
@@ -20,7 +20,7 @@ import styles from './sci0-renderer.module.css';
 import type { RenderMode } from './types.ts';
 
 export interface RenderCanvasProps {
-  picData: DrawCommand[];
+  picData: PicCommand[];
   limit?: number;
   label: string;
   pixelAspectRatio: keyof typeof PIXEL_ASPECT_RATIOS;
