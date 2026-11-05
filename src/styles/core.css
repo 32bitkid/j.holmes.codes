@@ -1,20 +1,21 @@
 :root {
   font-family: var(--font-equity-text);
-  font-size: min(16pt, max(12pt, 1.25vw));
+  font-size: 12pt;
+  font-synthesis: none;
   line-height: 1.7;
   font-weight: 400;
 
-  --max-content: 45rem;
+  --max-content: 75ch;
 
-  --f-root: 1.3348398541700344rem; /* calc(pow(2, 5 / 12)); */
-  --f-x-small: 0.5612310241546865rem; /* calc(pow(var(--f-root), -2)); */
-  --f-small: 0.7491535384383408rem; /* calc(pow(var(--f-root), -1)); */
-  --f-normal: 1rem; /* calc(pow(var(--f-root), 0)); */
-  --f-large: 1.3348398541700344rem; /* calc(pow(var(--f-root), 1)); */
-  --f-x-large: 1.7817974362806785rem; /* calc(pow(var(--f-root), 2)); */
-  --f-huge: 2.378414230005442rem; /* calc(pow(var(--f-root), 3)); */
-  --f-headline: 3.174802103936399rem; /* calc(pow(var(--f-root), 4)); */
-  --f-epic: 4.237852377437181rem; /* calc(pow(var(--f-root), 5)); */
+  --f-root: 1.3348398541700344rem;
+  --f-x-small: 0.5612310241546865rem;
+  --f-small: 0.7491535384383408rem;
+  --f-normal: 1rem;
+  --f-large: 1.3348398541700344rem;
+  --f-x-large: 1.7817974362806785rem;
+  --f-huge: 2.378414230005442rem;
+  --f-headline: 3.174802103936399rem;
+  --f-epic: 4.237852377437181rem;
 
   --pal-black: #010101;
   --pal-midnight: #031b75;
@@ -39,16 +40,40 @@
   background-color: var(--pal-white);
   scrollbar-width: thin;
   scrollbar-color: var(--pal-light) transparent;
+  scrollbar-gutter: stable both-edges;
+}
+
+@media screen and (min-width: 1024px) {
+  :root {
+    font-size: 14pt;
+  }
 }
 
 @media screen and (min-width: 1450px) {
   :root {
-    --max-content: 60rem;
+    font-size: 16pt;
+    --max-content: 90ch;
   }
 }
 
 body {
   line-height: inherit;
+  font-size-adjust: from-font;
+}
+
+:where(h1, h2) {
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
+}
+
+:where(h3, h4, h5, h6) {
+  text-box-trim: trim-both;
+  text-box-edge: cap text;
+}
+
+:where(p, blockquote, figcaption) {
+  text-box-trim: trim-end;
+  text-box-edge: cap alphabetic;
 }
 
 h1:not(hgroup > h1),
@@ -61,32 +86,32 @@ h6:not(hgroup > h6) {
   page-break-after: avoid;
 }
 
-h3:not(hgroup > h3) {
-  font-size: var(--f-large);
-  line-height: 1rlh;
-  font-weight: 700;
-  margin-block: 1.25rlh 0.25rlh;
+h1:not(hgroup > h1) {
+  font-family: var(--font-equity-caps);
+  font-size: var(--f-headline);
+  line-height: 1;
+  margin-block: calc(1rlh * 3) 1rlh;
+  font-feature-settings: "smcp", "onum";
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 
 h2:not(hgroup > h2) {
   font-family: var(--font-equity-caps);
   font-size: var(--f-x-large);
-  line-height: 1rlh;
+  line-height: 1;
   margin-block: calc(1rlh * 2) 1rlh;
   font-feature-settings: "smcp", "onum";
   font-weight: 600;
   letter-spacing: -0.06em;
 }
 
-h1:not(hgroup > h1) {
-  font-family: var(--font-equity-caps);
-  font-size: var(--f-huge);
-  margin-block: calc(1rlh * 3) 1rlh;
-  line-height: calc(1rlh * 2);
-  font-feature-settings: "smcp", "onum";
-  font-weight: 600;
-  letter-spacing: -0.06em;
-  text-wrap: balance;
+h3:not(hgroup > h3) {
+  font-size: var(--f-large);
+  line-height: 1;
+  font-weight: 700;
+  margin-block: 1.5rlh 0;
 }
 
 abbr {
@@ -103,12 +128,21 @@ p {
   margin-block-end: 1rlh;
   text-wrap: pretty;
   text-rendering: optimizeLegibility;
+  text-align: justify;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 4 4;
+  hyphenate-character: "‐";
+  font-variant-emoji: text;
 }
 
 :link,
 :visited {
   color: var(--colors-primary);
   text-decoration: none;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.125em;
+  text-decoration-skip-ink: auto;
+  hyphens: manual;
 }
 
 :link:hover,
@@ -118,24 +152,22 @@ p {
 
 :link[href^="http:"]::after,
 :link[href^="https:"]::after {
-  display: inline-block;
   text-decoration: none;
   content: "\2060\2191";
-  font-size: 0.75em;
+  font-size: 75%;
   vertical-align: super;
-  margin-right: -0.25ch;
+  margin-inline: -0.25ch;
   line-height: 0;
   text-indent: 0;
-  transform: rotate(60deg);
 }
 
 :link[href^="mailto:"]::after {
-  display: inline-block;
   text-decoration: none;
   content: "\2060\2709";
   vertical-align: super;
   line-height: 0;
-  font-size: 0.75em;
+  font-size: 75%;
+  margin-inline-end: -0.25ch;
   text-indent: 0;
 }
 
@@ -145,7 +177,7 @@ p {
   content: "\2060\2706";
   vertical-align: super;
   line-height: 0;
-  font-size: 0.75em;
+  font-size: 75%;
   text-indent: 0;
 }
 
@@ -247,14 +279,18 @@ small {
 code {
   text-rendering: optimizeSpeed;
 }
+
 :not(pre) > code {
+  hyphens: manual;
   font-family: var(--font-fira-code-vf);
   background: #f5f2f0;
-  padding: 0.2em 0.5ch;
+  margin-inline: 0.125ch;
+  padding-block: 0.333ex;
+  padding-inline: 0.5ch;
   border-radius: 0.3em;
   white-space: normal;
-  font-size: 0.85em;
-  font-weight: 450;
+  font-size: 92%;
+  font-weight: 500;
 }
 
 [id] {

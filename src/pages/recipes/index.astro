@@ -10,8 +10,6 @@ const allRecipes = await getCollection('recipes');
     <ul class="recipes">
         {allRecipes.map(recipe => <li><a href={`/recipes/${recipe.id}`}>{recipe.data.name}</a></li>)}
     </ul>
-    <em>Showing {allRecipes.length} recipes.</em>
-
 </Page>
 
 <style>

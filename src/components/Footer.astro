@@ -41,4 +41,8 @@ const currentYear = new Date().getFullYear();
   #copyright p:last-child {
     font-variant-caps: small-caps;
   }
+
+  @media print {
+    footer { display: none; }
+  }
 </style>

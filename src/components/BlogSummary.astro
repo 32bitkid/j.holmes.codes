@@ -1,20 +1,19 @@
 ---
 import DayFmt from './dates/DayFmt.astro';
 
-const { blog, showSummary = true } = Astro.props;
+const { blog } = Astro.props;
 const { summary } = blog.data;
 
 const date = blog.data.authorDate ?? new Date();
 const isDraft = !blog.data.published;
 ---
 
-<li class:list={{ draft: isDraft, showSummary, entry: true }}>
+<li class:list={{ draft: isDraft, entry: true }}>
   <div class="header">
   { date && (<DayFmt class="byline" date={date} human />) }
   { isDraft && (<div class="draft-marker">Draft</div>)}
   </div>
-  <a class="title" href={`/${blog.id}`}>{blog.data.title}</a>
-  {showSummary && <p class="summary">{summary}</p>}
+  <p class="summary"><a class="title" href={`/${blog.id}`}>{blog.data.title}</a> &#x00B7; {summary?.trim()}</p>
 </li>
 
 <style>
@@ -42,4 +41,5 @@ const isDraft = !blog.data.published;
     color: var(--colors-primary);
     vertical-align: 0.125rem;
   }
+
 </style>

@@ -1,5 +1,5 @@
 ---
-import { getImage, Picture, Font } from 'astro:assets';
+import { Font, getImage, Picture } from 'astro:assets';
 import DayFmt from '@components/dates/DayFmt.astro';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
@@ -26,7 +26,7 @@ const pageTitle = `${title} \u2236 j.holmes.codes`;
 const optImage = image && (await getImage({ src: image.src }));
 ---
 
-<html class:list={{ draft: !isPublished }}>
+<html class:list={{ draft: !isPublished }} lang="en-US">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -130,16 +130,18 @@ const optImage = image && (await getImage({ src: image.src }));
   }
 
   .heading {
-    margin-block: max(10rem, 25vh) 0;
+    margin-block-start: max(10rem, 25vh);
+    margin-block-end: 0.5rem;
   }
 
   .heading:not(:first-child) {
-    margin-block: 0;
+    margin-block-start: calc(1rlh * 2);
   }
 
   article {
     width: 100%;
     max-width: var(--max-content);
+    container-type: inline-size;
     padding-inline: 1.5ch;
     box-sizing: border-box;
     justify-self: center;
@@ -155,7 +157,7 @@ const optImage = image && (await getImage({ src: image.src }));
     display: block;
     line-height: inherit;
     font-size: 0.7492rem;
-    margin-left: 3ch;
+    margin-inline-start: 3ch;
   }
 
   .content {
@@ -250,17 +252,17 @@ const optImage = image && (await getImage({ src: image.src }));
 
   .content :global(.footnotes ol) {
     font-variant-numeric: oldstyle-nums;
-    line-height: calc(1rlh * 1);
     font-size: calc((var(--f-normal) + var(--f-small)) / 2);
-    margin-bottom: calc(1rlh * 1);
+    margin-block-end: 0;
+    line-height: 1.5;
   }
 
   .content :global(.footnotes li p) {
-    margin-bottom: calc(1rlh * 0.25);
+    margin-block-end: 1rlh;
   }
 
   .content :global(pre:not(figure pre)) {
-    margin-bottom: 1rlh;
+    margin-block-end: 1rlh;
   }
 
   .content :global(figure) {
