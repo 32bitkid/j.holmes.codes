@@ -66,7 +66,11 @@ const { Content } = await render(recipe);
         margin-block-start: 0;
     }
 
-    .recipe :global(ul) {
+    .recipe :global(hr) {
+        margin-block: 1rlh;
+    }
+
+    .recipe > :global(ul) {
         margin-block: 1rlh;
         margin-inline: auto;
         width: max-content;
@@ -80,17 +84,16 @@ const { Content } = await render(recipe);
         text-wrap: pretty;
     }
 
-    .recipe :global(ol:has(li:only-child)) {
+    .recipe > :global(ol:has(li:only-child)) {
         text-align: center;
     }
 
-    .recipe :global(ul li) {
-        text-wrap: balance;
+    .recipe > :global(ul li) {
         padding-left: 2ch;
         text-indent: -2ch;
     }
 
-    .recipe :global(ul:has(
+    .recipe > :global(ul:has(
         > :last-child:nth-child(1),
         > :last-child:nth-child(2),
         > :last-child:nth-child(3)
@@ -100,13 +103,21 @@ const { Content } = await render(recipe);
         columns: 1;
     }
 
-    .recipe :global(ol) {
+    @media screen and (max-width: 45rem) {
+        .recipe > :global(ul) {
+            border-left: none;
+            border-right: none;
+            columns: 1;
+        }
+    }
+
+    .recipe > :global(ol) {
         margin-block-end: 1rlh;
         text-align: justify;
         user-select: all;
     }
 
-    .recipe :global(ol li) {
+    .recipe > :global(ol li) {
         display: inline;
         font-size: 1rem;
     }

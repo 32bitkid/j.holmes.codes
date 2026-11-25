@@ -245,11 +245,6 @@ const optImage = image && (await getImage({ src: image.src }));
     border-top: 1px dashed var(--pal-light);
   }
 
-  .content :global(sup) {
-    vertical-align: super;
-    font-size: 0.707em;
-  }
-
   .content :global(.footnotes ol) {
     font-variant-numeric: oldstyle-nums;
     font-size: calc((var(--f-normal) + var(--f-small)) / 2);

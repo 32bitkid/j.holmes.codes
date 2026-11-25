@@ -20,6 +20,11 @@ export default defineConfig({
         math: true,
         definitionList: true,
         directive: true,
+        gfm: {
+          footnotes: {
+            label: '',
+          },
+        },
       },
       hastPlugins: [satteriSlugger()],
       mdastPlugins: [

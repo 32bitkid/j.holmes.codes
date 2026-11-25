@@ -191,10 +191,7 @@ hr {
   height: 0;
   border: 0;
   margin: 2rlh 0;
-  position: relative;
   clear: both;
-  overflow: visible;
-  text-align: center;
   color: var(--pal-light);
   border-bottom: 1px dotted currentColor;
   page-break-after: avoid;
@@ -278,6 +275,39 @@ small {
 
 code {
   text-rendering: optimizeSpeed;
+}
+
+sup {
+  vertical-align: super;
+  font-size: smaller;
+  margin-inline-start: 0.25ch;
+}
+
+.footnotes {
+  border-top: 1px dashed oklch(from currentColor l c h / 0.5);
+  margin-block-start: 1rlh;
+  padding-block-start: 1rlh;
+}
+
+.footnotes > h2:empty {
+  display: none;
+}
+
+.footnotes > ol {
+  list-style: decimal;
+  font-size: smaller;
+  line-height: 1.5;
+  margin-inline-start: 4ch;
+  margin-block-end: 0;
+}
+
+.footnotes > ol > li::marker {
+  font-feature-settings: "onum" 0;
+}
+
+.footnotes > ol > li > p {
+  font-size: calc((var(--f-normal) + var(--f-small)) / 2);
+  margin-block-end: 0.75lh;
 }
 
 :not(pre) > code {
